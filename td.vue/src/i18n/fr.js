@@ -176,7 +176,7 @@ const fra = {
             otmUnsupported: 'Import of Open Threat Model file format not yet supported',
             save: 'Could not save the Threat Model. Check the developer console for more information',
             tmUnsupported: 'Import of TM-BOM file format is experimental and subject to change that may break models',
-            v1Translate: 'Imported version 1.x models will be upgraded to the version 2.0 schema'
+            v1Translate: 'Imported version 1.x model has been upgraded to the version 2.x format'
         },
         prompts: {
             created: 'Threat model successfully created',

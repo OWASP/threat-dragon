@@ -16,7 +16,8 @@ describe('service/migration/tdV1/threatDragonV1.js', () => {
         });
 
         it('copies the version 1 summary', () => {
-            expect(v2Model.summary).toEqual(v1Model.summary);
+            expect(v2Model.summary).toMatchObject(v1Model.summary);
+            expect(v2Model.summary.id).not.toBeNull();
         });
 
         it('provides the detail', () => {
@@ -29,25 +30,28 @@ describe('service/migration/tdV1/threatDragonV1.js', () => {
     });
 
     describe('reads empty version 1 model', () => {
-	    beforeEach(() => {
-	        v2Model = threatDragonV1.read(emtpyV1Model);
-	    });
+        beforeEach(() => {
+            v2Model = threatDragonV1.read(emtpyV1Model);
+        });
 
-	    it('provides the version', () => {
-	        expect(v2Model.version).toMatch(/^2\.(0|[1-9]*)\.(0|[1-9]*)/);
-	    });
+        it('provides the version', () => {
+            expect(v2Model.version).toMatch(/^2\.(0|[1-9]*)\.(0|[1-9]*)/);
+        });
 
-	    it('copies minimal version 1 summary', () => {
-	        expect(v2Model.summary).toStrictEqual({'title': 'New threat model'});
-	    });
+        it('copies minimal version 1 summary', () => {
+            expect(v2Model.summary.description).toBe('');
+            expect(v2Model.summary.id).not.toBeNull();
+            expect(v2Model.summary.owner).toBe('');
+            expect(v2Model.summary.title).toBe('New threat model');
+        });
 
-	    it('provides minimal detail', () => {
-	        expect(v2Model.detail.contributors).toHaveLength(0);
-	        expect(v2Model.detail.diagrams).toHaveLength(0);
-	        expect(v2Model.detail.diagramTop).toBe(0);
-	        expect(v2Model.detail.reviewer).toMatch('');
-	        expect(v2Model.detail.threatTop).toBe(1000);
-	    });
+        it('provides minimal detail', () => {
+            expect(v2Model.detail.contributors).toHaveLength(0);
+            expect(v2Model.detail.diagrams).toHaveLength(0);
+            expect(v2Model.detail.diagramTop).toBe(0);
+            expect(v2Model.detail.reviewer).toMatch('');
+            expect(v2Model.detail.threatTop).toBe(1000);
+        });
     });
 
     describe('provides version', () => {

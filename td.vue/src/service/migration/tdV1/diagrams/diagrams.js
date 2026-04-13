@@ -24,7 +24,7 @@ const read = (v1Diagrams, version) => {
             thumbnail: v1Diagram.thumbnail,
             title: v1Diagram.title,
             version: version,
-            cells: elements.nodes.concat(elements.edges)
+            cells: JSON.parse(JSON.stringify(elements.nodes.concat(elements.edges)))
         });
 
     });
