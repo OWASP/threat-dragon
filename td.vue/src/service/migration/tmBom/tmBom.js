@@ -1,6 +1,12 @@
 import summary from './summary';
 import detail from './detail';
 
+const copyHasKey = (source, target, key) => {
+    if (Object.hasOwn(source, key)) {
+	    target[key] = source[key];
+    }
+};
+
 /* why use a hard coded Threat Dragon version here?
  * the build version may increase for Threat Dragon, but this conversion / migration
  * has been written for a particular version of Threat Dragon
@@ -11,15 +17,17 @@ const version = '2.4.1';
 
 const read = (model) => {
 
-    // not used (yet) by TD, but needs to be preserved if present
+    // required values not used by TD but need to be preserved
     let compatibility = {
         version: model.version,
         description: model.description,
-        frozen: model.frozen,
-        release_docs_link: model.release_docs_link,
-        reviewed_at: model.reviewed_at,
-        repo_link: model.repo_link
     };
+
+    // optional values need to be preserved if present
+    copyHasKey(model, compatibility, 'frozen');
+    copyHasKey(model, compatibility, 'release_docs_link');
+    copyHasKey(model, compatibility, 'reviewed_at');
+    copyHasKey(model, compatibility, 'repo_link');
 
     return {
         summary: summary.read(model),
@@ -32,17 +40,20 @@ const read = (model) => {
 const write = (model) => {
     let tmModel = new Object();
 
-    tmModel.version = model.compatibility ? model.compatibility.version : '1.0';
-
-    tmModel.scope = summary.write(model);
+    // compatibility object exists if original file was also TM-BOM
+    // required values
+    tmModel.version = model?.compatibility?.version || '1.0.1';
+    tmModel.description = model?.compatibility?.description || 'Export from Threat Dragon model';
 
     if (model.compatibility) {
-        tmModel.description = model.compatibility.description,
-        tmModel.frozen = model.compatibility.frozen,
-        tmModel.release_docs_link = model.compatibility.release_docs_link,
-        tmModel.reviewed_at = model.compatibility.reviewed_at,
-        tmModel.repo_link = model.compatibility.repo_link;
+        // optional key values
+        copyHasKey(model.compatibility, tmModel, 'frozen');
+        copyHasKey(model.compatibility, tmModel, 'release_docs_link');
+        copyHasKey(model.compatibility, tmModel, 'reviewed_at');
+        copyHasKey(model.compatibility, tmModel, 'repo_link');
     }
+
+    tmModel.scope = summary.write(model);
 
     return tmModel;
 };

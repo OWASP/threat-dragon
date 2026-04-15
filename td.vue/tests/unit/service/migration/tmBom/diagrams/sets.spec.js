@@ -92,6 +92,7 @@ const nodes = [
 ];
 
 describe('service/migration/tmBom/diagrams/sets.js', () => {
+
     describe('updates component descriptions', () => {
         let components = data_sets.merge(tmBomModel, nodes);
 
@@ -137,5 +138,15 @@ describe('service/migration/tmBom/diagrams/sets.js', () => {
             expect(components[6].data.description).toContain('control methods of acl');
             expect(components[9].data.description).not.toContain('control methods');
         });
+    });
+
+    describe('handles empty data sets', () => {
+        let noDataSetModel = JSON.parse(JSON.stringify(tmBomModel));
+        delete noDataSetModel.data_sets;
+
+	    it('preserves the components', () => {
+            let components = data_sets.merge(noDataSetModel, nodes);
+	        expect(components).toStrictEqual(nodes);
+	    });
     });
 });

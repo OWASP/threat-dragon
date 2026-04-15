@@ -2,9 +2,10 @@ import data_flows from '@/service/migration/tmBom/diagrams/flows';
 import tmBomModel from '../test-model';
 
 describe('service/migration/tmBom/diagrams/flows.js', () => {
+
     describe('finds the flows', () => {
         it('counts flows in model', () => {
-            expect(data_flows.placeFlows(tmBomModel)).toHaveLength(23);
+            expect(data_flows.read(tmBomModel)).toHaveLength(23);
         });
     });
 
@@ -55,5 +56,15 @@ describe('service/migration/tmBom/diagrams/flows.js', () => {
             expect(dataFlows[5].data.isEncrypted).toBe(false);
             expect(dataFlows[22].data.isEncrypted).toBe(true);
         });
+    });
+
+    describe('handles model with no data flows', () => {
+	    let noDataFlowsModel = JSON.parse(JSON.stringify(tmBomModel));
+	    delete noDataFlowsModel.data_flows;
+        let dataFlows = data_flows.placeFlows(noDataFlowsModel);
+
+	    it('adds no data flows', () => {
+	        expect(dataFlows).toEqual([]);
+	    });
     });
 });
