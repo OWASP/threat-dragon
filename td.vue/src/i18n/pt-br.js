@@ -427,6 +427,16 @@ const bra = {
                 informationDisclosure: 'Divulgação de informações',
                 denialOfService: 'Negação de serviço',
                 elevationOfPrivilege: 'Elevação de privilégio'
+            },
+            eop: {
+                header: '--- EoP ---',
+                dataValidationAndEncoding: 'Data Validation & Encoding', 
+                authentication: 'Authentication', 
+                sessionManagement: 'Session Management', 
+                authorization: 'Authorization', 
+                cryptography: 'Cryptography', 
+                cornucopia: 'Cornucopia',
+                wildCard: 'Wild Card'
             }
         },
         generic: {
