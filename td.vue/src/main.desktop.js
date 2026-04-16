@@ -7,6 +7,7 @@ import App from './App.vue';
 import i18nFactory from './i18n/index.js';
 
 import router from './router/index.js';
+import desktopSave from './service/desktop/save.js';
 import { providerNames } from './service/provider/providers.js';
 import tmBom from './service/migration/tmBom/tmBom';
 
@@ -171,8 +172,11 @@ window.electronAPI.onPrintModelConfirmed((_event, fileName) =>  {
 // request from electron to renderer to provide the model data so that it can be saved
 window.electronAPI.onSaveModelRequest((_event, fileName) =>  {
     console.debug('Save model request for file name : ' + fileName);
-    appProxy.$store.dispatch(tmActions.diagramApplied);
-    appProxy.$store.dispatch(tmActions.saveModel);
+    desktopSave.requestSave({
+        routeName: appProxy.$route.name,
+        providerName: providerNames.desktop,
+        saveModel: () => appProxy.$store.dispatch(tmActions.saveModel)
+    });
 });
 
 // advice from electron to renderer that the model has been saved

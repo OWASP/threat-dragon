@@ -332,7 +332,7 @@ describe('desktop/menu.js', () => {
             it('saveModel() should send save-model-request when model open', () => {
                 model.isOpen = true;
                 getSaveClick()();
-                expect(mockWindow.webContents.send).toHaveBeenCalledWith('apply-diagram-request');
+                expect(mockWindow.webContents.send).toHaveBeenCalledWith('save-model-request', 'test path');
             });
 
             it('saveModel() should send save-model-request with basename when model open', () => {
