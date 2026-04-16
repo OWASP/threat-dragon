@@ -427,12 +427,22 @@ const bra = {
                 informationDisclosure: 'Divulgação de informações',
                 denialOfService: 'Negação de serviço',
                 elevationOfPrivilege: 'Elevação de privilégio'
+            },
+            eop: {
+                header: '--- EoP ---',
+                dataValidationAndEncoding: 'Data Validation & Encoding',
+                authentication: 'Authentication',
+                sessionManagement: 'Session Management',
+                authorization: 'Authorization',
+                cryptography: 'Cryptography',
+                cornucopia: 'Cornucopia',
+                wildCard: 'Wild Card'
             }
         },
         generic: {
-            dafault: 'Nova ameaça genérica',
+            default: 'Nova ameaça genérica',
             cia : 'Nova ameaça CIA',
-            die : 'Nova ameaça CIA-DIE',
+            ciadie : 'Nova ameaça CIA-DIE',
             linddun : 'Nova ameaça LINDDUN',
             plot4ai : 'Nova ameaça PLOT4ai',
             stride: 'Nova ameaça STRIDE',
