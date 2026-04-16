@@ -49,13 +49,11 @@ import TdKeyboardShortcuts from '@/components/KeyboardShortcuts.vue';
 import TdThreatEditDialog from '@/components/ThreatEditDialog.vue';
 import TdThreatSuggestDialog from './ThreatSuggestDialog.vue';
 
+import { DESKTOP_DIAGRAM_SAVE_REQUEST_EVENT } from '@/service/desktop/save.js';
 import { getProviderType } from '@/service/provider/providers.js';
+import { providerTypes } from '@/service/provider/providerTypes.js';
 import diagramService from '@/service/diagram/diagram.js';
-import {
-    getElementsInsideBoundary,
-    getBoundariesCrossedByFlow,
-    getFlowsCrossedByBoundary
-} from '@/service/boundary-utils.js';
+import saveDiagram from '@/service/diagram/save.js';
 import stencil from '@/service/x6/stencil.js';
 import tmActions from '@/store/actions/threatmodel.js';
 
@@ -74,22 +72,15 @@ export default {
     }),
     data() {
         return {
-            graph: null
+            graph: null,
+            desktopSaveRequestHandler: null
         };
     },
     async mounted() {
         this.init();
-        if (window.electronAPI?.onApplyDiagramRequest) {
-            window.electronAPI.onApplyDiagramRequest(() => {
-                if (!this.graph) return;
-
-                const updated = Object.assign({}, this.diagram);
-                updated.cells = this.graph.toJSON().cells;
-
-                this.$store.dispatch(tmActions.diagramSaved, updated);
-                this.$store.dispatch(tmActions.notModified);
-            });
-
+        if (this.providerType === providerTypes.desktop) {
+            this.desktopSaveRequestHandler = () => this.handleDesktopSaveRequest();
+            window.addEventListener(DESKTOP_DIAGRAM_SAVE_REQUEST_EVENT, this.desktopSaveRequestHandler);
         }
     },
     methods: {
@@ -109,47 +100,16 @@ export default {
         threatSuggest(type){
             this.$refs.threatSuggestDialog.showModal(type);
         },
-        saved() {
-            console.debug('Save diagram');
-            // Ensure boundary/flow relationship data is attached to each cell's data
-            try {
-                if (this.graph && typeof this.graph.getCells === 'function') {
-                    this.graph.getCells().forEach(boundary => {
-                        try {
-                            if (boundary && (boundary.shape === 'trust-boundary-box' || boundary.shape === 'trust-boundary-curve')) {
-                                boundary.data = boundary.data || {};
-                                const contained = getElementsInsideBoundary(this.graph.getCells(), boundary);
-                                boundary.data.containedElements = contained.map(el => el.id);
-                                boundary.data.crossingFlows = getFlowsCrossedByBoundary(boundary, this.graph.getCells());
-                            }
-                        } catch (innerErr) {
-                            // continue processing other cells even if one fails
-                            // eslint-disable-next-line no-console
-                            console.warn('Failed computing boundary data for a cell', innerErr);
-                        }
-                    });
-
-                    this.graph.getCells().forEach(flow => {
-                        try {
-                            if (flow && flow.shape === 'flow') {
-                                flow.data = flow.data || {};
-                                flow.data.trustBoundaryIds = getBoundariesCrossedByFlow(flow, this.graph.getCells());
-                            }
-                        } catch (innerErr) {
-                            console.warn('Failed computing flow boundary ids for a cell', innerErr);
-                        }
-                    });
-                }
-            } catch (err) {
-                // If anything goes wrong computing relationships, don't block saving — log and continue
-                // eslint-disable-next-line no-console
-                console.error('Error while attaching boundary/flow data before save', err);
+        handleDesktopSaveRequest() {
+            if (!this.graph) {
+                return;
             }
 
-            const updated = Object.assign({}, this.diagram);
-            updated.cells = (this.graph && typeof this.graph.toJSON === 'function') ? this.graph.toJSON().cells : this.diagram.cells || [];
-            this.$store.dispatch(tmActions.diagramSaved, updated);
-            this.$store.dispatch(tmActions.saveModel);
+            saveDiagram.save(this.$store, this.graph, this.diagram);
+        },
+        saved() {
+            console.debug('Save diagram');
+            saveDiagram.save(this.$store, this.graph, this.diagram);
         },
         async closed() {
             if (!this.$store.getters.modelChanged || await this.getConfirmModal()) {
@@ -169,6 +129,9 @@ export default {
         }
     },
     destroyed() {
+        if (this.desktopSaveRequestHandler) {
+            window.removeEventListener(DESKTOP_DIAGRAM_SAVE_REQUEST_EVENT, this.desktopSaveRequestHandler);
+        }
         diagramService.dispose(this.graph);
     }
 };

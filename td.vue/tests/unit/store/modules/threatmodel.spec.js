@@ -310,6 +310,23 @@ describe('store/modules/threatmodel.js', () => {
                     });
                 });
             });
+
+            describe('desktop provider', () => {
+                beforeEach(async () => {
+                    mocks.rootState.provider.selected = 'desktop';
+                    mocks.state.data = { summary: { title: 'Desktop model' } };
+                    mocks.state.fileName = 'desktop-model.json';
+                    window.electronAPI = {
+                        modelSave: jest.fn()
+                    };
+                    await threatmodelModule.actions[THREATMODEL_SAVE](mocks, 'tm');
+                });
+
+                it('saves through the electron API without an extra diagramSaved commit', () => {
+                    expect(window.electronAPI.modelSave).toHaveBeenCalledWith(mocks.state.data, mocks.state.fileName);
+                    expect(mocks.commit).not.toHaveBeenCalledWith(THREATMODEL_DIAGRAM_SAVED, expect.anything());
+                });
+            });
         });
 
         it('commits the diagram update action', () => {

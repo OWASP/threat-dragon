@@ -106,10 +106,7 @@ helpMenu.links = [
 const waitForToast = async (text) => {
     const browser = getBrowser();
     await browser.waitUntil(
-        async () => {
-            const source = await browser.getPageSource();
-            return source.includes(text);
-        },
+        async () => browser.execute((toastText) => document.body.innerText.includes(toastText), text),
         { timeout: UI_WAIT_TIMEOUT_MS, timeoutMsg: `Timed out waiting for toast: ${text}` }
     );
 };
