@@ -97,7 +97,7 @@ const msa = {
         refBranch: 'Cawangan Rujukan',
         add: 'tambah cawangan',
         cancel: 'Batal',
-        nama: 'nama cawangan',
+        name: 'nama cawangan',
     },
     folder: {
         select: 'Select a',
@@ -430,11 +430,11 @@ const msa = {
             },
             eop: {
                 header: '--- EoP ---',
-                dataValidationAndEncoding: 'Data Validation & Encoding', 
-                authentication: 'Authentication', 
-                sessionManagement: 'Session Management', 
-                authorization: 'Authorization', 
-                cryptography: 'Cryptography', 
+                dataValidationAndEncoding: 'Data Validation & Encoding',
+                authentication: 'Authentication',
+                sessionManagement: 'Session Management',
+                authorization: 'Authorization',
+                cryptography: 'Cryptography',
                 cornucopia: 'Cornucopia',
                 wildCard: 'Wild Card'
             }

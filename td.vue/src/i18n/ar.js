@@ -509,7 +509,7 @@ const ara = {
             openMedium: 'مفتوح / أولوية متوسطة',
             openLow: 'مفتوح / أولوية منخفضة',
             openTbd: 'مفتوح / الأولوية في TBD',
-            openunknown: 'مفتوح / أولوية غير معروفة'
+            openUnknown: 'مفتوح / أولوية غير معروفة'
         }
     },
     upgrade: {
