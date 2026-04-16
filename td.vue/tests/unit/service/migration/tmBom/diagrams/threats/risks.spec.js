@@ -62,6 +62,15 @@ describe('service/migration/tmBom/diagrams/threats/risks.js', () => {
             expect(threats[2].score).toBe(8);
             expect(threats[3].score).toBe(25);
         });
+    });
 
+    describe('handles absence of risk', () => {
+        let emptyRisksModel = JSON.parse(JSON.stringify(tmBomModel));
+        delete emptyRisksModel.risks;
+        let threats = risks.merge(emptyRisksModel, mockTdThreats);
+
+        it('preserves the threats', () => {
+		    expect(threats).toStrictEqual(mockTdThreats);
+        });
     });
 });

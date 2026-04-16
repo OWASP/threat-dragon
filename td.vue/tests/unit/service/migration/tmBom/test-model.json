@@ -98,11 +98,11 @@
 
     "components": [
         {
-            "symbolic_name": "web-service",
-            "title": "Simple Python Web Server",
-            "description": "Serves as simple web server",
+            "symbolic_name": "component0",
+            "title": "Test component title0",
+            "description": "Test component description0",
             "trust_zone": "prod-zone",
-            "repo_link": "https://github.com/wunderwuzzi23/huskyai"
+            "repo_link": "https://example.com/link0"
         },
         {
             "symbolic_name": "api-gateway",
@@ -432,7 +432,7 @@
             "title": "API Gateway to Simple Python Web Server",
             "description": "Transfer data from API Gateway to Simple Python Web Server.",
             "source": {"type": "component","object": "api-gateway"},
-            "destination": {"type": "component","object": "web-service"},
+            "destination": {"type": "component","object": "component0"},
             "has_sensitive_data": false,
             "encrypted": false
         },
@@ -441,7 +441,7 @@
             "title": "Bastion to Simple Python Web Server",
             "description": "Transfer data from Bastion to Simple Python Web Server.",
             "source": {"type": "component","object": "bastion"},
-            "destination": {"type": "component","object": "web-service"},
+            "destination": {"type": "component","object": "component0"},
             "has_sensitive_data": false,
             "encrypted": false
         },
@@ -450,7 +450,7 @@
             "title": "Stored Machine Learning Model to Simple Python Web Server",
             "description": "Transfer sensitive data from Stored Machine Learning Model to Simple Python Web Server.",
             "source": {"type": "data_store", "object": "ml-models-blob"},
-            "destination": {"type": "component","object": "web-service"},
+            "destination": {"type": "component","object": "component0"},
             "has_sensitive_data": true,
             "encrypted": false
         },
@@ -504,15 +504,23 @@
             "title": "Third Party Tools to Simple Python Web Server",
             "description": "Transfer data from Third Party tools and ML libraries to Simple Python Web Server.",
             "source": {"type": "actor", "object": "third-party-tools"},
-            "destination": {"type": "component", "object": "web-service"},
+            "destination": {"type": "component", "object": "component0"},
             "has_sensitive_data": false,
             "encrypted": true
         }
     ],
     "assumptions": [
         {
-            "description": "All services within the trust boundary validate tokens via Auth Service",
+            "description": "Test assumption0",
             "validity": "confirmed"
+        },
+        {
+            "description": "Test assumption1",
+            "topics": ["component0"]
+        },
+        {
+            "description": "Test assumption2",
+            "validity": "rejected"
         }
     ],
     "threat_personas": [

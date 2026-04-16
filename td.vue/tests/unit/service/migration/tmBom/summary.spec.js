@@ -1,14 +1,20 @@
+import assumptions from '@/service/migration/tmBom/diagrams/assumptions';
 import summary from '@/service/migration/tmBom/summary';
+
 import tmBomModel from './test-model';
 import tdModel from './v2-threat-model';
+
+jest.mock('@/service/migration/tmBom/diagrams/assumptions');
 
 describe('service/migration/tmBom/summary.js', () => {
 
     describe('reads TM-BOM', () => {
         let testSummary;
+        const testAssumptions = [{validity: 'valid0', description: ''}, {validity: '', description: 'description1'}];
 
 	    describe('creates summary from TM-BOM', () => {
 	        beforeEach(() => {
+                assumptions.summary.mockReturnValue(testAssumptions);
 	            testSummary = summary.read(tmBomModel);
 	        });
 	
@@ -21,9 +27,9 @@ describe('service/migration/tmBom/summary.js', () => {
 	        });
 	
 	        it('adds assumptions', () => {
-	            expect(testSummary.description).toContain(tmBomModel.assumptions[0].validity);
+	            expect(testSummary.description).toContain('valid0');
 	            expect(testSummary.description).toContain('#1');
-	            expect(testSummary.description).toContain(tmBomModel.assumptions[0].description);
+	            expect(testSummary.description).toContain('description1');
 	        });
 	
 	        it('stores the compatibility values', () => {
@@ -34,7 +40,7 @@ describe('service/migration/tmBom/summary.js', () => {
 	        });
         });
 
-	    describe('handles missing TM-BOM objects', () => {
+	    describe('handles empty TM-BOM objects', () => {
 	        it('provides empty scope', () => {
                 let noScopeModel = JSON.parse(JSON.stringify(tmBomModel));
                 delete noScopeModel.scope;
@@ -43,9 +49,8 @@ describe('service/migration/tmBom/summary.js', () => {
 	        });
 
 	        it('skips empty assumptions', () => {
-                let noAssumptionsModel = JSON.parse(JSON.stringify(tmBomModel));
-                delete noAssumptionsModel.assumptions;
-                testSummary = summary.read(noAssumptionsModel);
+                assumptions.summary.mockReturnValue([]);
+                testSummary = summary.read(tmBomModel);
 	            expect(testSummary.description).not.toContain('#1');
 	        });
 	    });

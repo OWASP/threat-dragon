@@ -1,11 +1,12 @@
 import diagrams from './diagrams/diagrams';
 
 const read = (model, version) => {
+    let allDiagrams = diagrams.read(model, version);
     
     return {
         contributors: [{ 'name': 'Imported from TM-BOM' }],
-        diagrams: diagrams.read(model, version),
-        diagramTop: model.diagrams ? model.diagrams.length : 0,
+        diagrams: allDiagrams,
+        diagramTop: allDiagrams.length,
         reviewer: '',
         threatTop: model.threats && model.threats.length ? model.threats.length - 1 : 0
     };

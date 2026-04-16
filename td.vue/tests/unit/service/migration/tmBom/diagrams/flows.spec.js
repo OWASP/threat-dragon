@@ -42,7 +42,7 @@ describe('service/migration/tmBom/diagrams/flows.js', () => {
         it('sets the target cell', () => {
             expect(dataFlows[0].target.cell).toBe('gather-images');
             expect(dataFlows[10].target.cell).toBe('deployment-service');
-            expect(dataFlows[22].target.cell).toBe('web-service');
+            expect(dataFlows[22].target.cell).toBe('component0');
         });
 
         it('copies the description', () => {
