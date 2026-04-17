@@ -20,7 +20,6 @@ describe('Desktop electron shell tests', function () {
             'modelOpened',
             'modelPrint',
             'modelSave',
-            'onApplyDiagramRequest',
             'onCloseAppRequest',
             'onCloseModelRequest',
             'onNewModelRequest',

@@ -1,0 +1,194 @@
+{
+  "version": "2.0.0",
+  "summary": {
+    "title": "Desktop Save Regression Fixture",
+    "owner": "OWASP Threat Dragon",
+    "description": "Fixture used by desktop save regression tests.",
+    "id": 0
+  },
+  "detail": {
+    "contributors": [],
+    "diagrams": [
+      {
+        "name": "",
+        "title": "Desktop Save Regression Diagram",
+        "description": "STRIDE diagram",
+        "diagramType": "STRIDE",
+        "thumbnail": "./public/content/images/thumbnail.stride.jpg",
+        "version": "2.0.0",
+        "id": 0,
+        "cells": [
+          {
+            "position": {
+              "x": 310,
+              "y": 200
+            },
+            "size": {
+              "width": 110,
+              "height": 110
+            },
+            "attrs": {
+              "text": {
+                "text": "Web Application"
+              },
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 1,
+                "strokeDasharray": null
+              }
+            },
+            "shape": "process",
+            "id": "52cc03a7-95fd-4707-8c16-a68f73af180e",
+            "zIndex": 1,
+            "data": {
+              "type": "tm.Process",
+              "name": "Web Application",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "privilegeLevel": "",
+              "hasOpenThreats": false,
+              "threats": []
+            }
+          },
+          {
+            "position": {
+              "x": 110,
+              "y": 40
+            },
+            "size": {
+              "width": 112.5,
+              "height": 60
+            },
+            "attrs": {
+              "text": {
+                "text": "Browser"
+              },
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 1,
+                "strokeDasharray": null
+              }
+            },
+            "shape": "actor",
+            "id": "a64b89f3-52b7-4a3f-b0d1-4a42165ec364",
+            "zIndex": 2,
+            "data": {
+              "type": "tm.Actor",
+              "name": "Browser",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "providesAuthentication": false,
+              "hasOpenThreats": true,
+              "threats": [
+                {
+                  "id": "f95ea54c-6b6c-4140-bafc-fdf667468ded",
+                  "title": "Existing actor threat",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Spoofing",
+                  "description": "Existing threat retained across saves",
+                  "mitigation": "Documented mitigation",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 1,
+                  "score": ""
+                }
+              ]
+            }
+          },
+          {
+            "shape": "trust-boundary-curve",
+            "attrs": {
+              "line": {
+                "targetMarker": "",
+                "sourceMarker": ""
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "labels": [
+              {
+                "attrs": {
+                  "text": {
+                    "text": ""
+                  }
+                }
+              }
+            ],
+            "data": {
+              "type": "tm.Boundary",
+              "name": "",
+              "description": "",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            },
+            "id": "24eec8e1-ba66-4dc8-b5bd-209eaa566428",
+            "source": {
+              "x": 160,
+              "y": 290
+            },
+            "target": {
+              "x": 490,
+              "y": 110
+            },
+            "vertices": [
+              {
+                "x": 260,
+                "y": 150
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 1,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Data Flow",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "protocol": "",
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "hasOpenThreats": false,
+              "threats": []
+            },
+            "id": "f5217809-bee8-4134-a22b-832b82beadf0",
+            "source": {
+              "cell": "a64b89f3-52b7-4a3f-b0d1-4a42165ec364"
+            },
+            "target": {
+              "cell": "52cc03a7-95fd-4707-8c16-a68f73af180e"
+            },
+            "vertices": [
+              {
+                "x": 166.25,
+                "y": 200
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "diagramTop": 1,
+    "reviewer": "Jane Smith",
+    "threatTop": 1
+  }
+}

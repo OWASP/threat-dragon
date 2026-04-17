@@ -151,7 +151,6 @@ const eng = {
             templateDownloading: 'Downloading template'
         },
         repo: {
-            
             notInitialized: {
                 title: 'Template Repository Not Initialized',
                 userMessage: 'The template repository has not been initialized. Please contact your administrator.',
@@ -172,8 +171,6 @@ const eng = {
                 action: 'Initialize',
                 success: 'Template repository successfully initialized.',
                 error: 'Could not initialize the template repository. Check the developer console for more information.'
-
-
             }
         },
     },
@@ -373,7 +370,6 @@ const eng = {
         next:'Next',
         previous:'Previous',
         manage : 'Manage...',
-
         exportTemplate: 'Export As Template',
     },
     cards: {
@@ -431,6 +427,16 @@ const eng = {
                 informationDisclosure: 'Information disclosure',
                 denialOfService: 'Denial of service',
                 elevationOfPrivilege: 'Elevation of privilege'
+            },
+            eop: {
+                header: '--- EoP ---',
+                dataValidationAndEncoding: 'Data Validation & Encoding', 
+                authentication: 'Authentication', 
+                sessionManagement: 'Session Management', 
+                authorization: 'Authorization', 
+                cryptography: 'Cryptography', 
+                cornucopia: 'Cornucopia',
+                wildCard: 'Wild Card'
             }
         },
         generic: {
