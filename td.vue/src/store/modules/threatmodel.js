@@ -47,6 +47,8 @@ const stashThreatModel = (theState, threatModel) => {
     theState.stash = JSON.stringify(threatModel);
 };
 
+const toDesktopSavePayload = (threatModel) => JSON.parse(JSON.stringify(threatModel));
+
 const actions = {
     [THREATMODEL_CLEAR]: ({ commit }) => commit(THREATMODEL_CLEAR),
     [THREATMODEL_CONTRIBUTORS_UPDATED]: ({ commit }, contributors) => commit(THREATMODEL_CONTRIBUTORS_UPDATED, contributors),
@@ -54,7 +56,7 @@ const actions = {
         console.debug('Create threat model action');
         if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
             // desktop responds later with its own STASH and NOT_MODIFIED
-            window.electronAPI.modelSave(state.data, state.fileName);
+            window.electronAPI.modelSave(toDesktopSavePayload(state.data), state.fileName);
             return true;
         } else {
             let result = false;
@@ -126,7 +128,7 @@ const actions = {
         console.debug('Save threat model action');
         if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
             // desktop responds later with its own STASH and NOT_MODIFIED
-            window.electronAPI.modelSave(state.data, state.fileName);
+            window.electronAPI.modelSave(toDesktopSavePayload(state.data), state.fileName);
         } else {
             let result = false;
             if (getProviderType(rootState.provider.selected) === providerTypes.local) {
@@ -254,8 +256,11 @@ const actions = {
 const mutations = {
     [THREATMODEL_CLEAR]: (state) => clearState(state),
     [THREATMODEL_CONTRIBUTORS_UPDATED]: (state, contributors) => {
+        const normalizedContributors = Array.isArray(contributors)
+            ? contributors
+            : (contributors ? [contributors] : []);
         state.data.detail.contributors.length = 0;
-        contributors.forEach((name, idx) => Vue.set(state.data.detail.contributors, idx, { name }));
+        normalizedContributors.forEach((name, idx) => Vue.set(state.data.detail.contributors, idx, { name }));
     },
     [THREATMODEL_DIAGRAM_CLOSED]: (state) => {
         state.modified = false;

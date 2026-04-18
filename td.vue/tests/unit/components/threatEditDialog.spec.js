@@ -1,8 +1,10 @@
-import { BFormInput, BFormRadioGroup, BFormSelect, BFormTextarea, BModal, BootstrapVue } from 'bootstrap-vue';
+import { BFormInput, BFormTextarea, BModal, BootstrapVue } from 'bootstrap-vue';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
 import dataChanged from '@/service/x6/graph/data-changed.js';
+import TdFormRadioGroup from '@/components/FormRadioGroup.vue';
+import TdFormSelect from '@/components/FormSelect.vue';
 import TdThreatEditDialog from '@/components/ThreatEditDialog.vue';
 
 describe('components/ThreatEditDialog.vue', () => {
@@ -79,7 +81,7 @@ describe('components/ThreatEditDialog.vue', () => {
         });
 
         it('has a threat type input', () => {
-            const input = wrapper.findAllComponents(BFormSelect)
+            const input = wrapper.findAllComponents(TdFormSelect)
                 .filter(x => x.attributes('id') === 'threat-type')
                 .at(0);
 
@@ -87,7 +89,7 @@ describe('components/ThreatEditDialog.vue', () => {
         });
 
         it('has a status input', () => {
-            const input = wrapper.findAllComponents(BFormRadioGroup)
+            const input = wrapper.findAllComponents(TdFormRadioGroup)
                 .filter(x => x.attributes('id') === 'status')
                 .at(0);
 
@@ -103,7 +105,7 @@ describe('components/ThreatEditDialog.vue', () => {
         });
 
         it('has a severity input', () => {
-            const input = wrapper.findAllComponents(BFormRadioGroup)
+            const input = wrapper.findAllComponents(TdFormRadioGroup)
                 .filter(x => x.attributes('id') === 'severity')
                 .at(0);
 
@@ -254,7 +256,7 @@ describe('components/ThreatEditDialog.vue', () => {
             });
 
             it('has an eop game input', () => {
-                const input = wrapper.findAllComponents(BFormSelect)
+                const input = wrapper.findAllComponents(TdFormSelect)
                     .filter(x => x.attributes('id') === 'eop-game-select')
                     .at(0);
 
@@ -263,7 +265,7 @@ describe('components/ThreatEditDialog.vue', () => {
 
 
             it('has a card suit input', () => {
-                const input = wrapper.findAllComponents(BFormSelect)
+                const input = wrapper.findAllComponents(TdFormSelect)
                     .filter(x => x.attributes('id') === 'card-suit')
                     .at(0);
 
@@ -271,7 +273,7 @@ describe('components/ThreatEditDialog.vue', () => {
             });
 
             it('has a card number input', () => {
-                const input = wrapper.findAllComponents(BFormSelect)
+                const input = wrapper.findAllComponents(TdFormSelect)
                     .filter(x => x.attributes('id') === 'card-number')
                     .at(0);
 
@@ -279,7 +281,7 @@ describe('components/ThreatEditDialog.vue', () => {
             });
 
             it('does not show a threat type input', () => {
-                const inputs = wrapper.findAllComponents(BFormSelect)
+                const inputs = wrapper.findAllComponents(TdFormSelect)
                     .filter(x => x.attributes('id') === 'threat-type');
 
                 expect(inputs).toHaveLength(0);
@@ -295,7 +297,7 @@ describe('components/ThreatEditDialog.vue', () => {
             });
 
             it('has a threat type input', () => {
-                const input = wrapper.findAllComponents(BFormSelect)
+                const input = wrapper.findAllComponents(TdFormSelect)
                     .filter(x => x.attributes('id') === 'threat-type')
                     .at(0);
 
@@ -303,14 +305,14 @@ describe('components/ThreatEditDialog.vue', () => {
             });
 
             it('does not show card suit input', () => {
-                const inputs = wrapper.findAllComponents(BFormSelect)
+                const inputs = wrapper.findAllComponents(TdFormSelect)
                     .filter(x => x.attributes('id') === 'card-suit');
 
                 expect(inputs).toHaveLength(0);
             });
 
             it('does not show card number input', () => {
-                const inputs = wrapper.findAllComponents(BFormSelect)
+                const inputs = wrapper.findAllComponents(TdFormSelect)
                     .filter(x => x.attributes('id') === 'card-number');
 
                 expect(inputs).toHaveLength(0);

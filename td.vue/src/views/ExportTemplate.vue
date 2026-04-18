@@ -41,14 +41,14 @@
                                 id="tags-group" 
                                 :label="$t('template.tags')" 
                                 label-for="tags">
-                                <b-form-tags 
+                                <td-form-tags 
                                     id="template-tags" 
                                     :placeholder="$t('template.tags')"
                                     v-model="templateTags"
                                     variant="primary" 
                                     separator=",;"
                                     tag-class="mx-2"
-                                ></b-form-tags>
+                                ></td-form-tags>
                             </b-form-group>
                         </b-col>
                     </b-form-row>
@@ -83,12 +83,14 @@
 import { mapState } from 'vuex';
 import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
+import TdFormTags from '@/components/FormTags.vue';
 import tmActions from '@/store/actions/threatmodel.js';
 
 export default {
     name: 'ExportTemplate',
     components: {
-        TdFormButton
+        TdFormButton,
+        TdFormTags
     },
     data() {
         return {
@@ -127,9 +129,12 @@ export default {
             const routeName = isLocalRoute
                 ? 'localThreatModel'
                 : `${this.providerType}ThreatModel`;
+            const params = Object.assign({}, this.$route.params, {
+                threatmodel: this.model?.summary?.title
+            });
             this.$router.push({
                 name: routeName,
-                params: this.$route.params
+                params
             });
         },
         onCancelClick(evt) {
@@ -138,9 +143,12 @@ export default {
             const routeName = isLocalRoute
                 ? 'localThreatModel'
                 : `${this.providerType}ThreatModel`;
+            const params = Object.assign({}, this.$route.params, {
+                threatmodel: this.model?.summary?.title
+            });
             this.$router.push({
                 name: routeName,
-                params: this.$route.params
+                params
             });
         }
     }

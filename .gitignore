@@ -113,6 +113,7 @@
 
 # Vue front end
 !td.vue
+!td.vue/.npmrc
 !td.vue/**/*.vue
 !td.vue/*config.js
 !td.vue/**/*.scss
@@ -238,6 +239,8 @@
 !td.vue/tests/unit/desktop/helpers/*.js
 !td.vue/tests/unit/entity/
 !td.vue/tests/unit/entity/*.spec.js
+!td.vue/tests/unit/helpers/
+!td.vue/tests/unit/helpers/*.js
 !td.vue/tests/unit/router/
 !td.vue/tests/unit/router/*.spec.js
 !td.vue/tests/unit/service/

@@ -84,20 +84,47 @@
           md="6"
         >
           <b-form-group label-cols="auto" id="outofscope-group">
-            <b-form-checkbox id="outofscope" v-model="cellRef.data.outOfScope" @change="onChangeScope()">{{
-              $t('threatmodel.properties.outOfScope')
-            }}</b-form-checkbox>
+            <div class="form-check">
+              <input
+                id="outofscope"
+                :checked="cellRef.data.outOfScope"
+                class="form-check-input"
+                type="checkbox"
+                @change="cellRef.data.outOfScope = $event.target.checked; onChangeScope()"
+              >
+              <label class="form-check-label" for="outofscope">
+                {{ $t('threatmodel.properties.outOfScope') }}
+              </label>
+            </div>
           </b-form-group>
         </b-col>
 
         <b-col v-if="cellRef.data.type === 'tm.Flow'" md="6">
           <b-form-group label-cols="auto" id="flowoutofscope-group">
-            <b-form-checkbox id="flowoutofscope" v-model="cellRef.data.outOfScope" @change="onChangeScope()">{{
-              $t('threatmodel.properties.outOfScope')
-            }}</b-form-checkbox>
-            <b-form-checkbox id="bidirection" v-model="cellRef.data.isBidirectional" @change="onChangeBidirection()">{{
-              $t('threatmodel.properties.bidirection')
-            }}</b-form-checkbox>
+            <div class="form-check">
+              <input
+                id="flowoutofscope"
+                :checked="cellRef.data.outOfScope"
+                class="form-check-input"
+                type="checkbox"
+                @change="cellRef.data.outOfScope = $event.target.checked; onChangeScope()"
+              >
+              <label class="form-check-label" for="flowoutofscope">
+                {{ $t('threatmodel.properties.outOfScope') }}
+              </label>
+            </div>
+            <div class="form-check">
+              <input
+                id="bidirection"
+                :checked="cellRef.data.isBidirectional"
+                class="form-check-input"
+                type="checkbox"
+                @change="cellRef.data.isBidirectional = $event.target.checked; onChangeBidirection()"
+              >
+              <label class="form-check-label" for="bidirection">
+                {{ $t('threatmodel.properties.bidirection') }}
+              </label>
+            </div>
           </b-form-group>
         </b-col>
 
@@ -135,76 +162,139 @@
 
         <b-col v-if="cellRef.data.type === 'tm.Process'">
           <b-form-group label-cols="auto" id="process-handles-group">
-            <b-form-checkbox
-              id="handlesCardPayment"
-              v-model="cellRef.data.handlesCardPayment"
-              @change="onChangeProperties()"
-              >{{ $t('threatmodel.properties.handlesCardPayment') }}</b-form-checkbox
-            >
-            <b-form-checkbox
-              id="handlesGoodsOrServices"
-              v-model="cellRef.data.handlesGoodsOrServices"
-              @change="onChangeProperties()"
-              >{{ $t('threatmodel.properties.handlesGoodsOrServices') }}</b-form-checkbox
-            >
+            <div class="form-check">
+              <input
+                id="handlesCardPayment"
+                :checked="cellRef.data.handlesCardPayment"
+                class="form-check-input"
+                type="checkbox"
+                @change="cellRef.data.handlesCardPayment = $event.target.checked; onChangeProperties()"
+              >
+              <label class="form-check-label" for="handlesCardPayment">
+                {{ $t('threatmodel.properties.handlesCardPayment') }}
+              </label>
+            </div>
+            <div class="form-check">
+              <input
+                id="handlesGoodsOrServices"
+                :checked="cellRef.data.handlesGoodsOrServices"
+                class="form-check-input"
+                type="checkbox"
+                @change="cellRef.data.handlesGoodsOrServices = $event.target.checked; onChangeProperties()"
+              >
+              <label class="form-check-label" for="handlesGoodsOrServices">
+                {{ $t('threatmodel.properties.handlesGoodsOrServices') }}
+              </label>
+            </div>
           </b-form-group>
         </b-col>
 
         <b-col v-if="cellRef.data.type === 'tm.Process'">
           <b-form-group label-cols="auto" id="web-app-group">
-            <b-form-checkbox
-              id="isWebApplication"
-              v-model="cellRef.data.isWebApplication"
-              @change="onChangeProperties()"
-              >{{ $t('threatmodel.properties.isWebApplication') }}</b-form-checkbox
-            >
+            <div class="form-check">
+              <input
+                id="isWebApplication"
+                :checked="cellRef.data.isWebApplication"
+                class="form-check-input"
+                type="checkbox"
+                @change="cellRef.data.isWebApplication = $event.target.checked; onChangeProperties()"
+              >
+              <label class="form-check-label" for="isWebApplication">
+                {{ $t('threatmodel.properties.isWebApplication') }}
+              </label>
+            </div>
           </b-form-group>
         </b-col>
 
         <b-col v-if="cellRef.data.type === 'tm.Store'">
           <b-form-group label-cols="auto" id="isalog-group">
-            <b-form-checkbox id="isalog" v-model="cellRef.data.isALog" @change="onChangeProperties()">{{
-              $t('threatmodel.properties.isALog')
-            }}</b-form-checkbox>
-            <b-form-checkbox
-              id="storesCredentials"
-              v-model="cellRef.data.storesCredentials"
-              @change="onChangeProperties()"
-              >{{ $t('threatmodel.properties.storesCredentials') }}</b-form-checkbox
-            >
+            <div class="form-check">
+              <input
+                id="isalog"
+                :checked="cellRef.data.isALog"
+                class="form-check-input"
+                type="checkbox"
+                @change="cellRef.data.isALog = $event.target.checked; onChangeProperties()"
+              >
+              <label class="form-check-label" for="isalog">
+                {{ $t('threatmodel.properties.isALog') }}
+              </label>
+            </div>
+            <div class="form-check">
+              <input
+                id="storesCredentials"
+                :checked="cellRef.data.storesCredentials"
+                class="form-check-input"
+                type="checkbox"
+                @change="cellRef.data.storesCredentials = $event.target.checked; onChangeProperties()"
+              >
+              <label class="form-check-label" for="storesCredentials">
+                {{ $t('threatmodel.properties.storesCredentials') }}
+              </label>
+            </div>
           </b-form-group>
         </b-col>
 
         <b-col v-if="cellRef.data.type === 'tm.Store'">
           <b-form-group label-cols="auto" id="isEncrypted-group">
-            <b-form-checkbox id="isEncrypted" v-model="cellRef.data.isEncrypted" @change="onChangeProperties()">{{
-              $t('threatmodel.properties.isEncrypted')
-            }}</b-form-checkbox>
-            <b-form-checkbox id="isSigned" v-model="cellRef.data.isSigned" @change="onChangeProperties()">{{
-              $t('threatmodel.properties.isSigned')
-            }}</b-form-checkbox>
+            <div class="form-check">
+              <input
+                id="isEncrypted"
+                :checked="cellRef.data.isEncrypted"
+                class="form-check-input"
+                type="checkbox"
+                @change="cellRef.data.isEncrypted = $event.target.checked; onChangeProperties()"
+              >
+              <label class="form-check-label" for="isEncrypted">
+                {{ $t('threatmodel.properties.isEncrypted') }}
+              </label>
+            </div>
+            <div class="form-check">
+              <input
+                id="isSigned"
+                :checked="cellRef.data.isSigned"
+                class="form-check-input"
+                type="checkbox"
+                @change="cellRef.data.isSigned = $event.target.checked; onChangeProperties()"
+              >
+              <label class="form-check-label" for="isSigned">
+                {{ $t('threatmodel.properties.isSigned') }}
+              </label>
+            </div>
           </b-form-group>
         </b-col>
 
         <b-col v-if="cellRef.data.type === 'tm.Store'">
           <b-form-group label-cols="auto" id="storesInventory-group">
-            <b-form-checkbox
-              id="storesInventory"
-              v-model="cellRef.data.storesInventory"
-              @change="onChangeProperties()"
-              >{{ $t('threatmodel.properties.storesInventory') }}</b-form-checkbox
-            >
+            <div class="form-check">
+              <input
+                id="storesInventory"
+                :checked="cellRef.data.storesInventory"
+                class="form-check-input"
+                type="checkbox"
+                @change="cellRef.data.storesInventory = $event.target.checked; onChangeProperties()"
+              >
+              <label class="form-check-label" for="storesInventory">
+                {{ $t('threatmodel.properties.storesInventory') }}
+              </label>
+            </div>
           </b-form-group>
         </b-col>
 
         <b-col v-if="cellRef.data.type === 'tm.Actor'">
           <b-form-group label-cols="auto" id="providesAuthentication-group">
-            <b-form-checkbox
-              id="providesAuthentication"
-              v-model="cellRef.data.providesAuthentication"
-              @change="onChangeProperties()"
-              >{{ $t('threatmodel.properties.providesAuthentication') }}</b-form-checkbox
-            >
+            <div class="form-check">
+              <input
+                id="providesAuthentication"
+                :checked="cellRef.data.providesAuthentication"
+                class="form-check-input"
+                type="checkbox"
+                @change="cellRef.data.providesAuthentication = $event.target.checked; onChangeProperties()"
+              >
+              <label class="form-check-label" for="providesAuthentication">
+                {{ $t('threatmodel.properties.providesAuthentication') }}
+              </label>
+            </div>
           </b-form-group>
         </b-col>
 
@@ -226,20 +316,35 @@
 
         <b-col v-if="cellRef.data.type === 'tm.Flow'">
           <b-form-group label-cols="auto" id="isEncrypted-group">
-            <b-form-checkbox id="isEncrypted" v-model="cellRef.data.isEncrypted" @change="onChangeProperties()">{{
-              $t('threatmodel.properties.isEncrypted')
-            }}</b-form-checkbox>
+            <div class="form-check">
+              <input
+                id="isEncrypted"
+                :checked="cellRef.data.isEncrypted"
+                class="form-check-input"
+                type="checkbox"
+                @change="cellRef.data.isEncrypted = $event.target.checked; onChangeProperties()"
+              >
+              <label class="form-check-label" for="isEncrypted">
+                {{ $t('threatmodel.properties.isEncrypted') }}
+              </label>
+            </div>
           </b-form-group>
         </b-col>
 
         <b-col v-if="cellRef.data.type === 'tm.Flow'">
           <b-form-group label-cols="auto" id="isPublicNetwork-group">
-            <b-form-checkbox
-              id="isPublicNetwork"
-              v-model="cellRef.data.isPublicNetwork"
-              @change="onChangeProperties()"
-              >{{ $t('threatmodel.properties.publicNetwork') }}</b-form-checkbox
-            >
+            <div class="form-check">
+              <input
+                id="isPublicNetwork"
+                :checked="cellRef.data.isPublicNetwork"
+                class="form-check-input"
+                type="checkbox"
+                @change="cellRef.data.isPublicNetwork = $event.target.checked; onChangeProperties()"
+              >
+              <label class="form-check-label" for="isPublicNetwork">
+                {{ $t('threatmodel.properties.publicNetwork') }}
+              </label>
+            </div>
           </b-form-group>
         </b-col>
       </b-form-row>
