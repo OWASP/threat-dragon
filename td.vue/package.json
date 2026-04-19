@@ -126,7 +126,7 @@
     "browserstack-cypress-cli": "1.34.0",
     "chromedriver": "^134.0.0",
     "cypress": "^13.7.3",
-    "electron": "^26.3.0",
+    "electron": "^41.2.1",
     "electron-builder": "^24.13.3",
     "electron-builder-notarize": "^1.5.2",
     "electron-chromedriver": "^26.6.10",
