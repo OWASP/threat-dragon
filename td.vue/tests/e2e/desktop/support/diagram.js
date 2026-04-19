@@ -1,9 +1,10 @@
 const fs = require('fs');
 const { getBrowser } = require('./session');
-const { openModel, saveModel, saveModelAs, closeModel } = require('./menu');
+const { openModel, saveModel, saveModelAs, closeModel, waitForToast } = require('./menu');
 const { waitFor } = require('./utils');
 
 const UI_WAIT_TIMEOUT_MS = 10000;
+const THREAT_MODEL_SAVED_TOAST = 'Threat model successfully saved';
 
 const diagramView = {
     selectors: {
@@ -96,6 +97,7 @@ const saveDiagramWithCtrlS = async () => {
     await graphCanvas.waitForDisplayed({ timeout: UI_WAIT_TIMEOUT_MS });
     await graphCanvas.click();
     await browser.keys(['Control', 's']);
+    await waitForToast(THREAT_MODEL_SAVED_TOAST);
 };
 
 const closeDiagram = async () => {
