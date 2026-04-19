@@ -24,6 +24,7 @@ const THREAT_MODEL_EXPORTED_TOAST = 'Threat model exported';
 const appContent = {
     dashboardUrl: 'app://./index.html#/dashboard',
     demoModelTitle: 'Demo Threat Model',
+    discardMessage: 'Are you sure you want to discard your changes?',
     exportMarker: 'Threat Dragon export',
     newModelEditRoute: /#\/desktop\/New%20Threat%20Model\/edit/,
     nonEmptyFileSizeBytes: 0,
@@ -270,6 +271,19 @@ const closeModel = async () => {
     await waitForDashboard();
 };
 
+const closeDirtyModel = async () => {
+    const browser = getBrowser();
+    await clickFileMenuItem(fileMenu.labels.closeModel);
+    await browser.waitUntil(
+        async () => browser.execute((message) => document.body.innerText.includes(message), appContent.discardMessage),
+        { timeout: UI_WAIT_TIMEOUT_MS, timeoutMsg: 'Timed out waiting for discard confirmation' }
+    );
+    const okButton = await browser.$('//button[normalize-space()="OK"]');
+    await okButton.waitForClickable({ timeout: UI_WAIT_TIMEOUT_MS });
+    await okButton.click();
+    await waitForDashboard();
+};
+
 const openHelpMenuLink = async (label) => {
     await clickHelpMenuItem(label);
 };
@@ -292,6 +306,7 @@ module.exports = {
     openModel,
     createNewModel,
     waitForModelEditor,
+    waitForToast,
     setThreatModelTitle,
     waitForThreatModelTitle,
     saveModel,
@@ -299,6 +314,7 @@ module.exports = {
     exportModelAsHtml,
     exportModelAsPdf,
     closeModel,
+    closeDirtyModel,
     openHelpMenuLink,
     openAboutDialog
 };

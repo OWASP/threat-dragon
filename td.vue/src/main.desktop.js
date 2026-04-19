@@ -211,5 +211,4 @@ app.use(BootstrapVue);
 app.use(Toast, toastOptions);
 installToastGlobalProperties(app, toastOptions);
 app.component('font-awesome-icon', FontAwesomeIcon);
-app.mount('#app');
-appProxy = app.config.globalProperties;
+appProxy = app.mount('#app');
