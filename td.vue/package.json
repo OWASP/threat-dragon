@@ -90,7 +90,7 @@
     "passive-events-support": "^1.1.0",
     "uuid": "11.1.0",
     "vue": "^3.4.21",
-    "vue-i18n": "^9.14.1",
+    "vue-i18n": "^10.0.8",
     "vue-router": "^4.4.5",
     "vue-toastification": "^2.0.0-rc.5",
     "vuex": "^4.1.0"
