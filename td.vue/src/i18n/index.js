@@ -45,7 +45,7 @@ const installLegacyCompat = (instance) => {
 const get = () => {
     if (i18nInstance === null) {
         i18nInstance = createI18n({
-            // Preserves Options API and get().global.tc() compatibility with vue-i18n v8
+            // Preserves Options API compatibility while migrating off deprecated tc/$tc.
             // Legacy mode is deprecated and will be removed in vue-i18n v12.
             // TODO: remove after refactoring i18n usage
             legacy: true,
@@ -62,7 +62,8 @@ const get = () => {
     return i18nInstance;
 };
 
-export const tc = (key) => get().global.tc(key);
+export const t = (...args) => get().global.t(...args);
+export const tc = (key, ...args) => t(key, ...args);
 
 export default {
     get
