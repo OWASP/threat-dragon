@@ -12,11 +12,11 @@
                 rel="noopener noreferrer"
             >{{ `${repoName}/${branch}` }}</a>
             {{ $t('threatmodelSelect.from') }}
-            <a href="javascript:void(0)" id="return-to-branch" @click="selectBranchClick">{{ $t('threatmodelSelect.branch') }}</a>
+            <a href="#" id="return-to-branch" @click.prevent="selectBranchClick">{{ $t('threatmodelSelect.branch') }}</a>
             {{ $t('threatmodelSelect.or') }}
-            <a href="javascript:void(0)" id="return-to-repo" @click="selectRepoClick">{{ $t('threatmodelSelect.repo') }}</a>
+            <a href="#" id="return-to-repo" @click.prevent="selectRepoClick">{{ $t('threatmodelSelect.repo') }}</a>
             {{ $t('threatmodelSelect.or') }}
-            <a href="javascript:void(0)" id="new-threat-model" @click="newThreatModel">{{ $t('threatmodelSelect.newThreatModel') }}</a>
+            <a href="#" id="new-threat-model" @click.prevent="newThreatModel">{{ $t('threatmodelSelect.newThreatModel') }}</a>
     </td-selection-page>
 </template>
 

@@ -128,7 +128,7 @@ export default {
             });
         }
     },
-    destroyed() {
+    unmounted() {
         if (this.desktopSaveRequestHandler) {
             window.removeEventListener(DESKTOP_DIAGRAM_SAVE_REQUEST_EVENT, this.desktopSaveRequestHandler);
         }

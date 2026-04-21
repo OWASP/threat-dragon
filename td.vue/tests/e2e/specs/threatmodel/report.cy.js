@@ -13,13 +13,13 @@ describe('report', () => {
                 .contains('Web Application Config (Store)')
                 .should('be.visible');
     
-            cy.get('#show_outofscope').click({ force: true });
+            cy.get('#show_outofscope').uncheck({ force: true });
     
             cy.get('.entity-title')
                 .contains('Web Application Config (Store)')
                 .should('not.be','visible');
     
-            cy.get('#show_outofscope').click({ force: true });
+            cy.get('#show_outofscope').check({ force: true });
         });
     
         it('shows/hides mitigated threats', () => {
@@ -27,38 +27,38 @@ describe('report', () => {
                 .contains('Unauthorised access')
                 .should('be.visible');
     
-            cy.get('#show_mitigated').click({ force: true });
+            cy.get('#show_mitigated').uncheck({ force: true });
     
             cy.get('[data-test-id="Database"]')
                 .contains('Unauthorised access')
                 .should('not.be','visible');
     
-            cy.get('#show_mitigated').click({ force: true });
+            cy.get('#show_mitigated').check({ force: true });
         });
     
         it('shows/hides model diagrams', () => {
             cy.get('.td-readonly-diagram')
                 .should('be.visible');
     
-            cy.get('#show_models').click({ force: true });
+            cy.get('#show_models').uncheck({ force: true });
     
             cy.get('.td-readonly-diagram')
                 .should('not.be','visible');
     
-            cy.get('#show_models').click({ force: true });
+            cy.get('#show_models').check({ force: true });
         });
     
         it('shows/hides TD branding', () => {
             cy.get('.td-brand-text')
                 .should('not.be','visible');
     
-            cy.get('#show_branding').click({ force: true });
+            cy.get('#show_branding').check({ force: true });
 
             cy.get('.td-brand-text')
                 .contains('OWASP Threat Dragon')
                 .should('be.visible');
     
-            cy.get('#show_branding').click({ force: true });
+            cy.get('#show_branding').uncheck({ force: true });
         });
     });
 

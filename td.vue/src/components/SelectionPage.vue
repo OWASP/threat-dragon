@@ -32,23 +32,23 @@
                 <b-list-group>
                     <b-list-group-item
                         v-if="showBackItem"
-                        href="javascript:void(0)"
-                        @click="onBackClick">
+                        href="#"
+                        @click.prevent="onBackClick">
                         ...
                     </b-list-group-item>
 
                     <b-list-group-item
                         v-if="items.length === 0 && !!emptyStateText"
-                        @click="onEmptyStateClick"
-                        href="javascript:void(0)">
+                        @click.prevent="onEmptyStateClick"
+                        href="#">
                         {{ emptyStateText }}
                     </b-list-group-item>
 
                     <b-list-group-item
                         v-for="(item, idx) in displayedItems"
                         :key="idx"
-                        href="javascript:void(0)"
-                        @click="onItemClick(item)">
+                        href="#"
+                        @click.prevent="onItemClick(item)">
                         <span v-if="typeof item === 'string'">{{ item }}</span>
                         <span v-else class="d-flex justify-content-between align-items-center">
                             {{ item.value }}

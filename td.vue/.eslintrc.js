@@ -3,7 +3,7 @@ module.exports = {
         'node': true
     },
     'extends': [
-        'plugin:vue/essential',
+        'plugin:vue/vue3-essential',
         'eslint:recommended'
     ],
     globals: {

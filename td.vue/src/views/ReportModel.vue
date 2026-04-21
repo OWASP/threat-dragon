@@ -8,10 +8,18 @@
                             <b-form-group
                                 label-cols="auto"
                                 id="model-group">
-                                <b-form-checkbox
-                                    id="show_models"
-                                    v-model="display.diagrams"
-                                >{{ $t('report.options.showModelDiagrams') }}</b-form-checkbox>
+                                <div class="form-check">
+                                    <input
+                                        id="show_models"
+                                        :checked="display.diagrams"
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        @change="display.diagrams = $event.target.checked"
+                                    >
+                                    <label class="form-check-label" for="show_models">
+                                        {{ $t('report.options.showModelDiagrams') }}
+                                    </label>
+                                </div>
                             </b-form-group>
                         </b-col>
 
@@ -19,10 +27,18 @@
                             <b-form-group
                                 label-cols="auto"
                                 id="mitigated-group">
-                                <b-form-checkbox
-                                    id="show_mitigated"
-                                    v-model="display.mitigated"
-                                >{{ $t('report.options.showMitigatedThreats') }}</b-form-checkbox>
+                                <div class="form-check">
+                                    <input
+                                        id="show_mitigated"
+                                        :checked="display.mitigated"
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        @change="display.mitigated = $event.target.checked"
+                                    >
+                                    <label class="form-check-label" for="show_mitigated">
+                                        {{ $t('report.options.showMitigatedThreats') }}
+                                    </label>
+                                </div>
                             </b-form-group>
                         </b-col>
 
@@ -30,10 +46,18 @@
                             <b-form-group
                                 label-cols="auto"
                                 id="outofscope-group">
-                                <b-form-checkbox
-                                    id="show_outofscope"
-                                    v-model="display.outOfScope"
-                                >{{ $t('report.options.showOutOfScope') }}</b-form-checkbox>
+                                <div class="form-check">
+                                    <input
+                                        id="show_outofscope"
+                                        :checked="display.outOfScope"
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        @change="display.outOfScope = $event.target.checked"
+                                    >
+                                    <label class="form-check-label" for="show_outofscope">
+                                        {{ $t('report.options.showOutOfScope') }}
+                                    </label>
+                                </div>
                             </b-form-group>
                         </b-col>
 
@@ -41,10 +65,18 @@
                             <b-form-group
                                 label-cols="auto"
                                 id="empty-group">
-                                <b-form-checkbox
-                                    id="show_empty"
-                                    v-model="display.empty"
-                                >{{ $t('report.options.showEmpty') }}</b-form-checkbox>
+                                <div class="form-check">
+                                    <input
+                                        id="show_empty"
+                                        :checked="display.empty"
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        @change="display.empty = $event.target.checked"
+                                    >
+                                    <label class="form-check-label" for="show_empty">
+                                        {{ $t('report.options.showEmpty') }}
+                                    </label>
+                                </div>
                             </b-form-group>
                         </b-col>
 
@@ -52,10 +84,18 @@
                             <b-form-group
                                 label-cols="auto"
                                 id="branding-group">
-                                <b-form-checkbox
-                                    id="show_branding"
-                                    v-model="display.branding"
-                                >{{ $t('report.options.showBranding') }}</b-form-checkbox>
+                                <div class="form-check">
+                                    <input
+                                        id="show_branding"
+                                        :checked="display.branding"
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        @change="display.branding = $event.target.checked"
+                                    >
+                                    <label class="form-check-label" for="show_branding">
+                                        {{ $t('report.options.showBranding') }}
+                                    </label>
+                                </div>
                             </b-form-group>
                         </b-col>
 
@@ -63,10 +103,18 @@
                             <b-form-group
                                 label-cols="auto"
                                 id="properties-group">
-                                <b-form-checkbox
-                                    id="show_attributes"
-                                    v-model="display.properties"
-                                >{{ $t('report.options.showProperties') }}</b-form-checkbox>
+                                <div class="form-check">
+                                    <input
+                                        id="show_attributes"
+                                        :checked="display.properties"
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        @change="display.properties = $event.target.checked"
+                                    >
+                                    <label class="form-check-label" for="show_attributes">
+                                        {{ $t('report.options.showProperties') }}
+                                    </label>
+                                </div>
                             </b-form-group>
                         </b-col>
                     </b-form-row>

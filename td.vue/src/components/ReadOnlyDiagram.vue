@@ -55,7 +55,7 @@ export default {
     created() {
         window.addEventListener('resize', debounce(this.resize, debounceTimeoutMs));
     },
-    destroyed() {
+    unmounted() {
         window.removeEventListener('resize', this.resize);
         diagramService.dispose(this.graph);
     }

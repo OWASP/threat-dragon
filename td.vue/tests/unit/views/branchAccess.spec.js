@@ -118,6 +118,12 @@ describe('views/BranchAccess.vue', () => {
         it('displays the translated text', () => {
             expect(wrapper.findComponent(TdSelectionPage).text()).toContain('branch.chooseRepo');
         });
+
+        it('updates the search query from the selection page filter event', async () => {
+            wrapper.findComponent(TdSelectionPage).vm.$emit('update:filter', 'feature');
+            await wrapper.vm.$nextTick();
+            expect(wrapper.vm.searchQuery).toEqual('feature');
+        });
     });
 
     describe('selectRepoClick', () => {

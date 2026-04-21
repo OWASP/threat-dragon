@@ -26,7 +26,8 @@ COPY        ./td.vue/*.config.js ./td.vue/
 
 RUN         npm clean-install --ignore-scripts
 RUN         cd td.server && npm clean-install
-RUN         cd td.vue && npm clean-install
+# TODO: Remove --legacy-peer-deps when Vue3 migration is complete
+RUN         cd td.vue && npm clean-install --legacy-peer-deps
 RUN         npm run build
 RUN         cd td.server && npm run make-sbom
 RUN         cp td.server/sbom.json        boms/threat-dragon-server-bom.json && \

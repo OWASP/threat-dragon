@@ -7,7 +7,7 @@
             </div>
             <div class="dropdown-items-container">
                 <b-dropdown-item v-for="localeCode in filteredLocales" :key="`locale-${localeCode}`" :value="localeCode"
-                    @click.native="updateLocale(localeCode)">
+                    @click="updateLocale(localeCode)">
                     {{ getLanguageName(localeCode) }}
                 </b-dropdown-item>
             </div>

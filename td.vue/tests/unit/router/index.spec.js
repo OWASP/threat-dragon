@@ -1,10 +1,12 @@
-import VueRouter from 'vue-router';
-
 import router from '@/router/index.js';
 
 describe('router/index.js', () => {
     it('creates a vue router', () => {
-        expect(router.get()).toBeInstanceOf(VueRouter);
+        expect(router.get()).toEqual(expect.objectContaining({
+            push: expect.any(Function),
+            replace: expect.any(Function),
+            getRoutes: expect.any(Function)
+        }));
     });
 
     describe('Home page', () => {
@@ -16,7 +18,7 @@ describe('router/index.js', () => {
         });
 
         it('is the default path', () => {
-            expect(homeRoute.path).toEqual('');
+            expect(homeRoute.path).toEqual('/');
         });
 
         it('uses the HomePage view', () => {
