@@ -1,4 +1,4 @@
-const fin = {
+const messages = {
     auth: {
         sessionExpired: 'Istuntosi on vanhentunut. Ole hyvä ja kirjaudu sisään uudelleen jatkaaksesi.'
     },
@@ -524,4 +524,4 @@ const fin = {
     }
 };
 
-export default fin;
+export default messages;

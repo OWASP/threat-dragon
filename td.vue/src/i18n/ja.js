@@ -1,4 +1,4 @@
-const jpn = {
+const messages = {
     auth: {
         sessionExpired: 'セッションの有効期限が切れました。再ログインしてください。'
     },
@@ -524,4 +524,4 @@ const jpn = {
     }
 };
 
-export default jpn;
+export default messages;

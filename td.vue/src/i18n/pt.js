@@ -1,4 +1,4 @@
-const por = {
+const messages = {
     auth: {
         sessionExpired: 'A sua sessão expirou. Por favor, inicie sessão novamente para continuar.'
     },
@@ -524,4 +524,4 @@ const por = {
     }
 };
 
-export default por;
+export default messages;

@@ -1,4 +1,4 @@
-const spa = {
+const messages = {
     auth: {
         sessionExpired: 'Su sesión ha expirado. Por favor inicie una nueva sesión para continuar.'
     },
@@ -524,4 +524,4 @@ const spa = {
     }
 };
 
-export default spa;
+export default messages;

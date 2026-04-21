@@ -1,4 +1,4 @@
-const ind = {
+const messages = {
     auth: {
         sessionExpired: 'Sesi Anda telah berakhir. Silakan masuk kembali untuk melanjutkan.'
     },
@@ -524,4 +524,4 @@ const ind = {
     }
 };
 
-export default ind;
+export default messages;
