@@ -76,7 +76,7 @@
                                 id="contributors-group"
                                 :label="$t('threatmodel.contributors')"
                                 label-for="contributors">
-                                <b-form-tags
+                                <td-form-tags
                                     id="contributors"
                                     :placeholder="$t('threatmodel.contributorsPlaceholder')"
                                     v-model="contributors"
@@ -84,7 +84,7 @@
                                     variant="primary"
                                     separator=",;"
                                     tag-class="mx-2"
-                                ></b-form-tags>
+                                ></td-form-tags>
                             </b-form-group>
                         </b-col>
                     </b-form-row>
@@ -143,7 +143,7 @@
 
                     <b-form-row>
                         <b-col md=6>
-                            <a href="javascript:void(0)" @click="onAddDiagramClick" class="add-diagram-link m-2">
+                            <a href="#" @click.prevent="onAddDiagramClick" class="add-diagram-link m-2">
                                 <font-awesome-icon icon="plus"></font-awesome-icon>
                                 {{ $t('threatmodel.diagram.addNewDiagram') }}
                             </a>
@@ -199,12 +199,14 @@ import { mapState } from 'vuex';
 
 import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
+import TdFormTags from '@/components/FormTags.vue';
 import tmActions from '@/store/actions/threatmodel.js';
 
 export default {
     name: 'ThreatModelEdit',
     components: {
-        TdFormButton
+        TdFormButton,
+        TdFormTags
     },
     computed: {
         ...mapState({
@@ -268,8 +270,7 @@ export default {
                 this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
             }
         },
-        onAddDiagramClick(evt) {
-            evt.preventDefault();
+        onAddDiagramClick() {
             let newDiagram = {
                 id: this.diagramTop,
                 title: this.$t('threatmodel.diagram.stride.defaultTitle'),

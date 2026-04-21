@@ -1,10 +1,11 @@
-const ara = {
+const messages = {
     auth: {
         sessionExpired: 'انتهت صلاحية جلستك. يرجى تسجيل الدخول مرة أخرى للمتابعة.'
     },
     nav: {
         loggedInAs: 'تم تسجيل الدخول كـ ',
-        logOut: 'Log out'
+        logOut: 'Log out',
+        contentManagement: 'Content Management'
     },
     home: {
         title: 'OWASP Threat Dragon',
@@ -46,7 +47,8 @@ const ara = {
             openExisting: 'فتح نموذج تهديد موجود',
             createNew: 'إنشاء نموذج تهديد جديد فارغ',
             readDemo: 'استكشاف نموذج تهديد تجريبي',
-            importExisting: 'استيراد نموذج التهديد بصيغة  JSON'
+            importExisting: 'استيراد نموذج التهديد بصيغة  JSON',
+            createFromTemplate: 'Create model from a Template'
         }
     },
     demo: {
@@ -110,6 +112,68 @@ const ara = {
         repo: 'مستودع',
         newThreatModel: 'إنشاء نموذج تهديد جديد'
     },
+    template:{
+        startFromLocalTemplate: 'Start from a Local Template',
+        select: 'Select a Template from the list below',
+        selectDescription: 'Templates provide a starting point for new threat models, pre-populated with relevant components and threats.',
+        noTemplates: 'No templates found',
+        templatesLocalSession: 'Remote templates are not available for local sessions.',
+        search: 'Search templates...',
+        exportTemplate: 'Export as Template',
+        tags: 'Tags',
+        name: 'Template Name',
+        description: 'Template Description',
+        saveTemplate: 'Save Template',
+        addNew: 'Add New Template',
+        manage: 'Manage Templates',
+        manageDescription: 'Import, export, and manage your threat model templates here.',
+        editTemplate: 'Edit Template',
+        addTagsPlaceholder: 'Add tags...',
+        updateSuccess: 'Template updated successfully',
+        importSuccess: 'Template imported successfully',
+        deleteSuccess: 'Template deleted successfully',
+        deleteTitle: 'Confirm Delete',
+        deleteConfirm: 'Are you sure you want to delete "{name}"?',
+        errors: {
+            invalidJson: 'Invalid JSON. Please check your template file and try again',
+            invalidTemplate: 'Invalid template format. Please check your template file and try again',
+            loadFailed: 'Failed to load templates. Please try again',
+            duplicateTemplate: 'A template with this name already exists. Please use a different name',
+            updateFailed: 'Failed to update template',
+            deleteFailed: 'Failed to delete template'
+        },
+        warnings: {
+            templateSave: 'Could not save the template. Check the developer console for more information',
+            invalidSchema: 'Template does not strictly match schema. Details in the developer console'
+        },
+        prompts: {
+            templateSaved: 'Template successfully saved',
+            templateDownloading: 'Downloading template'
+        },
+        repo: {
+            notInitialized: {
+                title: 'Template Repository Not Initialized',
+                userMessage: 'The template repository has not been initialized. Please contact your administrator.',
+                adminMessage: 'Please go to the Manage Templates page to initialize the template repository.'
+            },
+            notConfigured: {
+                title: 'Template Repository Not Configured',
+                userMessage: 'The template repository is not configured. Please set up the repository to access templates.'
+            },
+            notFound: {
+                title: 'Template Repository Not Found',
+                userMessage: 'The repository {repoName} is not a valid repository. Please check your configuration.'
+            },
+            bootstrap:{
+                bootstrapping:'Initializing..',
+                title: 'Initialize Template Repository',
+                description: 'This will create the necessary folder structure within the repository if it does not already exist.',
+                action: 'Initialize',
+                success: 'Template repository successfully initialized.',
+                error: 'Could not initialize the template repository. Check the developer console for more information.'
+            }
+        },
+    },
     threatmodel: {
         contributors: 'المساهمون',
         contributorsPlaceholder: 'ابدأ الكتابة لإضافة مساهم',
@@ -168,6 +232,7 @@ const ara = {
             onlyJsonAllowed: 'الملفات التي يمكن التعامل معها هي التي تنتهي بامتداد .json فقط.',
             open: 'حدث خطأ في فتح نموذج التهديد. تحقق من الـ console الخاص بالمطور (developer console) للحصول على مزيد من المعلومات',
             save: 'حدث خطأ في حفظ نموذج التهديد. تحقق من الـ console الخاص بالمطور (developer console) للحصول على مزيد من المعلومات',
+            createConflict: 'A threat model with this name already exists. Please use a different name.'
         },
         warnings: {
             export: 'Could not export the Threat Model. Check the developer console for more information',
@@ -303,7 +368,9 @@ const ara = {
         saveModelAs: 'حفظ النموذج كـ',
         search: 'بحث',
         next: 'التالي',
-        previous: 'السابق'
+        previous: 'السابق',
+        manage : 'Manage...',
+        exportTemplate: 'Export As Template',
     },
     cards: {
         details: 'تفاصيل البطاقة',
@@ -360,6 +427,16 @@ const ara = {
                 informationDisclosure: 'Information disclosure كشف المعلومات',
                 denialOfService: 'Denial of service إنكار الخدمة',
                 elevationOfPrivilege: 'Elevation of privilege تسلق الامتياز'
+            },
+            eop: {
+                header: '--- EoP ---',
+                dataValidationAndEncoding: 'Data Validation & Encoding',
+                authentication: 'Authentication',
+                sessionManagement: 'Session Management',
+                authorization: 'Authorization',
+                cryptography: 'Cryptography',
+                cornucopia: 'Cornucopia',
+                wildCard: 'Wild Card'
             }
         },
         generic: {
@@ -432,7 +509,7 @@ const ara = {
             openMedium: 'مفتوح / أولوية متوسطة',
             openLow: 'مفتوح / أولوية منخفضة',
             openTbd: 'مفتوح / الأولوية في TBD',
-            openunknown: 'مفتوح / أولوية غير معروفة'
+            openUnknown: 'مفتوح / أولوية غير معروفة'
         }
     },
     upgrade: {
@@ -447,4 +524,4 @@ const ara = {
     }
 };
 
-export default ara;
+export default messages;

@@ -1,10 +1,11 @@
-const hin = {
+const messages = {
     auth: {
         sessionExpired: 'आपका सत्र समाप्त हो गया है। कृपया जारी रखने के लिए फिर से लॉग इन करें।'
     },
     nav: {
         loggedInAs: 'लॉग-इन किया गया है भूमिका में',
-        logOut: 'लॉगआउट'
+        logOut: 'लॉगआउट',
+        contentManagement: 'Content Management'
     },
     home: {
         title: 'OWASP थ्रेट ड्रैगन',
@@ -46,7 +47,8 @@ const hin = {
             openExisting: 'एक मौजूदा थ्रेट मॉडल खोलें',
             createNew: 'एक नया, खाली थ्रेट मॉडल बनाएँ',
             readDemo: 'एक नमूना थ्रेट मॉडल का अन्वेषण करें',
-            importExisting: 'JSON के माध्यम से एक थ्रेट मॉडल आयात करें'
+            importExisting: 'JSON के माध्यम से एक थ्रेट मॉडल आयात करें',
+            createFromTemplate: 'Create model from a Template'
         }
     },
     demo: {
@@ -110,6 +112,68 @@ const hin = {
         repo: 'रेपो',
         newThreatModel: 'एक नया थ्रेट मॉडल बनाएं'
     },
+    template:{
+        startFromLocalTemplate: 'Start from a Local Template',
+        select: 'Select a Template from the list below',
+        selectDescription: 'Templates provide a starting point for new threat models, pre-populated with relevant components and threats.',
+        noTemplates: 'No templates found',
+        templatesLocalSession: 'Remote templates are not available for local sessions.',
+        search: 'Search templates...',
+        exportTemplate: 'Export as Template',
+        tags: 'Tags',
+        name: 'Template Name',
+        description: 'Template Description',
+        saveTemplate: 'Save Template',
+        addNew: 'Add New Template',
+        manage: 'Manage Templates',
+        manageDescription: 'Import, export, and manage your threat model templates here.',
+        editTemplate: 'Edit Template',
+        addTagsPlaceholder: 'Add tags...',
+        updateSuccess: 'Template updated successfully',
+        importSuccess: 'Template imported successfully',
+        deleteSuccess: 'Template deleted successfully',
+        deleteTitle: 'Confirm Delete',
+        deleteConfirm: 'Are you sure you want to delete "{name}"?',
+        errors: {
+            invalidJson: 'Invalid JSON. Please check your template file and try again',
+            invalidTemplate: 'Invalid template format. Please check your template file and try again',
+            loadFailed: 'Failed to load templates. Please try again',
+            duplicateTemplate: 'A template with this name already exists. Please use a different name',
+            updateFailed: 'Failed to update template',
+            deleteFailed: 'Failed to delete template'
+        },
+        warnings: {
+            templateSave: 'Could not save the template. Check the developer console for more information',
+            invalidSchema: 'Template does not strictly match schema. Details in the developer console'
+        },
+        prompts: {
+            templateSaved: 'Template successfully saved',
+            templateDownloading: 'Downloading template'
+        },
+        repo: {
+            notInitialized: {
+                title: 'Template Repository Not Initialized',
+                userMessage: 'The template repository has not been initialized. Please contact your administrator.',
+                adminMessage: 'Please go to the Manage Templates page to initialize the template repository.'
+            },
+            notConfigured: {
+                title: 'Template Repository Not Configured',
+                userMessage: 'The template repository is not configured. Please set up the repository to access templates.'
+            },
+            notFound: {
+                title: 'Template Repository Not Found',
+                userMessage: 'The repository {repoName} is not a valid repository. Please check your configuration.'
+            },
+            bootstrap:{
+                bootstrapping:'Initializing..',
+                title: 'Initialize Template Repository',
+                description: 'This will create the necessary folder structure within the repository if it does not already exist.',
+                action: 'Initialize',
+                success: 'Template repository successfully initialized.',
+                error: 'Could not initialize the template repository. Check the developer console for more information.'
+            }
+        },
+    },
     threatmodel: {
         contributors: 'योगदानकर्ता',
         contributorsPlaceholder: 'योगदानकर्ता जोड़ने के लिए टाइप करना प्रारंभ करें',
@@ -167,7 +231,8 @@ const hin = {
             invalidModel: 'The threat model file does not validate correctly. Please check your model and try again',
             onlyJsonAllowed: 'केवल .json के साथ समाप्त होने वाली फ़ाइलें समर्थित हैं।',
             open: 'इस थ्रेट मॉडल को खोलने में त्रुटि। अधिक जानकारी के लिए डेवलपर कंसोल की जाँच करें',
-            save: 'खतरे के मॉडल को सहेजने में त्रुटि। अधिक जानकारी के लिए डेवलपर कंसोल की जाँच करें'
+            save: 'खतरे के मॉडल को सहेजने में त्रुटि। अधिक जानकारी के लिए डेवलपर कंसोल की जाँच करें',
+            createConflict: 'A threat model with this name already exists. Please use a different name.'
         },
         warnings: {
             export: 'Could not export the Threat Model. Check the developer console for more information',
@@ -176,7 +241,7 @@ const hin = {
             otmUnsupported: 'Import of Open Threat Model file format not yet supported',
             save: 'Could not save the Threat Model. Check the developer console for more information',
             tmUnsupported: 'Import of TM-BOM file format is experimental and subject to change that may break models',
-            v1Translate: 'Imported version 1.x models will be upgraded to the version 2.0 schema'
+            v1Translate: 'Imported version 1.x model has been upgraded to the version 2.x format'
         },
         prompts: {
             created: 'Threat model successfully created',
@@ -303,7 +368,9 @@ const hin = {
         saveModelAs: 'मॉडल को इस रूप में सहेजें',
         search: 'खोज',
         next: 'अगला',
-        previous: 'पहले का'
+        previous: 'पहले का',
+        manage : 'Manage...',
+        exportTemplate: 'Export As Template',
     },
     cards: {
         details: 'कार्ड विवरण',
@@ -360,6 +427,16 @@ const hin = {
                 informationDisclosure: 'सूचना प्रकटीकरण',
                 denialOfService: 'सेवा से इनकार',
                 elevationOfPrivilege: 'विशेषाधिकार का उन्नयन'
+            },
+            eop: {
+                header: '--- EoP ---',
+                dataValidationAndEncoding: 'Data Validation & Encoding', 
+                authentication: 'Authentication', 
+                sessionManagement: 'Session Management', 
+                authorization: 'Authorization', 
+                cryptography: 'Cryptography', 
+                cornucopia: 'Cornucopia',
+                wildCard: 'Wild Card'
             }
         },
         generic: {
@@ -447,4 +524,4 @@ const hin = {
     }
 };
 
-export default hin;
+export default messages;

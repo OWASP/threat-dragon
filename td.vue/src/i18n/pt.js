@@ -1,4 +1,4 @@
-const por = {
+const messages = {
     auth: {
         sessionExpired: 'A sua sessão expirou. Por favor, inicie sessão novamente para continuar.'
     },
@@ -427,6 +427,16 @@ const por = {
                 informationDisclosure: 'Divulgação de informações',
                 denialOfService: 'Negação de serviço',
                 elevationOfPrivilege: 'Elevação de privilégio'
+            },
+            eop: {
+                header: '--- EoP ---',
+                dataValidationAndEncoding: 'Data Validation & Encoding', 
+                authentication: 'Authentication', 
+                sessionManagement: 'Session Management', 
+                authorization: 'Authorization', 
+                cryptography: 'Cryptography', 
+                cornucopia: 'Cornucopia',
+                wildCard: 'Wild Card'
             }
         },
         generic: {
@@ -514,4 +524,4 @@ const por = {
     }
 };
 
-export default por;
+export default messages;

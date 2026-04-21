@@ -1,40 +1,57 @@
 import { BDropdown, BDropdownItem, BootstrapVue } from 'bootstrap-vue';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
-import VueI18n from 'vue-i18n';
+import { createI18n } from 'vue-i18n';
 import Vuex from 'vuex';
 
 import LocaleSelect from '@/components/LocaleSelect.vue';
 import { LOCALE_SELECTED } from '@/store/actions/locale.js';
 
 describe('components/LocaleSelect.vue', () => {
-    let mockStore, wrapper;
+    let i18n, mockStore, wrapper, dispatchSpy;
+    const MESSAGES = {
+        en: { hello: 'Hello World' },
+        de: { hello: 'Hallo Welt' }
+    };
+    const LOCALE_LABELS = {
+        en: 'English',
+        de: 'Deutsch'
+    };
+    const mountComponent = (storeLocale = 'en') => {
+        const localVue = createLocalVue();
+        i18n = createI18n({
+            locale: 'en',
+            messages: MESSAGES
+        });
+
+        localVue.use(Vuex);
+        localVue.use(i18n);
+        localVue.use(BootstrapVue);
+
+        mockStore = new Vuex.Store({
+            state: { locale: { locale: storeLocale }},
+            actions: { [LOCALE_SELECTED]: () => {} },
+            dispatch: jest.fn()
+        });
+
+        wrapper = shallowMount(LocaleSelect, {
+            localVue,
+            i18n,
+            store: mockStore
+        });
+    };
+    const findLocaleItem = (label) => wrapper.findAllComponents(BDropdownItem).filter((c) => c.text() === label).at(0);
+
+    afterEach(() => {
+        jest.clearAllMocks();
+        wrapper = null;
+        mockStore = null;
+        i18n = null;
+    });
+
 
     describe('default locale', () => {
         beforeEach(() => {
-            const localVue = createLocalVue();
-            localVue.use(Vuex);
-            localVue.use(VueI18n);
-            localVue.use(BootstrapVue);
-
-            const i18n = new VueI18n({
-                locale: 'eng',
-                messages: {
-                    eng: { hello: 'Hello World' },
-                    deu: { hello: 'Hallo Welt' }
-                }
-            });
-
-            mockStore = new Vuex.Store({
-                state: { locale: { locale: 'eng' }},
-                actions: { [LOCALE_SELECTED]: () => {} },
-                dispatch: () => {}
-            });
-
-            wrapper = shallowMount(LocaleSelect, {
-                localVue,
-                i18n,
-                store: mockStore
-            });
+            mountComponent();
         });
 
         it('renders the component', () => {
@@ -42,78 +59,47 @@ describe('components/LocaleSelect.vue', () => {
         });
 
         it('displays the current locale', () => {
-            expect(wrapper.findComponent(BDropdown).attributes('text')).toEqual('English');
+            expect(wrapper.findComponent(BDropdown).attributes('text')).toEqual(LOCALE_LABELS.en);
         });
 
-        it('has an option for eng', () => {
-            expect(wrapper.findAllComponents(BDropdownItem)
-                .filter((c) => c.text() === 'English').exists()
-            ).toEqual(true);
+        it.each([
+            ['en', LOCALE_LABELS.en],
+            ['de', LOCALE_LABELS.de]
+        ])('has an option for %s', (_localeCode, localeLabel) => {
+            expect(findLocaleItem(localeLabel).exists()).toEqual(true);
         });
 
-        it('has an option for deu', () => {
-            expect(wrapper.findAllComponents(BDropdownItem)
-                .filter((c) => c.text() === 'Deutsch').exists()
-            ).toEqual(true);
-        });
 
         describe('updates', () => {
             beforeEach(() => {
-                mockStore.dispatch = jest.fn();
+                dispatchSpy = jest.spyOn(mockStore, 'dispatch');
             });
 
-            it('updates the locale to deu', async () => {
-                await wrapper.findAllComponents(BDropdownItem)
-                    .filter(c => c.text() === 'Deutsch')
-                    .at(0)
-                    .trigger('click');
+            it.each([
+                ['de', LOCALE_LABELS.de],
+                ['en', LOCALE_LABELS.en]
+            ])('updates the locale to %s', async (localeCode, localeLabel) => {
+                await findLocaleItem(localeLabel).trigger('click');
 
-                expect(mockStore.dispatch).toHaveBeenCalledWith(LOCALE_SELECTED, 'deu');
+                expect(dispatchSpy).toHaveBeenCalledTimes(1);
+                expect(dispatchSpy).toHaveBeenCalledWith(LOCALE_SELECTED, localeCode);
             });
-
-            it('updates the locale to eng', async () => {
-                await wrapper.findAllComponents(BDropdownItem)
-                    .filter(c => c.text() === 'English')
-                    .at(0)
-                    .trigger('click');
-
-                expect(mockStore.dispatch).toHaveBeenCalledWith(LOCALE_SELECTED, 'eng');
-            });
-
         });
+
     });
 
     describe('different locale', () => {
-        let i18n;
         beforeEach(() => {
-            const localVue = createLocalVue();
-            localVue.use(Vuex);
-            localVue.use(VueI18n);
-            localVue.use(BootstrapVue);
-
-            i18n = new VueI18n({
-                locale: 'eng',
-                messages: {
-                    eng: { hello: 'Hello World' },
-                    deu: { hello: 'Hallo Welt' }
-                }
-            });
-
-            mockStore = new Vuex.Store({
-                state: { locale: { locale: 'test' }},
-                actions: { [LOCALE_SELECTED]: () => {} },
-                dispatch: () => {}
-            });
-
-            wrapper = shallowMount(LocaleSelect, {
-                localVue,
-                i18n,
-                store: mockStore
-            });
+            mountComponent('test');
         });
 
         it('sets the locale based on the state', () => {
             expect(i18n.locale).toEqual('test');
         });
+
+        it('uses the locale code text for unknown locales', () => {
+            expect(wrapper.findComponent(BDropdown).attributes('text')).toEqual('test');
+        });
     });
+
 });

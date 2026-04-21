@@ -1,4 +1,4 @@
-const eng = {
+const messages = {
     auth: {
         sessionExpired: 'Your session has expired. Please log in again to continue.'
     },
@@ -151,7 +151,6 @@ const eng = {
             templateDownloading: 'Downloading template'
         },
         repo: {
-            
             notInitialized: {
                 title: 'Template Repository Not Initialized',
                 userMessage: 'The template repository has not been initialized. Please contact your administrator.',
@@ -172,8 +171,6 @@ const eng = {
                 action: 'Initialize',
                 success: 'Template repository successfully initialized.',
                 error: 'Could not initialize the template repository. Check the developer console for more information.'
-
-
             }
         },
     },
@@ -244,7 +241,7 @@ const eng = {
             otmUnsupported: 'Import of Open Threat Model file format not yet supported',
             save: 'Could not save the Threat Model. Check the developer console for more information',
             tmUnsupported: 'Import of TM-BOM file format is experimental and subject to change that may break models',
-            v1Translate: 'Imported version 1.x models will be upgraded to the version 2.0 schema'
+            v1Translate: 'Imported version 1.x model has been upgraded to the version 2.x format'
         },
         prompts: {
             created: 'Threat model successfully created',
@@ -373,7 +370,6 @@ const eng = {
         next:'Next',
         previous:'Previous',
         manage : 'Manage...',
-
         exportTemplate: 'Export As Template',
     },
     cards: {
@@ -431,6 +427,16 @@ const eng = {
                 informationDisclosure: 'Information disclosure',
                 denialOfService: 'Denial of service',
                 elevationOfPrivilege: 'Elevation of privilege'
+            },
+            eop: {
+                header: '--- EoP ---',
+                dataValidationAndEncoding: 'Data Validation & Encoding', 
+                authentication: 'Authentication', 
+                sessionManagement: 'Session Management', 
+                authorization: 'Authorization', 
+                cryptography: 'Cryptography', 
+                cornucopia: 'Cornucopia',
+                wildCard: 'Wild Card'
             }
         },
         generic: {
@@ -518,4 +524,4 @@ const eng = {
     }
 };
 
-export default eng;
+export default messages;

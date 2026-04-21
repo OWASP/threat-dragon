@@ -1,46 +1,68 @@
-import Vue from 'vue';
-import VueI18n from 'vue-i18n';
+import { createI18n } from 'vue-i18n';
 
 // the language codes follow
 // Internet Engineering Task Force (IETF) Best Current Practice (BCP) 47
-// using codes from ISO 639-2
+// ISO 639-1 language codes
 
-import ara from './ar.js';
-import deu from './de.js';
-import ell from './el.js';
-import eng from './en.js';
-import fin from './fi.js';
-import fra from './fr.js';
-import hin from './hi.js';
-import ind from './id.js';
-import jpn from './ja.js';
-import msa from './ms.js';
-import por from './pt.js';
-import bra from './pt-br.js';
+import ar from './ar.js';
+import de from './de.js';
+import el from './el.js';
+import en from './en.js';
+import es from './es.js';
+import fi from './fi.js';
+import fr from './fr.js';
+import hi from './hi.js';
+import id from './id.js';
+import ja from './ja.js';
+import ms from './ms.js';
+import pt from './pt.js';
+import ptBr from './pt-br.js';
 // hide RUS & UKR for now: import rus from './ru.js';
-import spa from './es.js';
 // hide RUS & UKR for now: import ukr from './uk.js';
-import zho from './zh.js';
+import zh from './zh.js';
 
-Vue.use(VueI18n);
-let i18n = null;
+let i18nInstance = null;
 
-const get = () => {
-    if (i18n === null) {
-        i18n = new VueI18n({
-            locale: 'eng',
-            fallbackLocale: {
-                'por': ['bra'],
-                'bra': ['por'],
-                'default':  'eng'
+const installLegacyCompat = (instance) => {
+    if (typeof instance.t !== 'function') {
+        instance.t = instance.global.t.bind(instance.global);
+    }
+
+    if (!Object.getOwnPropertyDescriptor(instance, 'locale')) {
+        Object.defineProperty(instance, 'locale', {
+            get() {
+                return instance.global.locale;
             },
-            messages: { ara, deu, ell, eng, spa, fin, fra, hin, ind, jpn, msa, por, bra, zho }
+            set(value) {
+                instance.global.locale = value;
+            }
         });
     }
-    return i18n;
+
+    return instance;
 };
 
-export const tc = (key) => get().tc(key);
+const get = () => {
+    if (i18nInstance === null) {
+        i18nInstance = createI18n({
+            // Preserves Options API compatibility while migrating off deprecated tc/$tc.
+            // Legacy mode is deprecated and will be removed in vue-i18n v12.
+            // TODO: remove after refactoring i18n usage
+            legacy: true,
+            locale: 'eng',
+            fallbackLocale: {
+                pt: ['pt-BR'],
+                default:  'en'
+            },
+            messages: { ar, de, el, en, es, fi, fr, hi, id, ja, ms, pt, 'pt-BR': ptBr, zh }
+        });
+        installLegacyCompat(i18nInstance);
+    }
+    return i18nInstance;
+};
+
+export const t = (...args) => get().global.t(...args);
+export const tc = (key, ...args) => t(key, ...args);
 
 export default {
     get

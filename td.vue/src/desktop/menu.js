@@ -13,23 +13,23 @@ const buildVersion = require('../../package.json').version;
 var mainWindow;
 
 // access the i18n message strings
-import ara from '@/i18n/ar.js';
-import deu from '@/i18n/de.js';
-import ell from '@/i18n/el.js';
-import eng from '@/i18n/en.js';
-import fin from '@/i18n/fi.js';
-import fra from '@/i18n/fr.js';
-import hin from '@/i18n/hi.js';
-import ind from '@/i18n/id.js';
-import jpn from '@/i18n/ja.js';
-import msa from '@/i18n/ms.js';
-import por from '@/i18n/pt.js';
-import bra from '@/i18n/pt-br.js';
-import spa from '@/i18n/es.js';
-import zho from '@/i18n/zh.js';
+import ar from '@/i18n/ar.js';
+import de from '@/i18n/de.js';
+import el from '@/i18n/el.js';
+import en from '@/i18n/en.js';
+import es from '@/i18n/es.js';
+import fi from '@/i18n/fi.js';
+import fr from '@/i18n/fr.js';
+import hi from '@/i18n/hi.js';
+import id from '@/i18n/id.js';
+import ja from '@/i18n/ja.js';
+import ms from '@/i18n/ms.js';
+import pt from '@/i18n/pt.js';
+import ptBr from '@/i18n/pt-br.js';
+import zh from '@/i18n/zh.js';
 
-const messages = { ara, deu, ell, eng, fin, fra, hin, ind, jpn, msa, por, bra, spa, zho };
-const defaultLanguage = 'eng';
+const messages = { ar, de, el, en, es, fi, fr, hi, id, ja, ms, pt, 'pt-BR': ptBr, zh };
+const defaultLanguage = 'en';
 var language = defaultLanguage;
 
 export const model = {
@@ -256,8 +256,6 @@ function saveModel () {
         mainWindow.webContents.send('save-model-failed', '', messages[language].threatmodel.warnings.noModelOpen);
         return;
     }
-    mainWindow.webContents.send('apply-diagram-request');
-
     logger.log.debug(messages[language].desktop.file.save + ': ' + 'prompt renderer for model data');
     mainWindow.webContents.send('save-model-request', path.basename(model.filePath));
 }
@@ -269,8 +267,6 @@ function saveModelAs () {
         mainWindow.webContents.send('save-model-failed', '', messages[language].threatmodel.warnings.noModelOpen);
         return;
     }
-    mainWindow.webContents.send('apply-diagram-request');
-    
     logger.log.debug(messages[language].desktop.file.saveAs + ': ' + 'clear location, prompt renderer for model data');
     // clear any existing filename to force a SaveAs
     model.filePath = '';
@@ -471,7 +467,7 @@ export const modelSave = (modelData, fileName) => {
 
 // the renderer has changed the language
 export const setLocale = (locale) => {
-    const languages = [ 'ara', 'deu', 'ell', 'eng', 'fin', 'fra', 'hin', 'ind', 'jpn', 'msa', 'por', 'bra', 'spa', 'zho' ];
+    const languages = [ 'ar', 'de', 'el', 'en', 'es', 'fi', 'fr', 'hi', 'id', 'ja', 'ms', 'pt', 'pt-BR', 'zh' ];
     language = languages.includes(locale) ? locale : defaultLanguage;
 };
 

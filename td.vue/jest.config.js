@@ -7,6 +7,11 @@ module.exports = async () => {
             '.*\\.(js)$': 'babel-jest'
         },
         moduleNameMapper: {
+            // TODO: Remove this alias when fully migrated to Vue 3 and
+            // the compat dependency is removed
+            '^vue$': require.resolve('@vue/compat'),
+            '^@vue/test-utils$': '<rootDir>/src/plugins/vue-test-utils-compat.js',
+            '^vue-i18n$': '<rootDir>/src/plugins/vue-i18n-test-compat.js',
             '^@/(.*)$': '<rootDir>/src/$1',
             '^lodash-es$': 'lodash'
         },
@@ -26,4 +31,3 @@ module.exports = async () => {
         ]
     };
 };
-

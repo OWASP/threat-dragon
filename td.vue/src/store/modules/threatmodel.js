@@ -8,7 +8,6 @@ import {
     THREATMODEL_CLEAR,
     THREATMODEL_CONTRIBUTORS_UPDATED,
     THREATMODEL_CREATE,
-    THREATMODEL_DIAGRAM_APPLIED,
     THREATMODEL_DIAGRAM_CLOSED,
     THREATMODEL_DIAGRAM_MODIFIED,
     THREATMODEL_DIAGRAM_SAVED,
@@ -48,6 +47,8 @@ const stashThreatModel = (theState, threatModel) => {
     theState.stash = JSON.stringify(threatModel);
 };
 
+const toDesktopSavePayload = (threatModel) => JSON.parse(JSON.stringify(threatModel));
+
 const actions = {
     [THREATMODEL_CLEAR]: ({ commit }) => commit(THREATMODEL_CLEAR),
     [THREATMODEL_CONTRIBUTORS_UPDATED]: ({ commit }, contributors) => commit(THREATMODEL_CONTRIBUTORS_UPDATED, contributors),
@@ -55,7 +56,7 @@ const actions = {
         console.debug('Create threat model action');
         if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
             // desktop responds later with its own STASH and NOT_MODIFIED
-            window.electronAPI.modelSave(state.data, state.fileName);
+            window.electronAPI.modelSave(toDesktopSavePayload(state.data), state.fileName);
             return true;
         } else {
             let result = false;
@@ -78,7 +79,6 @@ const actions = {
             return result;
         }
     },
-    [THREATMODEL_DIAGRAM_APPLIED]: ({ commit }) => commit(THREATMODEL_DIAGRAM_APPLIED),
     [THREATMODEL_DIAGRAM_CLOSED]: ({ commit }) => commit(THREATMODEL_DIAGRAM_CLOSED),
     [THREATMODEL_DIAGRAM_MODIFIED]: ({ commit }, diagram) => commit(THREATMODEL_DIAGRAM_MODIFIED, diagram),
     [THREATMODEL_DIAGRAM_SAVED]: ({ commit }, diagram) => commit(THREATMODEL_DIAGRAM_SAVED, diagram),
@@ -128,11 +128,7 @@ const actions = {
         console.debug('Save threat model action');
         if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
             // desktop responds later with its own STASH and NOT_MODIFIED
-            if (Object.keys(state.selectedDiagram).length !== 0) {
-                commit(THREATMODEL_DIAGRAM_SAVED, state.selectedDiagram);
-            }
-
-            window.electronAPI.modelSave(state.data, state.fileName);
+            window.electronAPI.modelSave(toDesktopSavePayload(state.data), state.fileName);
         } else {
             let result = false;
             if (getProviderType(rootState.provider.selected) === providerTypes.local) {
@@ -260,15 +256,11 @@ const actions = {
 const mutations = {
     [THREATMODEL_CLEAR]: (state) => clearState(state),
     [THREATMODEL_CONTRIBUTORS_UPDATED]: (state, contributors) => {
+        const normalizedContributors = Array.isArray(contributors)
+            ? contributors
+            : (contributors ? [contributors] : []);
         state.data.detail.contributors.length = 0;
-        contributors.forEach((name, idx) => Vue.set(state.data.detail.contributors, idx, { name }));
-    },
-    [THREATMODEL_DIAGRAM_APPLIED]: (state) => {
-        if (Object.keys(state.modifiedDiagram).length !== 0) {
-            const idx = state.data.detail.diagrams.findIndex(x => x.id === state.modifiedDiagram.id);
-            console.debug('Threatmodel modified diagram applied : ' + state.modifiedDiagram.id + ' at index: ' + idx);
-            state.data.detail.diagrams[idx] = state.modifiedDiagram;
-        }
+        normalizedContributors.forEach((name, idx) => Vue.set(state.data.detail.contributors, idx, { name }));
     },
     [THREATMODEL_DIAGRAM_CLOSED]: (state) => {
         state.modified = false;

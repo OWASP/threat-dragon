@@ -15,8 +15,8 @@
                     <b-col>
                         <b-form-group id="threat-type-group" :label="$t('threats.properties.type')"
                             label-for="threat-type">
-                            <b-form-select id="threat-type" v-model="threat.type" :options="types">
-                            </b-form-select>
+                            <td-form-select id="threat-type" v-model="threat.type" :options="types">
+                            </td-form-select>
                         </b-form-group>
                     </b-col>
                 </b-form-row>
@@ -25,8 +25,8 @@
                     <b-col md=5>
                         <b-form-group id="status-group" class="float-left" :label="$t('threats.properties.status')"
                             label-for="status">
-                            <b-form-radio-group id="status" v-model="threat.status" :options="statuses"
-                                buttons></b-form-radio-group>
+                            <td-form-radio-group id="status" v-model="threat.status" :options="statuses"
+                                buttons></td-form-radio-group>
                         </b-form-group>
                     </b-col>
 
@@ -39,8 +39,8 @@
                     <b-col md=5>
                         <b-form-group id="severity-group" class="float-right" :label="$t('threats.properties.severity')"
                             label-for="severity">
-                            <b-form-radio-group id="severity" v-model="threat.severity" :options="priorities"
-                                buttons></b-form-radio-group>
+                            <td-form-radio-group id="severity" v-model="threat.severity" :options="priorities"
+                                buttons></td-form-radio-group>
                         </b-form-group>
                     </b-col>
                 </b-form-row>
@@ -94,10 +94,16 @@ import { CELL_DATA_UPDATED } from '@/store/actions/cell.js';
 import tmActions from '@/store/actions/threatmodel.js';
 import dataChanged from '@/service/x6/graph/data-changed.js';
 import threatModels from '@/service/threats/models/index.js';
+import TdFormRadioGroup from '@/components/FormRadioGroup.vue';
+import TdFormSelect from '@/components/FormSelect.vue';
 import { GetContextSuggestions } from '@/service/threats/oats/context-generator.js';
 import { v4 as uuidv4 } from 'uuid';
 export default {
     name: 'TdThreatSuggest',
+    components: {
+        TdFormRadioGroup,
+        TdFormSelect
+    },
     computed: {
         ...mapState({
             cellRef: (state) => state.cell.ref,

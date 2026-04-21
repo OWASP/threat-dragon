@@ -1,8 +1,9 @@
-import { BootstrapVue, BCard, BCardHeader, BFormTags } from 'bootstrap-vue';
+import { BootstrapVue, BCard } from 'bootstrap-vue';
 import { createLocalVue, mount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
 import ThreatModelEdit from '@/views/ThreatModelEdit.vue';
+import TdFormTags from '@/components/FormTags.vue';
 import { THREATMODEL_CONTRIBUTORS_UPDATED, THREATMODEL_RESTORE, THREATMODEL_NOT_MODIFIED,  } from '@/store/actions/threatmodel.js';
 
 describe('views/ThreatmodelEdit.vue', () => {
@@ -74,8 +75,8 @@ describe('views/ThreatmodelEdit.vue', () => {
 
     describe('layout', () => {
         it('displays the title in the header', () => {
-            const header = wrapper.findComponent(BCard).findComponent(BCardHeader);
-            expect(header.text()).toEqual(`threatmodel.editing: ${title}`);
+            const header = wrapper.findComponent(BCard);
+            expect(header.attributes('header')).toEqual(`threatmodel.editing: ${title}`);
         });
 
         it('has a title input', () => {
@@ -95,7 +96,7 @@ describe('views/ThreatmodelEdit.vue', () => {
         });
 
         it('shows the contributors', () => {
-            expect(wrapper.findComponent(BFormTags).exists()).toEqual(true);
+            expect(wrapper.findComponent(TdFormTags).exists()).toEqual(true);
         });
 
         it('displays all diagrams', () => {

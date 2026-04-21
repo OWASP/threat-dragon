@@ -1,5 +1,4 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
 
 import { gitRoutes } from './git.js';
 import HomePage from '../views/HomePage.vue';
@@ -35,29 +34,33 @@ const routes = [
     ...googleRoutes
 ];
 
+let routerInstance = null;
+
 const get = () => {
-    Vue.use(VueRouter);
-    const router = new VueRouter({
-        routes
-    });
+    if (routerInstance === null) {
+        routerInstance = createRouter({
+            history: createWebHashHistory(),
+            routes
+        });
 
-    // Navigation guard for admin routes
-    router.beforeEach((to, _from, next) => {
-        if (to.meta.requiresAdmin) {
-            const isAdmin = store.get().getters.isAdmin;
+        // Navigation guard for admin routes
+        routerInstance.beforeEach((to, _from, next) => {
+            if (to.meta.requiresAdmin) {
+                const isAdmin = store.get().getters.isAdmin;
 
-            if (!isAdmin) {
-                console.warn('Access denied: Admin route requires admin permissions');
-                next('/dashboard');
+                if (!isAdmin) {
+                    console.warn('Access denied: Admin route requires admin permissions');
+                    next('/dashboard');
+                } else {
+                    next();
+                }
             } else {
                 next();
             }
-        } else {
-            next();
-        }
-    });
+        });
+    }
 
-    return router;
+    return routerInstance;
 };
 
 export default {

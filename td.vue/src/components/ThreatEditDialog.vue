@@ -35,7 +35,7 @@
                             :label="$t('threatmodel.diagram.eop.select')"
                             label-for="eop-game"
                         >
-                            <b-form-select
+                            <td-form-select
                                 id="eop-game-select"
                                 v-model="selectedGameId"
                                 :options="eopGames"
@@ -50,12 +50,12 @@
                             :label="$t('cards.properties.suit')"
                             label-for="card-suit"
                         >
-                            <b-form-select
+                            <td-form-select
                                 id="card-suit"
                                 v-model="card.suit"
                                 :options="cardSuits"
                             >
-                            </b-form-select>
+                            </td-form-select>
                         </b-form-group>
                     </b-col>
                     <b-col>
@@ -64,12 +64,12 @@
                             :label="$t('cards.properties.number')"
                             label-for="card-number"
                         >
-                            <b-form-select
+                            <td-form-select
                                 id="card-number"
                                 v-model="card.number"
                                 :options="filteredCardNumbers"
                             >
-                            </b-form-select>
+                            </td-form-select>
                         </b-form-group>
                     </b-col>
                 </b-form-row>
@@ -81,12 +81,12 @@
                             label-for="threat-type"
                             v-if="threat.modelType !== 'EOP'"
                         >
-                            <b-form-select
+                            <td-form-select
                                 id="threat-type"
                                 v-model="threat.type"
                                 :options="threatTypes"
                             >
-                            </b-form-select>
+                            </td-form-select>
                         </b-form-group>
                     </b-col>
                 </b-form-row>
@@ -146,12 +146,12 @@
                             :label="$t('threats.properties.status')"
                             label-for="status"
                         >
-                            <b-form-radio-group
+                            <td-form-radio-group
                                 id="status"
                                 v-model="threat.status"
                                 :options="statuses"
                                 buttons
-                            ></b-form-radio-group>
+                            ></td-form-radio-group>
                         </b-form-group>
                     </b-col>
 
@@ -176,12 +176,12 @@
                             :label="$t('threats.properties.severity')"
                             label-for="severity"
                         >
-                            <b-form-radio-group
+                            <td-form-radio-group
                                 id="severity"
                                 v-model="threat.severity"
                                 :options="priorities"
                                 buttons
-                            ></b-form-radio-group>
+                            ></td-form-radio-group>
                         </b-form-group>
                     </b-col>
                 </b-form-row>
@@ -267,10 +267,16 @@ import { CELL_DATA_UPDATED } from '@/store/actions/cell.js';
 import tmActions from '@/store/actions/threatmodel.js';
 import dataChanged from '@/service/x6/graph/data-changed.js';
 import threatModels from '@/service/threats/models/index.js';
+import TdFormRadioGroup from '@/components/FormRadioGroup.vue';
+import TdFormSelect from '@/components/FormSelect.vue';
 import { getGame, getAllGames } from '../service/threats/models/eop';
 
 export default {
     name: 'TdThreatEditDialog',
+    components: {
+        TdFormRadioGroup,
+        TdFormSelect
+    },
     computed: {
         ...mapState({
             cellRef: (state) => state.cell.ref,

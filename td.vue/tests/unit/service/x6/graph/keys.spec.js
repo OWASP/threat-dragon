@@ -1,16 +1,32 @@
 import keys from '@/service/x6/graph/keys.js';
+import saveDiagram from '@/service/diagram/save.js';
 import store from '@/store/index.js';
 
+jest.mock('@/service/diagram/save.js', () => ({
+    __esModule: true,
+    default: {
+        save: jest.fn()
+    }
+}));
+
+jest.mock('@/store/index.js', () => ({
+    __esModule: true,
+    default: {
+        get: jest.fn()
+    }
+}));
+
 describe('service/x6/graph/keys.js', () => {
-    let graph, mockStore, mockCanUndo, mockCanRedo, mockUndo, mockRedo;
+    let graph, mockCanUndo, mockCanRedo, mockUndo, mockRedo;
+    let bindings;
 
     beforeEach(() => {
-        mockStore = { dispatch: jest.fn() };
+        bindings = {};
         mockCanUndo = jest.fn().mockReturnValue(true);
         mockCanRedo = jest.fn().mockReturnValue(true);
         mockUndo = jest.fn();
         mockRedo = jest.fn();
-        store.get = jest.fn().mockReturnValue(mockStore);
+        saveDiagram.save.mockClear();
         graph = {
             removeCells: jest.fn(),
             getSelectedCells: jest.fn(),
@@ -29,13 +45,25 @@ describe('service/x6/graph/keys.js', () => {
             paste: jest.fn(),
             cleanSelection: jest.fn(),
             select: jest.fn(),
-            bindKey: jest.fn().mockImplementation((key, fn) => fn())
+            bindKey: jest.fn().mockImplementation((key, fn) => {
+                bindings[key] = fn;
+            })
         };
+        store.get.mockReturnValue({
+            state: {
+                threatmodel: {
+                    selectedDiagram: {
+                        id: 'diagram-1'
+                    }
+                }
+            }
+        });
     });
 
     describe('delete', () => {
         beforeEach(() => {
             keys.bind(graph);
+            bindings.del();
         });
 
         it('binds to the delete key', () => {
@@ -56,6 +84,7 @@ describe('service/x6/graph/keys.js', () => {
             beforeEach(() => {
                 graph.getPlugin('history').canUndo.mockImplementation(() => true);
                 keys.bind(graph);
+                bindings['ctrl+z']();
             });
 
             it('binds to the ctrl + x keys', () => {
@@ -75,6 +104,7 @@ describe('service/x6/graph/keys.js', () => {
             beforeEach(() => {
                 graph.getPlugin('history').canUndo.mockImplementation(() => false);
                 keys.bind(graph);
+                bindings['ctrl+z']();
             });
 
             it('does not call undo', () => {
@@ -88,6 +118,7 @@ describe('service/x6/graph/keys.js', () => {
             beforeEach(() => {
                 graph.getPlugin('history').canRedo.mockImplementation(() => true);
                 keys.bind(graph);
+                bindings['ctrl+y']();
             });
 
             it('binds to the ctrl + y keys', () => {
@@ -107,6 +138,7 @@ describe('service/x6/graph/keys.js', () => {
             beforeEach(() => {
                 graph.getPlugin('history').canRedo.mockImplementation(() => false);
                 keys.bind(graph);
+                bindings['ctrl+y']();
             });
 
             it('does not call redo', () => {
@@ -119,6 +151,7 @@ describe('service/x6/graph/keys.js', () => {
         describe('with undefined selected cells', () => {
             beforeEach(() => {
                 keys.bind(graph);
+                bindings['ctrl+c']();
             });
 
             it('binds to the ctrl + c keys', () => {
@@ -134,6 +167,7 @@ describe('service/x6/graph/keys.js', () => {
             beforeEach(() => {
                 graph.getSelectedCells.mockImplementation(() => []);
                 keys.bind(graph);
+                bindings['ctrl+c']();
             });
 
             it('does not call copy', () => {
@@ -148,6 +182,7 @@ describe('service/x6/graph/keys.js', () => {
                 cells = [{ foo: 'bar' }];
                 graph.getSelectedCells.mockImplementation(() => cells);
                 keys.bind(graph);
+                bindings['ctrl+c']();
             });
 
 
@@ -166,6 +201,7 @@ describe('service/x6/graph/keys.js', () => {
             beforeEach(() => {
                 graph.isClipboardEmpty.mockImplementation(() => true);
                 keys.bind(graph);
+                bindings['ctrl+v']();
             });
 
             it('binds to the ctrl + v keys', () => {
@@ -193,6 +229,7 @@ describe('service/x6/graph/keys.js', () => {
                 graph.isClipboardEmpty.mockImplementation(() => false);
                 graph.paste.mockImplementation(() => cells);
                 keys.bind(graph);
+                bindings['ctrl+v']();
             });
 
             it('pastes the cells', () => {
@@ -209,13 +246,13 @@ describe('service/x6/graph/keys.js', () => {
         });
     });
 
-    describe('save', () => {
-        beforeEach(() => {
-            keys.bind(graph);
-        });
+    it('binds ctrl + s to the shared save service', () => {
+        const event = { preventDefault: jest.fn() };
+        keys.bind(graph);
+        bindings['ctrl+s'](event);
 
-        it('binds to the ctrl + s keys', () => {
-            expect(graph.bindKey).toHaveBeenLastCalledWith('ctrl+s', expect.any(Function));
-        });
+        expect(graph.bindKey).toHaveBeenCalledWith('ctrl+s', expect.any(Function));
+        expect(event.preventDefault).toHaveBeenCalled();
+        expect(saveDiagram.save).toHaveBeenCalledWith(store.get(), graph, { id: 'diagram-1' });
     });
 });

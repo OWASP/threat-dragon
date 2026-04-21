@@ -1,10 +1,11 @@
-const zho = {
+const messages = {
     auth: {
         sessionExpired: '会话登录已过期，请重新登录。'
     },
     nav: {
         loggedInAs: '登录身份为',
-        logOut: '登出'
+        logOut: '登出',
+        contentManagement: 'Content Management'
     },
     home: {
         title: 'OWASP Threat Dragon',
@@ -46,7 +47,8 @@ const zho = {
             openExisting: '打开现有的威胁模型',
             createNew: '创建一个新的、空的威胁模型',
             readDemo: '打开示例威胁模型',
-            importExisting: '通过 JSON 导入威胁模型'
+            importExisting: '通过 JSON 导入威胁模型',
+            createFromTemplate: 'Create model from a Template'
         }
     },
     demo: {
@@ -110,6 +112,68 @@ const zho = {
         repo: '源',
         newThreatModel: '创建新的威胁模型'
     },
+    template:{
+        startFromLocalTemplate: 'Start from a Local Template',
+        select: 'Select a Template from the list below',
+        selectDescription: 'Templates provide a starting point for new threat models, pre-populated with relevant components and threats.',
+        noTemplates: 'No templates found',
+        templatesLocalSession: 'Remote templates are not available for local sessions.',
+        search: 'Search templates...',
+        exportTemplate: 'Export as Template',
+        tags: 'Tags',
+        name: 'Template Name',
+        description: 'Template Description',
+        saveTemplate: 'Save Template',
+        addNew: 'Add New Template',
+        manage: 'Manage Templates',
+        manageDescription: 'Import, export, and manage your threat model templates here.',
+        editTemplate: 'Edit Template',
+        addTagsPlaceholder: 'Add tags...',
+        updateSuccess: 'Template updated successfully',
+        importSuccess: 'Template imported successfully',
+        deleteSuccess: 'Template deleted successfully',
+        deleteTitle: 'Confirm Delete',
+        deleteConfirm: 'Are you sure you want to delete "{name}"?',
+        errors: {
+            invalidJson: 'Invalid JSON. Please check your template file and try again',
+            invalidTemplate: 'Invalid template format. Please check your template file and try again',
+            loadFailed: 'Failed to load templates. Please try again',
+            duplicateTemplate: 'A template with this name already exists. Please use a different name',
+            updateFailed: 'Failed to update template',
+            deleteFailed: 'Failed to delete template'
+        },
+        warnings: {
+            templateSave: 'Could not save the template. Check the developer console for more information',
+            invalidSchema: 'Template does not strictly match schema. Details in the developer console'
+        },
+        prompts: {
+            templateSaved: 'Template successfully saved',
+            templateDownloading: 'Downloading template'
+        },
+        repo: {
+            notInitialized: {
+                title: 'Template Repository Not Initialized',
+                userMessage: 'The template repository has not been initialized. Please contact your administrator.',
+                adminMessage: 'Please go to the Manage Templates page to initialize the template repository.'
+            },
+            notConfigured: {
+                title: 'Template Repository Not Configured',
+                userMessage: 'The template repository is not configured. Please set up the repository to access templates.'
+            },
+            notFound: {
+                title: 'Template Repository Not Found',
+                userMessage: 'The repository {repoName} is not a valid repository. Please check your configuration.'
+            },
+            bootstrap:{
+                bootstrapping:'Initializing..',
+                title: 'Initialize Template Repository',
+                description: 'This will create the necessary folder structure within the repository if it does not already exist.',
+                action: 'Initialize',
+                success: 'Template repository successfully initialized.',
+                error: 'Could not initialize the template repository. Check the developer console for more information.'
+            }
+        },
+    },
     threatmodel: {
         contributors: '贡献者',
         contributorsPlaceholder: '添加新的贡献者',
@@ -167,7 +231,8 @@ const zho = {
             invalidModel: '威胁模型验证不正确。请检查你的模型并重试',
             onlyJsonAllowed: '只支持以.json结尾的文件。',
             open: '打开此威胁模型出错。检查开发者控制台以了解更多信息',
-            save: '保存此威胁模型出错。检查开发者控制台以了解更多信息'
+            save: '保存此威胁模型出错。检查开发者控制台以了解更多信息',
+            createConflict: 'A threat model with this name already exists. Please use a different name.'
         },
         warnings: {
             export: '无法导出威胁模型。检查开发者控制台查阅更多信息',
@@ -303,7 +368,9 @@ const zho = {
         saveModelAs: '模型另存为',
         search: '搜索',
         next: '下一个',
-        previous: '上一个'
+        previous: '上一个',
+        manage : 'Manage...',
+        exportTemplate: 'Export As Template',
     },
     cards: {
         details: '卡片详情',
@@ -360,6 +427,16 @@ const zho = {
                 informationDisclosure: '信息泄露',
                 denialOfService: '拒绝服务',
                 elevationOfPrivilege: '权限提升'
+            },
+            eop: {
+                header: '--- EoP ---',
+                dataValidationAndEncoding: 'Data Validation & Encoding', 
+                authentication: 'Authentication', 
+                sessionManagement: 'Session Management', 
+                authorization: 'Authorization', 
+                cryptography: 'Cryptography', 
+                cornucopia: 'Cornucopia',
+                wildCard: 'Wild Card'
             }
         },
         generic: {
@@ -447,4 +524,4 @@ const zho = {
     }
 };
 
-export default zho;
+export default messages;

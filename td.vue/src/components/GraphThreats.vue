@@ -4,15 +4,15 @@
         <b-row>
             <b-col>
                 <a
-                    href="javascript:void(0)"
-                    @click="threatSelected()"
+                    href="#"
+                    @click.prevent="threatSelected()"
                     v-if="!!numberResolved"
                 >
                     #{{ numberResolved }} {{ titleResolved || 'Unknown Threat' }}
                 </a>
                 <a
-                    href="javascript:void(0)"
-                    @click="threatSelected()"
+                    href="#"
+                    @click.prevent="threatSelected()"
                     v-else
                 >
                     {{ titleResolved || 'Unknown Threat' }}

@@ -21,6 +21,7 @@ const {
     exportModelAsHtml,
     exportModelAsPdf,
     closeModel,
+    closeDirtyModel,
     openHelpMenuLink,
     openAboutDialog
 } = require('../support/menu');
@@ -145,6 +146,21 @@ describe('Desktop menu integration tests', function () {
 
             await openModel(modelPath);
             await closeModel();
+
+            assert.equal(await browser.getPageSource().then((source) => source.includes(appContent.welcomeMessage)), true);
+            assert.equal(await browser.getUrl(), appContent.dashboardUrl);
+        });
+    });
+
+    it('confirms before closing a dirty model through File > Close Model', async () => {
+        const browser = getBrowser();
+
+        await withMenuWorkspace(async ({ copyModelFixture }) => {
+            const modelPath = copyModelFixture('close-dirty-model.json');
+
+            await openModel(modelPath);
+            await setThreatModelTitle('Unsaved Desktop Menu Change');
+            await closeDirtyModel();
 
             assert.equal(await browser.getPageSource().then((source) => source.includes(appContent.welcomeMessage)), true);
             assert.equal(await browser.getUrl(), appContent.dashboardUrl);

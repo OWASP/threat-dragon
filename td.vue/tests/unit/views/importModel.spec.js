@@ -1,7 +1,8 @@
-import { BootstrapVue, BJumbotron, BFormTextarea } from 'bootstrap-vue';
-import { createLocalVue, shallowMount } from '@vue/test-utils';
-import Vuex from 'vuex';
+import { BootstrapVue } from 'bootstrap-vue';
+import { mount } from '@vue/test-utils';
+import { createStore } from 'vuex';
 
+import { createLocalVue, mountOptions } from '../helpers/vueTestUtils';
 import ImportModel from '@/views/ImportModel.vue';
 import TdFormButton from '@/components/FormButton.vue';
 
@@ -12,8 +13,7 @@ describe('ImportModel.vue', () => {
         toast = { error: jest.fn(), warning: jest.fn() };
         localVue = createLocalVue();
         localVue.use(BootstrapVue);
-        localVue.use(Vuex);
-        mockStore = new Vuex.Store({
+        mockStore = createStore({
             state: {
                 provider: {
                     selected: 'local'
@@ -22,8 +22,7 @@ describe('ImportModel.vue', () => {
         });
         mockStore.dispatch = jest.fn();
         mockRouter = { push: jest.fn() };
-        wrapper = shallowMount(ImportModel, {
-            localVue,
+        wrapper = mount(ImportModel, mountOptions(localVue, {
             store: mockStore,
             mocks: {
                 $t: key => key,
@@ -31,15 +30,16 @@ describe('ImportModel.vue', () => {
                 $route: { params: { }},
                 $router: mockRouter
             }
-        });
+        }));
     });
 
     it('shows the jumbotron text', () => {
-        expect(wrapper.findComponent(BJumbotron).text()).toEqual('forms.open / dashboard.actions.importExisting');
+        expect(wrapper.text()).toContain('forms.open');
+        expect(wrapper.text()).toContain('dashboard.actions.importExisting');
     });
 
     it('has the textarea input', () => {
-        expect(wrapper.findComponent(BFormTextarea).exists()).toEqual(true);
+        expect(wrapper.find('#json-input').exists()).toEqual(true);
     });
 
     it('has the import button', () => {

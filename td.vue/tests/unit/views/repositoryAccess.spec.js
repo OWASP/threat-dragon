@@ -96,6 +96,12 @@ describe('views/RepositoryAccess.vue', () => {
         it('displays the translated text', () => {
             expect(wrapper.findComponent(TdSelectionPage).text()).toContain('repository.select');
         });
+
+        it('updates the search query from the selection page filter event', async () => {
+            wrapper.findComponent(TdSelectionPage).vm.$emit('update:filter', 'threat-dragon');
+            await wrapper.vm.$nextTick();
+            expect(wrapper.vm.searchQuery).toEqual('threat-dragon');
+        });
     });
 
     describe('onRepoClick', () => {

@@ -1,4 +1,4 @@
-import nodes from '@/service/diagram/v1/nodes.js';
+import nodes from '@/service/migration/tdV1/diagrams/nodes.js';
 
 describe('service/diagram/v1/nodes.js', () => {
     let cell, constructor, mapFn;

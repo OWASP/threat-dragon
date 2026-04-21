@@ -96,8 +96,8 @@
                 </b-form-group>
 
                 <b-form-group :label="$t('template.tags')" label-for="edit-tags">
-                    <b-form-tags id="edit-tags" v-model="editForm.tags" :placeholder="$t('template.addTagsPlaceholder')"
-                        separator=",;"></b-form-tags>
+                    <td-form-tags id="edit-tags" v-model="editForm.tags" :placeholder="$t('template.addTagsPlaceholder')"
+                        separator=",;"></td-form-tags>
                 </b-form-group>
             </b-form>
         </b-modal>
@@ -107,11 +107,15 @@
 <script>
 import { mapGetters } from 'vuex';
 import { v4 } from 'uuid';
+import TdFormTags from '@/components/FormTags.vue';
 import templateActions from '@/store/actions/template.js';
 import schema from '@/service/schema/ajv.js';
 
 export default {
     name: 'ManageTemplates',
+    components: {
+        TdFormTags
+    },
     data() {
         return {
             searchQuery: '',
