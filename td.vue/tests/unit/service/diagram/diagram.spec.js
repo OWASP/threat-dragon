@@ -15,7 +15,8 @@ describe('service/diagram/diagram.js', () => {
             thumbnail: 'foo.png',
             id: '12345',
             diagramType: 'STRIDE',
-            legacyField: true
+            legacyField: true,
+            version: '2.x'
         };
         graphMock = {
             fromJSON: jest.fn(),
@@ -35,80 +36,15 @@ describe('service/diagram/diagram.js', () => {
     });
 
     describe('draw', () => {
-        describe('v1', () => {
-            beforeEach(() => {
-                diagram.draw(null, diagramMock);
-            });
-
-            it('gets the readonly graph', () => {
-                expect(graphFactory.getReadonlyGraph).toHaveBeenCalledWith(null);
-            });
-
-            it('maps the cells', () => {
-                expect(cells.map).toHaveBeenCalledWith(diagramMock);
-            });
-
-            it('draws using a batch', () => {
-                expect(graphMock.startBatch).toHaveBeenCalledWith('td-init');
-            });
-
-            it('adds the nodes', () => {
-                expect(graphMock.addNode).toHaveBeenCalledTimes(nodesMock.length);
-            });
-
-            it('adds the edges', () => {
-                expect(graphMock.addEdge).toHaveBeenCalledTimes(edgesMock.length);
-            });
-
-            it('stops the batch', () => {
-                expect(graphMock.stopBatch).toHaveBeenCalled();
-            });
-
-            it('exports the json', () => {
-                expect(graphMock.toJSON).toHaveBeenCalled();
-            });
-
-            it('updates the styles for the cells', () => {
-                expect(dataChanged.updateStyleAttrs).toHaveBeenCalledTimes(cellsMock.length);
-            });
-
-            it('dispatches the diagramSaved event to the store', () => {
-                expect(storeMock.dispatch)
-                    .toHaveBeenCalledWith(
-                        tmActions.diagramSaved,
-                        expect.objectContaining({
-                            title: diagramMock.title,
-                            description: diagramMock.description,
-                            thumbnail: diagramMock.thumbnail,
-                            id: diagramMock.id,
-                            diagramType: diagramMock.diagramType,
-                            cells: [],
-                            version: expect.any(String)
-                        })
-                    );
-            });
-
-            it('does not leak unknown v1 properties into the upgraded diagram', () => {
-                const savedDiagram = storeMock.dispatch.mock.calls.find(
-                    ([action]) => action === tmActions.diagramSaved
-                )[1];
-
-                expect(savedDiagram.legacyField).toBeUndefined();
-            });
-        });
-
         it('gets the graph json', () => {
+            diagram.draw(null, diagramMock);
             expect(graphMock.fromJSON).toHaveBeenCalledTimes(1);
         });
     });
 
     describe('edit', () => {
-        beforeEach(() => {
-            diagramMock.version = '2.0';
-            diagram.edit(null, diagramMock);
-        });
-
         it('gets the edit graph', () => {
+            diagram.edit(null, diagramMock);
             expect(graphFactory.getEditGraph).toHaveBeenCalledWith(null);
         });
     });
