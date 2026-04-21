@@ -9,17 +9,17 @@ import { LOCALE_SELECTED } from '@/store/actions/locale.js';
 describe('components/LocaleSelect.vue', () => {
     let i18n, mockStore, wrapper, dispatchSpy;
     const MESSAGES = {
-        eng: { hello: 'Hello World' },
-        deu: { hello: 'Hallo Welt' }
+        en: { hello: 'Hello World' },
+        de: { hello: 'Hallo Welt' }
     };
     const LOCALE_LABELS = {
-        eng: 'English',
-        deu: 'Deutsch'
+        en: 'English',
+        de: 'Deutsch'
     };
-    const mountComponent = (storeLocale = 'eng') => {
+    const mountComponent = (storeLocale = 'en') => {
         const localVue = createLocalVue();
         i18n = createI18n({
-            locale: 'eng',
+            locale: 'en',
             messages: MESSAGES
         });
 
@@ -59,12 +59,12 @@ describe('components/LocaleSelect.vue', () => {
         });
 
         it('displays the current locale', () => {
-            expect(wrapper.findComponent(BDropdown).attributes('text')).toEqual(LOCALE_LABELS.eng);
+            expect(wrapper.findComponent(BDropdown).attributes('text')).toEqual(LOCALE_LABELS.en);
         });
 
         it.each([
-            ['eng', LOCALE_LABELS.eng],
-            ['deu', LOCALE_LABELS.deu]
+            ['en', LOCALE_LABELS.en],
+            ['de', LOCALE_LABELS.de]
         ])('has an option for %s', (_localeCode, localeLabel) => {
             expect(findLocaleItem(localeLabel).exists()).toEqual(true);
         });
@@ -76,8 +76,8 @@ describe('components/LocaleSelect.vue', () => {
             });
 
             it.each([
-                ['deu', LOCALE_LABELS.deu],
-                ['eng', LOCALE_LABELS.eng]
+                ['de', LOCALE_LABELS.de],
+                ['en', LOCALE_LABELS.en]
             ])('updates the locale to %s', async (localeCode, localeLabel) => {
                 await findLocaleItem(localeLabel).trigger('click');
 
