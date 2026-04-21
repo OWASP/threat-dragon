@@ -1,4 +1,4 @@
-const ukr = {
+const messages = {
     auth: {
         sessionExpired: 'Your session has expired. Please log in again to continue.'
     },
@@ -524,4 +524,4 @@ const ukr = {
     }
 };
 
-export default ukr;
+export default messages;

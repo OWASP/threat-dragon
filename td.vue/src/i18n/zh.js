@@ -1,4 +1,4 @@
-const zho = {
+const messages = {
     auth: {
         sessionExpired: '会话登录已过期，请重新登录。'
     },
@@ -524,4 +524,4 @@ const zho = {
     }
 };
 
-export default zho;
+export default messages;

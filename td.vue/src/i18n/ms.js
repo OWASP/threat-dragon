@@ -1,4 +1,4 @@
-const msa = {
+const messages = {
     auth: {
         sessionExpired: 'Sesi anda telah tamat. Sila log masuk semula untuk meneruskan.'
     },
@@ -524,4 +524,4 @@ const msa = {
     }
 };
 
-export default msa;
+export default messages;

@@ -1,4 +1,4 @@
-const bra = {
+const messages = {
     auth: {
         sessionExpired: 'Sua sessão está expirada. Por favor, faça login novamente.'
     },
@@ -524,4 +524,4 @@ const bra = {
     }
 };
 
-export default bra;
+export default messages;

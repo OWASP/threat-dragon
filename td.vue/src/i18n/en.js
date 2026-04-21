@@ -1,4 +1,4 @@
-const eng = {
+const messages = {
     auth: {
         sessionExpired: 'Your session has expired. Please log in again to continue.'
     },
@@ -524,4 +524,4 @@ const eng = {
     }
 };
 
-export default eng;
+export default messages;

@@ -1,4 +1,4 @@
-const ell = {
+const messages = {
     auth: {
         sessionExpired: 'Η συνεδρία σας έχει λήξει.  Παρακαλούμε συνδεθείτε εκ νέου για να συνεχίσετε.'
     },
@@ -524,4 +524,4 @@ const ell = {
     }
 };
 
-export default ell;
+export default messages;

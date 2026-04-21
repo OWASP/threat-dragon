@@ -85,33 +85,33 @@ export default {
         },
         getLanguageName(locale) {
             switch (locale) {
-            case 'ara':
+            case 'ar':
                 return 'العربية'; // Arabic
-            case 'deu':
+            case 'de':
                 return 'Deutsch'; // German
-            case 'ell':
+            case 'el':
                 return 'Ελληνικά'; // Greek
-            case 'eng':
+            case 'en':
                 return 'English';
-            case 'spa':
+            case 'es':
                 return 'Español'; // Spanish
-            case 'fin':
+            case 'fi':
                 return 'Suomi'; // Finnish
-            case 'fra':
+            case 'fr':
                 return 'Français'; // French
-            case 'hin':
+            case 'hi':
                 return 'हिंदी'; // Hindi
-            case 'ind':
+            case 'id':
                 return 'Bahasa Indonesia'; // Indonesia
-            case 'jpn':
+            case 'ja':
                 return '日本語'; // Japanese
-            case 'msa':
+            case 'ms':
                 return 'Malay'; // Malay
-            case 'por':
+            case 'pt':
                 return 'Português'; // Portuguese
-            case 'bra':
+            case 'pt-BR':
                 return 'Português (Brasil)'; // Brazilian Portuguese
-            case 'zho':
+            case 'zh':
                 return '中文'; // Chinese
             default:
                 return locale;

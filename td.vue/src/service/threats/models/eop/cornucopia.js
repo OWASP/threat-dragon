@@ -11,13 +11,13 @@ export default {
 
     getData() {
         switch (i18n.get().locale) {
-        case 'spa':
+        case 'es':
             return cornucopiaES;
-        case 'fra':
+        case 'fr':
             return cornucopiaFR;
-        case 'rus':
+        case 'ru':
             return cornucopiaRU;
-        case 'eng':
+        case 'en':
         default:
             return cornucopiaEN;
         }

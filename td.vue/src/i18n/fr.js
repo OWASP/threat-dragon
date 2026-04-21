@@ -1,4 +1,4 @@
-const fra = {
+const messages = {
     auth: {
         sessionExpired: 'Votre session est expirée. Veuillez vous reconnecter pour continuer.'
     },
@@ -524,4 +524,4 @@ const fra = {
     }
 };
 
-export default fra;
+export default messages;

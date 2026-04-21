@@ -30,7 +30,7 @@ describe('components/GraphButtons.vue', () => {
                     selected: provider
                 },
                 locale: {
-                    locale: 'eng'
+                    locale: 'en'
                 },
                 threatmodel: {
                     selectedDiagram: {
