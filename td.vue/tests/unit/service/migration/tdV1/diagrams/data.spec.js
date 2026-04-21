@@ -1,5 +1,5 @@
-import data from '@/service/diagram/v1/data.js';
-import edges from '@/service/diagram/v1/edges.js';
+import data from '@/service/migration/tdV1/diagrams/data.js';
+import edges from '@/service/migration/tdV1/diagrams/edges.js';
 import threats from '@/service/threats/index.js';
 import store from '@/service/x6/shapes/store';
 

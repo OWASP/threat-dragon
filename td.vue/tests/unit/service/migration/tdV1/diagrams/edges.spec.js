@@ -1,5 +1,5 @@
-import edges from '@/service/diagram/v1/edges.js';
-import labels from '@/service/diagram/v1/labels.js';
+import edges from '@/service/migration/tdV1/diagrams/edges.js';
+import labels from '@/service/migration/tdV1/diagrams/labels.js';
 
 describe('service/diagram/v1/edges.js', () => {
     describe('applyData', () => {
