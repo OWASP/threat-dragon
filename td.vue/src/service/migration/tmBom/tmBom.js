@@ -3,7 +3,7 @@ import detail from './detail';
 
 const copyHasKey = (source, target, key) => {
     if (Object.hasOwn(source, key)) {
-	    target[key] = source[key];
+        target[key] = source[key];
     }
 };
 
@@ -13,9 +13,10 @@ const copyHasKey = (source, target, key) => {
  * wich may not be the latest given in package.lock
  * Note : when this is revised, then change this version to match
  */
-const version = '2.4.1';
+const version = '2.6.1';
 
-const read = (model) => {
+// import a TM-BOM file to Threat Dragon format
+const importTmbom = (model) => {
 
     // required values not used by TD but need to be preserved
     let compatibility = {
@@ -37,7 +38,8 @@ const read = (model) => {
     };
 };
 
-const write = (model) => {
+// export a Threat Dragon file to TM-BOM format
+const exportTd = (model) => {
     let tmModel = new Object();
 
     // compatibility object exists if original file was also TM-BOM
@@ -58,7 +60,47 @@ const write = (model) => {
     return tmModel;
 };
 
+// read a TM-BOM file
+const read = (model) => {
+    // not supported yet, return an empty Threat Dragon model with TM-BOM attached
+    return {
+        version: version,
+        summary: {
+            title: model.scope.title,
+            description: 'Empty Threat Dragon model from a TM-BOM',
+        },
+        detail: [],
+        tmBom: model
+    };
+
+};
+
+// write a TM-BOM file
+const write = (model) => {
+    // not supported yet, so return a nearly empty TM=BOM
+    return {
+        version: '1.0.2',
+        scope: {
+            title: model.tmBom.scope.title,
+            description: 'Empty Threat Model Bill of Materials (TM-BOM)',
+            business_criticality: '',
+            data_sensitivity: '',
+            exposure: '',
+            tier: ''
+        },
+        trust_zones: [],
+        trust_boundaries: [],
+        actors: [],
+        components: [],
+        data_stores: [],
+        data_sets: [],
+        data_flows: []
+    };
+};
+
 export default {
+    exportTd,
+    importTmbom,
     read,
     version,
     write

@@ -11,7 +11,7 @@ describe('service/migration/tmBom/diagrams/assumptions.js', () => {
         });
 
         it('provides the assumption description', () => {
-            expect(summaryAssumptions[0].description).toContain('Test assumption0');
+            expect(summaryAssumptions[0].description).toContain('assumption0');
         });
 
         it('provides the assumption validity', () => {

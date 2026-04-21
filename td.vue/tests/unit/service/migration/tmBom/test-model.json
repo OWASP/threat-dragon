@@ -511,36 +511,36 @@
     ],
     "assumptions": [
         {
-            "description": "Test assumption0",
+            "description": "Test description assumption0",
             "validity": "confirmed"
         },
         {
-            "description": "Test assumption1",
+            "description": "Test description assumption1",
             "topics": ["component0"]
         },
         {
-            "description": "Test assumption2",
+            "description": "Test description assumption2",
             "validity": "rejected"
         }
     ],
     "threat_personas": [
         {
-            "symbolic_name": "ratimir",
-            "title": "Ratimir",
-            "description": "An expert social engineer, great at writing its own exploits and malware - Ratimir is a worthy adversary to consider",
+            "symbolic_name": "threat_persona0",
+            "title": "Test title threat persona0",
+            "description": "Test description threat persona0",
             "is_person": true,
             "skill_level": "expert_engineer",
             "access_level": "user",
-            "malicious_intent": true,
+            "malicious_intent": false,
             "applicability_to_org": "high"
         },
         {
-            "symbolic_name": "michiko",
-            "title": "Michiko",
-            "description": "Michiko levareges a lot of acquired knowledge from her e-crime organization which enables her to launch sophisticated attacks penetrating internal corporate networks",
-            "is_person": true,
+            "symbolic_name": "threat_persona1",
+            "title": "Test title threat persona1",
+            "description": "Test description threat persona1",
+            "is_person": false,
             "skill_level": "oc_sponsored",
-            "access_level": "admin",
+            "access_level": "anonymous",
             "malicious_intent": true,
             "applicability_to_org": "moderate"
         }
@@ -550,7 +550,7 @@
             "symbolic_name": "buffer-overflow-image-processing",
             "title": "Buffer overflow in image processing causing remote code execution or DoS",
             "description": "An attacker crafts an image to cause buffer overflow in image processing, leading to potential remote code execution, denial of service, and errors.",
-            "threat_persona": "ratimir",
+            "threat_persona": "threat_persona0",
             "event": "denial of service or remote code execution",
             "sources": ["adversary"],
             "attack_mechanisms": [
@@ -570,7 +570,7 @@
             "symbolic_name": "supply-chain-attack",
             "title": "Supply chain attack on third-party libraries compromising system outputs",
             "description": "An attacker poisons the supply chain of third-party libraries, leading to network or system compromise.",
-            "threat_persona": "ratimir",
+            "threat_persona": "threat_persona0",
             "event": "supply chain attack",
             "sources": ["adversary"],
             "attack_mechanisms": [
@@ -590,7 +590,7 @@
             "symbolic_name": "image-tampering",
             "title": "Image Tampering",
             "description": "An attacker tampers with or deletes stored images to impact training or testing results and/or cause denial of service.",
-            "threat_persona": "michiko",
+            "threat_persona": "threat_persona1",
             "event": "Image tampering",
             "sources": ["adversary"],
             "attack_mechanisms": [
@@ -614,7 +614,7 @@
             "symbolic_name": "notebook-tampering",
             "title": "Notebook tampering to insert a backdoor",
             "description": "An attacker modifies a notebook file to insert a backdoor, such as a keylogger or data stealer.",
-            "threat_persona": "michiko",
+            "threat_persona": "threat_persona1",
             "event": "notebook tampering",
             "sources": ["adversary"],
             "attack_mechanisms": [
@@ -638,7 +638,7 @@
             "symbolic_name": "model-tampering",
             "title": "Machine learning model tampering causing low accuracy or IP theft",
             "description": "An attacker or insider modifies or reads persisted model files to steal intellectual property or degrade prediction accuracy.",
-            "threat_persona": "michiko",
+            "threat_persona": "threat_persona1",
             "event": "machine learning model tampering",
             "sources": ["adversary"],
             "attack_mechanisms": [
@@ -662,7 +662,7 @@
             "symbolic_name": "perturbation-attack",
             "title": "Image perturbation attack resulting in incorrect classifications",
             "description": "An attacker uses brute force with random or systematic perturbations to create images that lead to incorrect classifications.",
-            "threat_persona": "ratimir",
+            "threat_persona": "threat_persona0",
             "event": "perturbation attack",
             "sources": ["adversary"],
             "attack_mechanisms": [
@@ -682,7 +682,7 @@
             "symbolic_name": "sensitive-image-exposure",
             "title": "Sensitive image exposure due to accidental access",
             "description": "An attacker or malicious insider gains access to sensitive uploaded images.",
-            "threat_persona": "michiko",
+            "threat_persona": "threat_persona1",
             "event": "accidental sensitive data exposure",
             "sources": ["adversary"],
             "attack_mechanisms": [
@@ -702,7 +702,7 @@
             "symbolic_name": "ssh-compromise-developer-machine",
             "title": "SSH compromise via stolen credentials from developer machine",
             "description": "An attacker compromises a developer machine to steal SSH keys, impersonate users, or escalate privileges.",
-            "threat_persona": "michiko",
+            "threat_persona": "threat_persona1",
             "event": "bastion compromise via SSH",
             "sources": ["adversary"],
             "attack_mechanisms": [
@@ -722,7 +722,7 @@
             "symbolic_name": "ssh-compromise-vulnerability",
             "title": "SSH compromise via open port vulnerability",
             "description": "An attacker exploits an open SSH port to escalate privileges or impersonate authorized users.",
-            "threat_persona": "ratimir",
+            "threat_persona": "threat_persona0",
             "event": "bastion compromise via SSH",
             "sources": ["adversary"],
             "attack_mechanisms": [
