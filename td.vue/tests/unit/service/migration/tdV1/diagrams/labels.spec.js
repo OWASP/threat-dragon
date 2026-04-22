@@ -1,4 +1,4 @@
-import labels from '@/service/diagram/v1/labels.js';
+import labels from '@/service/migration/tdV1/diagrams/labels.js';
 
 
 describe('service/diagram/v1/labels.js', () => {

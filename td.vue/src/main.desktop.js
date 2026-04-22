@@ -9,6 +9,7 @@ import i18nFactory from './i18n/index.js';
 import router from './router/index.js';
 import desktopSave from './service/desktop/save.js';
 import { providerNames } from './service/provider/providers.js';
+import threatDragonV1 from './service/migration/tdV1/threatDragonV1';
 import tmBom from './service/migration/tmBom/tmBom';
 
 import schema from './service/schema/ajv';
@@ -92,8 +93,12 @@ window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
     // schema errors are not fatal, and some formats are not supported yet
     if(!schema.isV2(jsonModel)){
         if (schema.isV1(jsonModel)) {
-            console.warn('Version 1.x file will be translated to V2 format');
+            console.warn('Convert TD V1.x to TD V2.x format');
             appProxy.$toast.warning(t('threatmodel.warnings.v1Translate'), { timeout: false });
+            jsonModel = threatDragonV1.read(jsonModel);
+            console.debug('Force selection of file name for V1.x');
+            fileName = '';
+            window.electronAPI.modelOpened(fileName);
         } else if (schema.isTmBom(jsonModel)) {
             jsonModel = openTmBom(jsonModel);
             console.debug('force re-selection of file name for TM-BOM');
@@ -104,7 +109,7 @@ window.electronAPI.onOpenModel((_event, fileName, jsonModel) =>  {
             appProxy.$toast.error(t('threatmodel.warnings.otmUnsupported'), { timeout: false });
             return;
         } else {
-            console.warn('Model does not strictly match possible schemas: ' + JSON.stringify(schema.checkV2(jsonModel)));
+            console.warn('Model does not strictly match possible schemas: ' + JSON.stringify(schema.checkV2(jsonModel, null, 2)));
             appProxy.$toast.warning(t('threatmodel.warnings.jsonSchema'));
         }
     }

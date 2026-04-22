@@ -18,9 +18,10 @@
           "type": "string"
         },
         "id": {
-          "description": "A unique identifier for this main threat model object",
-          "type": "integer",
-          "minimum": 0
+          "description": "A unique identifier for this main threat model object as integer / UUID",
+          "type": [ "integer", "string" ],
+          "minimum": 0,
+          "minLength": 2
         },
         "owner": {
           "description": "The original creator or overall owner of the model",

@@ -13,13 +13,13 @@ We follow **IETF BCP 47** language tags: `language`-`REGION` (case‑insensitive
 
 **Example:** `pt-BR` (Brazilian Portuguese). For a language without a region variant, use only the language code (e.g. `es`).
 
-> **Why uppercase region?** BCP 47 is case‑insensitive, but the canonical form (e.g., `pt-BR`) matches browser APIs 
+> **Why uppercase region?** BCP 47 is case‑insensitive, but the canonical form (e.g., `pt-BR`) matches browser APIs
 (`navigator.language`) and is the convention used in `vue-i18n` examples. Our code uses the canonical form for the `messages`
 object keys.
 
 ### Available translations
 
-All translation files are located in `td.vue/src/i18n/`. Each file exports a single JavaScript object with the same nested 
+All translation files are located in `td.vue/src/i18n/`. Each file exports a single JavaScript object with the same nested
 structure as `en.js`.
 
 | Language                      | BCP 47  | Filename    | Status                                                      |
@@ -41,21 +41,21 @@ structure as `en.js`.
 | Українська (Ukrainian)        | `uk`    | `uk.js`     | All keys present, some values are in English (untranslated) |
 | 中文 (Chinese)                 | `zh`    | `zh.js`     | All keys present, some values are in English (untranslated) |
 
-
 **Fallback behaviour**  
-If a translation key is missing in the selected locale, the application falls back according to the `fallbackLocale` 
+If a translation key is missing in the selected locale, the application falls back according to the `fallbackLocale`
 configuration in `td.vue/src/i18n/index.js`.  
 
 Currently:
+
 - European Portuguese (`pt`) falls back to Brazilian Portuguese (`pt-BR`)
 - All other locales fall back to English (`en`)
 
-> **Note:** The fallback is **one‑way** (`pt-BR` → `pt`). Portuguese does not fall back to Brazilian Portuguese (you need to 
+> **Note:** The fallback is **one‑way** (`pt-BR` → `pt`). Portuguese does not fall back to Brazilian Portuguese (you need to
 configure it).
 
 ### Adding a new language
 
-1. **Create a new file** in `td.vue/src/i18n` using the **IETF language tag** as the filename (e.g., `pt-br.js`, `en-gb.js`, 
+1. **Create a new file** in `td.vue/src/i18n` using the **IETF language tag** as the filename (e.g., `pt-br.js`, `en-gb.js`,
 `zh-cn.js`).
     - For a language without a region variant, use the two‑letter ISO 639‑1 code (e.g., `de.js`).
     - For region‑specific variants, append `-` and the two‑letter ISO 3166‑1 alpha‑2 country code (lowercase) to the base
@@ -65,9 +65,10 @@ configure it).
 
 3. **Import the new file** in `td.vue/src/i18n/index.js` and add it to the `messages` object, using the IETF tag as the key.
 
-4. **Configure fallback relationships** – in `td.vue/src/i18n/index.js`, if the new language should fall back to another 
+4. **Configure fallback relationships** – in `td.vue/src/i18n/index.js`, if the new language should fall back to another
 (e.g., a regional variant to its base language), add the appropriate entry to the `fallbackLocale` object in `index.js`.
 The syntax is:
+
    ```javascript
    fallbackLocale: {
        'new_locale': ['fallback1', 'fallback2'],
@@ -75,9 +76,9 @@ The syntax is:
    }
    ```
 
-4. **Test your translations** by selecting the new locale from the dropdown menu.
-    - **For bonus points**, test the fallback configuration: temporarily remove a specific translation key from your new 
-    locale file. When you reload the application with that locale selected, the fallback language (as configured in 
+5. **Test your translations** by selecting the new locale from the dropdown menu.
+    - **For bonus points**, test the fallback configuration: temporarily remove a specific translation key from your new
+    locale file. When you reload the application with that locale selected, the fallback language (as configured in
     `fallbackLocale` in `index.js`) should display the missing key. This confirms that the fallback chain works correctly and
      that users will always see a meaningful translation even if your file is incomplete.
 
