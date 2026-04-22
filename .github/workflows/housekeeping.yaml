@@ -5,6 +5,9 @@ on:
     - cron: '45 6 * * *'
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 env:
   IMAGE_NAME: threatdragon/owasp-threat-dragon:latest
 
@@ -53,7 +56,7 @@ jobs:
     name: Scan with Trivy
     runs-on: ubuntu-24.04
     permissions:
-      contents: write
+      contents: read
       security-events: write
     steps:
       - name: Checkout repository
@@ -79,6 +82,7 @@ jobs:
     name: Analyze with codeql
     runs-on: ubuntu-24.04
     permissions:
+      contents: read
       security-events: write
     strategy:
       fail-fast: false

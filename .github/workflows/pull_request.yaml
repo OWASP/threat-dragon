@@ -5,6 +5,9 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 env:
   IMAGE_NAME: "pr-${{ github.event.number }}"
   ZAP_FILE: "zap-scan-pr-${{ github.event.number }}"
@@ -189,6 +192,7 @@ jobs:
     runs-on: ubuntu-24.04
     needs: [server_unit_tests, site_unit_tests, desktop_unit_tests]
     permissions:
+      contents: read
       security-events: write
 
     strategy:
@@ -446,7 +450,7 @@ jobs:
     runs-on: ubuntu-24.04
     needs: build_docker_image
     permissions:
-      contents: write
+      contents: read
 
     steps:
       - name: Checkout
