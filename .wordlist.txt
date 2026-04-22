@@ -12,10 +12,12 @@ auth
 backend
 Backend
 Bahasa
+BCP
 bitbucket
 Bitbucket
 Bluesky
 BOM
+Brasil
 BrowserStack
 CentOS
 chai
@@ -70,6 +72,7 @@ hin
 hostname
 https
 HTTPS
+IETF
 Identifiability
 IoT
 Javascript
