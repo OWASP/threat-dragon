@@ -49,7 +49,7 @@ const get = () => {
             // Legacy mode is deprecated and will be removed in vue-i18n v12.
             // TODO: remove after refactoring i18n usage
             legacy: true,
-            locale: 'eng',
+            locale: 'en',
             fallbackLocale: {
                 pt: ['pt-BR'],
                 default:  'en'
