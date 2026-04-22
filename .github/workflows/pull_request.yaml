@@ -328,8 +328,11 @@ jobs:
       - name: Install front-end
         run: npm clean-install
 
+      - name: Build and run locally
+        run: npm run start:serve
+
       - name: Run visual regression tests
-        run: npm run test:visual
+        run: npm run test:visual -- --url http://localhost:8080/
 
       - name: Upload visual artifacts
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
