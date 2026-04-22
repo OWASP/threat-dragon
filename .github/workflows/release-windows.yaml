@@ -3,6 +3,9 @@ name: Windows release
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 # for security reasons the github actions are pinned to specific SHAs
 jobs:
 

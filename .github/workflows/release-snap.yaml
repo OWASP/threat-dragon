@@ -3,6 +3,9 @@ name: Release to Snap
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 # for security reasons the github actions are pinned to specific SHAs
 jobs:
   desktop_linux_snap:
