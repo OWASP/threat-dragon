@@ -155,14 +155,14 @@ These tests are used by the CI pipeline to determine if the deploy to Heroku was
 ### Visual Regression Tests
 
 Visual regression tests do a pixel by pixel comparison of the running application
-against baseline images. These tests are intended to flag UI regressions. 
+against baseline images. These tests are intended to flag UI regressions.
 
 The threshold is intentionally set low with a pixel ratio of `0.01`.  
 Baseline images are stored in `td.vue/tests/e2e/visual/baselines`
 
 To run the tests locally, from the `td.vue` directory, run: `npm run test:visual`
 
-When intentional changes are made to the UI, you must regenerate the visual 
+When intentional changes are made to the UI, you must regenerate the visual
 baselines with `npm run test:visual:update`.
 
 ## Cypress use of Electron
