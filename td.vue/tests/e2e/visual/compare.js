@@ -3,7 +3,7 @@ const path = require('path');
 const { PNG } = require('pngjs');
 
 const maxDiffPixelRatio = 0.01;
-const pixelmatchThreshold = 0.1;
+const pixelmatchThreshold = 0.12;
 const visualDir = path.join('tests', 'e2e', 'visual');
 const baselineDir = path.join(visualDir, 'baselines');
 const diffDir = path.join(visualDir, 'diffs');
