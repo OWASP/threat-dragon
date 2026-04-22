@@ -6,6 +6,9 @@ on:
     - cron: '40 8 * * *'
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 # for security reasons the github actions are pinned to specific SHAs
 jobs:
   browserstack_e2e:

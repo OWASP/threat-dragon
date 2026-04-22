@@ -5,6 +5,9 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 env:
   HEROKU_APP: threatdragon-v2
   HEROKU_EMAIL: jon.gadsden@owasp.org
@@ -451,7 +454,7 @@ jobs:
     runs-on: ubuntu-24.04
     needs: build_docker_image
     permissions:
-      contents: write
+      contents: read
       security-events: write
 
     steps:
