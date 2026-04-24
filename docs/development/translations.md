@@ -1,3 +1,11 @@
+---
+layout: page
+title: Translations
+nav_order: 4
+path: /development/translations
+group: Development
+---
+
 ## Translations
 
 Internationalization is enabled by [vue-i18n](https://kazupon.github.io/vue-i18n/).
