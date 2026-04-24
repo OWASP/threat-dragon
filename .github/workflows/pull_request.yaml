@@ -273,6 +273,51 @@ jobs:
           if-no-files-found: ignore
         if: ${{ failure() }}
 
+  visual_regression_tests:
+    name: Site visual regression
+    runs-on: ubuntu-24.04
+    needs: site_unit_tests
+    defaults:
+      run:
+        working-directory: td.vue
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Use node LTS 24.14
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+        with:
+          node-version: '24.14'
+
+      - name: Cache NPM dir
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+            ${{ runner.os }}-
+
+      - name: Install front-end
+        run: npm clean-install
+
+      - name: Build and run locally
+        run: npm run start:serve
+
+      - name: Run visual regression tests
+        run: npm run test:visual -- --url http://localhost:8080/
+
+      - name: Upload visual artifacts
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: visual-regression-artifacts
+          path: |
+            td.vue/tests/e2e/visual/screenshots
+            td.vue/tests/e2e/visual/diffs
+          if-no-files-found: ignore
+        if: ${{ failure() }}
+
   e2e_tests:
     name: Local site e2e tests
     runs-on: ubuntu-24.04

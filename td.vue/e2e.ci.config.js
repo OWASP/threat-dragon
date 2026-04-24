@@ -8,7 +8,7 @@ module.exports = defineConfig({
     screenshotsFolder: 'tests/e2e/screenshots',
     videosFolder: 'tests/e2e/videos',
     e2e: {
-        excludeSpecPattern: 'tests/e2e/specs/smokes/*.cy.js',
+        excludeSpecPattern: [ 'tests/e2e/specs/smokes/*.cy.js', 'tests/e2e/specs/visual/*.cy.js' ],
         supportFile: 'tests/e2e/support/e2e.js',
         specPattern: 'tests/e2e/specs/**/*.cy.js',
         baseUrl: 'http://localhost:3000/'
