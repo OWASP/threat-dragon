@@ -1,4 +1,4 @@
-import { BootstrapVue } from 'bootstrap-vue';
+import { createBootstrap } from 'bootstrap-vue-next';
 import { mount } from '@vue/test-utils';
 import { createStore } from 'vuex';
 
@@ -12,7 +12,7 @@ describe('ImportModel.vue', () => {
     beforeEach(() => {
         toast = { error: jest.fn(), warning: jest.fn() };
         localVue = createLocalVue();
-        localVue.use(BootstrapVue);
+        localVue.use(createBootstrap());
         mockStore = createStore({
             state: {
                 provider: {

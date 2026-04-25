@@ -2,10 +2,10 @@
     <b-container fluid>
         <b-row>
             <b-col>
-                <b-jumbotron class="text-center">
+                <div class="text-center p-5 mb-4 bg-light rounded-3">
                     <h4>{{ $t('template.manage') }}</h4>
                     <p class="lead">{{ $t('template.manageDescription') }}</p>
-                </b-jumbotron>
+                </div>
             </b-col>
         </b-row>
 
@@ -22,7 +22,7 @@
                         @click="handleBootstrap"
                         :disabled="isBootstrapping"
                     >
-                        <b-spinner small v-if="isBootstrapping" class="mr-2"></b-spinner>
+                        <b-spinner small v-if="isBootstrapping" class="me-2"></b-spinner>
                         {{ isBootstrapping ? $t('template.repo.bootstrap.bootstrapping') : $t('template.repo.bootstrap.action') }}
                     </b-button>
                 </b-card>
@@ -35,13 +35,13 @@
                 <b-col md="6" offset-md="3">
                     <b-form-group>
                         <b-input-group>
-                            <b-input-group-prepend>
-                                <b-button variant="primary" @click="onAddTemplateClick" id="add-template-btn" class="mr-3">
-                                    <font-awesome-icon icon="plus" class="mr-2"></font-awesome-icon>
+                            <template #prepend>
+                                <b-button variant="primary" @click="onAddTemplateClick" id="add-template-btn" class="me-3">
+                                    <font-awesome-icon icon="plus" class="me-2"></font-awesome-icon>
                                     {{ $t('template.addNew') }}
                                 </b-button>
-                            </b-input-group-prepend>
-                            <b-form-input v-model="searchQuery" :placeholder="$t('template.search')" />
+                            </template>
+                            <b-form-input v-model:model-value="searchQuery" :placeholder="$t('template.search')" />
                         </b-input-group>
                     </b-form-group>
                 </b-col>
@@ -56,7 +56,7 @@
                             <div class="flex-grow-1">
                                 <h5>{{ template.name }}</h5>
                                 <p class="mb-1 text-muted">{{ template.description }}</p>
-                                <b-badge v-for="tag in template.tags" :key="tag" variant="primary" class="mr-1">
+                                <b-badge v-for="tag in template.tags" :key="tag" variant="primary" class="me-1">
                                     {{ tag }}
                                 </b-badge>
                             </div>
@@ -67,12 +67,12 @@
                                     <font-awesome-icon icon="ellipsis-v"></font-awesome-icon>
                                 </template>
                                 <b-dropdown-item @click="onEditTemplate(template)">
-                                    <font-awesome-icon icon="edit" class="mr-2"></font-awesome-icon>
+                                    <font-awesome-icon icon="edit" class="me-2"></font-awesome-icon>
                                     {{ $t('forms.edit') }}
                                 </b-dropdown-item>
                                 <b-dropdown-divider></b-dropdown-divider>
                                 <b-dropdown-item @click="onDeleteTemplate(template)" variant="danger">
-                                    <font-awesome-icon icon="trash" class="mr-2"></font-awesome-icon>
+                                    <font-awesome-icon icon="trash" class="me-2"></font-awesome-icon>
                                     {{ $t('forms.delete') }}
                                 </b-dropdown-item>
                             </b-dropdown>
@@ -85,14 +85,14 @@
                 </b-col>
             </b-row>
         </template>
-        <b-modal id="edit-template-modal" :title="$t('template.editTemplate')" @ok="onSaveEdit">
+        <b-modal id="edit-template-modal" v-model:model-value="editModalVisible" :title="$t('template.editTemplate')" @ok="onSaveEdit">
             <b-form>
                 <b-form-group :label="$t('template.name')" label-for="edit-name">
-                    <b-form-input id="edit-name" v-model="editForm.name" required></b-form-input>
+                    <b-form-input id="edit-name" v-model:model-value="editForm.name" required></b-form-input>
                 </b-form-group>
 
                 <b-form-group :label="$t('template.description')" label-for="edit-description">
-                    <b-form-textarea id="edit-description" v-model="editForm.description" rows="3"></b-form-textarea>
+                    <b-form-textarea id="edit-description" v-model:model-value="editForm.description" rows="3"></b-form-textarea>
                 </b-form-group>
 
                 <b-form-group :label="$t('template.tags')" label-for="edit-tags">
@@ -105,6 +105,7 @@
 </template>
 
 <script>
+import { useModal } from 'bootstrap-vue-next';
 import { mapGetters } from 'vuex';
 import { v4 } from 'uuid';
 import TdFormTags from '@/components/FormTags.vue';
@@ -116,10 +117,16 @@ export default {
     components: {
         TdFormTags
     },
+    setup() {
+        return {
+            modalController: useModal()
+        };
+    },
     data() {
         return {
             searchQuery: '',
             editingTemplate: null,
+            editModalVisible: false,
             editForm: {
                 name: '',
                 description: '',
@@ -173,8 +180,7 @@ export default {
             this.editForm.description = template.description;
             this.editForm.tags = [...template.tags]; // Copy array
 
-            // Show modal
-            this.$bvModal.show('edit-template-modal');
+            this.editModalVisible = true;
         },
 
         async onSaveEdit() {
@@ -188,7 +194,7 @@ export default {
 
                 this.$toast.success(this.$t('template.updateSuccess'));
 
-                this.$bvModal.hide('edit-template-modal');
+                this.editModalVisible = false;
             } catch (error) {
                 console.error('Error updating template:', error);
                 this.$toast.error(this.$t('template.errors.updateFailed'));
@@ -264,17 +270,16 @@ export default {
         },
 
         async onDeleteTemplate(template) {
-            // Confirm before delete
-            const confirmed = await this.$bvModal.msgBoxConfirm(
-                this.$t('template.deleteConfirm', { name: template.name }),
-                {
-                    title: this.$t('template.deleteTitle'),
-                    okVariant: 'danger',
-                    okTitle: this.$t('forms.delete'),
-                    cancelTitle: this.$t('forms.cancel'),
-                    centered: true
-                }
-            );
+            const confirmed = (await this.modalController.create({
+                modelValue: true,
+                visible: true,
+                body: this.$t('template.deleteConfirm', { name: template.name }),
+                title: this.$t('template.deleteTitle'),
+                okVariant: 'danger',
+                okTitle: this.$t('forms.delete'),
+                cancelTitle: this.$t('forms.cancel'),
+                centered: true
+            }, { resolveOnHide: true })).ok;
 
             if (confirmed) {
                 try {

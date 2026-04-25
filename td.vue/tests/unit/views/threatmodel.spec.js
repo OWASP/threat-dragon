@@ -1,4 +1,4 @@
-import { BootstrapVue } from 'bootstrap-vue';
+import { createBootstrap } from 'bootstrap-vue-next';
 import { createLocalVue, mount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
@@ -23,7 +23,7 @@ describe('views/Threatmodel.vue', () => {
     beforeEach(() => {
         console.log = jest.fn();
         localVue = createLocalVue();
-        localVue.use(BootstrapVue);
+        localVue.use(createBootstrap());
         localVue.use(Vuex);
         mockStore = new Vuex.Store({
             state: {

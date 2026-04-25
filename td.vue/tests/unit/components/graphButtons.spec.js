@@ -1,4 +1,4 @@
-import { BootstrapVue, BDropdown } from 'bootstrap-vue';
+import { createBootstrap, BDropdown } from 'bootstrap-vue-next';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
@@ -27,7 +27,7 @@ describe('components/GraphButtons.vue', () => {
             }
         };
         localVue = createLocalVue();
-        localVue.use(BootstrapVue);
+        localVue.use(createBootstrap());
         localVue.use(Vuex);
         wrapper = shallowMount(TdGraphButtons, {
             localVue,

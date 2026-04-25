@@ -41,6 +41,7 @@
 </style>
 
 <script>
+import { useModal } from 'bootstrap-vue-next';
 import { mapState } from 'vuex';
 
 import TdGraphButtons from '@/components/GraphButtons.vue';
@@ -65,6 +66,11 @@ export default {
         TdKeyboardShortcuts,
         TdThreatEditDialog,
         TdThreatSuggestDialog
+    },
+    setup() {
+        return {
+            modalController: useModal()
+        };
     },
     computed: mapState({
         diagram: (state) => state.threatmodel.selectedDiagram,
@@ -117,15 +123,20 @@ export default {
                 this.$router.push({ name: `${this.providerType}ThreatModel`, params: this.$route.params });
             }
         },
-        getConfirmModal() {
-            return this.$bvModal.msgBoxConfirm(this.$t('forms.discardMessage'), {
+        async getConfirmModal() {
+            const result = await this.modalController.create({
+                modelValue: true,
+                visible: true,
+                body: this.$t('forms.discardMessage'),
                 title: this.$t('forms.discardTitle'),
                 okVariant: 'danger',
                 okTitle: this.$t('forms.ok'),
                 cancelTitle: this.$t('forms.cancel'),
-                hideHeaderClose: true,
+                noHeaderClose: true,
                 centered: true
-            });
+            }, { resolveOnHide: true });
+
+            return result.ok;
         }
     },
     unmounted() {

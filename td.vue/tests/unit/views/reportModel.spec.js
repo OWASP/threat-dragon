@@ -1,4 +1,4 @@
-import BootstrapVue from 'bootstrap-vue';
+import { createBootstrap } from 'bootstrap-vue-next';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
@@ -13,7 +13,7 @@ describe('views/ReportModel.vue', () => {
     beforeEach(() => {
         const localVue = createLocalVue();
         localVue.use(Vuex);
-        localVue.use(BootstrapVue);
+        localVue.use(createBootstrap());
 
         routerMock = { push: jest.fn(), params: {} };
         storeMock = new Vuex.Store({

@@ -14,12 +14,12 @@ describe('print', () => {
     });
 
     it('opens the new threat model', () => {
-        cy.get('a').contains('New Blank Model').click();
+        cy.contains('.list-group-item', 'New Blank Model').click();
         cy.url().should('contain', '/local/New%20Blank%20Model');
     });
 
     it('opens the demo threat model', () => {
-        cy.get('a').contains('Demo Threat Model').click();
+        cy.contains('.list-group-item', 'Demo Threat Model').click();
         cy.url().should('contain', '/local/Demo%20Threat%20Model');
     });
 

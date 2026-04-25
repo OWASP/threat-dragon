@@ -1,7 +1,7 @@
 <template>
   <b-navbar toggleable="lg" fixed="top" id="navbar">
     <b-navbar-brand :to="username ? '/dashboard' : '/'" class="td-brand">
-      <b-img src="@/assets/threatdragon_logo_image.svg" class="td-brand-img" alt="Threat Dragon Logo" />
+      <b-img :src="threatDragonLogo" class="td-brand-img" alt="Threat Dragon Logo" />
       Threat Dragon v{{ this.$store.state.packageBuildVersion }}{{ this.$store.state.packageBuildState }}
     </b-navbar-brand>
 
@@ -13,7 +13,7 @@
         </b-nav-item>
       </b-navbar-nav>
 
-      <b-navbar-nav class="ml-auto">
+      <b-navbar-nav class="ms-auto">
         <b-nav-text v-show="username" class="logged-in-as">{{ $t('nav.loggedInAs') }} {{ username }}</b-nav-text>
         <b-nav-item v-show="username" @click="onLogOut" id="nav-sign-out">
           <font-awesome-icon icon="sign-out-alt" class="td-fa-nav" v-b-tooltip.hover
@@ -45,7 +45,7 @@
         </b-nav-item>
         <b-nav-item href="https://owasp.org/www-project-threat-dragon/" target="_blank" rel="noopener noreferrer"
           id="nav-owasp-td">
-          <b-img src="@/assets/owasp.svg" class="td-fa-nav td-owasp-logo" :title="$t('desktop.help.visit')" />
+          <b-img :src="owaspLogo" class="td-fa-nav td-owasp-logo" :title="$t('desktop.help.visit')" />
         </b-nav-item>
       </b-navbar-nav>
     </b-collapse>
@@ -58,6 +58,7 @@ $icon-height: 1.2rem;
 .navbar {
   background-color: $orange;
   border-color: $orange-alt;
+  font-family: Ubuntu, Tahoma, "Helvetica Neue", Helvetica, Arial, sans-serif;
   height: $header-height+10;
   font-size: 15px;
 }
@@ -79,33 +80,31 @@ $icon-height: 1.2rem;
 }
 
 .td-brand {
+  align-items: center;
   color: $white !important;
+  display: flex;
+  gap: 0.4rem;
+  margin-left: 4px;
+  padding-bottom: 0;
+  padding-top: 0;
 
   .td-brand-img {
+    display: block;
     max-height: ($header-height - 10);
+    width: auto;
   }
 }
 
+.td-owasp-logo {
+  display: block;
+  width: auto;
+}
+
 @media (max-width: 576px) {
-
-  /* This is the typical breakpoint for phones */
-  .nav-link {
-    color: red !important;
-  }
-
   .logged-in-as {
     background-color: $orange;
     border-radius: 5px;
     padding: 10px;
-  }
-}
-
-@media (max-width: 576px) {
-  .td-owasp-logo {
-    /* Target the OWASP logo */
-    background-color: red;
-    border-radius: 50%;
-    padding: 5px;
   }
 }
 </style>
@@ -113,6 +112,8 @@ $icon-height: 1.2rem;
 <script>
 import { mapGetters } from 'vuex';
 
+import owaspLogo from '@/assets/owasp.svg';
+import threatDragonLogo from '@/assets/threatdragon_logo_image.svg';
 import { LOGOUT } from '@/store/actions/auth.js';
 import TdLocaleSelect from './LocaleSelect.vue';
 
@@ -120,6 +121,12 @@ export default {
     name: 'TdNavbar',
     components: {
         TdLocaleSelect
+    },
+    data() {
+        return {
+            owaspLogo,
+            threatDragonLogo
+        };
     },
     computed: {
         ...mapGetters([

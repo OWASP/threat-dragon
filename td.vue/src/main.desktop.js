@@ -2,6 +2,7 @@
 // after removing compat
 import 'mutationobserver-shim';
 import { createApp } from 'vue';
+import { useModal } from 'bootstrap-vue-next';
 
 import App from './App.vue';
 import i18nFactory from './i18n/index.js';
@@ -18,23 +19,29 @@ import authActions from './store/actions/auth.js';
 import providerActions from './store/actions/provider.js';
 import tmActions from './store/actions/threatmodel.js';
 
-import BootstrapVue from './plugins/bootstrap-vue.js';
+import BootstrapVueNext from './plugins/bootstrap-vue.js';
 import { FontAwesomeIcon } from './plugins/fontawesome-vue.js';
 import Toast, { toastOptions, installToastGlobalProperties } from './plugins/toastification.js';
 
 let appProxy;
+let modalController;
 
 const t = (...args) => i18nFactory.get().t(...args);
 
-const getConfirmModal = () => {
-    return appProxy.$bvModal.msgBoxConfirm(t('forms.discardMessage'), {
+const getConfirmModal = async () => {
+    const result = await modalController.create({
+        modelValue: true,
+        visible: true,
+        body: t('forms.discardMessage'),
         title: t('forms.discardTitle'),
         okVariant: 'danger',
         okTitle: t('forms.ok'),
         cancelTitle: t('forms.cancel'),
-        hideHeaderClose: true,
+        noHeaderClose: true,
         centered: true
-    });
+    }, { resolveOnHide: true });
+
+    return result.ok;
 };
 
 // request from electron to renderer to close the application
@@ -212,8 +219,9 @@ const app = createApp(App);
 app.use(storeFactory.get());
 app.use(router.get());
 app.use(i18nFactory.get());
-app.use(BootstrapVue);
+app.use(BootstrapVueNext);
 app.use(Toast, toastOptions);
 installToastGlobalProperties(app, toastOptions);
 app.component('font-awesome-icon', FontAwesomeIcon);
 appProxy = app.mount('#app');
+modalController = app.runWithContext(() => useModal());

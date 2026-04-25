@@ -4,7 +4,7 @@
             <b-card :header="$t('template.exportTemplate')" id="parent-card">
                 <b-form @submit.prevent="onSaveClick">
 
-                    <b-form-row>
+                    <b-row>
                         <b-col>
                             <b-form-group 
                                 id="name-group" 
@@ -12,15 +12,15 @@
                                 label-for="name">
                                 <b-form-input 
                                     id="name" 
-                                    v-model="templateName"
+                                    v-model:model-value="templateName"
                                     type="text" 
                                     required
                                 ></b-form-input>
                             </b-form-group>
                         </b-col>
-                    </b-form-row>
+                    </b-row>
 
-                    <b-form-row>
+                    <b-row>
                         <b-col>
                             <b-form-group 
                                 id="description-group" 
@@ -28,14 +28,14 @@
                                 label-for="description">
                                 <b-form-textarea 
                                     id="description" 
-                                    v-model="templateDescription"
+                                    v-model:model-value="templateDescription"
                                     type="text"
                                 ></b-form-textarea>
                             </b-form-group>
                         </b-col>
-                    </b-form-row>
+                    </b-row>
 
-                    <b-form-row>
+                    <b-row>
                         <b-col>
                             <b-form-group 
                                 id="tags-group" 
@@ -51,11 +51,11 @@
                                 ></td-form-tags>
                             </b-form-group>
                         </b-col>
-                    </b-form-row>
+                    </b-row>
 
-                    <b-form-row>
-                        <b-col class="text-right mt-5">
-                            <b-btn-group>
+                    <b-row>
+                        <b-col class="text-end mt-5">
+                            <b-button-group>
                                 <td-form-button 
                                     id="td-save-btn" 
                                     :isPrimary="true" 
@@ -69,9 +69,9 @@
                                     icon="times"
                                     :text="$t('forms.cancel')" 
                                 />
-                            </b-btn-group>
+                            </b-button-group>
                         </b-col>
-                    </b-form-row>
+                    </b-row>
 
                 </b-form>
             </b-card>

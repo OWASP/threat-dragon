@@ -2,11 +2,12 @@
     <div>
         <b-row>
             <b-col>
-                <b-jumbotron :header="$t('dashboard.welcome.title')">
+                <div class="p-5 mb-4 bg-light rounded-3">
+                    <h1>{{ $t('dashboard.welcome.title') }}</h1>
                     <p>
                         {{ $t('dashboard.welcome.description') }}
                     </p>
-                </b-jumbotron>
+                </div>
             </b-col>
         </b-row>
         <b-row >

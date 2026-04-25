@@ -18,8 +18,8 @@
                         <b-form-input
                             type="text"
                             id="branchName"
-                            v-model="newBranchName"
-                            @input="validate"
+                            v-model:model-value="newBranchName"
+                            @update:model-value="validate"
                             :state="isError"
                             lazy-formatter
                             trim

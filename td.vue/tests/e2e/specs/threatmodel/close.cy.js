@@ -2,7 +2,7 @@ describe('closing a threat model', () => {
     beforeEach(() => {
         cy.get('#local-login-btn').click();
         cy.get('a[href="#/demo/select"]').click();
-        cy.get('a[data-model-name="Demo Threat Model"').click();
+        cy.get('[data-model-name="Demo Threat Model"]').click();
         cy.url().should('contain', '/local/Demo%20Threat%20Model');
         cy.contains('Demo Threat Model');
     });

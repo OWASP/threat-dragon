@@ -1,4 +1,4 @@
-import { BootstrapVue, BCard } from 'bootstrap-vue';
+import { createBootstrap, BCard } from 'bootstrap-vue-next';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 
 import TdExecutiveSummary from '@/components/report/ExecutiveSummary.vue';
@@ -25,7 +25,7 @@ describe('components/report/ExecutiveSummary.vue', () => {
 
     const setup = (data) => {
         const localVue = createLocalVue();
-        localVue.use(BootstrapVue);
+        localVue.use(createBootstrap());
         wrapper = shallowMount(TdExecutiveSummary, {
             localVue,
             propsData: {

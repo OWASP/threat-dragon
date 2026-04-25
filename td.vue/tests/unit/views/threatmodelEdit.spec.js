@@ -1,4 +1,4 @@
-import { BootstrapVue, BCard } from 'bootstrap-vue';
+import { createBootstrap, BCard, BFormInput, BFormTextarea } from 'bootstrap-vue-next';
 import { createLocalVue, mount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
@@ -24,7 +24,7 @@ describe('views/ThreatmodelEdit.vue', () => {
         console.log = jest.fn();
         modelChanged = false;
         localVue = createLocalVue();
-        localVue.use(BootstrapVue);
+        localVue.use(createBootstrap());
         localVue.use(Vuex);
         mockStore = new Vuex.Store({
             state: {
@@ -74,25 +74,33 @@ describe('views/ThreatmodelEdit.vue', () => {
     });
 
     describe('layout', () => {
+        const inputValue = (component) => component.props('modelValue') || component.props('value');
+        const findInput = (id) => wrapper.findAllComponents(BFormInput)
+            .filter(x => x.attributes('id') === id)
+            .at(0);
+        const findTextarea = (id) => wrapper.findAllComponents(BFormTextarea)
+            .filter(x => x.attributes('id') === id)
+            .at(0);
+
         it('displays the title in the header', () => {
             const header = wrapper.findComponent(BCard);
             expect(header.attributes('header')).toEqual(`threatmodel.editing: ${title}`);
         });
 
         it('has a title input', () => {
-            expect(wrapper.find('#title').element.value).toEqual(title);
+            expect(inputValue(findInput('title'))).toEqual(title);
         });
 
         it('has an owner input', () => {
-            expect(wrapper.find('#owner').element.value).toEqual(owner);
+            expect(inputValue(findInput('owner'))).toEqual(owner);
         });
 
         it('has a reviewer input', () => {
-            expect(wrapper.find('#reviewer').element.value).toEqual(reviewer);
+            expect(inputValue(findInput('reviewer'))).toEqual(reviewer);
         });
 
         it('shows the description', () => {
-            expect(wrapper.find('#description').element.value).toEqual(description);
+            expect(inputValue(findTextarea('description'))).toEqual(description);
         });
 
         it('shows the contributors', () => {
@@ -275,28 +283,32 @@ describe('views/ThreatmodelEdit.vue', () => {
 
         describe('getConfirmModal', () => {
             beforeEach(() => {
-                wrapper.vm.$bvModal.msgBoxConfirm = jest.fn();
+                const modal = Promise.resolve({ ok: true });
+                modal.destroy = jest.fn().mockResolvedValue();
+                wrapper.vm.modalController.create = jest.fn().mockReturnValue(modal);
                 wrapper.vm.getConfirmModal();
             });
 
             it('sets the message', () => {
-                expect(wrapper.vm.$bvModal.msgBoxConfirm).toHaveBeenCalledWith(
-                    'forms.discardMessage',
-                    expect.anything()
+                expect(wrapper.vm.modalController.create).toHaveBeenCalledWith(
+                    expect.objectContaining({
+                        body: 'forms.discardMessage'
+                    }),
+                    { resolveOnHide: true }
                 );
             });
 
             it('sets the message box config', () => {
-                expect(wrapper.vm.$bvModal.msgBoxConfirm).toHaveBeenCalledWith(
-                    expect.anything(),
-                    {
+                expect(wrapper.vm.modalController.create).toHaveBeenCalledWith(
+                    expect.objectContaining({
                         title: 'forms.discardTitle',
                         okVariant: 'danger',
                         okTitle: 'forms.ok',
                         cancelTitle: 'forms.cancel',
-                        hideHeaderClose: true,
+                        noHeaderClose: true,
                         centered: true
-                    }
+                    }),
+                    { resolveOnHide: true }
                 );
             });
         });

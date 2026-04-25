@@ -1,4 +1,4 @@
-import { BootstrapVue } from 'bootstrap-vue';
+import { createBootstrap } from 'bootstrap-vue-next';
 import { shallowMount } from '@vue/test-utils';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -22,7 +22,7 @@ describe('components/GraphThreats.vue', () => {
 
     beforeEach(() => {
         localVue = createLocalVue();
-        localVue.use(BootstrapVue);
+        localVue.use(createBootstrap());
         localVue.component('font-awesome-icon', FontAwesomeIcon);
     });
 

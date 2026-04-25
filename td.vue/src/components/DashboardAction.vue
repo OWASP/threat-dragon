@@ -1,7 +1,7 @@
 <template>    
     <b-col lg="4">
     <router-link :to="to" class="action-pane-link">
-        <b-jumbotron class="text-center action-pane">
+        <div class="text-center action-pane p-5 mb-4 bg-light rounded-3">
                 <font-awesome-icon
                 :icon="[iconPreface, icon]"
                 size="4x"
@@ -9,7 +9,7 @@
                 ></font-awesome-icon>
             <br />
             {{ $t(`dashboard.actions.${description}`) }}
-        </b-jumbotron>
+        </div>
             </router-link>
     </b-col>
 </template>

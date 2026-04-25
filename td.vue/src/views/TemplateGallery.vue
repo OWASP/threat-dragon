@@ -2,10 +2,10 @@
     <b-container fluid>
         <b-row>
             <b-col>
-                <b-jumbotron class="text-center">
+                <div class="text-center p-5 mb-4 bg-light rounded-3">
                     <h4>{{ $t('template.select') }}</h4>
                     <p class="lead">{{ $t('template.selectDescription') }}</p>
-                </b-jumbotron>
+                </div>
             </b-col>
         </b-row>
 
@@ -13,7 +13,7 @@
         <b-row>
             <b-col md="6" offset-md="3">
                 <b-button variant="primary" @click="onImportFromLocal" block class="mb-3">
-                    <font-awesome-icon icon="cloud-upload" class="mr-2"></font-awesome-icon>
+                    <font-awesome-icon icon="cloud-upload" class="me-2"></font-awesome-icon>
                     {{ $t('template.startFromLocalTemplate') }}
                 </b-button>
             </b-col>
@@ -57,7 +57,7 @@
                     <h5>{{ $t('template.repo.notInitialized.title') }}</h5>
                     <p>{{ $t('template.repo.notInitialized.adminMessage') }}</p>
                     <b-button variant="success" :to="{ name: 'ManageTemplates' }">
-                        <font-awesome-icon icon="cog" class="mr-2"></font-awesome-icon>
+                        <font-awesome-icon icon="cog" class="me-2"></font-awesome-icon>
                         {{ $t('template.manage') }}
                     </b-button>
                 </b-alert>
@@ -72,7 +72,7 @@
                 <b-col md="6" offset-md="3">
                     <div class="d-flex mb-3">
                         <!-- Search bar -->
-                        <b-form-input v-model="searchQuery" :placeholder="$t('template.search')"
+                        <b-form-input v-model:model-value="searchQuery" :placeholder="$t('template.search')"
                             class="flex-grow-1" />
                     </div>
                 </b-col>
@@ -82,14 +82,16 @@
             <b-row>
                 <b-col md="6" offset-md="3">
                     <b-list-group v-if="templates.length > 0">
-                        <b-list-group-item v-for="template in filteredTemplates" :key="template.id" 
+                        <button v-for="template in filteredTemplates" :key="template.id"
+                            type="button"
+                            class="list-group-item list-group-item-action"
                             @click="onTemplateClick(template)" :data-template-id="template.id">
                             <h5>{{ template.name }}</h5>
                             <p class="mb-1 text-muted">{{ template.description }}</p>
-                            <b-badge v-for="tag in template.tags" :key="tag" variant="primary" class="mr-1">
+                            <b-badge v-for="tag in template.tags" :key="tag" variant="primary" class="me-1">
                                 {{ tag }}
                             </b-badge>
-                        </b-list-group-item>
+                        </button>
                     </b-list-group>
 
                     <b-alert v-else show variant="info">

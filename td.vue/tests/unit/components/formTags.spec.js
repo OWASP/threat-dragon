@@ -124,7 +124,7 @@ describe('components/FormTags.vue', () => {
             propsData: {
                 noTagRemove: true,
                 placeholder: 'Add contributor',
-                tagClass: ['mr-1', 'text-monospace'],
+                tagClass: ['me-1', 'text-monospace'],
                 tagRemoveLabel: 'Remove contributor',
                 value: ['alice'],
                 variant: 'info'
@@ -132,7 +132,7 @@ describe('components/FormTags.vue', () => {
         });
 
         expect(wrapper.find('input').attributes('placeholder')).toBe('Add contributor');
-        expect(wrapper.find('.b-form-tag').classes()).toEqual(expect.arrayContaining(['mr-1', 'text-monospace', 'badge-info']));
+        expect(wrapper.find('.b-form-tag').classes()).toEqual(expect.arrayContaining(['me-1', 'text-monospace', 'text-bg-info']));
         expect(wrapper.find('button').exists()).toBe(false);
     });
 

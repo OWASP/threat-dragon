@@ -167,7 +167,7 @@
             "product": "Key Vault"
         },
         {
-            "symbolic_name": "ml-models-blob",
+            "symbolic_name": "ms-models-blob",
             "title": "Machine Learning Model Storage Blob",
             "description": "Contains storage for machine learning models in serialized format.",
             "type": "object",
@@ -229,12 +229,12 @@
             "access_control_methods": ["rbac"]
         },
         {
-            "symbolic_name": "stored-ml-models",
+            "symbolic_name": "stored-ms-models",
             "title": "Stored Machine Learning Models",
             "description": "Contains trained machine learning models in serialized format for production use.",
             "placements": [
                 {
-                    "data_store": "ml-models-blob",
+                    "data_store": "ms-models-blob",
                     "encrypted": false
                 }
             ],
@@ -383,19 +383,19 @@
             "encrypted": false
         },
         {
-            "symbolic_name": "jupyter-notebook-ml-model",
+            "symbolic_name": "jupyter-notebook-ms-model",
             "title": "Jupyter Notebook to Machine Learning Model",
             "description": "Transfer final model from Jupyter Notebook to Machine Learning Model.",
             "source": {"type": "component", "object": "jupyter"},
-            "destination": {"type": "data_store", "object": "ml-models-blob"},
+            "destination": {"type": "data_store", "object": "ms-models-blob"},
             "has_sensitive_data": true,
             "encrypted": false
         },
         {
-            "symbolic_name": "ml-model-deployment-service",
+            "symbolic_name": "ms-model-deployment-service",
             "title": "Machine Learning Model to Deployment Service",
             "description": "Transfer from Machine Learning Model Blob to Deployment Service.",
-            "source": {"type": "data_store", "object": "ml-models-blob"},
+            "source": {"type": "data_store", "object": "ms-models-blob"},
             "destination": {"type": "component", "object": "deployment-service"},
             "has_sensitive_data": true,
             "encrypted": false
@@ -446,10 +446,10 @@
             "encrypted": false
         },
         {
-            "symbolic_name": "stored-ml-model-web-server",
+            "symbolic_name": "stored-ms-model-web-server",
             "title": "Stored Machine Learning Model to Simple Python Web Server",
             "description": "Transfer sensitive data from Stored Machine Learning Model to Simple Python Web Server.",
-            "source": {"type": "data_store", "object": "ml-models-blob"},
+            "source": {"type": "data_store", "object": "ms-models-blob"},
             "destination": {"type": "component","object": "web-service"},
             "has_sensitive_data": true,
             "encrypted": false
@@ -482,11 +482,11 @@
             "encrypted": true
         },
         {
-            "symbolic_name": "bastion-stored-ml-model",
+            "symbolic_name": "bastion-stored-ms-model",
             "title": "Bastion to Stored Machine Learning Model",
             "description": "Transfer sensitive data from Bastion to Stored Machine Learning Model.",
             "source": {"type": "component","object": "bastion"},
-            "destination": {"type": "data_store", "object": "ml-models-blob"},
+            "destination": {"type": "data_store", "object": "ms-models-blob"},
             "has_sensitive_data": true,
             "encrypted": false
         },

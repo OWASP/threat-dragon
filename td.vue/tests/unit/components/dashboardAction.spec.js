@@ -1,4 +1,4 @@
-import { BootstrapVue } from 'bootstrap-vue';
+import { createBootstrap } from 'bootstrap-vue-next';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { shallowMount, createLocalVue, RouterLinkStub } from '@vue/test-utils';
 
@@ -13,7 +13,7 @@ describe('components/DashboardAction.vue', () => {
 
     beforeEach(() => {
         localVue = createLocalVue();
-        localVue.use(BootstrapVue);
+        localVue.use(createBootstrap());
         localVue.component('font-awesome-icon', FontAwesomeIcon);
         wrapper = shallowMount(TdDashboardAction, {
             localVue,

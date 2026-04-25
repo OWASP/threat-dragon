@@ -5,7 +5,7 @@
         :disabled="disabled"
         :required="required"
         :size="size"
-        class="custom-select"
+        class="form-select"
         :value="selectedIndex"
         @change="onChange"
     >

@@ -1,4 +1,4 @@
-import { BootstrapVue, BFormTextarea, BFormGroup } from 'bootstrap-vue';
+import { createBootstrap, BFormTextarea, BFormGroup } from 'bootstrap-vue-next';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
@@ -11,7 +11,7 @@ describe('components/GraphProperties.vue', () => {
         beforeEach(() => {
             const localVue = createLocalVue();
             localVue.use(Vuex);
-            localVue.use(BootstrapVue);
+            localVue.use(createBootstrap());
             localVue.use(Vuex);
             const mockStore = new Vuex.Store({
                 state: {
@@ -48,7 +48,7 @@ describe('components/GraphProperties.vue', () => {
             };
             const localVue = createLocalVue();
             localVue.use(Vuex);
-            localVue.use(BootstrapVue);
+            localVue.use(createBootstrap());
             localVue.use(Vuex);
             const mockStore = new Vuex.Store({
                 state: {

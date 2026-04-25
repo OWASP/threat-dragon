@@ -3,15 +3,15 @@
         <b-modal
             v-if="!!threat"
             id="threat-edit"
+            v-model:model-value="editModalVisible"
             size="lg"
             ok-variant="primary"
             header-bg-variant="primary"
             header-text-variant="light"
             :title="modalTitle"
-            ref="editModal"
         >
             <b-form>
-                <b-form-row>
+                <b-row>
                     <b-col>
                         <b-form-group
                             id="title-group"
@@ -20,15 +20,15 @@
                         >
                             <b-form-input
                                 id="title"
-                                v-model="threat.title"
+                                v-model:model-value="threat.title"
                                 type="text"
                                 required
                             ></b-form-input>
                         </b-form-group>
                     </b-col>
-                </b-form-row>
+                </b-row>
 
-                <b-form-row v-if="threat.modelType == 'EOP'">
+                <b-row v-if="threat.modelType == 'EOP'">
                     <b-col>
                         <b-form-group 
                             id="eop-game"
@@ -42,8 +42,8 @@
                             />
                         </b-form-group>
                     </b-col>
-                </b-form-row>
-                <b-form-row v-if="threat.modelType == 'EOP'">
+                </b-row>
+                <b-row v-if="threat.modelType == 'EOP'">
                     <b-col>
                         <b-form-group
                             id="card-suit-group"
@@ -72,8 +72,8 @@
                             </td-form-select>
                         </b-form-group>
                     </b-col>
-                </b-form-row>
-                <b-form-row>
+                </b-row>
+                <b-row>
                     <b-col>
                         <b-form-group
                             id="threat-type-group"
@@ -89,9 +89,9 @@
                             </td-form-select>
                         </b-form-group>
                     </b-col>
-                </b-form-row>
+                </b-row>
 
-                <b-form-row
+                <b-row
                     v-if="
                         threat &&
                         threat.modelType === 'EOP' &&
@@ -136,13 +136,13 @@
                             }}
                         </a>
                     </b-col>
-                </b-form-row>
+                </b-row>
 
-                <b-form-row>
+                <b-row>
                     <b-col md="5">
                         <b-form-group
                             id="status-group"
-                            class="float-left"
+                            class="float-start"
                             :label="$t('threats.properties.status')"
                             label-for="status"
                         >
@@ -163,7 +163,7 @@
                         >
                             <b-form-input
                                 id="score"
-                                v-model="threat.score"
+                                v-model:model-value="threat.score"
                                 type="text"
                             ></b-form-input>
                         </b-form-group>
@@ -172,7 +172,7 @@
                     <b-col md="5">
                         <b-form-group
                             id="severity-group"
-                            class="float-right"
+                            class="float-end"
                             :label="$t('threats.properties.severity')"
                             label-for="severity"
                         >
@@ -184,9 +184,9 @@
                             ></td-form-radio-group>
                         </b-form-group>
                     </b-col>
-                </b-form-row>
+                </b-row>
 
-                <b-form-row>
+                <b-row>
                     <b-col>
                         <b-form-group
                             id="description-group"
@@ -195,15 +195,15 @@
                         >
                             <b-form-textarea
                                 id="description"
-                                v-model="threat.description"
+                                v-model:model-value="threat.description"
                                 rows="5"
                             >
                             </b-form-textarea>
                         </b-form-group>
                     </b-col>
-                </b-form-row>
+                </b-row>
 
-                <b-form-row>
+                <b-row>
                     <b-col>
                         <b-form-group
                             id="mitigation-group"
@@ -212,21 +212,21 @@
                         >
                             <b-form-textarea
                                 id="mitigation"
-                                v-model="threat.mitigation"
+                                v-model:model-value="threat.mitigation"
                                 rows="5"
                             >
                             </b-form-textarea>
                         </b-form-group>
                     </b-col>
-                </b-form-row>
+                </b-row>
             </b-form>
 
-            <template #modal-footer>
+            <template #footer>
                 <div class="w-100">
                     <b-button
                         v-if="!newThreat"
                         variant="danger"
-                        class="float-left"
+                        class="float-start"
                         @click="confirmDelete()"
                     >
                         {{ $t("forms.delete") }}
@@ -234,14 +234,14 @@
                     <b-button
                         v-if="newThreat"
                         variant="danger"
-                        class="float-left"
+                        class="float-start"
                         @click="immediateDelete()"
                     >
                         {{ $t("forms.remove") }}
                     </b-button>
                     <b-button
                         variant="secondary"
-                        class="float-right"
+                        class="float-end"
                         @click="updateThreat()"
                     >
                         {{ $t("forms.apply") }}
@@ -249,7 +249,7 @@
                     <b-button
                         v-if="!newThreat"
                         variant="secondary"
-                        class="float-right mr-2"
+                        class="float-end me-2"
                         @click="hideModal()"
                     >
                         {{ $t("forms.cancel") }}
@@ -261,6 +261,7 @@
 </template>
 
 <script>
+import { useModal } from 'bootstrap-vue-next';
 import { mapState } from 'vuex';
 
 import { CELL_DATA_UPDATED } from '@/store/actions/cell.js';
@@ -276,6 +277,11 @@ export default {
     components: {
         TdFormRadioGroup,
         TdFormSelect
+    },
+    setup() {
+        return {
+            modalController: useModal()
+        };
     },
     computed: {
         ...mapState({
@@ -362,6 +368,7 @@ export default {
             ],
             number: 0,
             selectedGameId: null,
+            editModalVisible: false,
             card: {
                 suit: null,
                 number: null,
@@ -401,7 +408,7 @@ export default {
                 this.card.number = this.threat.cardNumber;
                 this.number = this.threat.number;
                 this.newThreat = state === 'new';
-                this.$refs.editModal.show();
+                this.editModalVisible = true;
             }
         },
         updateThreat() {
@@ -410,16 +417,17 @@ export default {
                 this.card.suit &&
                 !this.card.number
             ) {
-                this.$bvModal.msgBoxOk(
-                    this.$t('threats.validation.cardNumberRequired'),
-                    {
-                        title: this.$t('threats.validation.error'),
-                        okVariant: 'danger',
-                        headerBgVariant: 'danger',
-                        headerTextVariant: 'light',
-                        centered: true,
-                    }
-                );
+                this.modalController.create({
+                    modelValue: true,
+                    visible: true,
+                    body: this.$t('threats.validation.cardNumberRequired'),
+                    title: this.$t('threats.validation.error'),
+                    okVariant: 'danger',
+                    okOnly: true,
+                    headerBgVariant: 'danger',
+                    headerTextVariant: 'light',
+                    centered: true,
+                }, { resolveOnHide: true });
                 return;
             }
 
@@ -490,18 +498,18 @@ export default {
             dataChanged.updateStyleAttrs(this.cellRef);
         },
         hideModal() {
-            this.$refs.editModal.hide();
+            this.editModalVisible = false;
         },
         async confirmDelete() {
-            const confirmed = await this.$bvModal.msgBoxConfirm(
-                this.$t('threats.confirmDeleteMessage'),
-                {
-                    title: this.$t('threats.confirmDeleteTitle'),
-                    okTitle: this.$t('forms.delete'),
-                    cancelTitle: this.$t('forms.cancel'),
-                    okVariant: 'danger',
-                }
-            );
+            const confirmed = (await this.modalController.create({
+                modelValue: true,
+                visible: true,
+                body: this.$t('threats.confirmDeleteMessage'),
+                title: this.$t('threats.confirmDeleteTitle'),
+                okTitle: this.$t('forms.delete'),
+                cancelTitle: this.$t('forms.cancel'),
+                okVariant: 'danger',
+            }, { resolveOnHide: true })).ok;
 
             if (!confirmed) {
                 return;

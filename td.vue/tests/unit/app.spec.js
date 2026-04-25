@@ -1,4 +1,4 @@
-import { BootstrapVue } from 'bootstrap-vue';
+import { createBootstrap } from 'bootstrap-vue-next';
 import { shallowMount } from '@vue/test-utils';
 import { createStore } from 'vuex';
 
@@ -14,7 +14,7 @@ describe('App.vue', () => {
     beforeEach(() => {
         console.log = jest.fn();
         localVue = createLocalVue();
-        localVue.use(BootstrapVue);
+        localVue.use(createBootstrap());
         mockStore = createStore({
             state: {
                 loader: {

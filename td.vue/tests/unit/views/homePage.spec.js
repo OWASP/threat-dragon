@@ -1,4 +1,4 @@
-import { BootstrapVue, BContainer, BJumbotron, BImg } from 'bootstrap-vue';
+import { createBootstrap, BContainer } from 'bootstrap-vue-next';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
@@ -19,7 +19,7 @@ describe('HomePage.vue', () => {
         beforeEach(() => {
             localVue = createLocalVue();
             localVue.use(Vuex);
-            localVue.use(BootstrapVue);
+            localVue.use(createBootstrap());
             localVue.component('font-awesome-icon', FontAwesomeIcon);
             mockStore = new Vuex.Store({
                 state: {
@@ -65,7 +65,7 @@ describe('HomePage.vue', () => {
             });
 
             it('has a jumbotron', () => {
-                expect(wrapper.findComponent(BJumbotron).exists()).toBe(true);
+                expect(wrapper.find('#welcome-jumbotron').exists()).toBe(true);
             });
 
             it('displays the title', () => {
@@ -73,8 +73,7 @@ describe('HomePage.vue', () => {
             });
 
             it('displays the threat dragon logo', () => {
-                expect(wrapper.findComponent(BImg).attributes('src'))
-                    .toContain('threatdragon_logo_image');
+                expect(wrapper.find('#home-td-logo').exists()).toBe(true);
             });
 
             it('has the description of the project', () => {

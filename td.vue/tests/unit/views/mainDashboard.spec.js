@@ -1,4 +1,4 @@
-import { BootstrapVue, BJumbotron } from 'bootstrap-vue';
+import { createBootstrap } from 'bootstrap-vue-next';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
@@ -12,7 +12,7 @@ describe('MainDashboard.vue', () => {
     beforeEach(() => {
         const template = '<div />';
         localVue = createLocalVue();
-        localVue.use(BootstrapVue);
+        localVue.use(createBootstrap());
         localVue.use(Vuex);
         localVue.component('font-awesome-icon', FontAwesomeIcon);
         mockStore = new Vuex.Store({
@@ -40,7 +40,7 @@ describe('MainDashboard.vue', () => {
     });
 
     it('has a jumbotron welcoming the user', () => {
-        expect(wrapper.findComponent(BJumbotron).text()).toContain('dashboard.welcome.description');
+        expect(wrapper.text()).toContain('dashboard.welcome.description');
     });
 
     it('has multiple actions', () => {

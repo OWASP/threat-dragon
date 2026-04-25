@@ -31,7 +31,7 @@
                         </h6>
                     </template>
                     <a href="#" @click.prevent="editDiagram(diagram)">
-                        <!-- "thumbnail": "./public/content/images/thumbnail.jpg", --> <b-img-lazy
+                        <!-- "thumbnail": "./public/content/images/thumbnail.jpg", --> <b-img
                             class="m-auto d-block td-diagram-thumb"
                             :src="require(`../assets/${diagram.thumbnail ? diagram.thumbnail.split('/').pop() : 'thumbnail.jpg'}`)"
                             :alt="diagram.title" />
@@ -43,8 +43,8 @@
             </b-col>
         </b-row>
         <b-row>
-            <b-col class="text-right">
-                <b-btn-group>
+            <b-col class="text-end">
+                <b-button-group>
                     <td-form-button id="td-edit-btn" :isPrimary="true" :onBtnClick="onEditClick" icon="edit"
                         :text="$t('forms.edit')" />
                     <td-form-button id="td-report-btn" :onBtnClick="onReportClick" icon="file-alt"
@@ -58,7 +58,7 @@
                     </b-dropdown>
                     <td-form-button id="td-close-btn" :onBtnClick="onCloseClick" icon="times"
                         :text="$t('forms.closeModel')" />
-                </b-btn-group>
+                </b-button-group>
             </b-col>
         </b-row>
     </div>

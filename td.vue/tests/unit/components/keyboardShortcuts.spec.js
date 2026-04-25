@@ -1,4 +1,4 @@
-import { BootstrapVue, BModal, BTable } from 'bootstrap-vue';
+import { createBootstrap, BModal, BTable } from 'bootstrap-vue-next';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 
 import TdKeyboardShortcuts from '@/components/KeyboardShortcuts.vue';
@@ -8,7 +8,7 @@ describe('components/KeyboardShortcuts.vue', () => {
 
     beforeEach(() => {
         localVue = createLocalVue();
-        localVue.use(BootstrapVue);
+        localVue.use(createBootstrap());
         wrapper = shallowMount(TdKeyboardShortcuts, {
             localVue,
             mocks: {

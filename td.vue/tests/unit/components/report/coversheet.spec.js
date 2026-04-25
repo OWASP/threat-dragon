@@ -1,4 +1,4 @@
-import { BootstrapVue } from 'bootstrap-vue';
+import { createBootstrap } from 'bootstrap-vue-next';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 
 import TdCoverSheet from '@/components/report/Coversheet.vue';
@@ -17,7 +17,7 @@ describe('components/report/Coversheet.vue', () => {
 
     const setup = (data) => {
         const localVue = createLocalVue();
-        localVue.use(BootstrapVue);
+        localVue.use(createBootstrap());
         wrapper = shallowMount(TdCoverSheet, {
             localVue,
             propsData: {

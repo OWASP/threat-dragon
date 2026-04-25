@@ -1,6 +1,6 @@
 <template>
     <b-container fluid>
-        <b-jumbotron id="welcome-jumbotron">
+        <div id="welcome-jumbotron">
             <b-row class="text-center mb-2">
                 <b-col md="12">
                     <h1 class="display-3 text-center">{{ $t("home.title") }}</h1>
@@ -11,7 +11,7 @@
                     <b-img class="td-cupcake"
                            id="home-td-logo"
                            :alt="$t('home.imgAlt')"
-                           src="@/assets/threatdragon_logo_image.svg"
+                           :src="threatDragonLogo"
                     />
                 </b-col>
                 <b-col md="8">
@@ -21,7 +21,7 @@
                         </p>
                     </b-row>
                     <b-row>
-                        <b-col class="mt-5 ml-5 text-center">
+                        <b-col class="mt-5 ms-5 text-center">
                             <td-provider-login-button
                                 v-for="(provider, idx) in providers"
                                 :key="idx"
@@ -31,26 +31,55 @@
                     </b-row>
                 </b-col>
             </b-row>
-        </b-jumbotron>
+        </div>
     </b-container>
 </template>
 
 <style lang="scss" scoped>
+#welcome-jumbotron {
+    background-color: #e9ecef;
+    border-radius: 0.3rem;
+    margin-bottom: 2rem;
+    padding: 2rem 1rem;
+}
+
 .login-btn-icon {
     display: block;
 }
 
+.display-3 {
+    font-family: Ubuntu, Tahoma, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 4.5rem;
+    font-weight: 300;
+    line-height: 1.2;
+}
+
 .td-description {
+    font-family: Ubuntu, Tahoma, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 20px;
+    max-width: 41rem;
     margin-right: 20px;
-    margin-left: 170px;
+    margin-left: 158px;
 }
 
 .td-cupcake {
+    width: 400px;
     margin-top: 10px;
     margin-bottom: 20px;
     margin-right: 20px;
-    margin-left: 20px;
+    margin-left: 26px;
+}
+
+:deep(#local-login-btn) {
+    font-family: Ubuntu, Tahoma, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    left: -1px;
+    position: relative;
+}
+
+@media (min-width: 576px) {
+    #welcome-jumbotron {
+        padding: 4rem 2rem;
+    }
 }
 </style>
 
@@ -58,11 +87,17 @@
 import {allProviders} from '@/service/provider/providers.js';
 import isElectron from 'is-electron';
 import TdProviderLoginButton from '@/components/ProviderLoginButton.vue';
+import threatDragonLogo from '@/assets/threatdragon_logo_image.svg';
 import configActions from '@/store/actions/config.js';
 import {mapState} from 'vuex';
 
 export default {
     name: 'HomePage',
+    data() {
+        return {
+            threatDragonLogo
+        };
+    },
     computed:
         mapState({
             config: state => {

@@ -7,7 +7,7 @@
             >
                 <b-form @submit="onSubmit">
 
-                    <b-form-row>
+                    <b-row>
                         <b-col>
                             <b-form-group
                                 id="title-group"
@@ -15,16 +15,16 @@
                                 label-for="title">
                                 <b-form-input
                                     id="title"
-                                    v-model="model.summary.title"
-                                    @input="onModifyModel()"
+                                    v-model:model-value="model.summary.title"
+                                    @update:model-value="onModifyModel()"
                                     type="text"
                                     required
                                 ></b-form-input>
                             </b-form-group>
                         </b-col>
-                    </b-form-row>
+                    </b-row>
 
-                    <b-form-row>
+                    <b-row>
                         <b-col md=6>
                             <b-form-group
                                 id="owner-group"
@@ -32,8 +32,8 @@
                                 label-for="owner">
                                 <b-form-input
                                     id="owner"
-                                    v-model="model.summary.owner"
-                                    @input="onModifyModel()"
+                                    v-model:model-value="model.summary.owner"
+                                    @update:model-value="onModifyModel()"
                                     type="text"
                                 ></b-form-input>
                             </b-form-group>
@@ -46,15 +46,15 @@
                                 label-for="reviewer">
                                 <b-form-input
                                     id="reviewer"
-                                    v-model="model.detail.reviewer"
-                                    @input="onModifyModel()"
+                                    v-model:model-value="model.detail.reviewer"
+                                    @update:model-value="onModifyModel()"
                                     type="text"
                                 ></b-form-input>
                             </b-form-group>
                         </b-col>
-                    </b-form-row>
+                    </b-row>
 
-                    <b-form-row>
+                    <b-row>
                         <b-col>
                             <b-form-group
                                 id="description-group"
@@ -62,15 +62,15 @@
                                 label-for="description">
                                 <b-form-textarea
                                     id="description"
-                                    v-model="model.summary.description"
-                                    @input="onModifyModel()"
+                                    v-model:model-value="model.summary.description"
+                                    @update:model-value="onModifyModel()"
                                     type="text"
                                 ></b-form-textarea>
                             </b-form-group>
                         </b-col>
-                    </b-form-row>
+                    </b-row>
 
-                    <b-form-row>
+                    <b-row>
                         <b-col>
                             <b-form-group
                                 id="contributors-group"
@@ -87,15 +87,15 @@
                                 ></td-form-tags>
                             </b-form-group>
                         </b-col>
-                    </b-form-row>
+                    </b-row>
 
-                    <b-form-row>
+                    <b-row>
                         <b-col>
                             <h5>{{ $t('threatmodel.diagram.diagrams') }}</h5>
                         </b-col>
-                    </b-form-row>
+                    </b-row>
 
-                    <b-form-row>
+                    <b-row>
                         <b-col md=10
                             v-for="(diagram, idx) in model.detail.diagrams"
                             :key="idx"
@@ -105,7 +105,7 @@
                                 :label-for="`diagram-${idx}`"
                                 class="mb-3"
                             >
-                                <b-input-group-prepend>
+                                <template #prepend>
                                     <b-dropdown variant="secondary" class="select-diagram-type" :text="model.detail.diagrams[idx].diagramType === 'EOP' ? $t('threatmodel.diagram.eop.select') : model.detail.diagrams[idx].diagramType">
                                         <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'CIA')">{{ $t('threatmodel.diagram.cia.select') }}</b-dropdown-item-button>
                                         <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'CIADIE')">{{ $t('threatmodel.diagram.die.select') }}</b-dropdown-item-button>
@@ -115,19 +115,21 @@
                                         <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'EOP')">{{ $t('threatmodel.diagram.eop.select') }}</b-dropdown-item-button>
                                         <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'Generic')">{{ $t('threatmodel.diagram.generic.select') }}</b-dropdown-item-button>
                                     </b-dropdown>
-                                </b-input-group-prepend>
+                                </template>
                                 <b-form-input
-                                    v-model="model.detail.diagrams[idx].title"
+                                    v-model:model-value="model.detail.diagrams[idx].title"
+                                    @update:model-value="onModifyModel()"
                                     type="text"
                                     class="td-diagram"
                                 ></b-form-input>
                                 <b-form-input
-                                    v-model="model.detail.diagrams[idx].description"
+                                    v-model:model-value="model.detail.diagrams[idx].description"
+                                    @update:model-value="onModifyModel()"
                                     :placeholder="model.detail.diagrams[idx].placeholder"
                                     type="text"
                                     class="td-diagram-description"
                                 ></b-form-input>
-                                <b-input-group-append>
+                                <template #append>
                                     <b-button variant="primary" class="td-duplicate-diagram" @click="onDuplicateDiagramClick(idx)">
                                         <font-awesome-icon icon="clone"></font-awesome-icon>
                                         {{ $t('forms.duplicate') }}
@@ -136,23 +138,23 @@
                                         <font-awesome-icon icon="times"></font-awesome-icon>
                                         {{ $t('forms.remove') }}
                                     </b-button>
-                                </b-input-group-append>
+                                </template>
                             </b-input-group>
                         </b-col>
-                    </b-form-row>
+                    </b-row>
 
-                    <b-form-row>
+                    <b-row>
                         <b-col md=6>
                             <a href="#" @click.prevent="onAddDiagramClick" class="add-diagram-link m-2">
                                 <font-awesome-icon icon="plus"></font-awesome-icon>
                                 {{ $t('threatmodel.diagram.addNewDiagram') }}
                             </a>
                         </b-col>
-                    </b-form-row>
+                    </b-row>
 
-                    <b-form-row>
-                        <b-col class="text-right mt-5">
-                            <b-btn-group>
+                    <b-row>
+                        <b-col class="text-end mt-5">
+                            <b-button-group>
                                 <td-form-button
                                     id="td-save-btn"
                                     :isPrimary="true"
@@ -169,9 +171,9 @@
                                     :onBtnClick="onCloseClick"
                                     icon="times"
                                     :text="$t('forms.close')" />
-                            </b-btn-group>
+                            </b-button-group>
                         </b-col>
-                    </b-form-row>
+                    </b-row>
 
                 </b-form>
             </b-card>
@@ -195,6 +197,7 @@
 </style>
 
 <script>
+import { useModal } from 'bootstrap-vue-next';
 import { mapState } from 'vuex';
 
 import { getProviderType } from '@/service/provider/providers.js';
@@ -207,6 +210,11 @@ export default {
     components: {
         TdFormButton,
         TdFormTags
+    },
+    setup() {
+        return {
+            modalController: useModal()
+        };
     },
     computed: {
         ...mapState({
@@ -372,15 +380,20 @@ export default {
             }
             return false;
         },
-        getConfirmModal() {
-            return this.$bvModal.msgBoxConfirm(this.$t('forms.discardMessage'), {
+        async getConfirmModal() {
+            const result = await this.modalController.create({
+                modelValue: true,
+                visible: true,
+                body: this.$t('forms.discardMessage'),
                 title: this.$t('forms.discardTitle'),
                 okVariant: 'danger',
                 okTitle: this.$t('forms.ok'),
                 cancelTitle: this.$t('forms.cancel'),
-                hideHeaderClose: true,
+                noHeaderClose: true,
                 centered: true
-            });
+            }, { resolveOnHide: true });
+
+            return result.ok;
         }
     }
 };

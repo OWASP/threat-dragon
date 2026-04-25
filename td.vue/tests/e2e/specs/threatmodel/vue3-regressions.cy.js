@@ -165,7 +165,7 @@ describe('Regressions discovered during vue3 migration', () => {
     it('updates export-template tags through a Bootstrap dropdown without runtime errors', () => {
         openDemoModel('Demo Threat Model');
 
-        cy.get('#manage-model-btn button.dropdown-toggle, #manage-model-btn__BV_toggle_')
+        cy.get('#manage-model-btn.dropdown-toggle, #manage-model-btn')
             .first()
             .click({ force: true });
         cy.get('#export-template-option').click({ force: true });

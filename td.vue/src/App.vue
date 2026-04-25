@@ -1,12 +1,14 @@
 <template>
-  <div>
-    <td-navbar />
-    <b-container fluid id="app">
-      <b-overlay style="max-height: 100vh;" :show="isLoading" spinner-variant="primary">
-        <router-view />
-      </b-overlay>
-    </b-container>
-  </div>
+  <b-app>
+    <div>
+      <td-navbar />
+      <b-container fluid id="app">
+        <b-overlay style="max-height: 100vh;" :show="isLoading" spinner-variant="primary">
+          <router-view />
+        </b-overlay>
+      </b-container>
+    </div>
+  </b-app>
 </template>
 
 <style lang="scss">

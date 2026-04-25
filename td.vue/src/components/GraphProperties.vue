@@ -42,7 +42,7 @@
     </b-row>
 
     <b-form v-if="!!cellRef && cellRef.data">
-      <b-form-row>
+      <b-row>
         <b-col md="6">
           <b-form-group
             id="name-group"
@@ -56,7 +56,7 @@
           >
             <b-form-textarea
               id="name"
-              v-model="cellRef.data.name"
+              v-model:model-value="cellRef.data.name"
               @update="onChangeName()"
               :rows="cellRef.data.type === 'tm.Text' ? 7 : 2"
               graphPro
@@ -73,7 +73,7 @@
           >
             <b-form-textarea
               id="description"
-              v-model="cellRef.data.description"
+              v-model:model-value="cellRef.data.description"
               @change="onChangeProperties()"
             ></b-form-textarea>
           </b-form-group>
@@ -138,7 +138,7 @@
             <b-form-textarea
               id="reasonoutofscope"
               :disabled="!cellRef.data.outOfScope"
-              v-model="cellRef.data.reasonOutOfScope"
+              v-model:model-value="cellRef.data.reasonOutOfScope"
               @change="onChangeProperties()"
             ></b-form-textarea>
           </b-form-group>
@@ -153,7 +153,7 @@
           >
             <b-form-input
               id="privilegelevel"
-              v-model="cellRef.data.privilegeLevel"
+              v-model:model-value="cellRef.data.privilegeLevel"
               @change="onChangeProperties()"
               type="text"
             ></b-form-input>
@@ -307,7 +307,7 @@
           >
             <b-form-input
               id="protocol"
-              v-model="cellRef.data.protocol"
+              v-model:model-value="cellRef.data.protocol"
               @change="onChangeProperties()"
               type="text"
             ></b-form-input>
@@ -347,7 +347,7 @@
             </div>
           </b-form-group>
         </b-col>
-      </b-form-row>
+      </b-row>
     </b-form>
   </div>
 </template>

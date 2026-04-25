@@ -11,17 +11,17 @@
             <b-card header-tag="header">
                 <template #header>
                     {{ $t('threatmodel.threats') }}
-                    <b-btn
+                    <b-button
                         :disabled="disableNewThreat"
                         @click="newThreat()"
                         v-if="!!cellRef"
                         variant="primary"
                         size="sm"
-                        class="float-right"
+                        class="float-end"
                     >
-                        <font-awesome-icon icon="plus" class="mr-1"></font-awesome-icon>
+                        <font-awesome-icon icon="plus" class="me-1"></font-awesome-icon>
                         {{ $t('threats.newThreat') }}
-                    </b-btn>
+                    </b-button>
                 </template>
                 <b-card-body>
                     <b-card-text v-if="!!cellRef">

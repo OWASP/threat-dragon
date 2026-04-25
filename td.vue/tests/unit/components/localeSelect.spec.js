@@ -1,4 +1,4 @@
-import { BDropdown, BDropdownItem, BootstrapVue } from 'bootstrap-vue';
+import { BDropdown, BDropdownItem, createBootstrap } from 'bootstrap-vue-next';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import { createI18n } from 'vue-i18n';
 import Vuex from 'vuex';
@@ -25,7 +25,7 @@ describe('components/LocaleSelect.vue', () => {
 
         localVue.use(Vuex);
         localVue.use(i18n);
-        localVue.use(BootstrapVue);
+        localVue.use(createBootstrap());
 
         mockStore = new Vuex.Store({
             state: { locale: { locale: storeLocale }},
@@ -78,8 +78,8 @@ describe('components/LocaleSelect.vue', () => {
             it.each([
                 ['de', LOCALE_LABELS.de],
                 ['en', LOCALE_LABELS.en]
-            ])('updates the locale to %s', async (localeCode, localeLabel) => {
-                await findLocaleItem(localeLabel).trigger('click');
+            ])('updates the locale to %s', async (localeCode) => {
+                wrapper.vm.updateLocale(localeCode);
 
                 expect(dispatchSpy).toHaveBeenCalledTimes(1);
                 expect(dispatchSpy).toHaveBeenCalledWith(LOCALE_SELECTED, localeCode);

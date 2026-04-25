@@ -1,5 +1,7 @@
 const path = require('path');
 const { CycloneDxWebpackPlugin } = require('@cyclonedx/webpack-plugin');
+const Components = require('unplugin-vue-components/webpack');
+const { BootstrapVueNextResolver } = require('bootstrap-vue-next/resolvers');
 const fs = require('fs');
 
 require('dotenv').config({ path: process.env.ENV_FILE || path.resolve(__dirname, '../.env') });
@@ -153,6 +155,9 @@ module.exports = {
     configureWebpack: {
         devtool: 'source-map',
         plugins: [
+            Components({
+                resolvers: [BootstrapVueNextResolver()]
+            }),
             new CycloneDxWebpackPlugin(
                 {
                     outputLocation: '.sbom',

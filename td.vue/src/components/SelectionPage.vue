@@ -2,27 +2,27 @@
     <b-container fluid>
         <b-row>
             <b-col>
-                <b-jumbotron class="text-center">
+                <div class="text-center p-5 mb-4 bg-light rounded-3">
                     <h4>
                         <slot></slot>
                     </h4>
-                </b-jumbotron>
+                </div>
             </b-col>
         </b-row>
         <b-row>
             <b-col md=6 offset=3>
                 <b-form>
-                    <b-form-row>
+                    <b-row>
                         <b-col>
                             <b-form-group id="filter-group">
                                 <b-form-input
                                     id="filter"
-                                    v-model="localFilter"
+                                    v-model:model-value="localFilter"
                                     :placeholder="$t('forms.search')"
                                 ></b-form-input>
                             </b-form-group>
                         </b-col>
-                    </b-form-row>
+                    </b-row>
                 </b-form>
             </b-col>
         </b-row>
@@ -30,25 +30,28 @@
         <b-row>
             <b-col md=6 offset=3>
                 <b-list-group>
-                    <b-list-group-item
+                    <button
                         v-if="showBackItem"
-                        href="#"
-                        @click.prevent="onBackClick">
+                        type="button"
+                        class="list-group-item list-group-item-action"
+                        @click="onBackClick">
                         ...
-                    </b-list-group-item>
+                    </button>
 
-                    <b-list-group-item
+                    <button
                         v-if="items.length === 0 && !!emptyStateText"
-                        @click.prevent="onEmptyStateClick"
-                        href="#">
+                        type="button"
+                        class="list-group-item list-group-item-action"
+                        @click="onEmptyStateClick">
                         {{ emptyStateText }}
-                    </b-list-group-item>
+                    </button>
 
-                    <b-list-group-item
+                    <button
                         v-for="(item, idx) in displayedItems"
                         :key="idx"
-                        href="#"
-                        @click.prevent="onItemClick(item)">
+                        type="button"
+                        class="list-group-item list-group-item-action"
+                        @click="onItemClick(item)">
                         <span v-if="typeof item === 'string'">{{ item }}</span>
                         <span v-else class="d-flex justify-content-between align-items-center">
                             {{ item.value }}
@@ -59,7 +62,7 @@
                                 :title="$t(item.iconTooltip) || ''"
                             ></font-awesome-icon>
                         </span>
-                    </b-list-group-item>
+                    </button>
                 </b-list-group>
             </b-col>
         </b-row>

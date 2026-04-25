@@ -74,10 +74,11 @@ const createMitigatedThreat = async (title, mitigation) => {
     await applyButton.waitForDisplayed({ timeout: UI_WAIT_TIMEOUT_MS });
     await applyButton.click();
 
-    await browser.waitUntil(
-        async () => !(await browser.getPageSource()).includes('Edit Threat'),
-        { timeout: UI_WAIT_TIMEOUT_MS, timeoutMsg: 'Timed out waiting for the threat dialog to close' }
-    );
+    await (await browser.$('#threat-edit')).waitForDisplayed({
+        timeout: UI_WAIT_TIMEOUT_MS,
+        reverse: true,
+        timeoutMsg: 'Timed out waiting for the threat dialog to close'
+    });
 };
 
 const saveDiagramWithButton = async () => {

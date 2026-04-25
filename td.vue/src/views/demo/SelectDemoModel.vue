@@ -2,23 +2,24 @@
     <b-container fluid>
         <b-row>
             <b-col>
-                <b-jumbotron class="text-center">
+                <div class="text-center p-5 mb-4 bg-light rounded-3">
                     <h4>
                         {{ $t('demo.select') }}
                     </h4>
-                </b-jumbotron>
+                </div>
             </b-col>
         </b-row>
         <b-row>
             <b-col md=6 offset=3>
                 <b-list-group>
-                    <b-list-group-item
+                    <button
                         v-for="(model, idx) in models"
                         :key="idx"
-                        href="#"
-                        @click.prevent="onModelClick(model)"
+                        type="button"
+                        class="list-group-item list-group-item-action"
+                        @click="onModelClick(model)"
                         :data-model-name="model.name"
-                    >{{ model.name }}</b-list-group-item>
+                    >{{ model.name }}</button>
                 </b-list-group>
             </b-col>
         </b-row>

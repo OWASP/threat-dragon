@@ -2,52 +2,52 @@
     <div>
         <b-row>
             <b-col>
-                <b-jumbotron class="text-center">
+                <div class="text-center p-5 mb-4 bg-light rounded-3">
                     <h4>
                         {{ $t('forms.open') }} / {{ $t('dashboard.actions.importExisting') }}
                     </h4>
-                </b-jumbotron>
+                </div>
             </b-col>
         </b-row>
         <b-row>
             <b-col md=8 offset=2>
                 <b-form>
-                    <b-form-row>
+                    <b-row>
                         <b-col @drop.prevent="onDropFile" @dragenter.prevent @dragover.prevent>
                             <b-form-group
                                 id="json-input-group"
                                 label-for="json-input">
                                 <b-form-textarea
                                     id="json-input"
-                                    v-model="tmJson"
+                                    v-model:model-value="tmJson"
                                     :placeholder="prompt"
                                     rows="16"
                                 ></b-form-textarea>
                             </b-form-group>
                         </b-col>
-                    </b-form-row>
+                    </b-row>
                 </b-form>
             </b-col>
         </b-row>
         <b-row>
-            <b-col md=4 offset=2  class="text-left">
-                <b-btn-group>
+            <b-col md=4 offset=2  class="text-start">
+                <b-button-group>
                     <td-form-button
                         id="td-open-btn"
                         :onBtnClick="onOpenClick"
                         icon="folder-open"
                         :text="$t('forms.open')" />
-                </b-btn-group>
+                </b-button-group>
             </b-col>
-            <b-col md=4 class="text-right">
-                <b-btn-group>
+            <b-col md=4 class="text-end">
+                <b-button-group>
                     <td-form-button
                         id="td-import-btn"
                         :isPrimary="true"
                         :onBtnClick="onImportClick"
                         icon="file-import"
                         :text="$t('forms.import')" />
-                </b-btn-group>
+                </b-button-group>
             </b-col>
         </b-row>
     </div>

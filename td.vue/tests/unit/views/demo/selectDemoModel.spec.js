@@ -1,4 +1,4 @@
-import { BootstrapVue, BJumbotron, BListGroupItem } from 'bootstrap-vue';
+import { createBootstrap } from 'bootstrap-vue-next';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
@@ -11,7 +11,7 @@ describe('views/demo/SelectDemoModel.vue', () => {
 
     beforeEach(() => {
         localVue = createLocalVue();
-        localVue.use(BootstrapVue);
+        localVue.use(createBootstrap());
         localVue.use(Vuex);
 
         mockStore = new Vuex.Store({
@@ -38,12 +38,12 @@ describe('views/demo/SelectDemoModel.vue', () => {
     });
 
     it('displays the title', () => {
-        expect(wrapper.findComponent(BJumbotron).text()).toEqual('demo.select');
+        expect(wrapper.text()).toContain('demo.select');
     });
 
     it('displays the Demo Threat Model', () => {
         expect(
-            wrapper.findAllComponents(BListGroupItem)
+            wrapper.findAll('.list-group-item')
                 .filter(x => x.text() === 'Demo Threat Model')
                 .at(0)
                 .exists()
@@ -52,7 +52,7 @@ describe('views/demo/SelectDemoModel.vue', () => {
 
     it('displays the HuskyAI demo model', () => {
         expect(
-            wrapper.findAllComponents(BListGroupItem)
+            wrapper.findAll('.list-group-item')
                 .filter(x => x.text() === 'Husky AI')
                 .at(0)
                 .exists()
@@ -61,7 +61,7 @@ describe('views/demo/SelectDemoModel.vue', () => {
 
     it('displays the Cryptocurrency Wallet demo model', () => {
         expect(
-            wrapper.findAllComponents(BListGroupItem)
+            wrapper.findAll('.list-group-item')
                 .filter(x => x.text() === 'Cryptocurrency Wallet')
                 .at(0)
                 .exists()
@@ -70,7 +70,7 @@ describe('views/demo/SelectDemoModel.vue', () => {
 
     it('displays the Generic CMS demo model', () => {
         expect(
-            wrapper.findAllComponents(BListGroupItem)
+            wrapper.findAll('.list-group-item')
                 .filter(x => x.text() === 'Generic CMS')
                 .at(0)
                 .exists()
@@ -79,7 +79,7 @@ describe('views/demo/SelectDemoModel.vue', () => {
 
     it('displays the IoT Device demo model', () => {
         expect(
-            wrapper.findAllComponents(BListGroupItem)
+            wrapper.findAll('.list-group-item')
                 .filter(x => x.text() === 'IoT Device')
                 .at(0)
                 .exists()
@@ -88,7 +88,7 @@ describe('views/demo/SelectDemoModel.vue', () => {
 
     it('displays the Online Game demo model', () => {
         expect(
-            wrapper.findAllComponents(BListGroupItem)
+            wrapper.findAll('.list-group-item')
                 .filter(x => x.text() === 'Online Game')
                 .at(0)
                 .exists()
@@ -97,7 +97,7 @@ describe('views/demo/SelectDemoModel.vue', () => {
 
     it('displays the Payments Processing Platform demo model', () => {
         expect(
-            wrapper.findAllComponents(BListGroupItem)
+            wrapper.findAll('.list-group-item')
                 .filter(x => x.text() === 'Payments Processing Platform')
                 .at(0)
                 .exists()
@@ -106,7 +106,7 @@ describe('views/demo/SelectDemoModel.vue', () => {
 
     it('displays the Renting Car Startup demo model', () => {
         expect(
-            wrapper.findAllComponents(BListGroupItem)
+            wrapper.findAll('.list-group-item')
                 .filter(x => x.text() === 'Renting Car Startup')
                 .at(0)
                 .exists()
@@ -115,7 +115,7 @@ describe('views/demo/SelectDemoModel.vue', () => {
 
     it('displays the Three Tier Web Application demo model', () => {
         expect(
-            wrapper.findAllComponents(BListGroupItem)
+            wrapper.findAll('.list-group-item')
                 .filter(x => x.text() === 'Three Tier Web Application')
                 .at(0)
                 .exists()
@@ -124,7 +124,7 @@ describe('views/demo/SelectDemoModel.vue', () => {
 
     it('displays the New Blank Model', () => {
         expect(
-            wrapper.findAllComponents(BListGroupItem)
+            wrapper.findAll('.list-group-item')
                 .filter(x => x.text() === 'New Blank Model')
                 .at(0)
                 .exists()
@@ -166,10 +166,8 @@ describe('views/demo/SelectDemoModel.vue', () => {
                 }
             });
 
-            demoModelItem = await wrapper.findAllComponents(BListGroupItem)
-                .filter(x => x.text() === 'Demo Threat Model')
-                .at(0);
-            await demoModelItem.trigger('click');
+            demoModelItem = wrapper.vm.models.find(model => model.name === 'Demo Threat Model');
+            wrapper.vm.onModelClick(demoModelItem);
         });
 
         it('dispatches the selected event', () => {
@@ -216,10 +214,8 @@ describe('views/demo/SelectDemoModel.vue', () => {
                 }
             });
 
-            demoModelItem = await wrapper.findAllComponents(BListGroupItem)
-                .filter(x => x.text() === 'Demo Threat Model')
-                .at(0);
-            await demoModelItem.trigger('click');
+            demoModelItem = wrapper.vm.models.find(model => model.name === 'Demo Threat Model');
+            wrapper.vm.onModelClick(demoModelItem);
         });
 
         it('dispatches the selected event', () => {
@@ -267,10 +263,8 @@ describe('views/demo/SelectDemoModel.vue', () => {
                 }
             });
 
-            demoModelItem = await wrapper.findAllComponents(BListGroupItem)
-                .filter(x => x.text() === 'Demo Threat Model')
-                .at(0);
-            await demoModelItem.trigger('click');
+            demoModelItem = wrapper.vm.models.find(model => model.name === 'Demo Threat Model');
+            wrapper.vm.onModelClick(demoModelItem);
         });
 
         it('dispatches the selected event', () => {

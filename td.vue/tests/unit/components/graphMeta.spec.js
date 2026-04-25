@@ -1,4 +1,4 @@
-import { BootstrapVue, BCardText } from 'bootstrap-vue';
+import { createBootstrap, BCardText } from 'bootstrap-vue-next';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import Vuex from 'vuex';
@@ -13,7 +13,7 @@ describe('components/GraphMeta.vue', () => {
         beforeEach(() => {
             const localVue = createLocalVue();
             localVue.use(Vuex);
-            localVue.use(BootstrapVue);
+            localVue.use(createBootstrap());
             localVue.component('font-awesome-icon', FontAwesomeIcon);
             localVue.use(Vuex);
             const mockStore = new Vuex.Store({
@@ -53,7 +53,7 @@ describe('components/GraphMeta.vue', () => {
             };
             const localVue = createLocalVue();
             localVue.use(Vuex);
-            localVue.use(BootstrapVue);
+            localVue.use(createBootstrap());
             localVue.component('font-awesome-icon', FontAwesomeIcon);
             localVue.use(Vuex);
             const mockStore = new Vuex.Store({
@@ -106,7 +106,7 @@ describe('components/GraphMeta.vue', () => {
             };
             const localVue = createLocalVue();
             localVue.use(Vuex);
-            localVue.use(BootstrapVue);
+            localVue.use(createBootstrap());
             localVue.component('font-awesome-icon', FontAwesomeIcon);
             localVue.use(Vuex);
             const mockStore = new Vuex.Store({
@@ -163,7 +163,7 @@ describe('components/GraphMeta.vue', () => {
             };
             const localVue = createLocalVue();
             localVue.use(Vuex);
-            localVue.use(BootstrapVue);
+            localVue.use(createBootstrap());
             localVue.component('font-awesome-icon', FontAwesomeIcon);
             localVue.use(Vuex);
             const mockStore = new Vuex.Store({

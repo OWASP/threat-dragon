@@ -1,4 +1,4 @@
-import { BFormInput, BFormTextarea, BModal, BootstrapVue } from 'bootstrap-vue';
+import { BFormInput, BFormTextarea, BModal, createBootstrap } from 'bootstrap-vue-next';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
@@ -26,20 +26,43 @@ describe('components/ThreatEditDialog.vue', () => {
     });
 
     const getStore = () => new Vuex.Store({
-        state: { cell: { ref: { getData: jest.fn(), data: { threatFrequency:{availability: 0,confidentiality: 0,integrity: 0}, threats: [ getThreatData() ]}}}},
+        state: {
+            cell: {
+                ref: {
+                    getData: jest.fn(),
+                    data: {
+                        threatFrequency: {
+                            availability: 0,
+                            confidentiality: 0,
+                            integrity: 0
+                        },
+                        threats: [ getThreatData() ]
+                    }
+                }
+            }
+        },
         actions: { CELL_DATA_UPDATED: () => {} }
     });
 
     beforeEach(() => {
         localVue = createLocalVue();
         localVue.use(Vuex);
-        localVue.use(BootstrapVue);
+        localVue.use(createBootstrap());
     });
+
+    const BModalStub = {
+        name: 'BModal',
+        props: ['title', 'modelValue'],
+        template: '<div><slot /><slot name="footer" /></div>'
+    };
 
     const getWrapper = () => shallowMount(TdThreatEditDialog, {
         localVue,
         mocks: {
             $t: key => key
+        },
+        stubs: {
+            BModal: BModalStub
         },
         store: mockStore = getStore()
     });
@@ -50,8 +73,6 @@ describe('components/ThreatEditDialog.vue', () => {
         beforeEach(() => {
             wrapper = getWrapper();
             modal = wrapper.findComponent(BModal);
-            wrapper.vm.$refs.editModal.show = jest.fn();
-            wrapper.vm.$refs.editModal.hide = jest.fn();
             wrapper.vm.editThreat(getThreatData().id);
         });
 
@@ -64,12 +85,12 @@ describe('components/ThreatEditDialog.vue', () => {
         });
 
         it('shows the modal', () => {
-            expect(wrapper.vm.$refs.editModal.show).toHaveBeenCalled();
+            expect(wrapper.vm.editModalVisible).toBe(true);
         });
 
         it('hides the modal', () => {
             wrapper.vm.hideModal();
-            expect(wrapper.vm.$refs.editModal.hide).toHaveBeenCalled();
+            expect(wrapper.vm.editModalVisible).toBe(false);
         });
 
         it('has a title input', () => {
@@ -137,7 +158,9 @@ describe('components/ThreatEditDialog.vue', () => {
 
         describe('canceled', () => {
             beforeEach(async () => {
-                wrapper.vm.$bvModal.msgBoxConfirm = jest.fn().mockResolvedValue(false);
+                const modal = Promise.resolve({ ok: false });
+                modal.destroy = jest.fn().mockResolvedValue();
+                wrapper.vm.modalController.create = jest.fn().mockReturnValue(modal);
                 await wrapper.vm.confirmDelete();
             });
 
@@ -148,19 +171,24 @@ describe('components/ThreatEditDialog.vue', () => {
 
         describe('with confirmation', () => {
             beforeEach(async () => {
-                wrapper.vm.$bvModal.msgBoxConfirm = jest.fn().mockResolvedValue(true);
+                const modal = Promise.resolve({ ok: true });
+                modal.destroy = jest.fn().mockResolvedValue();
+                wrapper.vm.modalController.create = jest.fn().mockReturnValue(modal);
                 dataChanged.updateStyleAttrs = jest.fn();
                 mockStore.dispatch = jest.fn();
-                wrapper.vm.$refs.editModal.show = jest.fn();
                 await wrapper.vm.editThreat(threatId);
                 await wrapper.vm.confirmDelete();
-            }); 
+            });
 
             it('dispatches the cell data updated action', () => {
                 expect(mockStore.dispatch)
                     .toHaveBeenCalledWith('CELL_DATA_UPDATED', {
                         hasOpenThreats: false,
-                        threatFrequency:{availability: 0,confidentiality: 0,integrity: 0},
+                        threatFrequency: {
+                            availability: 0,
+                            confidentiality: 0,
+                            integrity: 0
+                        },
                         threats: []
                     });
             });
@@ -178,8 +206,6 @@ describe('components/ThreatEditDialog.vue', () => {
     describe('updateThreat', () => {
         beforeEach(() => {
             wrapper = getWrapper();
-            wrapper.vm.$refs.editModal.show = jest.fn();
-            wrapper.vm.$refs.editModal.hide = jest.fn();
             mockStore.dispatch = jest.fn();
             dataChanged.updateStyleAttrs = jest.fn();
             wrapper.vm.editThreat(threatId);
@@ -187,8 +213,16 @@ describe('components/ThreatEditDialog.vue', () => {
         });
 
         it('updates the data', () => {
-            expect(mockStore.dispatch).toHaveBeenNthCalledWith(1,'CELL_DATA_UPDATED',{threatFrequency:{availability: 0,confidentiality: 0,integrity: 0}, threats: [ getThreatData() ] });
-            expect(mockStore.dispatch).toHaveBeenNthCalledWith(2,'THREATMODEL_MODIFIED');
+            expect(mockStore.dispatch)
+                .toHaveBeenNthCalledWith(1, 'CELL_DATA_UPDATED', {
+                    threatFrequency: {
+                        availability: 0,
+                        confidentiality: 0,
+                        integrity: 0
+                    },
+                    threats: [ getThreatData() ]
+                });
+            expect(mockStore.dispatch).toHaveBeenNthCalledWith(2, 'THREATMODEL_MODIFIED');
         });
 
         it('updates the styles', () => {
@@ -198,38 +232,75 @@ describe('components/ThreatEditDialog.vue', () => {
 
     describe('cornucopia link', () => {
         it('renders link for EOP with suit and number', async () => {
-            const store=new Vuex.Store({state:{cell:{ref:{getData:jest.fn(),data:{threatFrequency:{availability:0,confidentiality:0,integrity:0},threats:[{...getThreatData(),modelType:'EOP'}]}}}},actions:{CELL_DATA_UPDATED:()=>{}}});
-            wrapper=shallowMount(TdThreatEditDialog,{localVue,mocks:{$t:k=>k},store});
-            wrapper.vm.$refs.editModal={show:jest.fn(),hide:jest.fn()};
+            const store = new Vuex.Store({
+                state: {
+                    cell: {
+                        ref: {
+                            getData: jest.fn(),
+                            data: {
+                                threatFrequency: {
+                                    availability: 0,
+                                    confidentiality: 0,
+                                    integrity: 0
+                                },
+                                threats: [{ ...getThreatData(), modelType: 'EOP' }]
+                            }
+                        }
+                    }
+                },
+                actions: { CELL_DATA_UPDATED: () => {} }
+            });
+
+            wrapper = shallowMount(TdThreatEditDialog, {
+                localVue,
+                mocks: { $t: k => k },
+                stubs: { BModal: BModalStub },
+                store
+            });
             wrapper.vm.editThreat(threatId);
-            wrapper.vm.selectedGameId='cornucopia';
-            wrapper.vm.card.suit='DATA VALIDATION & ENCODING';
-            wrapper.vm.card.number='VE2';
+            wrapper.vm.selectedGameId = 'cornucopia';
+            wrapper.vm.card.suit = 'DATA VALIDATION & ENCODING';
+            wrapper.vm.card.number = 'VE2';
             await wrapper.vm.$nextTick();
-            const link=wrapper.find('a');
+            const link = wrapper.find('a');
             expect(link.exists()).toBe(true);
             expect(link.attributes('href')).toContain('https://cornucopia.owasp.org/edition/webapp/');
             expect(link.text()).toContain('VE2');
         });
 
         it('hides link when model is not EOP', () => {
-            const store=new Vuex.Store({
-                state:{cell:{ref:{getData:jest.fn(),data:{
-                    threatFrequency:{availability:0,confidentiality:0,integrity:0},
-                    threats:[ getThreatData() ]
-                }}}},
-                actions:{CELL_DATA_UPDATED:()=>{}}
+            const store = new Vuex.Store({
+                state: {
+                    cell: {
+                        ref: {
+                            getData: jest.fn(),
+                            data: {
+                                threatFrequency: {
+                                    availability: 0,
+                                    confidentiality: 0,
+                                    integrity: 0
+                                },
+                                threats: [ getThreatData() ]
+                            }
+                        }
+                    }
+                },
+                actions: { CELL_DATA_UPDATED: () => {} }
             });
-            wrapper = shallowMount(TdThreatEditDialog,{localVue,mocks:{$t:key=>key},store});
-            wrapper.vm.$refs.editModal={show:jest.fn(),hide:jest.fn()};
+
+            wrapper = shallowMount(TdThreatEditDialog, {
+                localVue,
+                mocks: { $t: key => key },
+                stubs: { BModal: BModalStub },
+                store
+            });
             wrapper.vm.editThreat(threatId);
-            const link=wrapper.find('a');
+            const link = wrapper.find('a');
             expect(link.exists()).toBe(false);
         });
 
         it('modal title uses threat number', () => {
             wrapper = getWrapper();
-            wrapper.vm.$refs.editModal = { show: jest.fn(), hide: jest.fn() };
             wrapper.vm.editThreat(threatId);
             expect(wrapper.vm.modalTitle).toBe('threats.edit #0');
         });
@@ -245,13 +316,11 @@ describe('components/ThreatEditDialog.vue', () => {
         describe('when modelType is EOP', () => {
             beforeEach(() => {
                 wrapper = getWrapper();
-                wrapper.vm.$refs.editModal.show = jest.fn();
-                wrapper.vm.$refs.editModal.hide = jest.fn();
-                    
+
                 const cornucopiaThreat = getThreatData();
                 cornucopiaThreat.modelType = 'EOP';
                 mockStore.state.cell.ref.data.threats = [cornucopiaThreat];
-                    
+
                 wrapper.vm.editThreat(threatId);
             });
 
@@ -291,8 +360,6 @@ describe('components/ThreatEditDialog.vue', () => {
         describe('when modelType is not EOP', () => {
             beforeEach(() => {
                 wrapper = getWrapper();
-                wrapper.vm.$refs.editModal.show = jest.fn();
-                wrapper.vm.$refs.editModal.hide = jest.fn();
                 wrapper.vm.editThreat(threatId);
             });
 
@@ -323,8 +390,6 @@ describe('components/ThreatEditDialog.vue', () => {
     describe('updateThreat card validation', () => {
         beforeEach(() => {
             wrapper = getWrapper();
-            wrapper.vm.$refs.editModal.show = jest.fn();
-            wrapper.vm.$refs.editModal.hide = jest.fn();
             mockStore.dispatch = jest.fn();
             dataChanged.updateStyleAttrs = jest.fn();
         });
@@ -333,25 +398,29 @@ describe('components/ThreatEditDialog.vue', () => {
                 const eopThreat = getThreatData();
                 eopThreat.modelType = 'EOP';
                 mockStore.state.cell.ref.data.threats = [eopThreat];
-                
+
                 wrapper.vm.editThreat(threatId);
                 wrapper.vm.card.suit = 'DATA VALIDATION & ENCODING';
                 wrapper.vm.card.number = null;
-                wrapper.vm.$bvModal.msgBoxOk = jest.fn().mockResolvedValue(true);
-                
+                const modal = Promise.resolve({ ok: true });
+                modal.destroy = jest.fn().mockResolvedValue();
+                wrapper.vm.modalController.create = jest.fn().mockReturnValue(modal);
+
                 await wrapper.vm.updateThreat();
             });
 
             it('shows error modal', () => {
-                expect(wrapper.vm.$bvModal.msgBoxOk).toHaveBeenCalledWith(
-                    'threats.validation.cardNumberRequired',
+                expect(wrapper.vm.modalController.create).toHaveBeenCalledWith(
                     expect.objectContaining({
+                        body: 'threats.validation.cardNumberRequired',
                         title: 'threats.validation.error',
                         okVariant: 'danger',
+                        okOnly: true,
                         headerBgVariant: 'danger',
                         headerTextVariant: 'light',
                         centered: true
-                    })
+                    }),
+                    { resolveOnHide: true }
                 );
             });
 
@@ -360,7 +429,7 @@ describe('components/ThreatEditDialog.vue', () => {
             });
 
             it('does not hide the modal', () => {
-                expect(wrapper.vm.$refs.editModal.hide).not.toHaveBeenCalled();
+                expect(wrapper.vm.editModalVisible).toBe(true);
             });
 
             it('does not update style attributes', () => {
@@ -373,7 +442,7 @@ describe('components/ThreatEditDialog.vue', () => {
                 const eopThreat = getThreatData();
                 eopThreat.modelType = 'EOP';
                 mockStore.state.cell.ref.data.threats = [eopThreat];
-                
+
                 wrapper.vm.editThreat(threatId);
                 wrapper.vm.card.suit = 'DATA VALIDATION & ENCODING';
                 wrapper.vm.card.number = 'VE2';
@@ -385,7 +454,7 @@ describe('components/ThreatEditDialog.vue', () => {
             });
 
             it('hides the modal', () => {
-                expect(wrapper.vm.$refs.editModal.hide).toHaveBeenCalled();
+                expect(wrapper.vm.editModalVisible).toBe(false);
             });
 
             it('updates the style attributes', () => {

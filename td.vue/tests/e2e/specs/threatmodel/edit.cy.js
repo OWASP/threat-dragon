@@ -36,7 +36,7 @@ describe('editing threat models', () => {
         it('can add a new diagram', () => {
             cy.get('.add-diagram-link').click();
             cy.get('#diagram-group-0').should('be.visible');
-            cy.get('.input-group-append').click();
+            cy.get('.td-remove-diagram').click();
             cy.get('#diagram-group-0').should('not.be', 'visible');
         });
 

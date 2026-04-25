@@ -1,4 +1,4 @@
-import { BootstrapVue, BTable } from 'bootstrap-vue';
+import { createBootstrap, BTable } from 'bootstrap-vue-next';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 
 import TdReportEntity from '@/components/report/ReportEntity.vue';
@@ -51,7 +51,7 @@ describe('components/report/ReportEntity.vue', () => {
 
     const setup = (data) => {
         const localVue = createLocalVue();
-        localVue.use(BootstrapVue);
+        localVue.use(createBootstrap());
         wrapper = shallowMount(TdReportEntity, {
             localVue,
             propsData: {

@@ -63,7 +63,9 @@ You do not need to import anything in your components or pages, they are globall
 
 ## Bootstrap
 
-This project uses [bootstrap-vue](https://www.npmjs.com/package/bootstrap-vue), and it is available globally as well.
+This project uses [Bootstrap 5](https://www.npmjs.com/package/bootstrap) and
+[BootstrapVueNext](https://www.npmjs.com/package/bootstrap-vue-next), and the BootstrapVueNext
+components are available globally.
 
 ## Adding providers
 

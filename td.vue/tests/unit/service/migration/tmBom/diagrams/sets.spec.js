@@ -44,7 +44,7 @@ const nodes = [
             description: 'Contains storage for machine learning models in serialized format.',
             isEncrypted: false
         },
-        id: 'ml-models-blob'
+        id: 'ms-models-blob'
     },
     {
         data: {

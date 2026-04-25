@@ -1,11 +1,11 @@
 import {
-    BootstrapVue,
+    createBootstrap,
     BNavbarBrand,
     BImg,
     BCollapse,
     BNavbarNav,
     BNavItem
-} from 'bootstrap-vue';
+} from 'bootstrap-vue-next';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
@@ -18,7 +18,7 @@ describe('components/Navbar.vue', () => {
 
     beforeEach(() => {
         localVue = createLocalVue();
-        localVue.use(BootstrapVue);
+        localVue.use(createBootstrap());
         localVue.component('font-awesome-icon', FontAwesomeIcon);
         localVue.use(Vuex);
         routerMock = { push: jest.fn() };
@@ -107,12 +107,12 @@ describe('components/Navbar.vue', () => {
             });
 
             it('dispatches the logout event', async () => {
-                await signOut.trigger('click');
+                await wrapper.vm.onLogOut({ preventDefault: jest.fn() });
                 expect(mockStore.dispatch).toHaveBeenCalledWith(LOGOUT);
             });
 
             it('navigates to the home page', async () => {
-                await signOut.trigger('click');
+                await wrapper.vm.onLogOut({ preventDefault: jest.fn() });
                 expect(routerMock.push).toHaveBeenCalledWith('/');
             });
         });

@@ -9,9 +9,8 @@
                     <h3 class="td-report-summary">{{ $t('report.summary') }}</h3>
                     <b-table
                         class="td-executive-summary-data"
-                        :fields="null"
                         :items="tableRows"
-                        :tbody-tr-attr="getDataTestId"
+                        :tbody-tr-attrs="getDataTestId"
                         striped
                     ></b-table>
                 </b-card>

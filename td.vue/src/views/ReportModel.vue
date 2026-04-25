@@ -3,7 +3,7 @@
         <b-row class="no-print td-report-options sticky">
             <b-col>
                 <b-form class="">
-                    <b-form-row>
+                    <b-row>
                         <b-col>
                             <b-form-group
                                 label-cols="auto"
@@ -117,12 +117,12 @@
                                 </div>
                             </b-form-group>
                         </b-col>
-                    </b-form-row>
+                    </b-row>
                 </b-form>
             </b-col>
 
-            <b-col class="text-right right">
-                <b-btn-group>
+            <b-col class="text-end right">
+                <b-button-group>
                     <td-form-button
                         id="td-print-pdf-btn"
                         :onBtnClick="printPdf"
@@ -140,7 +140,7 @@
                         :onBtnClick="onCloseClick"
                         icon="times"
                         :text="$t('forms.close')" />
-                </b-btn-group>
+                </b-button-group>
             </b-col>
         </b-row>
 

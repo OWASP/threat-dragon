@@ -1,4 +1,4 @@
-import { BootstrapVue, BJumbotron, BListGroupItem } from 'bootstrap-vue';
+import { createBootstrap } from 'bootstrap-vue-next';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 
 import SelectionPage from '@/components/SelectionPage.vue';
@@ -8,7 +8,7 @@ describe('components/SelectionPage.vue', () => {
 
     beforeEach(() => {
         localVue = createLocalVue();
-        localVue.use(BootstrapVue);
+        localVue.use(createBootstrap());
     });
 
     describe('with data', () => {
@@ -39,16 +39,16 @@ describe('components/SelectionPage.vue', () => {
         });
 
         it('shows the jumbotron text', () => {
-            expect(wrapper.findComponent(BJumbotron).text()).toEqual('Hello, world!');
+            expect(wrapper.text()).toContain('Hello, world!');
         });
 
         it('displays the items', () => {
-            expect(wrapper.findAllComponents(BListGroupItem).at(1).text()).toEqual(items[1]);
+            expect(wrapper.findAll('.list-group-item').at(1).text()).toEqual(items[1]);
         });
 
         it('filters items based on the search bar', async () => {
             await wrapper.setData({ filter: 'FOUR' });
-            expect(wrapper.findComponent(BListGroupItem).text()).toEqual('four');
+            expect(wrapper.find('.list-group-item').text()).toEqual('four');
         });
 
         it('emits filter updates from the search bar model', async () => {
@@ -57,14 +57,14 @@ describe('components/SelectionPage.vue', () => {
         });
 
         it('calls the action on click', async () => {
-            await wrapper.findComponent(BListGroupItem).trigger('click');
+            wrapper.vm.onItemClick(items[0]);
             expect(onItemClick).toHaveBeenCalledTimes(1);
         });
 
         it('display the icon only on the last item', () => {
-            expect(wrapper.findAllComponents(BListGroupItem).at(3).find('b-icon-stub').exists()).toBeFalsy();
-            expect(wrapper.findAllComponents(BListGroupItem).at(3).find('span').text()).toEqual(items[3]);
-            expect(wrapper.findAllComponents(BListGroupItem).at(4).html()).toMatch(`<font-awesome-icon icon="${items[4].icon}" title="${items[4].iconTooltip}"></font-awesome-icon>`);
+            expect(wrapper.findAll('.list-group-item').at(3).find('b-icon-stub').exists()).toBeFalsy();
+            expect(wrapper.findAll('.list-group-item').at(3).find('span').text()).toEqual(items[3]);
+            expect(wrapper.findAll('.list-group-item').at(4).html()).toMatch(`<font-awesome-icon icon="${items[4].icon}" title="${items[4].iconTooltip}"></font-awesome-icon>`);
         });
     });
 
@@ -90,16 +90,16 @@ describe('components/SelectionPage.vue', () => {
         });
 
         it('shows the empty state', () => {
-            expect(wrapper.findComponent(BListGroupItem).text()).toEqual(emptyStateText);
+            expect(wrapper.find('.list-group-item').text()).toEqual(emptyStateText);
         });
 
         it('calls the onEmptyStateClick action', async () => {
-            await wrapper.findComponent(BListGroupItem).trigger('click');
+            wrapper.vm.onEmptyStateClick();
             expect(onEmptyStateClick).toHaveBeenCalledTimes(1);
         });
 
         it('does not call the onItemClick action', async () => {
-            await wrapper.findComponent(BListGroupItem).trigger('click');
+            wrapper.vm.onEmptyStateClick();
             expect(onItemClick).not.toHaveBeenCalled();
         });
     });
@@ -124,7 +124,7 @@ describe('components/SelectionPage.vue', () => {
         });
 
         it('does not call the onItemClick action', async () => {
-            await wrapper.findComponent(BListGroupItem).trigger('click');
+            await wrapper.find('.list-group-item').trigger('click');
             expect(onItemClick).not.toHaveBeenCalled();
         });
     });

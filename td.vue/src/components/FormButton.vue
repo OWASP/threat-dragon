@@ -1,5 +1,5 @@
 <template>
-    <b-btn
+    <b-button
         @click="onBtnClick"
         :class="{ 'td-primary-btn': isPrimary, 'td-default-btn': !isPrimary }"
         :variant="isPrimary ? 'primary' : 'secondary'"
@@ -9,7 +9,7 @@
             :icon="[iconPreface, icon]"
         ></font-awesome-icon>
         {{ text }}
-    </b-btn>
+    </b-button>
 </template>
 
 <style lang="scss" scoped>

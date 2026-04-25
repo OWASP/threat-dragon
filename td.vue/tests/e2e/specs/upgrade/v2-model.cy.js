@@ -10,12 +10,12 @@ describe('upgrade v2 demo', () => {
     });
 
     it('opens the v2 demo threat model', () => {
-        cy.get('a').contains('Demo Threat Model').click();
+        cy.get('[data-model-name="Demo Threat Model"]').click();
         cy.url().should('contain', '/local/Demo%20Threat%20Model');
     });
 
     it('can edit the model', () => {
-        cy.get('a').contains('Demo Threat Model').click();
+        cy.get('[data-model-name="Demo Threat Model"]').click();
         cy.get('#td-edit-btn').click();
         cy.url().should('contain', '/edit');
         cy.get('#description').should('be.visible');
@@ -23,7 +23,7 @@ describe('upgrade v2 demo', () => {
     });
 
     it('can edit the diagram', () => {
-        cy.get('a').contains('Demo Threat Model').click();
+        cy.get('[data-model-name="Demo Threat Model"]').click();
         cy.get('.td-diagram-thumb').click();
         cy.url().should('contain', '/edit/Main%20Request%20Data%20Flow');
     });

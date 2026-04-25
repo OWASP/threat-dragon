@@ -1,4 +1,4 @@
-import BootstrapVue from 'bootstrap-vue';
+import { createBootstrap } from 'bootstrap-vue-next';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 
 import TdDiagramDetail from '@/components/report/DiagramDetail.vue';
@@ -21,7 +21,7 @@ describe('components/report/DiagramDetail.vue', () => {
 
     const setup = (data) => {
         const localVue = createLocalVue();
-        localVue.use(BootstrapVue);
+        localVue.use(createBootstrap());
         wrapper = shallowMount(TdDiagramDetail, {
             localVue,
             propsData: {

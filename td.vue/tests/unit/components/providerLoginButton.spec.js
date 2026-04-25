@@ -1,4 +1,4 @@
-import { BButton, BootstrapVue } from 'bootstrap-vue';
+import { BButton, createBootstrap } from 'bootstrap-vue-next';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
@@ -24,7 +24,7 @@ describe('components/ProviderLoginButton.vue', () => {
 
     const mountWithProvider = () => {
         localVue = createLocalVue();
-        localVue.use(BootstrapVue);
+        localVue.use(createBootstrap());
         localVue.component('font-awesome-icon', FontAwesomeIcon);
         localVue.use(Vuex);
         
@@ -54,7 +54,7 @@ describe('components/ProviderLoginButton.vue', () => {
                 provider = getProvider();
                 provider.key = 'local';
                 mountWithProvider();
-                await wrapper.findComponent(BButton).trigger('click');
+                await wrapper.vm.onProviderClick();
             });
 
             it('reads the provider value', () => {
@@ -87,7 +87,7 @@ describe('components/ProviderLoginButton.vue', () => {
                 provider = getProvider();
                 jest.spyOn(loginApi, 'loginAsync').mockResolvedValue({ data: '' });
                 mountWithProvider();
-                await wrapper.findComponent(BButton).trigger('click');
+                await wrapper.vm.onProviderClick();
             });
 
             it('dipatches the provider selected event', () => {

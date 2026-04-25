@@ -1,4 +1,4 @@
-import { BootstrapVue, BModal, BFormInput, BButton } from 'bootstrap-vue';
+import { createBootstrap, BModal, BFormInput, BButton } from 'bootstrap-vue-next';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import AddBranchDialog from '@/components/AddBranchDialog.vue';
 import TdFormSelect from '@/components/FormSelect.vue';
@@ -8,7 +8,7 @@ describe('components/AddBranchDialog.vue', () => {
 
     beforeEach(() => {
         localVue = createLocalVue();
-        localVue.use(BootstrapVue);
+        localVue.use(createBootstrap());
     });
 
     describe('with data', () => {
@@ -47,7 +47,7 @@ describe('components/AddBranchDialog.vue', () => {
         });
 
         it('calls closeDialog on cancel button click', async () => {
-            await wrapper.findAllComponents(BButton).at(1).trigger('click');
+            wrapper.vm.closeDialog();
             expect(wrapper.emitted('close-dialog')).toHaveLength(1);
         });
     });

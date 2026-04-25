@@ -1,5 +1,5 @@
 import * as actual from '@vue/test-utils/dist/vue-test-utils.cjs.js';
-import * as bootstrapVueLib from 'bootstrap-vue';
+import { Components as BootstrapVueNextComponents } from 'bootstrap-vue-next';
 import { defineComponent, h } from 'vue';
 
 if (typeof Array.prototype.exists !== 'function') {
@@ -9,16 +9,6 @@ if (typeof Array.prototype.exists !== 'function') {
         }
     });
 }
-
-const bootstrapComponentAliases = {
-    BButton: ['b-btn'],
-    BButtonGroup: ['b-btn-group']
-};
-
-const bootstrapDirectiveAliases = {
-    VBModal: ['b-modal'],
-    VBTooltip: ['b-tooltip']
-};
 
 const renderDefaultSlot = (slots) => {
     if (!slots?.default) {
@@ -30,199 +20,11 @@ const renderDefaultSlot = (slots) => {
         : slots.default;
 };
 
-const renderNamedSlot = (slots, name) => {
-    if (!slots?.[name]) {
-        return undefined;
-    }
-
-    return typeof slots[name] === 'function'
-        ? slots[name]()
-        : slots[name];
-};
-
 const defaultI18n = {
     locale: 'en',
     availableLocales: ['en', 'de'],
     t: (key) => key,
     tc: (key) => key
-};
-
-const getJest = () => {
-    try {
-        return Function('return this')().jest;
-    } catch (_err) {
-        return undefined;
-    }
-};
-
-const createMockFn = (impl = () => undefined) => {
-    const jestApi = getJest();
-    if (jestApi?.fn) {
-        return jestApi.fn(impl);
-    }
-
-    return impl;
-};
-
-const createClickableCompat = (name, tag = 'button') => defineComponent({
-    name,
-    inheritAttrs: false,
-    emits: ['click'],
-    props: {
-        value: {
-            type: [String, Number, Boolean, Object],
-            default: undefined
-        },
-        id: {
-            type: String,
-            default: undefined
-        },
-        to: {
-            type: [String, Object],
-            default: undefined
-        },
-        href: {
-            type: String,
-            default: undefined
-        }
-    },
-    render() {
-        return h(tag, {
-            ...this.$attrs,
-            id: this.id,
-            href: this.href,
-            to: stringifyValue(this.to),
-            value: stringifyValue(this.value),
-            type: tag === 'button' ? 'button' : undefined,
-            onClick: (event) => {
-                if (typeof this.$attrs.onClick === 'function') {
-                    this.$attrs.onClick(event);
-                }
-
-                this.$emit('click', event);
-            }
-        }, renderDefaultSlot(this.$slots));
-    }
-});
-
-const createBootstrapCompat = (name, tag = 'div') => defineComponent({
-    name,
-    inheritAttrs: false,
-    props: {
-        id: {
-            type: String,
-            default: undefined
-        },
-        title: {
-            type: String,
-            default: undefined
-        },
-        header: {
-            type: String,
-            default: undefined
-        },
-        value: {
-            type: [String, Number, Boolean, Object, Array],
-            default: undefined
-        },
-        modelValue: {
-            type: [String, Number, Boolean, Object, Array],
-            default: undefined
-        },
-        options: {
-            type: Array,
-            default: () => []
-        },
-        items: {
-            type: Array,
-            default: () => []
-        },
-        fields: {
-            type: [Array, Object],
-            default: undefined
-        }
-    },
-    emits: ['click', 'input', 'change', 'update:modelValue'],
-    methods: {
-        show() {},
-        hide() {}
-    },
-    render() {
-        const model = this.modelValue ?? this.value;
-        const commonData = {
-            ...this.$attrs,
-            id: this.id,
-            title: this.title,
-            header: this.header,
-            value: stringifyValue(model),
-            onClick: (event) => {
-                if (typeof this.$attrs.onClick === 'function') {
-                    this.$attrs.onClick(event);
-                }
-
-                this.$emit('click', event);
-            }
-        };
-
-        if (tag === 'input') {
-            return h('input', {
-                ...commonData,
-                type: this.$attrs.type || 'text'
-            });
-        }
-
-        if (tag === 'textarea') {
-            return h('textarea', commonData, stringifyValue(model) || '');
-        }
-
-        if (tag === 'select') {
-            const optionNodes = this.options.map((option) => {
-                const normalized = typeof option === 'object'
-                    ? option
-                    : { value: option, text: option };
-                return h('option', {
-                    value: stringifyValue(normalized.value)
-                }, normalized.text ?? stringifyValue(normalized.value));
-            });
-
-            return h('select', commonData, [
-                ...optionNodes,
-                ...(renderDefaultSlot(this.$slots) || [])
-            ]);
-        }
-
-        return h(tag, commonData, [
-            ...(renderNamedSlot(this.$slots, 'header') || []),
-            ...(renderDefaultSlot(this.$slots) || []),
-            ...(renderNamedSlot(this.$slots, 'modal-footer') || [])
-        ]);
-    }
-});
-
-const BootstrapButtonCompat = createClickableCompat('BButton');
-const BootstrapDropdownItemCompat = createClickableCompat('BDropdownItem');
-const BootstrapListGroupItemCompat = createClickableCompat('BListGroupItem', 'a');
-const BootstrapNavItemCompat = createClickableCompat('BNavItem', 'a');
-const BootstrapCardTextCompat = createBootstrapCompat('BCardText');
-const BootstrapJumbotronCompat = createBootstrapCompat('BJumbotron');
-const BootstrapModalCompat = createBootstrapCompat('BModal');
-const BootstrapFormInputCompat = createBootstrapCompat('BFormInput', 'input');
-const BootstrapFormTextareaCompat = createBootstrapCompat('BFormTextarea', 'textarea');
-const BootstrapTableCompat = createBootstrapCompat('BTable', 'table');
-const BootstrapCardCompat = createBootstrapCompat('BCard');
-
-const bootstrapComponentStubs = {
-    BCard: BootstrapCardCompat,
-    BCardText: BootstrapCardTextCompat,
-    BButton: BootstrapButtonCompat,
-    BDropdownItem: BootstrapDropdownItemCompat,
-    BFormInput: BootstrapFormInputCompat,
-    BFormTextarea: BootstrapFormTextareaCompat,
-    BJumbotron: BootstrapJumbotronCompat,
-    BListGroupItem: BootstrapListGroupItemCompat,
-    BModal: BootstrapModalCompat,
-    BNavItem: BootstrapNavItemCompat,
-    BTable: BootstrapTableCompat
 };
 
 const FontAwesomeIconCompat = defineComponent({
@@ -258,11 +60,6 @@ const FontAwesomeIconCompat = defineComponent({
     }
 });
 
-const kebabCase = (value) => value
-    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
-    .replace(/^([A-Z])/, (_, char) => char.toLowerCase())
-    .toLowerCase();
-
 const stringifyValue = (value) => {
     if (Array.isArray(value)) {
         return value.join(',');
@@ -281,13 +78,6 @@ const stringifyValue = (value) => {
 
 const camelize = (value) => value.replace(/-([a-z])/g, (_, char) => char.toUpperCase());
 
-const isBootstrapVuePlugin = (plugin) => (
-    plugin === bootstrapVueLib.BootstrapVue ||
-    plugin === bootstrapVueLib.default ||
-    plugin?.NAME === 'BootstrapVue' ||
-    plugin?.install === bootstrapVueLib.install
-);
-
 const selectorNames = (selector) => {
     if (!selector || typeof selector === 'string') {
         return [];
@@ -301,21 +91,6 @@ const selectorNames = (selector) => {
     ].filter(Boolean);
 };
 
-const registerAliases = (registry, name, exported, extraAliases = []) => {
-    const aliases = new Set([
-        name,
-        kebabCase(name),
-        exported?.name,
-        exported?.__name,
-        exported?.options?.name,
-        ...extraAliases
-    ].filter(Boolean));
-
-    aliases.forEach((alias) => {
-        registry[alias] = exported;
-    });
-};
-
 const mergeGlobalOption = (base, extra) => {
     if (!extra) {
         return base;
@@ -327,37 +102,6 @@ const mergeGlobalOption = (base, extra) => {
     };
 };
 
-const expandStubAliases = (stubs) => {
-    const expanded = { ...(stubs || {}) };
-
-    Object.entries(bootstrapComponentStubs).forEach(([name, stub]) => {
-        const aliases = [
-            name,
-            kebabCase(name),
-            ...(bootstrapComponentAliases[name] || [])
-        ];
-
-        aliases.forEach((alias) => {
-            expanded[alias] = expanded[alias] || stub;
-        });
-    });
-
-    return expanded;
-};
-
-const registerBootstrapVue = (localVue) => {
-    Object.entries(bootstrapVueLib).forEach(([name, exported]) => {
-        if (/^B[A-Z]/.test(name)) {
-            const component = bootstrapComponentStubs[name] || exported;
-            registerAliases(localVue._components, name, component, bootstrapComponentAliases[name]);
-        }
-
-        if (/^VB[A-Z]/.test(name)) {
-            registerAliases(localVue._directives, name, exported, bootstrapDirectiveAliases[name]);
-        }
-    });
-};
-
 export function createLocalVue(options = {}) {
     const localVue = {
         _plugins: [],
@@ -367,11 +111,6 @@ export function createLocalVue(options = {}) {
         _config: options,
         use(plugin) {
             if (!plugin) {
-                return this;
-            }
-
-            if (Object.values(bootstrapVueLib).includes(plugin)) {
-                registerBootstrapVue(this);
                 return this;
             }
 
@@ -390,6 +129,10 @@ export function createLocalVue(options = {}) {
                 return this;
             }
 
+            if (!this._plugins.includes(plugin)) {
+                this._plugins.push(plugin);
+            }
+
             const collector = {
                 component: (name, comp) => {
                     this._components[name] = comp;
@@ -404,7 +147,10 @@ export function createLocalVue(options = {}) {
                     return collector;
                 },
                 use: (nestedPlugin) => {
-                    this.use(nestedPlugin);
+                    const nestedInstall = typeof nestedPlugin === 'function' ? nestedPlugin : nestedPlugin?.install;
+                    if (typeof nestedInstall === 'function') {
+                        nestedInstall(collector);
+                    }
                     return collector;
                 },
                 config: { globalProperties: {} },
@@ -445,6 +191,10 @@ actual.BaseWrapper.prototype.attributes = function (key) {
         const propValue = props[key] ?? props[camelize(key)];
         if (propValue !== undefined) {
             return stringifyValue(propValue);
+        }
+
+        if (key === 'value' && props.modelValue !== undefined) {
+            return stringifyValue(props.modelValue);
         }
     }
 
@@ -589,18 +339,9 @@ const normalizeMountOptions = (options = {}) => {
     } = options;
 
     const plugins = [];
-    const bootstrapCompat = {
-        _components: {},
-        _directives: {}
-    };
 
     const registerPlugin = (plugin) => {
         if (!plugin) {
-            return;
-        }
-
-        if (isBootstrapVuePlugin(plugin)) {
-            registerBootstrapVue(bootstrapCompat);
             return;
         }
 
@@ -644,17 +385,17 @@ const normalizeMountOptions = (options = {}) => {
             ...(mocks || {})
         },
         components: mergeGlobalOption(
-            mergeGlobalOption(bootstrapCompat._components || {}, localVue?._components || {}),
+            {
+                ...BootstrapVueNextComponents,
+                ...(localVue?._components || {})
+            },
             global?.components || {}
         ),
         directives: mergeGlobalOption(
-            mergeGlobalOption(bootstrapCompat._directives || {}, localVue?._directives || {}),
+            localVue?._directives || {},
             global?.directives || {}
         ),
-        stubs: expandStubAliases(mergeGlobalOption(
-            mergeGlobalOption(bootstrapComponentStubs, normalizeStubs(global?.stubs)),
-            normalizeStubs(stubs)
-        ))
+        stubs: mergeGlobalOption(normalizeStubs(global?.stubs), normalizeStubs(stubs))
     };
 
     if (mergedGlobal.mocks.$emit) {
@@ -671,15 +412,6 @@ const normalizeMountOptions = (options = {}) => {
 
     if (!mergedGlobal.mocks.$tc && typeof mergedI18n.tc === 'function') {
         mergedGlobal.mocks.$tc = mergedI18n.tc.bind(mergedI18n);
-    }
-
-    if (!mergedGlobal.mocks.$bvModal) {
-        mergedGlobal.mocks.$bvModal = {
-            show: () => {},
-            hide: () => {},
-            msgBoxConfirm: createMockFn(() => Promise.resolve(false)),
-            msgBoxOk: createMockFn(() => Promise.resolve(true))
-        };
     }
 
     mergedGlobal.components['font-awesome-icon'] = FontAwesomeIconCompat;

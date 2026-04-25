@@ -1,4 +1,4 @@
-import { BootstrapVue } from 'bootstrap-vue';
+import { createBootstrap } from 'bootstrap-vue-next';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
@@ -64,7 +64,7 @@ describe('components/GraphButtons.vue', () => {
     beforeEach(() => {
         saveDiagram.save.mockClear();
         localVue = createLocalVue();
-        localVue.use(BootstrapVue);
+        localVue.use(createBootstrap());
         localVue.use(Vuex);
 
         graphMock = {
@@ -85,7 +85,9 @@ describe('components/GraphButtons.vue', () => {
             }
         };
         wrapper = mountComponent();
-        jest.spyOn(wrapper.vm.$bvModal, 'msgBoxConfirm').mockResolvedValue(true);
+        const modal = Promise.resolve({ ok: true });
+        modal.destroy = jest.fn().mockResolvedValue();
+        wrapper.vm.modalController.create = jest.fn().mockReturnValue(modal);
     });
 
     afterEach(() => {

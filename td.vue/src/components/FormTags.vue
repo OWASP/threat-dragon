@@ -11,7 +11,7 @@
                 v-for="tag in tags"
                 :key="tag"
                 class="b-form-tag d-inline-flex align-items-baseline mw-100 badge"
-                :class="[tagClass, `badge-${variant}`]"
+                :class="[tagClass, `text-bg-${variant}`]"
             >
                 <span class="b-form-tag-content flex-grow-1 text-truncate">
                     {{ tag }}
@@ -19,12 +19,10 @@
                 <button
                     v-if="!noTagRemove"
                     type="button"
-                    class="close b-form-tag-remove"
+                    class="btn-close b-form-tag-remove ms-1"
                     :aria-label="tagRemoveLabel"
                     @click.stop="removeTag(tag)"
-                >
-                    &times;
-                </button>
+                ></button>
             </li>
             <li class="b-form-tags-field flex-grow-1" role="none">
                 <div class="d-flex" role="group">
