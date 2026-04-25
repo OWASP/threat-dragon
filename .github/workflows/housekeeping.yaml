@@ -5,6 +5,9 @@ on:
     - cron: '45 6 * * *'
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 env:
   IMAGE_NAME: threatdragon/owasp-threat-dragon:latest
 
@@ -25,7 +28,7 @@ jobs:
           keep_minimum_runs: 10
 
       - name: Delete unused workflows
-        uses: otto-de/purge-deprecated-workflow-runs@f586d3fe7f959c38ca76a0030521dfa47946bce3 # v4.0.6
+        uses: otto-de/purge-deprecated-workflow-runs@05bb48958a4a1c5e0e17e8d4a94868266a6548ea # v4.0.9
         with:
           token: ${{ github.token }}
 
@@ -53,7 +56,7 @@ jobs:
     name: Scan with Trivy
     runs-on: ubuntu-24.04
     permissions:
-      contents: write
+      contents: read
       security-events: write
     steps:
       - name: Checkout repository

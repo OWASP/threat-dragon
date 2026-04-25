@@ -3,6 +3,9 @@ name: Release MacOS
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 # for security reasons the github actions are pinned to specific SHAs
 jobs:
   desktop_macos:
@@ -30,7 +33,7 @@ jobs:
           node-version: '24.14'
 
       - name: Cache NPM dir
-        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -55,7 +58,7 @@ jobs:
         run: find . -name "*.log" -exec cat '{}' \; -print
 
       - name: Save SBOM artifact
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: sboms-desktop-macos-site
           path: './td.vue/dist-desktop/bundled/.sbom/*'
