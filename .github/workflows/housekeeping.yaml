@@ -5,6 +5,9 @@ on:
     - cron: '45 6 * * *'
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 env:
   IMAGE_NAME: threatdragon/owasp-threat-dragon:latest
 
@@ -25,7 +28,7 @@ jobs:
           keep_minimum_runs: 10
 
       - name: Delete unused workflows
-        uses: otto-de/purge-deprecated-workflow-runs@f586d3fe7f959c38ca76a0030521dfa47946bce3 # v4.0.6
+        uses: otto-de/purge-deprecated-workflow-runs@05bb48958a4a1c5e0e17e8d4a94868266a6548ea # v4.0.9
         with:
           token: ${{ github.token }}
 
@@ -53,7 +56,7 @@ jobs:
     name: Scan with Trivy
     runs-on: ubuntu-24.04
     permissions:
-      contents: write
+      contents: read
       security-events: write
     steps:
       - name: Checkout repository
@@ -74,34 +77,6 @@ jobs:
         uses: github/codeql-action/upload-sarif@c10b8064de6f491fea524254123dbe5e09572f13 # v4.35.1
         with:
           sarif_file: 'trivy-results.sarif'
-
-  codeql:
-    name: Analyze with codeql
-    runs-on: ubuntu-24.04
-    permissions:
-      security-events: write
-    strategy:
-      fail-fast: false
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          ref: main
-
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@c10b8064de6f491fea524254123dbe5e09572f13 # v4.35.1
-        with:
-          languages: 'javascript'
-          config-file: ./.github/codeql/codeql-config.yml
-          # If you wish to specify custom queries, you can do so here or in a config file.
-          # By default, queries listed here will override any specified in a config file.
-          # Prefix the list here with "+" to use these queries and those in the config file.
-
-      - name: CodeQL autobuild
-        uses: github/codeql-action/autobuild@c10b8064de6f491fea524254123dbe5e09572f13 # v4.35.1
-
-      - name: Perform vulnerability analysis
-        uses: github/codeql-action/analyze@c10b8064de6f491fea524254123dbe5e09572f13 # v4.35.1
 
   link_checker:
     name: Link checker

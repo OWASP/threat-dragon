@@ -24,42 +24,25 @@ describe('import', () => {
         });
     });
 
-    // TODO: guard navigation error, so skip
-    describe.skip('using a valid V1 model without diagram', () => {
-        it('allows a user to upgrade from v1 to v2', () => {
+    describe('using a valid V1 model without diagram', () => {
+        it('upgrades from v1 to v2', () => {
             cy.fixture('v1-new-model').then((model) => {
                 cy.get('#json-input').type(JSON.stringify(model), {parseSpecialCharSequences: false});
             });
             cy.get('#td-import-btn').click();
-            cy.url().should('contain', '/local/New%20threat%20model/upgrade');
+            cy.url().should('contain', '/local/New%20threat%20model');
         });
 
-        it('tells the user about the upgrade', () => {
-            cy.get('.modal-title').contains('Threatmodel Update');
-            cy.get('.td-welcome-title').contains('Welcome to version 2');
-            cy.get('.td-p1').contains('drawing library');
-            cy.get('.td-p2').contains('upgrade');
-            cy.get('.td-upgrade-modal-ok').click();
-        });
-    
-        it('has the user continue', () => {
-            cy.get('.td-instructions').contains('your model');
-            cy.get('.td-upgrade-continue').click();
-            cy.url().should('contain', 'local/New%20threat%20model');
-        });
-    
         it('can edit the model', () => {
+            cy.fixture('v1-new-model').then((model) => {
+                cy.get('#json-input').type(JSON.stringify(model), {parseSpecialCharSequences: false});
+            });
+            cy.get('#td-import-btn').click();
             cy.get('#td-edit-btn').click();
             cy.url().should('contain', '/edit');
             cy.get('#description').should('be.visible');
             cy.get('button').contains('Close').click();
         });
-    
-        it('asks the user about the changes', () => {
-            cy.get('.modal-title').contains('Discard Changes?');
-            cy.get('button').contains('OK').click();
-        });
-
     });
 
     describe('using a valid V2 model without diagram', () => {
@@ -76,45 +59,20 @@ describe('import', () => {
         });
     });
 
-    // TODO: skipping because the threat model is large and we do not (yet) scroll
-    //       also we get an uncaught navigation guard error
-    describe.skip('using a valid V1 model with a diagram', () => {
-        it('allows a user to upgrade from v1 to v2', () => {
+    describe('using a valid V1 model with a diagram', () => {
+        it('upgrades diagrams from v1 to v2', () => {
             cy.fixture('v1-model').then((model) => {
                 cy.get('#json-input').type(JSON.stringify(model), {parseSpecialCharSequences: false, delay: 1});
             });
             cy.get('#td-import-btn').click();
-            cy.url().should('contain', '/local/Demo%20Threat%20Model/upgrade');
+            cy.url().should('contain', '/local/Demo%20Threat%20Model');
         });
 
-        it('tells the user about the upgrade', () => {
-            cy.get('.modal-title').contains('Threatmodel Update');
-            cy.get('.td-welcome-title').contains('Welcome to version 2');
-            cy.get('.td-p1').contains('drawing library');
-            cy.get('.td-p2').contains('upgrade');
-            cy.get('.td-upgrade-modal-ok').should('be.visible');
-            cy.get('.td-upgrade-modal-ok').click();
-        });
-    
-        it('shows each diagram', () => {
-            cy.get('.td-diagram-title').contains('Main Request Data Flow');
-            cy.get('.td-readonly-diagram').should('be.visible');
-        });
-    
-        it('can edit a diagram', () => {
-            cy.get('.td-diagram-edit-btn').click();
-            cy.url().should('contain', 'local/Demo%20Threat%20Model/edit/Main%20Request%20Data%20Flow');
-            cy.go('back');
-            cy.get('.td-upgrade-modal-ok').click();
-        });
-    
-        it('has the user continue', () => {
-            cy.get('.td-instructions').contains('your model');
-            cy.get('.td-upgrade-continue').click();
-            cy.url().should('contain', 'local/Demo%20Threat%20Model');
-        });
-    
         it('can edit the model', () => {
+            cy.fixture('v1-model').then((model) => {
+                cy.get('#json-input').type(JSON.stringify(model), {parseSpecialCharSequences: false, delay: 1});
+            });
+            cy.get('#td-import-btn').click();
             cy.get('#td-edit-btn').click();
             cy.url().should('contain', '/edit');
             cy.get('#description').should('be.visible');
@@ -122,6 +80,10 @@ describe('import', () => {
         });
     
         it('can edit the diagram', () => {
+            cy.fixture('v1-model').then((model) => {
+                cy.get('#json-input').type(JSON.stringify(model), {parseSpecialCharSequences: false, delay: 1});
+            });
+            cy.get('#td-import-btn').click();
             cy.get('.td-diagram-thumb').click();
             cy.url().should('contain', '/edit/Main%20Request%20Data%20Flow');
         });

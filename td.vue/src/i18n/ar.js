@@ -1,4 +1,4 @@
-const ara = {
+const messages = {
     auth: {
         sessionExpired: 'انتهت صلاحية جلستك. يرجى تسجيل الدخول مرة أخرى للمتابعة.'
     },
@@ -524,4 +524,4 @@ const ara = {
     }
 };
 
-export default ara;
+export default messages;

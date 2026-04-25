@@ -41,8 +41,8 @@ const renderNamedSlot = (slots, name) => {
 };
 
 const defaultI18n = {
-    locale: 'eng',
-    availableLocales: ['eng', 'deu'],
+    locale: 'en',
+    availableLocales: ['en', 'de'],
     t: (key) => key,
     tc: (key) => key
 };
@@ -611,7 +611,7 @@ const normalizeMountOptions = (options = {}) => {
 
     if (store) {
         if (store.state && !store.state.locale) {
-            store.state.locale = { locale: 'eng' };
+            store.state.locale = { locale: 'en' };
         }
 
         if (store.state && !Object.prototype.hasOwnProperty.call(store.state, 'packageBuildVersion')) {
