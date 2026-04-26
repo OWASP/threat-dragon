@@ -4,6 +4,7 @@ updates:
     directory: ".github/workflows"
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 1
     cooldown:
       default-days: 10
     groups:
@@ -18,14 +19,16 @@ updates:
         applies-to: security-updates
         patterns:
           - "*"
+    ignore:
+      - dependency-name: "*"
         update-types:
-          - "patch"
-          - "minor"
+          - "version-update:semver-major"
 
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 1
     cooldown:
       default-days: 10
     groups:
@@ -40,9 +43,6 @@ updates:
         applies-to: security-updates
         patterns:
           - "*"
-        update-types:
-          - "patch"
-          - "minor"
     ignore:
       - dependency-name: "*"
         update-types:
@@ -52,6 +52,7 @@ updates:
     directory: "/td.server"
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 1
     cooldown:
       default-days: 10
     groups:
@@ -66,9 +67,6 @@ updates:
         applies-to: security-updates
         patterns:
           - "*"
-        update-types:
-          - "patch"
-          - "minor"
     ignore:
       - dependency-name: "*"
         update-types:
@@ -78,6 +76,7 @@ updates:
     directory: "/td.vue"
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 1
     cooldown:
       default-days: 10
     groups:
@@ -92,9 +91,30 @@ updates:
         applies-to: security-updates
         patterns:
           - "*"
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - "version-update:semver-major"
+
+  - package-ecosystem: "bundler"
+    directory: "/docs"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 1
+    cooldown:
+      default-days: 10
+    groups:
+      docs-bundler-version:
+        applies-to: version-updates
+        patterns:
+          - "*"
         update-types:
           - "patch"
           - "minor"
+      docs-bundler-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
     ignore:
       - dependency-name: "*"
         update-types:
