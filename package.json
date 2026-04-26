@@ -63,7 +63,7 @@
   },
   "devDependencies": {
     "@wdio/cli": "^9.27.0",
-    "baseline-browser-mapping": "^2.10.16",
+    "baseline-browser-mapping": "^2.10.19",
     "npm-run-all2": "^8.0.4",
     "rimraf": "^6.1.3"
   },
