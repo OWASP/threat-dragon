@@ -6,17 +6,6 @@ CVE-2023-28155
 # ignore until Vue2 to Vue3 upgrade
 CVE-2025-15284
 
-# minimatch is used by npm in the base image and has no fix available in latest npm release
-# TODO: Revist after npm 11.9.1 is released
-CVE-2026-27903
-CVE-2026-27904
-
-# tar is used by npm in the base image and has no fix available in latest npm release
-# TODO: Revist after npm 11.9.1 is released
-CVE-2026-29786
-
-# CVEs not in the application itself
-CVE-2026-33750
-CVE-2026-33671
-CVE-2026-33672
-
+# uuid is only used at runtime via v4; this issue affects v3/v5/v6 with caller buffers.
+# Forcing uuid 14 is a breaking CJS/import change for request.
+GHSA-w5hq-g745-h8pq
