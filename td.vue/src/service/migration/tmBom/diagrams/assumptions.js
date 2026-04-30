@@ -1,11 +1,9 @@
 const merge = (model, components) => {
     
     if (model.assumptions) {
-        let assumptions = model.assumptions;
-        assumptions.forEach((assumption) => {
-            let topics = assumption.topics;
-            if (topics) {
-                topics.forEach((topic) => {
+        model.assumptions.forEach((assumption) => {
+            if (assumption.topics) {
+                assumption.topics.forEach((topic) => {
                     components.forEach((component) => {
                         if (topic === component.id) {
                             component.data.description += '\n' + assumption.validity + ' ' + 'assumption : ';
@@ -24,9 +22,7 @@ const summary = (model) => {
     let summaryAssumptions = new Array();
 
     if (model.assumptions) {
-        let assumptions = model.assumptions;
-
-        assumptions.forEach((assumption) => {
+        model.assumptions.forEach((assumption) => {
             if (!assumption.topics) {
                 summaryAssumptions.push(assumption);
             }

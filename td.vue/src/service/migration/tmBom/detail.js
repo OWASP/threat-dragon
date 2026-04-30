@@ -1,19 +1,17 @@
 import diagrams from './diagrams/diagrams';
 
-const read = (model, version) => {
+const merge = (model, version) => {
+    let allDiagrams = diagrams.merge(model, version);
     
-    let diagramTop = model.diagrams ? model.diagrams : [];
-    let threatTop = model.threats ? model.threats : [];
-
     return {
         contributors: [{ 'name': 'Imported from TM-BOM' }],
-        diagrams: diagrams.read(model, version),
-        diagramTop: model.diagrams ? diagramTop.length - 1 : 0,
+        diagrams: allDiagrams,
+        diagramTop: allDiagrams.length,
         reviewer: '',
-        threatTop: model.threats ? threatTop.length - 1 : 0
+        threatTop: model.threats && model.threats.length ? model.threats.length - 1 : 0
     };
 };
 
 export default {
-    read
+    merge
 };

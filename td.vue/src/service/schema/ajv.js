@@ -1,10 +1,10 @@
 import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
-import otm from '@/service/migration/otm/openThreatModel';
-import tmBom from '@/service/migration/tmBom/threatModelBom';
 
 const schemaV1 = require('@/assets/schema/threat-dragon-v1.schema');
 const schemaV2 = require('@/assets/schema/threat-dragon-v2.schema');
+const schemaOtm = require('@/assets/schema/open-threat-model.schema');
+const schemaTmbom = require('@/assets/schema/threat-model.schema');
 const schemaTemplate = require('@/assets/schema/owasp-threat-dragon-template.schema.json');
 
 const ajv = new Ajv({'allowUnionTypes' : true});
@@ -12,12 +12,14 @@ addFormats(ajv);
 
 const validateV1 = ajv.compile(schemaV1);
 const validateV2 = ajv.compile(schemaV2);
+const validateOtm = ajv.compile(schemaOtm);
+const validateTmbom = ajv.compile(schemaTmbom);
 const validateTemplate = ajv.compile(schemaTemplate);
 
 export const isValid = (jsonFile) => {
 
     // use the latest V2 schema, save errors for later if needed
-    if (validateV2(jsonFile)) {
+    if (isV2(jsonFile)) {
         console.debug('Schema validate success');
         return true;
     }
@@ -57,11 +59,16 @@ export const isV2 = (jsonFile) => {
 };
 
 export const isTmBom = (jsonFile) => {
-    return tmBom.isValid(jsonFile);
+    return validateTmbom(jsonFile);
+};
+
+export const checkTmBom = (jsonFile) => {
+    validateTmbom(jsonFile);
+    return validateTmbom.errors;
 };
 
 export const isOtm = (jsonFile) => {
-    return otm.isValid(jsonFile);
+    return validateOtm(jsonFile);
 };
 
 export const isTemplate = (jsonFile) => {
@@ -78,6 +85,7 @@ export const validateTemplateFormat = (jsonFile) => {
 };
 
 export default {
+    checkTmBom,
     checkV2,
     isV1,
     isV2,

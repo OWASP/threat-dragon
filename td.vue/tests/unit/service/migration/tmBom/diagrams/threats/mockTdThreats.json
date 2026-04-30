@@ -1,0 +1,44 @@
+{
+    "threats": [
+        {
+            "id": "threat0",
+            "score": 3,
+            "description": "Mock initial description0",
+            "mitigation": "Mitigated",
+            "status": "N/A",
+            "severity": "TBD"
+        },
+        {
+            "id": "threat1",
+            "score": 0,
+            "description": "Mock initial description1",
+            "mitigation": "Mock initial mitigation0",
+            "status": "N/A",
+            "severity": "Low"
+        },
+        {
+            "id": "threat2",
+            "score": null,
+            "description": "Mock initial description2",
+            "mitigation": "Mock initial mitigation0",
+            "status": "Mitigated",
+            "severity": "Medium"
+        },
+        {
+            "id": "threat3",
+            "score": -1,
+            "description": "Mock initial description2",
+            "mitigation": "Mock initial mitigation0",
+            "status": "Open",
+            "severity": "High"
+        },
+        {
+            "id": "threat4",
+            "score": 12,
+            "description": "Mock initial description3",
+            "mitigation": "Mock initial mitigation0",
+            "status": "Open",
+            "severity": "Critical"
+        }
+    ]
+}

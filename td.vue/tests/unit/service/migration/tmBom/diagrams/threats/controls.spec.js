@@ -1,92 +1,69 @@
+import boundaries from '@/service/migration/tmBom/diagrams/threats/boundaries';
 import controls from '@/service/migration/tmBom/diagrams/threats/controls';
 import tmBomModel from '../../test-model';
+import { threats as mockTdThreats } from './mockTdThreats';
 
-const tdThreats = [
-    {
-        status: 'Open',
-        severity: 'TBD',
-        description: 'An attacker crafts an image',
-        title: 'Buffer overflow',
-        type: 'Generic',
-        mitigation: '',
-        modelType: 'Generic',
-        id: 'buffer-overflow-image-processing'
-    },
-    {
-        status: 'Open',
-        severity: 'TBD',
-        description: 'An attacker poisons the supply chain',
-        title: 'Supply chain attack',
-        type: 'Generic',
-        mitigation: '',
-        modelType: 'Generic',
-        id: 'supply-chain-attack'
-    },
-    {
-        status: 'Open',
-        severity: 'TBD',
-        description: 'An attacker tampers with or deletes stored images',
-        title: 'Image Tampering',
-        type: 'Generic',
-        mitigation: '',
-        modelType: 'Generic',
-        id: 'image-tampering'
-    },
-    {
-        status: 'Open',
-        severity: 'TBD',
-        description: 'An attacker modifies a notebook file',
-        title: 'Notebook tampering',
-        type: 'Generic',
-        mitigation: '',
-        modelType: 'Generic',
-        id: 'notebook-tampering'
-    }
-];
+jest.mock('@/service/migration/tmBom/diagrams/threats/boundaries');
 
 describe('service/migration/tmBom/diagrams/threats/controls.js', () => {
-    var threats = controls.merge(tmBomModel, tdThreats);
 
     describe('updates the threats', () => {
+        boundaries.merge.mockImplementation((_model, control) => control);
+        let tdThreats = JSON.parse(JSON.stringify(mockTdThreats));
+        let threats = controls.merge(tmBomModel, tdThreats);
 
-        it('provides first threat mitigation', () => {
-            expect(threats[0].mitigation).toContain('Implement sandboxing');
-            expect(threats[1].mitigation).toContain('Validate TLS usage');
-            expect(threats[2].mitigation).toContain('Ensure appropriate access control');
-            expect(threats[3].mitigation).toContain('Store hashes and validate integrity');
+        it('adds the control title', () => {
+            expect(threats[0].mitigation).toContain('Test title control0');
+            expect(threats[0].mitigation).toContain('Test title control3');
+            expect(threats[1].mitigation).toContain('Test title control0');
+            expect(threats[1].mitigation).toContain('Test title control4');
+            expect(threats[4].mitigation).not.toContain('Test title control0');
+            expect(threats[4].mitigation).toContain('Test title control7');
         });
 
-        it('provides second threat mitigation', () => {
-            expect(threats[0].mitigation).toContain('Cheat Sheet for File Upload');
-            expect(threats[1].mitigation).toContain('SCA scanning and patching');
-            expect(threats[2].mitigation).toContain('Have access logging in place');
-            expect(threats[3].mitigation).toContain('Ensure appropriate access control');
-        });
-
-        it('provides third threat mitigation', () => {
-            expect(threats[2].mitigation).toContain('Ensure backups for Azure Blob');
-            expect(threats[3].mitigation).toContain('Developer machine endpoint security');
-        });
-
-        it('provides threat mitigation description', () => {
-            expect(threats[0].mitigation).toContain('processing in isolated environment');
-            expect(threats[1].mitigation).toContain('Regularly scan third-party dependencies');
-            expect(threats[2].mitigation).toContain('Ensure developer machines are patched');
-            expect(threats[3].mitigation).toContain('Ensure developer machines are patched');
+        it('adds the control status', () => {
+            expect(threats[0].mitigation).toContain('assumed');
+            expect(threats[0].mitigation).toContain('under review');
+            expect(threats[1].mitigation).toContain('assumed');
+            expect(threats[1].mitigation).toContain('approved');
+            expect(threats[4].mitigation).not.toContain('assumed');
+            expect(threats[4].mitigation).toContain('wont do');
         });
 
         it('updates threat status', () => {
-            expect(threats[0].status).toBe('Open');
-            expect(threats[1].status).toBe('Open');
+            expect(threats[0].status).toBe('Mitigated');
+            expect(threats[1].status).toBe('Mitigated');
             expect(threats[2].status).toBe('Mitigated');
-            expect(threats[3].status).toBe('Mitigated');
+            expect(threats[3].status).toBe('Open');
+            expect(threats[4].status).toBe('Mitigated');
         });
 
         it('sets threat severity', () => {
             expect(threats[0].severity).toBe('Critical');
-            expect(threats[1].severity).toBe('Critical');
-            expect(threats[2].severity).toBe('Critical');
-            expect(threats[3].severity).toBe('Critical');
+            expect(threats[1].severity).toBe('Medium');
+            expect(threats[2].severity).toBe('High');
+            expect(threats[3].severity).toBe('High');
+            expect(threats[4].severity).toBe('Critical');
+        });
+
+    });
+
+    describe('handles absence of controls', () => {
+        let uncontrolsTmBomModel = Object.assign({}, tmBomModel);
+        delete(uncontrolsTmBomModel.controls);
+        boundaries.merge.mockImplementation((_model, control) => control);
+        let threats = controls.merge(uncontrolsTmBomModel, mockTdThreats);
+
+        it('skips boundaries', () => {
+		    expect(boundaries.merge).not.toHaveBeenCalled();
+        });
+
+        it('preserves threat severity', () => {
+		    expect(threats[0].severity).toBe('TBD');
+		    expect(threats[1].severity).toBe('Low');
+		    expect(threats[2].severity).toBe('Medium');
+		    expect(threats[3].severity).toBe('High');
+		    expect(threats[4].severity).toBe('Critical');
         });
 
     });

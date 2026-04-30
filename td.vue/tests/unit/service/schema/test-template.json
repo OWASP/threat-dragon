@@ -1,0 +1,25 @@
+{
+  "templateMetadata": {
+    "id": "80048145-be8a-4002-86c8-4058500af279",
+    "name": "New threat model",
+    "description": "",
+    "tags": [],
+    "modelRef": "1b3aa01f-a352-4df8-9c21-e1aae5d63e47"
+  },
+  "model": {
+    "version": "2.6.0",
+    "summary": {
+      "title": "New threat model",
+      "owner": "",
+      "description": "",
+      "id": ""
+    },
+    "detail": {
+      "contributors": [],
+      "diagrams": [],
+      "diagramTop": 0,
+      "reviewer": "",
+      "threatTop": 0
+    }
+  }
+}

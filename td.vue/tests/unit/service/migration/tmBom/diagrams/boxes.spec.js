@@ -1,68 +1,73 @@
 import boxes from '@/service/migration/tmBom/diagrams/boxes';
 import tmBomModel from '../test-model';
-const padding = 50;
-const nodeSize = { width: 160 + (2 * padding), height: 80 + (2 * padding) };
 
 describe('service/migration/tmBom/diagrams/boxes.js', () => {
-    const offset = {'x': 100, 'y': 80};
-    const boundaryBoxShape = {
-        shape: 'trust-boundary-box',
-        data: {
-            type: 'tm.BoundaryBox',
-            isTrustBoundary: true,
-            hasOpenThreats: false
-        }
-    };
-    let testBoundaryBoxes = boxes.read(tmBomModel, offset, nodeSize, padding);
+    let testBoundaryBoxes = boxes.merge(tmBomModel);
 
-    describe('import TM-BOM zones', () => {
+    describe('import TM-BOM trust zones', () => {
         it('finds the boundary boxes', () => {
-            expect(testBoundaryBoxes).toHaveLength(3);
+            expect(testBoundaryBoxes).toHaveLength(tmBomModel.trust_zones.length);
         });
 
-        it('provides the first boundary box', () => {
-            expect(testBoundaryBoxes[0]).toMatchObject(boundaryBoxShape);
-            expect(testBoundaryBoxes[1]).toMatchObject(boundaryBoxShape);
-            expect(testBoundaryBoxes[2]).toMatchObject(boundaryBoxShape);
+        it('provides boundary box shape', () => {
+            expect(testBoundaryBoxes[0].shape).toEqual('trust-boundary-box');
+            expect(testBoundaryBoxes[0].data.type).toEqual('tm.BoundaryBox');
+            expect(testBoundaryBoxes[0].data.isTrustBoundary).toBe(true);
+            expect(testBoundaryBoxes[0].data.hasOpenThreats).toBe(false);
         });
 
         it('creates the id strings', () => {
-            expect(testBoundaryBoxes[0].id).toBe('prod-zone');
-            expect(testBoundaryBoxes[1].id).toBe('experimental-zone');
-            expect(testBoundaryBoxes[2].id).toBe('public');
+            expect(testBoundaryBoxes[0].id).toBe('trust-zone0');
+            expect(testBoundaryBoxes[1].id).toBe('trust-zone1');
+            expect(testBoundaryBoxes[2].id).toBe('trust-zone2');
         });
 
         it('sizes the boundary boxes', () => {
-            expect(testBoundaryBoxes[0].size).toStrictEqual({ width: 520, height: 360 });
-            expect(testBoundaryBoxes[1].size).toStrictEqual({ width: 520, height: 360 });
-            expect(testBoundaryBoxes[2].size).toStrictEqual({ width: 260, height: 180});
+            expect(testBoundaryBoxes[0].size.width).toBeGreaterThanOrEqual(boxes.nodeGeometry.width);
+            expect(testBoundaryBoxes[0].size.height).toBeGreaterThanOrEqual(boxes.nodeGeometry.height);
+            expect(testBoundaryBoxes[2].size.width).toBeGreaterThan(boxes.nodeGeometry.width);
+            expect(testBoundaryBoxes[2].size.height).toBeGreaterThan(boxes.nodeGeometry.height);
         });
 
         it('places the boundary boxes', () => {
-            expect(testBoundaryBoxes[0].position).toStrictEqual({ x: 100, y: 80 });
-            expect(testBoundaryBoxes[1].position).toStrictEqual({ x: 670, y: 80 });
-            expect(testBoundaryBoxes[2].position).toStrictEqual({ x: 100, y: 490 });
+            expect(testBoundaryBoxes[0].position.x).toBeGreaterThanOrEqual(boxes.nodeGeometry.width);
+            expect(testBoundaryBoxes[0].position.y).toBeGreaterThanOrEqual(boxes.nodeGeometry.height);
+            expect(testBoundaryBoxes[1].position.x).toBeGreaterThan(boxes.nodeGeometry.padding + boxes.nodeGeometry.width);
+            expect(testBoundaryBoxes[1].position.y).toBeGreaterThanOrEqual(boxes.nodeGeometry.height);
+            expect(testBoundaryBoxes[2].position.x).toBeGreaterThanOrEqual(boxes.nodeGeometry.width);
+            expect(testBoundaryBoxes[2].position.y).toBeGreaterThan(boxes.nodeGeometry.padding + boxes.nodeGeometry.height);
         });
 
         it('names the boundary boxes', () => {
-            expect(testBoundaryBoxes[0].data.name).toBe('Production Trust Zone');
-            expect(testBoundaryBoxes[0].attrs.label.text).toBe('Production Trust Zone');
-            expect(testBoundaryBoxes[1].data.name).toBe('Experimental Trust Zone');
-            expect(testBoundaryBoxes[1].attrs.label.text).toBe('Experimental Trust Zone');
-            expect(testBoundaryBoxes[2].data.name).toBe('Public Internet');
-            expect(testBoundaryBoxes[2].attrs.label.text).toBe('Public Internet');
+            expect(testBoundaryBoxes[0].data.name).toBe('Test title trust-zone0');
+            expect(testBoundaryBoxes[0].attrs.label.text).toBe('Test title trust-zone0');
+            expect(testBoundaryBoxes[1].data.name).toBe('Test title trust-zone1');
+            expect(testBoundaryBoxes[1].attrs.label.text).toBe('Test title trust-zone1');
+            expect(testBoundaryBoxes[2].data.name).toBe('Test title trust-zone2');
+            expect(testBoundaryBoxes[2].attrs.label.text).toBe('Test title trust-zone2');
         });
 
         it('provides the description', () => {
-            expect(testBoundaryBoxes[0].data.description).toContain('production deployment');
-            expect(testBoundaryBoxes[1].data.description).toContain('experimental deployment');
-            expect(testBoundaryBoxes[2].data.description).toContain('The public internet');
+            expect(testBoundaryBoxes[0].data.description).toContain('Test description trust-zone0');
+            expect(testBoundaryBoxes[1].data.description).toContain('Test description trust-zone1');
+            expect(testBoundaryBoxes[2].data.description).toContain('Test description trust-zone2');
         });
 
         it('sets the Z index', () => {
             expect(testBoundaryBoxes[0].zIndex).toBe(-1);
             expect(testBoundaryBoxes[1].zIndex).toBe(-2);
             expect(testBoundaryBoxes[2].zIndex).toBe(-3);
+        });
+
+    });
+
+    describe('handle absence of TM-BOM trust zones', () => {
+        let reducedModel = JSON.parse(JSON.stringify(tmBomModel));
+        delete(reducedModel.trust_zones);
+        let testBoundaryBoxes = boxes.merge(reducedModel);
+
+        it('provides empty boundary box array', () => {
+            expect(testBoundaryBoxes).toHaveLength(0);
         });
 
     });

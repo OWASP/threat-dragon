@@ -1,0 +1,91 @@
+{
+	"components": [
+	    {
+	        "data": {
+	            "type": "tm.Actor",
+	            "name": "Test title actor0",
+	            "description": "Test description actor0"
+	        },
+	        "id": "actor0"
+	    },
+	    {
+	        "data": {
+	            "type": "tm.Store",
+	            "name": "Test title data store0",
+	            "description": "Test description data store0",
+	            "isEncrypted": true
+	        },
+	        "id":  "data-store0"
+	    },
+	    {
+	        "data": {
+	            "type": "tm.Store",
+	            "name": "Test title data store1",
+	            "description": "Test description data store1",
+	            "isEncrypted": true
+	        },
+	        "id":  "data-store1"
+	    },
+	    {
+	        "data": {
+	            "type": "tm.Store",
+	            "name": "Test title data store2",
+	            "description": "Test description data store2",
+	            "isEncrypted": true
+	        },
+	        "id":  "data-store2"
+	    },
+	    {
+	        "data": {
+	            "type": "tm.Store",
+	            "name": "Test title data store3",
+	            "description": "Test description data store3",
+	            "isEncrypted": false
+	        },
+	        "id":  "data-store3"
+	    },
+	    {
+	        "data": {
+	            "type": "tm.Store",
+	            "name": "Test title data store4",
+	            "description": "Test description data store4",
+	            "isEncrypted": false
+	        },
+	        "id":  "data-store4"
+	    },
+	    {
+	        "data": {
+	            "type": "tm.Store",
+	            "name": "Test title data store5",
+	            "description": "Test description data store5",
+	            "isEncrypted": false
+	        },
+	        "id":  "data-store5"
+	    },
+	    {
+	        "data": {
+	            "type": "tm.Store",
+	            "name": "Test title data_store6",
+	            "description": "Test description data_store6",
+	            "isEncrypted": false
+	        },
+	        "id":  "data_store6"
+	    },
+	    {
+	        "data": {
+	            "type": "tm.Process",
+	            "name": "Test title process0",
+	            "description": "Test description process0"
+	        },
+	        "id": "process0"
+	    },
+	    {
+	        "data": {
+	            "type": "tm.Process",
+	            "name": "Test title process1",
+	            "description": "Test description process1"
+	        },
+	        "id": "process1"
+	    }
+	]
+}

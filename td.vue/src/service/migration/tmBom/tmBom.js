@@ -7,48 +7,100 @@ import detail from './detail';
  * wich may not be the latest given in package.lock
  * Note : when this is revised, then change this version to match
  */
-const version = '2.4.1';
+const version = '2.6.1';
 
-const read = (model) => {
+const createKey = (source, target, key) => {
+    if (Object.hasOwn(source, key)) {
+        target[key] = source[key];
+    }
+};
 
-    // not used (yet) by TD, but needs to be preserved if present
+// export a Threat Dragon file to TM-BOM format
+const exportAsTmbom = (model) => {
+    let tmModel = new Object();
+
+    // compatibility object exists if original file was also TM-BOM
+    // required values
+    tmModel.version = model?.compatibility?.version || '1.0.1';
+    tmModel.description = model?.compatibility?.description || 'Export from Threat Dragon model';
+
+    if (model.compatibility) {
+        // optional key values
+        createKey(model.compatibility, tmModel, 'frozen');
+        createKey(model.compatibility, tmModel, 'release_docs_link');
+        createKey(model.compatibility, tmModel, 'reviewed_at');
+        createKey(model.compatibility, tmModel, 'repo_link');
+    }
+
+    tmModel.scope = summary.write(model);
+
+    return tmModel;
+};
+
+// import a TM-BOM file to Threat Dragon format
+export const importTmbom = (model) => {
+
+    // required values not used by TD but need to be preserved
     let compatibility = {
         version: model.version,
         description: model.description,
-        frozen: model.frozen,
-        release_docs_link: model.release_docs_link,
-        reviewed_at: model.reviewed_at,
-        repo_link: model.repo_link
     };
 
+    // optional values need to be preserved but only if present
+    createKey(model, compatibility, 'frozen');
+    createKey(model, compatibility, 'release_docs_link');
+    createKey(model, compatibility, 'reviewed_at');
+    createKey(model, compatibility, 'repo_link');
+
     return {
-        summary: summary.read(model),
-        detail: detail.read(model, version),
+        summary: summary.merge(model),
+        detail: detail.merge(model, version),
         version: version,
         compatibility
     };
 };
 
+// read a TM-BOM file
+const read = (model) => {
+    // not supported yet, return an empty Threat Dragon model with TM-BOM attached
+    return {
+        version: version,
+        summary: {
+            title: model.scope.title,
+            description: 'Empty Threat Dragon model from a TM-BOM',
+        },
+        detail: [],
+        tmBom: model
+    };
+
+};
+
+// write a TM-BOM file
 const write = (model) => {
-    let tmModel = new Object();
-
-    tmModel.version = model.compatibility ? model.compatibility.version : '1.0';
-
-    tmModel.scope = summary.write(model);
-
-    if (model.compatibility) {
-        tmModel.description = model.compatibility.description,
-        tmModel.frozen = model.compatibility.frozen,
-        tmModel.release_docs_link = model.compatibility.release_docs_link,
-        tmModel.reviewed_at = model.compatibility.reviewed_at,
-        tmModel.repo_link = model.compatibility.repo_link;
-    }
-
-    return tmModel;
+    // not supported yet, so return a nearly empty TM=BOM
+    return {
+        version: '1.0.2',
+        scope: {
+            title: model.tmBom.scope.title,
+            description: 'Empty Threat Model Bill of Materials (TM-BOM)',
+            business_criticality: '',
+            data_sensitivity: '',
+            exposure: '',
+            tier: ''
+        },
+        trust_zones: [],
+        trust_boundaries: [],
+        actors: [],
+        components: [],
+        data_stores: [],
+        data_sets: [],
+        data_flows: []
+    };
 };
 
 export default {
+    exportAsTmbom,
+    importTmbom,
     read,
-    version,
     write
 };

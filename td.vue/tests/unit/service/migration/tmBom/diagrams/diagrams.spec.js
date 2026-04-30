@@ -5,13 +5,13 @@ describe('service/migration/tmBom/diagrams/diagrams.js', () => {
     let testDiagrams;
     const version = 'x.y.zz';
 
-    describe('import TM-BOM diagrams', () => {
+    describe('merge', () => {
         beforeEach(() => {
-            testDiagrams = diagrams.read(tmBomModel, version);
+            testDiagrams = diagrams.merge(tmBomModel, version);
         });
 
-        it('finds both diagrams', () => {
-            expect(testDiagrams).toHaveLength(2);
+        it('import TM-BOM diagrams', () => {
+            expect(testDiagrams).toHaveLength(tmBomModel.diagrams.length + 1);
         });
 
         it('versions the diagram', () => {
@@ -19,7 +19,7 @@ describe('service/migration/tmBom/diagrams/diagrams.js', () => {
         });
 
         it('creates a default diagram', () => {
-            expect(testDiagrams[0].title).toBe('Husky AI');
+            expect(testDiagrams[0].title).toBe('Test title scope');
             expect(testDiagrams[0].diagramType).toBe('TM-BOM');
             expect(testDiagrams[0].id).toBe(0);
 
@@ -30,6 +30,18 @@ describe('service/migration/tmBom/diagrams/diagrams.js', () => {
             expect(testDiagrams[1].thumbnail).toContain('thumbnail.jpg');
             expect(testDiagrams[1].diagramType).toBe(tmBomModel.diagrams[0].type);
             expect(testDiagrams[1].id).toBe(1);
+        });
+
+    });
+
+    describe('merge main diagram', () => {
+        beforeEach(() => {
+            delete(tmBomModel.diagrams);
+		    testDiagrams = diagrams.merge(tmBomModel, version);
+        });
+
+        it('creates main diagram', () => {
+	    expect(testDiagrams).toHaveLength(1);
         });
 
     });

@@ -1129,8 +1129,8 @@
     "version": "1.0.1",
     "description": "A machine learning system to classify Huskies vs dogs",
     "frozen": true,
-    "release_docs_link": "https://github.com/wunderwuzzi23/huskyai",
+    "release_docs_link": "https://example.com/release_docs_link",
     "reviewed_at": "2025-05-28",
-    "repo_link": "https://github.com/wunderwuzzi23/huskyai"
+    "repo_link": "https://example.com/repo_link"
   }
 }

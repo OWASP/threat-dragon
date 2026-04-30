@@ -1,6 +1,6 @@
 import defaultProperties from '@/service/entity/default-properties.js';
 
-const read = (model) => {
+const merge = (model) => {
     const flows = placeFlows(model);
 
     return flows;
@@ -30,5 +30,5 @@ const placeFlows = (model) => {
 
 export default {
     placeFlows,
-    read
+    merge
 };
