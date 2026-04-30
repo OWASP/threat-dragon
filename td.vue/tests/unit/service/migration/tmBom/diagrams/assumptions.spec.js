@@ -11,12 +11,13 @@ describe('service/migration/tmBom/diagrams/assumptions.js', () => {
         });
 
         it('provides the assumption description', () => {
-            expect(summaryAssumptions[0].description).toContain('assumption0');
+            expect(summaryAssumptions[0].description).toContain('description assumption2');
+            expect(summaryAssumptions[1].description).toContain('description assumption3');
         });
 
         it('provides the assumption validity', () => {
-            expect(summaryAssumptions[0].validity).toBe('confirmed');
-            expect(summaryAssumptions[1].validity).toBe('rejected');
+            expect(summaryAssumptions[0].validity).toBe('rejected');
+            expect(summaryAssumptions[1].validity).toBe('unconfirmed');
         });
     });
 

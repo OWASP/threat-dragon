@@ -6,10 +6,10 @@ const merge = (model, control) => {
     if (boundary) {
         newControl.description += '\nApplied across boundaries ' + boundary.trust_zone_a + ' and ' + boundary.trust_zone_b;
         if (boundary.access_control_methods) {
-            newControl.description += '\nAccess control methods: ' + boundary.access_control_methods;
+            newControl.description += '\nAccess control methods: ' + String(boundary.access_control_methods).replaceAll(',', ', ').replaceAll('_', ' ');
         }
         if (boundary.authentication_methods) {
-            newControl.description += '\nAuthentication methods: ' + boundary.authentication_methods;
+            newControl.description += '\nAuthentication methods: ' + String(boundary.authentication_methods).replaceAll(',', ', ').replaceAll('_', ' ');
         }
         if (boundary.access_token_expires) {
             newControl.description += '\nAccess token expiry: ' + boundary.access_token_expires;

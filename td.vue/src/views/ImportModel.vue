@@ -61,7 +61,7 @@ import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
 import tmActions from '@/store/actions/threatmodel.js';
 import schema from '@/service/schema/ajv';
-import tmBom from '@/service/migration/tmBom/tmBom';
+import { importTmbom } from '@/service/migration/tmBom/tmBom';
 import threatDragonV1 from '@/service/migration/tdV1/threatDragonV1';
 
 // only search for text files
@@ -161,7 +161,7 @@ export default {
                 } else if (schema.isTmBom(jsonModel)) {
                     console.warn('Convert TM-BOM to internal TD format');
                     this.$toast.warning(this.$t('threatmodel.warnings.tmUnsupported'), { timeout: false });
-                    jsonModel = tmBom.read(jsonModel);
+                    jsonModel = importTmbom(jsonModel);
                     console.debug('Force selection of file name for TM-BOM');
                     fileName = '';
                     this.$store.dispatch(tmActions.update, { fileName: fileName });

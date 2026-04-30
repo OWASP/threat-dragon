@@ -272,8 +272,10 @@
 !td.vue/tests/unit/service/migration/tmBom/*.json
 !td.vue/tests/unit/service/migration/tmBom/diagrams/
 !td.vue/tests/unit/service/migration/tmBom/diagrams/*.spec.js
+!td.vue/tests/unit/service/migration/tmBom/diagrams/*.json
 !td.vue/tests/unit/service/migration/tmBom/diagrams/threats/
 !td.vue/tests/unit/service/migration/tmBom/diagrams/threats/*.spec.js
+!td.vue/tests/unit/service/migration/tmBom/diagrams/threats/*.json
 !td.vue/tests/unit/service/provider/
 !td.vue/tests/unit/service/provider/*.spec.js
 !td.vue/tests/unit/service/schema/

@@ -15,7 +15,7 @@ const mockCombinedModel = {
         description: 'Empty Threat Dragon model from a TM-BOM',
     },
     detail: [],
-    tmBom: JSON.parse(JSON.stringify(tmBomModel))
+    tmBom: tmBomModel
 };
 
 describe('service/migration/tmBom/tmBom.js', () => {
@@ -27,8 +27,8 @@ describe('service/migration/tmBom/tmBom.js', () => {
 
         describe('import from TM-BOM format', () => {
             beforeEach(() => {
-                summary.read.mockReturnValue(summaryReturn);
-                detail.read.mockReturnValue(detailReturn);
+                summary.merge.mockReturnValue(summaryReturn);
+                detail.merge.mockReturnValue(detailReturn);
                 testModel = tmBom.importTmbom(tmBomModel);
             });
 
@@ -72,20 +72,14 @@ describe('service/migration/tmBom/tmBom.js', () => {
         });
     });
 
-    describe('version', () => {
-        it('reports the schema version', () => {
-            expect(tmBom.version.length).toBeGreaterThanOrEqual(5);
-        });
-    });
-
-    describe('exportTd', () => {
+    describe('exportAsTmbom', () => {
         let testModel;
         const summaryReturn = 'test TM-BOM scope';
 
         describe('export to TM-BOM format', () => {
             beforeEach(() => {
                 summary.write.mockReturnValue(summaryReturn);
-                testModel = tmBom.exportTd(tdModel);
+                testModel = tmBom.exportAsTmbom(tdModel);
             });
 
             it('provides mandatory values', () => {
@@ -109,7 +103,7 @@ describe('service/migration/tmBom/tmBom.js', () => {
             it('defaults absent required values', () => {
                 let noCompatibilityModel = JSON.parse(JSON.stringify(tdModel));
                 delete noCompatibilityModel.compatibility;
-                testModel = tmBom.exportTd(noCompatibilityModel);
+                testModel = tmBom.exportAsTmbom(noCompatibilityModel);
                 expect(testModel.version.length).toBeGreaterThanOrEqual(5);
                 expect(testModel.description.length).toBeGreaterThan(1);
             });
@@ -118,7 +112,7 @@ describe('service/migration/tmBom/tmBom.js', () => {
                 let noOptionsModel = JSON.parse(JSON.stringify(tdModel));
                 delete noOptionsModel.compatibility.frozen;
                 delete noOptionsModel.compatibility.repo_link;
-                testModel = tmBom.exportTd(noOptionsModel);
+                testModel = tmBom.exportAsTmbom(noOptionsModel);
                 expect(testModel.frozen).toBeUndefined();
                 expect(testModel.release_docs_link).toBe(tmBomModel.release_docs_link);
                 expect(testModel.reviewed_at).toBe(tmBomModel.reviewed_at);

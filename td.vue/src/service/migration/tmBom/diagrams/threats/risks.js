@@ -8,9 +8,9 @@ const merge = (model, tdThreats) => {
                     if (tdThreat.id === threat) {
                         tdThreat.description += '\nRisk Identified: ' + risk.title;
                         tdThreat.description += '\n' + risk.description;
-                        tdThreat.description += '\nThis is a ' + risk.level;
+                        tdThreat.description += '\nThis is a ' + risk.level.replaceAll('_', ' ');
                         tdThreat.description += ' risk with a ' + risk.likelihood + ' liklihood';
-                        tdThreat.description += ' and  ' + risk.impact + ' impact:';
+                        tdThreat.description += ' and ' + risk.impact + ' impact:';
                         tdThreat.description += '\n' + risk.impact_description;
                         tdThreat.score = risk.score > tdThreat.score ? risk.score : tdThreat.score;
                     }

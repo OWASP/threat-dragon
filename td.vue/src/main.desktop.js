@@ -10,7 +10,7 @@ import router from './router/index.js';
 import desktopSave from './service/desktop/save.js';
 import { providerNames } from './service/provider/providers.js';
 import threatDragonV1 from './service/migration/tdV1/threatDragonV1';
-import tmBom from './service/migration/tmBom/tmBom';
+import { importTmbom } from './service/migration/tmBom/tmBom';
 
 import schema from './service/schema/ajv';
 import storeFactory from './store/index.js';
@@ -205,7 +205,7 @@ const localAuth = () => {
 const openTmBom = (jsonModel) => {
     console.warn('Convert TM-BOM to internal TD format');
     appProxy.$toast.warning(t('threatmodel.warnings.tmUnsupported'), { timeout: false });
-    return tmBom.read(jsonModel);
+    return importTmbom(jsonModel);
 };
 
 const app = createApp(App);

@@ -1,6 +1,6 @@
 import assumptions from './diagrams/assumptions';
 
-const read = (model) => {
+const merge = (model) => {
     let summary = new Object();
 
     if (!model.scope) {
@@ -53,6 +53,6 @@ const write = (model) => {
 };
 
 export default {
-    read,
+    merge,
     write
 };

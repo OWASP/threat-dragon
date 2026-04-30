@@ -1,7 +1,7 @@
 import diagrams from './diagrams/diagrams';
 
-const read = (model, version) => {
-    let allDiagrams = diagrams.read(model, version);
+const merge = (model, version) => {
+    let allDiagrams = diagrams.merge(model, version);
     
     return {
         contributors: [{ 'name': 'Imported from TM-BOM' }],
@@ -13,5 +13,5 @@ const read = (model, version) => {
 };
 
 export default {
-    read
+    merge
 };

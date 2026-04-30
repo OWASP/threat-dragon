@@ -62,6 +62,11 @@ export const isTmBom = (jsonFile) => {
     return validateTmbom(jsonFile);
 };
 
+export const checkTmBom = (jsonFile) => {
+    validateTmbom(jsonFile);
+    return validateTmbom.errors;
+};
+
 export const isOtm = (jsonFile) => {
     return validateOtm(jsonFile);
 };
@@ -80,6 +85,7 @@ export const validateTemplateFormat = (jsonFile) => {
 };
 
 export default {
+    checkTmBom,
     checkV2,
     isV1,
     isV2,

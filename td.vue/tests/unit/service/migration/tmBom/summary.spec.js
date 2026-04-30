@@ -8,14 +8,14 @@ jest.mock('@/service/migration/tmBom/diagrams/assumptions');
 
 describe('service/migration/tmBom/summary.js', () => {
 
-    describe('reads TM-BOM', () => {
+    describe('merge TM-BOM', () => {
         let testSummary;
         const testAssumptions = [{validity: 'valid0', description: ''}, {validity: '', description: 'description1'}];
 
 	    describe('creates summary from TM-BOM', () => {
 	        beforeEach(() => {
                 assumptions.summary.mockReturnValue(testAssumptions);
-	            testSummary = summary.read(tmBomModel);
+	            testSummary = summary.merge(tmBomModel);
 	        });
 	
 	        it('provides summary', () => {
@@ -44,13 +44,13 @@ describe('service/migration/tmBom/summary.js', () => {
 	        it('provides empty scope', () => {
                 let noScopeModel = JSON.parse(JSON.stringify(tmBomModel));
                 delete noScopeModel.scope;
-                testSummary = summary.read(noScopeModel);
+                testSummary = summary.merge(noScopeModel);
 	            expect(testSummary).toStrictEqual({});
 	        });
 
 	        it('skips empty assumptions', () => {
                 assumptions.summary.mockReturnValue([]);
-                testSummary = summary.read(tmBomModel);
+                testSummary = summary.merge(tmBomModel);
 	            expect(testSummary.description).not.toContain('#1');
 	        });
 	    });

@@ -1,66 +1,59 @@
 import risks from '@/service/migration/tmBom/diagrams/threats/risks';
 import tmBomModel from '../../test-model';
-
-const mockTdThreats = [
-    {
-        score: 3,
-        description: 'An attacker crafts an image',
-        id: 'notebook-tampering'
-    },
-    {
-        score: 0,
-        description: 'An attacker poisons the supply chain',
-        id: 'supply-chain-attack'
-    },
-    {
-        score: null,
-        description: 'An attacker tampers with or deletes stored images',
-        id: 'image-tampering'
-    },
-    {
-        score: 25,
-        description: 'An attacker modifies a notebook file',
-        id: 'ssh-compromise-developer-machine'
-    }
-];
+import { threats as mockTdThreats } from './mockTdThreats';
 
 describe('service/migration/tmBom/diagrams/threats/risks.js', () => {
     describe('updates threat descriptions', () => {
         let threats = risks.merge(tmBomModel, mockTdThreats);
 
         it('provides the risk title', () => {
-            expect(threats[0].description).toContain('Adversarial attacks');
-            expect(threats[1].description).not.toContain('Web attacks');
-            expect(threats[2].description).toContain('Adversarial attacks');
-            expect(threats[3].description).toContain('Unauthorized SSH access');
+            expect(threats[0].description).toContain('Test title risk0');
+            expect(threats[0].description).toContain('Test title risk1');
+            expect(threats[2].description).toContain('Test title risk3');
+            expect(threats[2].description).not.toContain('risk1');
+            expect(threats[4].description).toContain('Test title risk5');
+            expect(threats[4].description).not.toContain('risk1');
         });
 
         it('provides the risk description', () => {
-            expect(threats[0].description).toContain('Attackers could manipulate');
-            expect(threats[1].description).not.toContain('Attackers could manipulate');
-            expect(threats[2].description).toContain('Attackers could manipulate');
-            expect(threats[3].description).not.toContain('Attackers could manipulate');
+            expect(threats[0].description).toContain('Test description risk0');
+            expect(threats[0].description).toContain('Test description risk1');
+            expect(threats[2].description).not.toContain('risk1');
+            expect(threats[4].description).toContain('Test description risk5');
         });
 
         it('provides the risk level', () => {
-            expect(threats[0].description).toContain('a medium risk');
-            expect(threats[1].description).toContain('a high risk');
-            expect(threats[2].description).toContain('a medium risk');
-            expect(threats[3].description).toContain('a high risk');
+            expect(threats[0].description).toContain('a very low risk');
+            expect(threats[0].description).toContain('a low risk');
+            expect(threats[2].description).not.toContain('medium risk');
+            expect(threats[4].description).toContain('a critical risk');
         });
 
-        it('details the risk', () => {
-            expect(threats[0].description).toContain('unlikely liklihood');
-            expect(threats[1].description).toContain('moderate impact');
-            expect(threats[2].description).not.toContain('moderate impact');
-            expect(threats[3].description).toContain('Operational disruption');
+        it('provides the liklihood', () => {
+		    expect(threats[0].description).toContain('rare liklihood');
+		    expect(threats[0].description).toContain('unlikely liklihood');
+		    expect(threats[2].description).not.toContain('unlikely');
+		    expect(threats[4].description).toContain('certain liklihood');
+        });
+
+        it('provides the impact', () => {
+            expect(threats[0].description).toContain('and negligible impact');
+            expect(threats[0].description).toContain('and minor impact');
+            expect(threats[2].description).not.toContain('minor');
+            expect(threats[4].description).toContain('and severe impact');
+        });
+
+        it('describes the impact', () => {
+            expect(threats[0].description).toContain('Test impact description risk0');
+            expect(threats[0].description).toContain('Test impact description risk1');
+            expect(threats[2].description).not.toContain('risk1');
+            expect(threats[4].description).toContain('Test impact description risk5');
         });
 
         it('sets the risk score', () => {
-            expect(threats[0].score).toBe(8);
-            expect(threats[1].score).toBe(9);
-            expect(threats[2].score).toBe(8);
-            expect(threats[3].score).toBe(25);
+            expect(threats[0].score).toBe(5);
+            expect(threats[1].score).toBe(10);
+            expect(threats[4].score).toBe(25);
         });
     });
 

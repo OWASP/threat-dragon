@@ -12,34 +12,34 @@ describe('service/migration/tmBom/detail.js', () => {
     describe('import TM-BOM diagram details', () => {
 
         it('provides detail', () => {
-            diagrams.read.mockReturnValue(testDiagrams);
-            testDetail = detail.read(tmBomModel);
+            diagrams.merge.mockReturnValue(testDiagrams);
+            testDetail = detail.merge(tmBomModel);
             expect(testDetail.contributors).toHaveLength(1);
-            expect(testDetail.diagramTop).toBe(2);
+            expect(testDetail.diagramTop).toBe(tmBomModel.diagrams.length + 1);
             expect(testDetail.reviewer).toBe('');
-            expect(testDetail.threatTop).toBe(8);
+            expect(testDetail.threatTop).toBe(tmBomModel.threats.length - 1);
 
         });
 
         it('handles empty diagrams', () => {
-            diagrams.read.mockReturnValue([]);
-            testDetail = detail.read(tmBomModel);
+            diagrams.merge.mockReturnValue([]);
+            testDetail = detail.merge(tmBomModel);
 		    expect(testDetail.diagramTop).toBe(0);
         });
 
         it('handles empty threats', () => {
 		    let emptyThreatsModel = JSON.parse(JSON.stringify(tmBomModel));
 		    emptyThreatsModel.threats = [];
-            diagrams.read.mockReturnValue(testDiagrams);
-		    testDetail = detail.read(emptyThreatsModel);
+            diagrams.merge.mockReturnValue(testDiagrams);
+		    testDetail = detail.merge(emptyThreatsModel);
 		    expect(testDetail.threatTop).toBe(0);
         });
 
         it('handles missing threats', () => {
 		    let noThreatsModel = JSON.parse(JSON.stringify(tmBomModel));
 		    delete noThreatsModel.threats;
-            diagrams.read.mockReturnValue(testDiagrams);
-		    testDetail = detail.read(noThreatsModel);
+            diagrams.merge.mockReturnValue(testDiagrams);
+		    testDetail = detail.merge(noThreatsModel);
 		    expect(testDetail.threatTop).toBe(0);
         });
     });
