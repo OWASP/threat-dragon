@@ -33,6 +33,21 @@ The [github release area][releases] contains Threat Dragon from version 1.3 to t
 Previous releases are from Mike Goodwin's
 [original repository](https://github.com/mike-goodwin/owasp-threat-dragon-desktop/releases).
 
+## Quick Start
+
+The fastest way to get started with Threat Dragon:
+
+1. **Try it online** — visit [the demo site][demo] to start modeling immediately, no installation needed
+2. **Desktop app** — download an installer from the [releases page][releases] for Windows, macOS, or Linux
+3. **Docker** — pull and run with:
+   ```
+   docker pull owasp/threat-dragon:stable
+   docker run -it --rm -p 8080:3000 -v $(pwd)/.env:/app/.env owasp/threat-dragon:stable
+   ```
+   See [Docker instructions](#docker-from-dockerhub) for environment configuration
+
+Once running, create a new threat model and start drawing data flow diagrams. See the [getting started guide][docs] for detailed walkthrough.
+
 ## About Threat Dragon
 
 There is a good overview of
