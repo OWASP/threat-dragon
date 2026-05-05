@@ -10,7 +10,11 @@ const assignThreats = (model, components) => {
         threat.components_affected?.forEach((componentAffected) => {
             components.forEach((component) => {
                 if (componentAffected === component.id) {
-                    component.data.threats.push(threat);
+                    if (component.data.threats) {
+                        component.data.threats.push(threat);
+                    } else {
+                        console.warn('Ignoring threat incorrectly associated with trust zone');
+                    }
                 }
             });
         });
@@ -33,12 +37,12 @@ const merge = (model, version) => {
     cells = assignThreats(model, cells);
 
     diagrams.push({
-	    version: version,
-	    title: model.scope.title,
-	    thumbnail: thumbnail,
-	    diagramType: 'TM-BOM',
-	    id: diagramId++,
-	    cells: cells
+        version: version,
+        title: model.scope.title,
+        thumbnail: thumbnail,
+        diagramType: 'TM-BOM',
+        id: diagramId++,
+        cells: cells
     });
 
     // add TM-BOM diagrams, which are supporting diagrams in arbitrary format

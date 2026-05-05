@@ -534,7 +534,7 @@
             "symbolic_name": "threat3",
             "title": "Test title threat3",
             "description": "Test description threat3",
-            "components_affected": ["component5"],
+            "components_affected": ["trust-zone3"],
             "threat_persona": "threat-persona3",
             "event": "Test event threat0",
             "sources": ["events_beyond_org_control", "adversary"]
