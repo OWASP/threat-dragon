@@ -13,7 +13,7 @@ const assignThreats = (model, components) => {
                     if (component.data.threats) {
                         component.data.threats.push(threat);
                     } else {
-                        console.warn('Ignoring threat ' + threat.id + ' incorrectly associated with trust zone ' + component.id);
+                        console.warn('Ignoring threat ' + threat.id + 'for trust zone : ' + component.id);
                     }
                 }
             });
@@ -30,6 +30,7 @@ const checkEdges = (edges, nodes) => {
     for (let node of nodes) {
         ids.push(node.id);
     }
+
     edges.forEach((edge) => {
         if (!ids.includes(edge.source.cell)) {
             console.warn('Source cell not found: ' + edge.source.cell);
