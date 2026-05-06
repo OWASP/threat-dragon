@@ -390,6 +390,15 @@
             "destination": {"type": "data_store", "object": "data-store3"},
             "has_sensitive_data": true,
             "encrypted": false
+        },
+        {
+            "symbolic_name": "data-flow6",
+            "title": "Test title data-flow6",
+            "description": "Test description data-flow6",
+            "source": {"type": "actor", "object": "no-source"},
+            "destination": {"type": "data_store", "object": "no-destination"},
+            "has_sensitive_data": true,
+            "encrypted": false
         }
     ],
     "assumptions": [

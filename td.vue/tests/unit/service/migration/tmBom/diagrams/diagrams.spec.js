@@ -41,7 +41,7 @@ describe('service/migration/tmBom/diagrams/diagrams.js', () => {
         });
 
         it('creates main diagram', () => {
-	    expect(testDiagrams).toHaveLength(1);
+	        expect(testDiagrams).toHaveLength(1);
         });
 
     });
