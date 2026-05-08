@@ -1,8 +1,8 @@
 import assumptions from '@/service/migration/tmBom/diagrams/assumptions';
 import summary from '@/service/migration/tmBom/summary';
 
-import tmBomModel from './test-model';
-import tdModel from './v2-threat-model';
+import tmBomModel from './tmbom-test-model';
+import tdModel from './td-test-model';
 
 jest.mock('@/service/migration/tmBom/diagrams/assumptions');
 
@@ -56,12 +56,12 @@ describe('service/migration/tmBom/summary.js', () => {
 	    });
     });
 
-    describe('writes TM-BOM', () => {
+    describe('convert TM-BOM', () => {
         let testScope;
 
 	    describe('recreates TM-BOM scope', () => {
 	        beforeEach(() => {
-	            testScope = summary.write(tdModel);
+	            testScope = summary.convert(tdModel);
 	        });
 	
 	        it('populates the scope values', () => {
@@ -81,14 +81,14 @@ describe('service/migration/tmBom/summary.js', () => {
 	        it('creates default scope values', () => {
                 let noDescription = JSON.parse(JSON.stringify(tdModel));
                 delete noDescription.summary.description;
-                testScope = summary.write(noDescription);
+                testScope = summary.convert(noDescription);
 	            expect(testScope.description.length).toBeGreaterThan(0);
 	        });
 
 	        it('provides scope compatibility defaults', () => {
                 let noCompatibility = JSON.parse(JSON.stringify(tdModel));
                 delete noCompatibility.summary.compatibility;
-                testScope = summary.write(noCompatibility);
+                testScope = summary.convert(noCompatibility);
                 expect(testScope.business_criticality).not.toBeNull();
                 expect(testScope.data_sensitivity).not.toBeNull();
                 expect(testScope.exposure).not.toBeNull();

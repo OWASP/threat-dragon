@@ -2,7 +2,7 @@ import controls from '@/service/migration/tmBom/diagrams/threats/controls';
 import assumptions from '@/service/migration/tmBom/diagrams/assumptions';
 import risks from '@/service/migration/tmBom/diagrams/threats/risks';
 import threats from '@/service/migration/tmBom/diagrams/threats/threats';
-import tmBom from '../../test-model';
+import tmBom from '../../tmbom-test-model';
 //import { threats as mockThreats } from './mockTdThreats.json';
 
 jest.mock('@/service/migration/tmBom/diagrams/threats/controls');

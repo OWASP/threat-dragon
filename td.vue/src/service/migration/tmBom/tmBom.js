@@ -7,7 +7,8 @@ import detail from './detail';
  * wich may not be the latest given in package.lock
  * Note : when this is revised, then change this version to match
  */
-const version = '2.6.1';
+const tdVersion = '2.6.1';
+const tmbomVersion = '1.0.2';
 
 const createKey = (source, target, key) => {
     if (Object.hasOwn(source, key)) {
@@ -17,23 +18,26 @@ const createKey = (source, target, key) => {
 
 // export a Threat Dragon file to TM-BOM format
 const exportAsTmbom = (model) => {
-    let tmModel = new Object();
+    //let tmModel = new Object();
+    let tmModel = detail.convert(model);
 
     // compatibility object exists if original file was also TM-BOM
-    // required values
-    tmModel.version = model?.compatibility?.version || '1.0.1';
-    tmModel.description = model?.compatibility?.description || 'Export from Threat Dragon model';
+    tmModel.version = model.compatibility?.version || tmbomVersion;
 
     if (model.compatibility) {
         // optional key values
+		createKey(model.compatibility, tmModel, 'description');
         createKey(model.compatibility, tmModel, 'frozen');
+		createKey(model.compatibility, tmModel, 'released_at');
+		createKey(model.compatibility, tmModel, 'product_release_date');
         createKey(model.compatibility, tmModel, 'release_docs_link');
         createKey(model.compatibility, tmModel, 'reviewed_at');
         createKey(model.compatibility, tmModel, 'repo_link');
     }
 
-    tmModel.scope = summary.write(model);
+    tmModel.scope = summary.convert(model);
 
+    console.debug(JSON.stringify(tmModel, null, 2));
     return tmModel;
 };
 
@@ -54,8 +58,8 @@ export const importTmbom = (model) => {
 
     return {
         summary: summary.merge(model),
-        detail: detail.merge(model, version),
-        version: version,
+        detail: detail.merge(model, tdVersion),
+        version: tdVersion,
         compatibility
     };
 };
@@ -64,7 +68,7 @@ export const importTmbom = (model) => {
 const read = (model) => {
     // not supported yet, return an empty Threat Dragon model with TM-BOM attached
     return {
-        version: version,
+        version: tdVersion,
         summary: {
             title: model.scope.title,
             description: 'Empty Threat Dragon model from a TM-BOM',
@@ -79,7 +83,7 @@ const read = (model) => {
 const write = (model) => {
     // not supported yet, so return a nearly empty TM=BOM
     return {
-        version: '1.0.2',
+        version: tmbomVersion,
         scope: {
             title: model.tmBom.scope.title,
             description: 'Empty Threat Model Bill of Materials (TM-BOM)',

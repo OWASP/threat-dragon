@@ -1,5 +1,5 @@
 import boxes from '@/service/migration/tmBom/diagrams/boxes';
-import tmBomModel from '../test-model';
+import tmBomModel from '../tmbom-test-model';
 
 describe('service/migration/tmBom/diagrams/boxes.js', () => {
     let testBoundaryBoxes = boxes.merge(tmBomModel);

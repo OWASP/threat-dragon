@@ -43,6 +43,16 @@ const checkEdges = (edges, nodes) => {
     });
 };
 
+const convert = (model) => {
+    let diagrams = new Array();
+
+    if (!model.detail.diagrams) {
+	    diagrams = [];
+    }
+
+    return diagrams;
+};
+
 const merge = (model, version) => {
     const thumbnail = './public/content/images/thumbnail.jpg';
     var diagrams = new Array();
@@ -82,5 +92,6 @@ const merge = (model, version) => {
 };
 
 export default {
+    convert,
     merge
 };

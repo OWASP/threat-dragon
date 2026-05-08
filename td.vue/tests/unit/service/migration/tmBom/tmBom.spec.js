@@ -2,8 +2,8 @@ import summary from '@/service/migration/tmBom/summary';
 import detail from '@/service/migration/tmBom/detail';
 import tmBom from '@/service/migration/tmBom/tmBom';
 
-import tmBomModel from './test-model';
-import tdModel from './v2-threat-model';
+import tmBomModel from './tmbom-test-model';
+import tdModel from './td-test-model';
 
 jest.mock('@/service/migration/tmBom/summary');
 jest.mock('@/service/migration/tmBom/detail');
@@ -74,11 +74,11 @@ describe('service/migration/tmBom/tmBom.js', () => {
 
     describe('exportAsTmbom', () => {
         let testModel;
-        const summaryReturn = 'test TM-BOM scope';
 
         describe('export to TM-BOM format', () => {
             beforeEach(() => {
-                summary.write.mockReturnValue(summaryReturn);
+                summary.convert.mockReturnValue(tmBomModel.summary);
+                detail.convert.mockReturnValue({ diagrams: []});
                 testModel = tmBom.exportAsTmbom(tdModel);
             });
 
@@ -95,11 +95,17 @@ describe('service/migration/tmBom/tmBom.js', () => {
             });
 
             it('creates the TM-BOM scope', () => {
-                expect(testModel.scope).toEqual(summaryReturn);
+                console.debug(JSON.stringify(testModel, null, 2));
+                expect(testModel.scope).toEqual(tmBomModel.summary);
             });
         });
 
         describe('handles missing TM-BOM objects', () => {
+            beforeEach(() => {
+			    summary.convert.mockReturnValue(tmBomModel.summary);
+			    detail.convert.mockReturnValue({ diagrams: []});
+            });
+
             it('defaults absent required values', () => {
                 let noCompatibilityModel = JSON.parse(JSON.stringify(tdModel));
                 delete noCompatibilityModel.compatibility;

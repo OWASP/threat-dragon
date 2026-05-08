@@ -1,5 +1,11 @@
 import diagrams from './diagrams/diagrams';
 
+const convert = (model) => {
+    return {
+	    diagrams: diagrams.convert(model)
+    };
+};
+
 const merge = (model, version) => {
     let allDiagrams = diagrams.merge(model, version);
     
@@ -13,5 +19,6 @@ const merge = (model, version) => {
 };
 
 export default {
+    convert,
     merge
 };

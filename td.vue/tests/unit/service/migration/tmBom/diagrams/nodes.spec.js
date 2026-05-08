@@ -1,5 +1,5 @@
 import {merge, createNodes, placeNodes} from '@/service/migration/tmBom/diagrams/nodes';
-import tmBomModel from '../test-model';
+import tmBomModel from '../tmbom-test-model';
 
 describe('service/migration/tmBom/diagrams/nodes.js', () => {
 

@@ -11,8 +11,10 @@
     },
     "description": "Test description",
     "frozen": false,
+    "released_at": "2025-05-10",
+    "product_release_date": "2025-05-11",
     "release_docs_link": "https://example.com/release_docs_link",
-    "reviewed_at": "2025-05-28",
+    "reviewed_at": "2025-05-12",
     "repo_link": "https://example.com/repo_link",
     "diagrams": [
         {
