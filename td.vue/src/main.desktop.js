@@ -203,7 +203,7 @@ const localAuth = () => {
 };
 
 const openTmBom = (jsonModel) => {
-    console.warn('Convert TM-BOM to internal TD format');
+    console.info('Convert TM-BOM to internal TD format');
     appProxy.$toast.warning(t('threatmodel.warnings.tmUnsupported'), { timeout: false });
     return importTmbom(jsonModel);
 };

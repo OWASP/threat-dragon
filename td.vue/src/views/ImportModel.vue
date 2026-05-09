@@ -159,7 +159,7 @@ export default {
                     fileName = '';
                     this.$store.dispatch(tmActions.update, { fileName: fileName });
                 } else if (schema.isTmBom(jsonModel)) {
-                    console.warn('Convert TM-BOM to internal TD format');
+                    console.info('Convert TM-BOM to internal TD format');
                     this.$toast.warning(this.$t('threatmodel.warnings.tmUnsupported'), { timeout: false });
                     jsonModel = importTmbom(jsonModel);
                     console.debug('Force selection of file name for TM-BOM');

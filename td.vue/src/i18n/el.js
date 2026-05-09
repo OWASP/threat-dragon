@@ -240,7 +240,7 @@ const messages = {
             noModelOpen: 'No model open',
             otmUnsupported: 'Import of Open Threat Model file format not yet supported',
             save: 'Could not save the Threat Model. Check the developer console for more information',
-            tmUnsupported: 'Import of TM-BOM file format is experimental and subject to change that may break models',
+            tmUnsupported: 'Import of TM-BOM files converts the file format to Threat Dragon',
             v1Translate: 'Τα εισαχθέντα μοντέλα της έκδοσης 1.x models θα αναβαθμιστούν στο σχήμα της έκδοσης 2.0'
         },
         prompts: {

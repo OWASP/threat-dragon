@@ -37,11 +37,11 @@ describe('service/migration/tmBom/diagrams/diagrams.js', () => {
     describe('merge main diagram', () => {
         beforeEach(() => {
             delete(tmBomModel.diagrams);
-		    testDiagrams = diagrams.merge(tmBomModel, version);
+            testDiagrams = diagrams.merge(tmBomModel, version);
         });
 
         it('creates main diagram', () => {
-	    expect(testDiagrams).toHaveLength(1);
+            expect(testDiagrams).toHaveLength(1);
         });
 
     });
