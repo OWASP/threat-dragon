@@ -25,6 +25,31 @@ describe('service/x6/graph/data-changed.js', () => {
         });
     });
 
+    describe('updateName', () => {
+        let cellData;
+
+        beforeEach(() => {
+            cellData = { name: 'Original name' };
+            cell = {
+                getData: jest.fn(() => cellData),
+                setName: jest.fn()
+            };
+        });
+
+        it('uses the existing cell data name by default', () => {
+            dataChanged.updateName(cell);
+
+            expect(cell.setName).toHaveBeenCalledWith('Original name');
+        });
+
+        it('updates the cell data before setting the diagram label', () => {
+            dataChanged.updateName(cell, 'Updated name');
+
+            expect(cellData.name).toEqual('Updated name');
+            expect(cell.setName).toHaveBeenCalledWith('Updated name');
+        });
+    });
+
     describe('actor', () => {
         beforeEach(() => {
             cell = getCell();

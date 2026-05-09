@@ -36,6 +36,7 @@ describe('components/GraphProperties.vue', () => {
 
     describe('with data', () => {
         let entityData;
+        let cellRef;
 
         beforeEach(() => {
             entityData = {
@@ -46,6 +47,14 @@ describe('components/GraphProperties.vue', () => {
                 isBidirectional: true,
                 reasonOutOfScope: 'someone thought so'
             };
+            cellRef = {
+                data: entityData,
+                getData: () => entityData,
+                updateStyle: jest.fn(),
+                isEdge: () => false,
+                setData: jest.fn(),
+                setName: jest.fn()
+            };
             const localVue = createLocalVue();
             localVue.use(Vuex);
             localVue.use(BootstrapVue);
@@ -53,13 +62,7 @@ describe('components/GraphProperties.vue', () => {
             const mockStore = new Vuex.Store({
                 state: {
                     cell: {
-                        ref: {
-                            data: entityData,
-                            getData: () => entityData,
-                            updateStyle: jest.fn(),
-                            isEdge: () => false,
-                            setData: jest.fn()
-                        }
+                        ref: cellRef
                     }
                 }
             });
@@ -84,6 +87,13 @@ describe('components/GraphProperties.vue', () => {
                 .filter(x => x.attributes('id') === 'name')
                 .at(0);
             expect(input.attributes('value')).toEqual(entityData.name);
+        });
+
+        it('updates the diagram label with the current textarea value', () => {
+            wrapper.vm.onChangeName('some flow updated');
+
+            expect(entityData.name).toEqual('some flow updated');
+            expect(cellRef.setName).toHaveBeenCalledWith('some flow updated');
         });
 
         it('shows the description', () => {
