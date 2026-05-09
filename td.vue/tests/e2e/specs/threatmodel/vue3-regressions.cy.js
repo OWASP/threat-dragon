@@ -51,6 +51,14 @@ const selectGraphLabel = (labelPattern) => {
         .click({ force: true });
 };
 
+const assertSelectedGraphLabel = (expectedLabel) => {
+    cy.get('#graph-container .x6-cell.x6-node.x6-node-selected tspan')
+        .should(($labels) => {
+            const labelText = [...$labels].map((label) => label.textContent).join('');
+            expect(labelText).to.equal(expectedLabel);
+        });
+};
+
 const assertNoObservedError = (matcher) => {
     cy.window().its('__tdObservedErrors').should((messages) => {
         expect(messages, 'captured browser errors').to.satisfy((errors) =>
@@ -135,6 +143,20 @@ describe('Regressions discovered during vue3 migration', () => {
         });
 
         assertNoObservedError(expectedRuntimeError);
+    });
+
+    it('updates the selected component label on every name keystroke', () => {
+        openDemoModel('Demo Threat Model');
+        openDiagramEditor('Main Request Data Flow');
+        selectGraphLabel(/Database/);
+
+        cy.get('#name').clear();
+        cy.get('#name').type('D');
+        assertSelectedGraphLabel('D');
+        cy.get('#name').type('B');
+        assertSelectedGraphLabel('DB');
+        cy.get('#name').type('2');
+        assertSelectedGraphLabel('DB2');
     });
 
     it('does not render javascript: links in the exercised threat-model flows', () => {
