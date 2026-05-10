@@ -1,4 +1,4 @@
-import { BootstrapVue, BFormTextarea, BFormGroup } from 'bootstrap-vue';
+import { BootstrapVue, BForm, BFormTextarea, BFormGroup } from 'bootstrap-vue';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
@@ -7,26 +7,37 @@ import TdGraphProperties from '@/components/GraphProperties.vue';
 describe('components/GraphProperties.vue', () => {
     let wrapper;
 
+    const mountComponent = (cellRef, mutations) => {
+        const localVue = createLocalVue();
+        localVue.use(Vuex);
+        localVue.use(BootstrapVue);
+        const mockStore = new Vuex.Store({
+            state: {
+                cell: {
+                    ref: cellRef
+                }
+            },
+            mutations
+        });
+
+        wrapper = shallowMount(TdGraphProperties, {
+            localVue,
+            store: mockStore,
+            mocks: {
+                $t: key => key
+            }
+        });
+
+        return mockStore;
+    };
+
+    const findNameInput = () => wrapper.findAllComponents(BFormTextarea)
+        .filter(x => x.attributes('id') === 'name')
+        .at(0);
+
     describe('emptyState', () => {
         beforeEach(() => {
-            const localVue = createLocalVue();
-            localVue.use(Vuex);
-            localVue.use(BootstrapVue);
-            localVue.use(Vuex);
-            const mockStore = new Vuex.Store({
-                state: {
-                    cell: {
-                        ref: null
-                    }
-                }
-            });
-            wrapper = shallowMount(TdGraphProperties, {
-                localVue,
-                store: mockStore,
-                mocks: {
-                    $t: key => key
-                }
-            });
+            mountComponent(null);
         });
 
         it('displays the empty state message', () => {
@@ -36,6 +47,7 @@ describe('components/GraphProperties.vue', () => {
 
     describe('with data', () => {
         let entityData;
+        let cellRef;
 
         beforeEach(() => {
             entityData = {
@@ -46,30 +58,15 @@ describe('components/GraphProperties.vue', () => {
                 isBidirectional: true,
                 reasonOutOfScope: 'someone thought so'
             };
-            const localVue = createLocalVue();
-            localVue.use(Vuex);
-            localVue.use(BootstrapVue);
-            localVue.use(Vuex);
-            const mockStore = new Vuex.Store({
-                state: {
-                    cell: {
-                        ref: {
-                            data: entityData,
-                            getData: () => entityData,
-                            updateStyle: jest.fn(),
-                            isEdge: () => false,
-                            setData: jest.fn()
-                        }
-                    }
-                }
-            });
-            wrapper = shallowMount(TdGraphProperties, {
-                localVue,
-                store: mockStore,
-                mocks: {
-                    $t: key => key
-                }
-            });
+            cellRef = {
+                data: entityData,
+                getData: () => entityData,
+                updateStyle: jest.fn(),
+                isEdge: () => false,
+                setData: jest.fn(),
+                setName: jest.fn()
+            };
+            mountComponent(cellRef);
         });
 
         it('has a label for name', () => {
@@ -80,10 +77,14 @@ describe('components/GraphProperties.vue', () => {
         });
 
         it('displays the name in a textarea', () => {
-            const input = wrapper.findAllComponents(BFormTextarea)
-                .filter(x => x.attributes('id') === 'name')
-                .at(0);
-            expect(input.attributes('value')).toEqual(entityData.name);
+            expect(findNameInput().attributes('value')).toEqual(entityData.name);
+        });
+
+        it('updates the diagram label with the current textarea value', () => {
+            wrapper.vm.onChangeName('some flow updated');
+
+            expect(entityData.name).toEqual('some flow updated');
+            expect(cellRef.setName).toHaveBeenCalledWith('some flow updated');
         });
 
         it('shows the description', () => {
@@ -130,6 +131,65 @@ describe('components/GraphProperties.vue', () => {
 
             expect(entityData.isBidirectional).toEqual(false);
             expect(wrapper.vm.onChangeBidirection).toHaveBeenCalledTimes(1);
+        });
+    });
+
+    describe('when selection changes while editing', () => {
+        let firstForm;
+        let secondCell;
+        let secondForm;
+        let selectedName;
+
+        const createCellRef = (id, name) => ({
+            id,
+            data: {
+                type: 'tm.Process',
+                name,
+                description: '',
+                outOfScope: false,
+                isTrustBoundary: false,
+                reasonOutOfScope: '',
+                handlesCardPayment: false,
+                handlesGoodsOrServices: false,
+                isWebApplication: false,
+                privilegeLevel: '',
+                threats: []
+            },
+            getData() {
+                return this.data;
+            },
+            updateStyle: jest.fn(),
+            isEdge: () => false,
+            setData: jest.fn(),
+            setName: jest.fn(function (name) {
+                this.data.name = name;
+            })
+        });
+
+        beforeEach(async () => {
+            const firstCell = createCellRef('first-cell', 'first process');
+            secondCell = createCellRef('second-cell', 'second process');
+            const mockStore = mountComponent(firstCell, {
+                selectCell(state, ref) {
+                    state.cell.ref = ref;
+                }
+            });
+
+            firstForm = wrapper.findComponent(BForm).element;
+
+            mockStore.commit('selectCell', secondCell);
+            await wrapper.vm.$nextTick();
+
+            secondForm = wrapper.findComponent(BForm).element;
+            selectedName = findNameInput().attributes('value');
+        });
+
+        it('recreates form controls when the selected cell changes', () => {
+            expect(secondForm).not.toBe(firstForm);
+        });
+
+        it('displays the newly selected cell name', () => {
+            expect(selectedName).toEqual(secondCell.data.name);
         });
     });
 

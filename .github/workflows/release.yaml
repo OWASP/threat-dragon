@@ -331,7 +331,7 @@ jobs:
       # Snaps do not publish, even with snapcraft installed, so use Snap Store
       - name: Build Linux snap
         shell: bash
-        run: npm run build:desktop -- --linux snap
+        run: npm run build:desktop -- --linux snap --publish never
 
       - name: Upload to Snap Store
         shell: bash

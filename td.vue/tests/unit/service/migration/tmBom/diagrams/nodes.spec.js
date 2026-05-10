@@ -49,7 +49,7 @@ describe('service/migration/tmBom/diagrams/nodes.js', () => {
 
     describe('create nodes in zones', () => {
         it('creates nodes in untrusted zone', () => {
-            let components = createNodes(tmBomModel, null);
+            let components = createNodes(tmBomModel);
             expect(components).toHaveLength(6);
         });
 
@@ -111,8 +111,10 @@ describe('service/migration/tmBom/diagrams/nodes.js', () => {
         delete(emptyZonesTmBom.trust_zones);
         let components = merge(emptyZonesTmBom);
 
-        it('merges only public nodes', () => {
-            expect(components).toHaveLength(6);
+        it('merges all nodes as public', () => {
+            expect(components).toHaveLength(tmBomModel.actors.length
+                + tmBomModel.components.length
+                + tmBomModel.data_stores.length);
         });
     });
 

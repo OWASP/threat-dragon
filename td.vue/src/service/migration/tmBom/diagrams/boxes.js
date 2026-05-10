@@ -6,30 +6,26 @@ const nodeGeometry = {width: 160 + padding, height: 80 + padding, padding: paddi
 
 const countNodes = (model, trust_zone) => {
     let count = 0;
+    let zones = new Array();
+    model.trust_zones?.forEach((zone) => zones.push(zone.symbolic_name));
 
-    if (model.actors) {
-        model.actors.forEach((actor) => {
-            if (actor.trust_zone === trust_zone) {
-                count++;
-            }
-        });
-    }
+    model.actors?.forEach((actor) => {
+        if (actor.trust_zone === trust_zone || (!zones.includes(actor.trust_zone) && trust_zone === undefined)) {
+            count++;
+        }
+    });
 
-    if (model.components) {
-        model.components.forEach((component) => {
-            if (component.trust_zone === trust_zone) {
-                count++;
-            }
-        });
-    }
+    model.components?.forEach((component) => {
+        if (component.trust_zone === trust_zone || (!zones.includes(component.trust_zone) && trust_zone === undefined)) {
+            count++;
+        }
+    });
 
-    if (model.data_stores) {
-        model.data_stores.forEach((data_store) => {
-            if (data_store.trust_zone === trust_zone) {
-                count++;
-            }
-        });
-    }
+    model.data_stores?.forEach((data_store) => {
+        if (data_store.trust_zone === trust_zone || (!zones.includes(data_store.trust_zone) && trust_zone === undefined)) {
+            count++;
+        }
+    });
 
     return count;
 };

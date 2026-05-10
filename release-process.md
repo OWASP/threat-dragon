@@ -130,7 +130,7 @@ Download desktop AppImage for Linux `Threat-Dragon-ng-2.6.1.AppImage` and the `l
 Create SHA512 `checksum-linux.yml` file:
 
  ```bash
-grep sha512 latest-linux.yml | tail -n 1 | cut -d ":" -f 2 | base64 -d |  \
+grep sha512 latest-linux.yml | tail -n 1 | cut -d " " -f 2 | base64 -d |  \
     hexdump -ve '1/1 "%.2x"' > checksum-linux.yml
 echo -n " Threat-Dragon-ng-2.6.1.AppImage" >> checksum-linux.yml
 ```

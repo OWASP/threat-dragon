@@ -66,11 +66,15 @@ const updateStyleAttrs = (cell) => {
     }
 };
 
-const updateName = (cell) => {
+const updateName = (cell, name) => {
     if (!cell || !cell.setName || !cell.getData) {
         console.warn('No cell found to update name');
     } else {
-        cell.setName(cell.getData().name);
+        const cellData = cell.getData();
+        if (cellData && name !== undefined) {
+            cellData.name = name;
+        }
+        cell.setName(cellData.name);
     }
 };
 

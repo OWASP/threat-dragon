@@ -1,6 +1,6 @@
 {
   "name": "threat-dragon-server",
-  "version": "2.6.1",
+  "version": "2.6.2",
   "private": true,
   "scripts": {
     "audit": "npm audit",
@@ -44,7 +44,7 @@
     "bitbucket": "^2.11.0",
     "dotenv": "^16.0.3",
     "express": "^5.0.1",
-    "express-rate-limit": "^8.4.1",
+    "express-rate-limit": "^8.5.1",
     "googleapis": ">=171.4.0",
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.3",
