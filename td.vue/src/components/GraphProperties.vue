@@ -57,7 +57,7 @@
             <b-form-textarea
               id="name"
               v-model="cellRef.data.name"
-              @update="onChangeName()"
+              @update="onChangeName"
               :rows="cellRef.data.type === 'tm.Text' ? 7 : 2"
               graphPro
             ></b-form-textarea>
@@ -372,8 +372,8 @@ export default {
             // should not need to need to force an update
             this.$forceUpdate();
         },
-        onChangeName() {
-            dataChanged.updateName(this.cellRef);
+        onChangeName(name) {
+            dataChanged.updateName(this.cellRef, name);
             this.updateComponent();
         },
         onChangeBidirection() {
