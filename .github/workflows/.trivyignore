@@ -1,11 +1,2 @@
-# https://avd.aquasec.com/nvd/cve-2023-28155
-# request version prior to 2.88.2
-# this vulnerability is for the build system, not run time, so ignore
-CVE-2023-28155
-
 # ignore until Vue2 to Vue3 upgrade
 CVE-2025-15284
-
-# uuid is only used at runtime via v4; this issue affects v3/v5/v6 with caller buffers.
-# Forcing uuid 14 is a breaking CJS/import change for request.
-GHSA-w5hq-g745-h8pq
