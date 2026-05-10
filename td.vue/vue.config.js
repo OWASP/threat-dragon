@@ -93,11 +93,13 @@ module.exports = {
                             arch: ['arm64', 'x64']
                         }
                     ],
-                    rfc3161TimeStampServer: 'http://timestamp.acs.microsoft.com',
-                    signingHashAlgorithms: ['sha256'],
-                    publisherName: [
-                        'Open Source Developer, Antony Jonathan Gadsden'
-                    ]
+                    signtoolOptions: {
+                        rfc3161TimeStampServer: 'http://timestamp.acs.microsoft.com',
+                        signingHashAlgorithms: ['sha256'],
+                        publisherName: [
+                            'Open Source Developer, Antony Jonathan Gadsden'
+                        ]
+                    }
                 },
                 linux: {
                     category: 'Development',
