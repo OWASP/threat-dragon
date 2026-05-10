@@ -2977,10 +2977,10 @@
   "version": "2.6.1",
   "compatibility": {
     "version": "1.0.2",
-    "description": "Test compatibility description",
-    "frozen": true,
+    "description": "Test description",
+    "frozen": false,
     "release_docs_link": "https://example.com/release_docs_link",
-    "reviewed_at": "2025-05-28",
+    "reviewed_at": "2025-05-12",
     "repo_link": "https://example.com/repo_link"
   }
 }

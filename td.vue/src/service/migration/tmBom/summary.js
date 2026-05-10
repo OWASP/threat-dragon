@@ -1,20 +1,5 @@
 import assumptions from './diagrams/assumptions';
 
-const convert = (model) => {
-    let scope = new Object();
-
-    scope.title = model.summary.title;
-    scope.description = model.summary?.description || 'Export from Threat Dragon model';
-
-    // reinstate keys not used (yet) by TD
-    scope.business_criticality = model.summary.compatibility?.business_criticality || '';
-    scope.data_sensitivity = model.summary.compatibility?.data_sensitivity || '';
-    scope.exposure = model.summary.compatibility?.exposure || '';
-    scope.tier = model.summary.compatibility?.tier || '';
-
-    return scope;
-};
-
 const merge = (model) => {
     let summary = new Object();
 
@@ -53,6 +38,5 @@ const merge = (model) => {
 };
 
 export default {
-    convert,
     merge
 };

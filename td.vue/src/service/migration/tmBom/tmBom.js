@@ -1,5 +1,6 @@
 import summary from './summary';
 import detail from './detail';
+import scope from './scope';
 
 /* why use a hard coded Threat Dragon version here?
  * the build version may increase for Threat Dragon, but this conversion / migration
@@ -17,9 +18,11 @@ const createKey = (source, target, key) => {
 };
 
 // export a Threat Dragon file to TM-BOM format
+// required keys for TM-BOM:
+// version, scope, trust_zones, trust_boundaries
+// actors, components, data_stores, data_sets, data_flows
 const exportAsTmbom = (model) => {
-    //let tmModel = new Object();
-    let tmModel = detail.convert(model);
+    let tmModel = new Object();
 
     // compatibility object exists if original file was also TM-BOM
     tmModel.version = model.compatibility?.version || tmbomVersion;
@@ -35,7 +38,7 @@ const exportAsTmbom = (model) => {
         createKey(model.compatibility, tmModel, 'repo_link');
     }
 
-    tmModel.scope = summary.convert(model);
+    tmModel.scope = scope.convert(model);
 
     console.debug(JSON.stringify(tmModel, null, 2));
     return tmModel;

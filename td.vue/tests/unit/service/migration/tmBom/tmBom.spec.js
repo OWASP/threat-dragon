@@ -1,10 +1,12 @@
 import summary from '@/service/migration/tmBom/summary';
+import scope from '@/service/migration/tmBom/scope';
 import detail from '@/service/migration/tmBom/detail';
 import tmBom from '@/service/migration/tmBom/tmBom';
 
 import tmBomModel from './tmbom-test-model';
 import tdModel from './td-test-model';
 
+jest.mock('@/service/migration/tmBom/scope');
 jest.mock('@/service/migration/tmBom/summary');
 jest.mock('@/service/migration/tmBom/detail');
 
@@ -77,17 +79,16 @@ describe('service/migration/tmBom/tmBom.js', () => {
 
         describe('export to TM-BOM format', () => {
             beforeEach(() => {
-                summary.convert.mockReturnValue(tmBomModel.summary);
-                detail.convert.mockReturnValue({ diagrams: []});
+                scope.convert.mockReturnValue(tmBomModel.scope);
                 testModel = tmBom.exportAsTmbom(tdModel);
             });
 
             it('provides mandatory values', () => {
                 expect(testModel.version).toBe(tdModel.compatibility.version);
-                expect(testModel.description).toBe(tdModel.compatibility.description);
             });
 
             it('reinstates the compatibility values', () => {
+                expect(testModel.description).toBe(tdModel.compatibility.description);
                 expect(testModel.frozen).toBe(tdModel.compatibility.frozen);
                 expect(testModel.release_docs_link).toBe(tdModel.compatibility.release_docs_link);
                 expect(testModel.reviewed_at).toBe(tdModel.compatibility.reviewed_at);
@@ -96,14 +97,13 @@ describe('service/migration/tmBom/tmBom.js', () => {
 
             it('creates the TM-BOM scope', () => {
                 console.debug(JSON.stringify(testModel, null, 2));
-                expect(testModel.scope).toEqual(tmBomModel.summary);
+                expect(testModel.scope).toEqual(tmBomModel.scope);
             });
         });
 
         describe('handles missing TM-BOM objects', () => {
             beforeEach(() => {
-			    summary.convert.mockReturnValue(tmBomModel.summary);
-			    detail.convert.mockReturnValue({ diagrams: []});
+                scope.convert.mockReturnValue(tmBomModel.summary);
             });
 
             it('defaults absent required values', () => {
@@ -111,7 +111,6 @@ describe('service/migration/tmBom/tmBom.js', () => {
                 delete noCompatibilityModel.compatibility;
                 testModel = tmBom.exportAsTmbom(noCompatibilityModel);
                 expect(testModel.version.length).toBeGreaterThanOrEqual(5);
-                expect(testModel.description.length).toBeGreaterThan(1);
             });
 
             it('defaults absent optional values', () => {
@@ -119,6 +118,7 @@ describe('service/migration/tmBom/tmBom.js', () => {
                 delete noOptionsModel.compatibility.frozen;
                 delete noOptionsModel.compatibility.repo_link;
                 testModel = tmBom.exportAsTmbom(noOptionsModel);
+                expect(testModel.description.length).toBeGreaterThan(1);
                 expect(testModel.frozen).toBeUndefined();
                 expect(testModel.release_docs_link).toBe(tmBomModel.release_docs_link);
                 expect(testModel.reviewed_at).toBe(tmBomModel.reviewed_at);
