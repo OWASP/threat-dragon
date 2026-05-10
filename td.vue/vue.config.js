@@ -97,7 +97,7 @@ module.exports = {
                         rfc3161TimeStampServer: 'http://timestamp.acs.microsoft.com',
                         signingHashAlgorithms: ['sha256'],
                         publisherName: [
-                            'Open Source Developer, Antony Jonathan Gadsden'
+                            'Open Source Developer, Leo Reading'
                         ]
                     }
                 },
