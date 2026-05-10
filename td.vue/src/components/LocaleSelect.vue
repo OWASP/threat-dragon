@@ -1,17 +1,38 @@
 <template>
-    <div class="locale-changer">
-        <b-dropdown right :text="getLanguageName(locale)" variant="primary">
-            <div class="px-2 py-2">
-                <input type="text" v-model="searchQuery" class="form-control" placeholder="Search language..." @click.stop
-                    @input="filterLocales" />
+    <div class="td-dropdown td-locale-select" @keydown.escape="closeDropdown">
+        <button
+            type="button"
+            class="td-dropdown-toggle"
+            aria-haspopup="true"
+            :aria-expanded="isOpen.toString()"
+            @click.stop.prevent="toggleDropdown"
+        >
+            {{ getLanguageName(locale) }}
+        </button>
+        <div v-if="isOpen" class="td-dropdown-menu td-dropdown-menu-right" role="menu">
+            <div class="td-dropdown-search">
+                <input
+                    type="text"
+                    v-model="searchQuery"
+                    class="td-dropdown-input"
+                    placeholder="Search language..."
+                    @click.stop
+                    @input="filterLocales"
+                />
             </div>
-            <div class="dropdown-items-container">
-                <b-dropdown-item v-for="localeCode in filteredLocales" :key="`locale-${localeCode}`" :value="localeCode"
-                    @click="updateLocale(localeCode)">
+            <div class="td-dropdown-scroll">
+                <button
+                    v-for="localeCode in filteredLocales"
+                    :key="`locale-${localeCode}`"
+                    type="button"
+                    class="td-dropdown-item"
+                    role="menuitem"
+                    @click.stop.prevent="updateLocale(localeCode)"
+                >
                     {{ getLanguageName(localeCode) }}
-                </b-dropdown-item>
+                </button>
             </div>
-        </b-dropdown>
+        </div>
     </div>
 </template>
   
@@ -24,6 +45,7 @@ export default {
     name: 'TdLocalSelect',
     data() {
         return {
+            isOpen: false,
             searchQuery: '',
             filteredLocales: []
         };
@@ -42,17 +64,34 @@ export default {
             }
         })
     },
+    mounted() {
+        document.addEventListener('click', this.closeDropdownOnOutsideClick);
+    },
+    unmounted() {
+        document.removeEventListener('click', this.closeDropdownOnOutsideClick);
+    },
     methods: {
+        toggleDropdown() {
+            this.isOpen = !this.isOpen;
+        },
+        closeDropdown() {
+            this.isOpen = false;
+        },
+        closeDropdownOnOutsideClick(event) {
+            if (!this.$el.contains(event.target)) {
+                this.closeDropdown();
+            }
+        },
         filterLocales() {
             const query = this.searchQuery.toLowerCase().trim();
 
             if (!query) {
-                this.filteredLocales = this.$i18n.availableLocales;
+                this.filteredLocales = [...this.$i18n.availableLocales];
                 return;
             }
 
             // Sort and filter locales
-            this.filteredLocales = this.$i18n.availableLocales
+            this.filteredLocales = [...this.$i18n.availableLocales]
                 .sort((a, b) => {
                     const nameA = this.getLanguageName(a).toLowerCase();
                     const nameB = this.getLanguageName(b).toLowerCase();
@@ -82,6 +121,7 @@ export default {
             }
             this.searchQuery = ''; // Clear search after selection
             this.filterLocales(); // Reset the filtered list
+            this.closeDropdown();
         },
         getLanguageName(locale) {
             switch (locale) {
@@ -130,15 +170,3 @@ export default {
     }
 };
 </script>
-  
-<style scoped>
-.locale-changer input {
-    min-width: 200px;
-    margin-bottom: 8px;
-}
-
-.dropdown-items-container {
-    max-height: 300px;
-    overflow-y: auto;
-}
-</style>
