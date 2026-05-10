@@ -41,7 +41,10 @@
       </b-col>
     </b-row>
 
-    <b-form v-if="!!cellRef && cellRef.data">
+    <b-form
+      v-if="!!cellRef && cellRef.data"
+      :key="cellKey"
+    >
       <b-form-row>
         <b-col md="6">
           <b-form-group
@@ -364,9 +367,14 @@ import dataChanged from '@/service/x6/graph/data-changed.js';
 
 export default {
     name: 'TdGraphProperties',
-    computed: mapState({
-        cellRef: (state) => state.cell.ref
-    }),
+    computed: {
+        ...mapState({
+            cellRef: (state) => state.cell.ref
+        }),
+        cellKey() {
+            return this.cellRef?.id || this.cellRef?.data?.type || 'selected-cell';
+        }
+    },
     methods: {
         updateComponent() {
             // should not need to need to force an update
