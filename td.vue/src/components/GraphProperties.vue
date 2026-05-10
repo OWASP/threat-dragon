@@ -372,7 +372,7 @@ export default {
             cellRef: (state) => state.cell.ref
         }),
         cellKey() {
-            return this.cellRef?.id || this.cellRef?.data?.type || 'selected-cell';
+            return this.cellRef?.id;
         }
     },
     methods: {
