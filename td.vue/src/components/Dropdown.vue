@@ -1,3 +1,69 @@
+<template>
+    <div class="td-dropdown" @keydown.escape="closeDropdown">
+        <button
+            type="button"
+            class="td-dropdown-toggle"
+            aria-haspopup="true"
+            :aria-expanded="isOpen.toString()"
+            @click.stop.prevent="toggleDropdown"
+        >
+            <slot name="button-content">
+                {{ text }}
+            </slot>
+        </button>
+        <div
+            v-if="isOpen"
+            class="td-dropdown-menu"
+            :class="{ 'td-dropdown-menu-right': right }"
+            role="menu"
+            @click.stop
+        >
+            <slot :close="closeDropdown"></slot>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    name: 'TdDropdown',
+    props: {
+        text: {
+            type: String,
+            default: ''
+        },
+        right: {
+            type: Boolean,
+            default: false
+        }
+    },
+    data() {
+        return {
+            isOpen: false
+        };
+    },
+    mounted() {
+        document.addEventListener('click', this.closeDropdownOnOutsideClick);
+    },
+    unmounted() {
+        document.removeEventListener('click', this.closeDropdownOnOutsideClick);
+    },
+    methods: {
+        toggleDropdown() {
+            this.isOpen = !this.isOpen;
+        },
+        closeDropdown() {
+            this.isOpen = false;
+        },
+        closeDropdownOnOutsideClick(event) {
+            if (!this.$el.contains(event.target)) {
+                this.closeDropdown();
+            }
+        }
+    }
+};
+</script>
+
+<style lang="scss">
 .td-dropdown {
     display: inline-flex;
     position: relative;
@@ -115,3 +181,4 @@
         right: auto;
     }
 }
+</style>

@@ -1,7 +1,8 @@
-import { createLocalVue, shallowMount } from '@vue/test-utils';
+import { createLocalVue, mount } from '@vue/test-utils';
 import { createI18n } from 'vue-i18n';
 import Vuex from 'vuex';
 
+import TdDropdown from '@/components/Dropdown.vue';
 import LocaleSelect from '@/components/LocaleSelect.vue';
 import { LOCALE_SELECTED } from '@/store/actions/locale.js';
 
@@ -31,7 +32,7 @@ describe('components/LocaleSelect.vue', () => {
             dispatch: jest.fn()
         });
 
-        wrapper = shallowMount(LocaleSelect, {
+        wrapper = mount(LocaleSelect, {
             localVue,
             i18n,
             store: mockStore
@@ -46,7 +47,10 @@ describe('components/LocaleSelect.vue', () => {
     afterEach(() => {
         jest.clearAllMocks();
         if (wrapper) {
-            document.removeEventListener('click', wrapper.vm.closeDropdownOnOutsideClick);
+            const dropdown = wrapper.findComponent(TdDropdown);
+            if (dropdown.exists()) {
+                document.removeEventListener('click', dropdown.vm.closeDropdownOnOutsideClick);
+            }
         }
         wrapper = null;
         mockStore = null;

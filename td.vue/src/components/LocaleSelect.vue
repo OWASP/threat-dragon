@@ -1,15 +1,6 @@
 <template>
-    <div class="td-dropdown td-locale-select" @keydown.escape="closeDropdown">
-        <button
-            type="button"
-            class="td-dropdown-toggle"
-            aria-haspopup="true"
-            :aria-expanded="isOpen.toString()"
-            @click.stop.prevent="toggleDropdown"
-        >
-            {{ getLanguageName(locale) }}
-        </button>
-        <div v-if="isOpen" class="td-dropdown-menu td-dropdown-menu-right" role="menu">
+    <td-dropdown class="td-locale-select" :text="getLanguageName(locale)" right>
+        <template #default="{ close }">
             <div class="td-dropdown-search">
                 <input
                     type="text"
@@ -27,25 +18,28 @@
                     type="button"
                     class="td-dropdown-item"
                     role="menuitem"
-                    @click.stop.prevent="updateLocale(localeCode)"
+                    @click.stop.prevent="updateLocale(localeCode, close)"
                 >
                     {{ getLanguageName(localeCode) }}
                 </button>
             </div>
-        </div>
-    </div>
+        </template>
+    </td-dropdown>
 </template>
   
 <script>
 import { mapState } from 'vuex';
 import { LOCALE_SELECTED } from '@/store/actions/locale.js';
 import isElectron from 'is-electron';
+import TdDropdown from './Dropdown.vue';
 
 export default {
     name: 'TdLocalSelect',
+    components: {
+        TdDropdown
+    },
     data() {
         return {
-            isOpen: false,
             searchQuery: '',
             filteredLocales: []
         };
@@ -64,24 +58,7 @@ export default {
             }
         })
     },
-    mounted() {
-        document.addEventListener('click', this.closeDropdownOnOutsideClick);
-    },
-    unmounted() {
-        document.removeEventListener('click', this.closeDropdownOnOutsideClick);
-    },
     methods: {
-        toggleDropdown() {
-            this.isOpen = !this.isOpen;
-        },
-        closeDropdown() {
-            this.isOpen = false;
-        },
-        closeDropdownOnOutsideClick(event) {
-            if (!this.$el.contains(event.target)) {
-                this.closeDropdown();
-            }
-        },
         filterLocales() {
             const query = this.searchQuery.toLowerCase().trim();
 
@@ -114,14 +91,14 @@ export default {
                         searchableText.includes(query);
                 });
         },
-        updateLocale(locale) {
+        updateLocale(locale, closeDropdown) {
             this.$store.dispatch(LOCALE_SELECTED, locale);
             if (isElectron()) {
                 window.electronAPI.updateMenu(locale);
             }
             this.searchQuery = ''; // Clear search after selection
             this.filterLocales(); // Reset the filtered list
-            this.closeDropdown();
+            closeDropdown();
         },
         getLanguageName(locale) {
             switch (locale) {
