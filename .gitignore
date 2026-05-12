@@ -199,8 +199,6 @@
 !td.vue/src/styles/
 !td.vue/src/styles/*.css
 !td.vue/src/styles/*.scss
-!td.vue/src/styles/components/
-!td.vue/src/styles/components/*.scss
 !td.vue/src/views/
 !td.vue/src/views/*.vue
 !td.vue/src/views/demo/
