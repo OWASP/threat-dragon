@@ -160,9 +160,12 @@ against baseline images. These tests are intended to flag UI regressions.
 The threshold is intentionally set low with a pixel ratio of `0.01`.  
 Baseline images are stored in `td.vue/tests/e2e/visual/baselines`
 
-To run the tests locally, from the `td.vue` directory, run: `npm run test:visual`
+These tests run against Chrome. There can be some minor differences between
+Chrome versions. The pull request workflow has a specific version pinned.
 
-When intentional changes are made to the UI, you must regenerate the visual
+To run visual regressions locally, from `td.vue` run `npm run test:visual`
+
+When intentional changes are made to the UI, you may need to regenerate the visual
 baselines with `npm run test:visual:update`.
 
 ## Cypress use of Electron
