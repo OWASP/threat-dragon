@@ -20,7 +20,9 @@ class ThreatDragonEnv extends Env {
             { key: 'SERVER_API_PROTOCOL', required: false, defaultValue: 'https' },
             { key: 'REPO_ROOT_DIRECTORY', required: false, defaultValue: 'ThreatDragonModels' },
             { key: 'REPO_USE_SEARCH', required: false, defaultValue: false },
-            { key: 'REPO_SEARCH_QUERY', required: false }
+            { key: 'REPO_SEARCH_QUERY', required: false },
+            { key: 'LOCALES_ALLOWED', required: false, defaultValue: '[]' },
+            { key: 'LOCALE_DEFAULT', required: false, defaultValue: 'en' }
         ];
     }
 }

@@ -22,6 +22,11 @@ A minimal set of environment variables, that will provide local file access, is:
 * ENCRYPTION_JWT_REFRESH_SIGNING_KEY
 * SERVER_API_PROTOCOL
 
+Optionally the server can also restrict which locales are available:
+
+* LOCALES_ALLOWED — JSON array of allowed locale codes, e.g. `["en","es","fr"]`
+* LOCALE_DEFAULT — Default locale the server suggests, e.g. `pt` or `en`
+
 ### Generating keys
 
 A random 16 byte (32 character, 256 bit) hexadecimal string should be used for encryption,
@@ -69,6 +74,10 @@ ENCRYPTION_KEYS='[{"isPrimary": true, "id": 0, "value": "0123456789abcdef0123456
 ENCRYPTION_JWT_SIGNING_KEY=deadbeef112233445566778899aabbcc
 ENCRYPTION_JWT_REFRESH_SIGNING_KEY=00112233445566778899aabbccddeeff
 SERVER_API_PROTOCOL='http'
+
+# Optional locale configuration
+LOCALES_ALLOWED='[]'
+LOCALE_DEFAULT=en
 ```
 
 ----

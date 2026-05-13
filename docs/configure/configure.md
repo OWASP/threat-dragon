@@ -174,6 +174,8 @@ it depends on what repository access is required and whether running the desktop
 | `APP_TLS_KEY_PATH` | Locates the TLS key if TLS used | |
 | `ENV_FILE` | The location of a dotenv file, if dotenv is used. Exported as it needs to be accessed before the dotenv file is read | `.env` |
 | `NODE_ENV` | Optional run mode such as 'test', 'production' or 'development' | `production` |
+| `LOCALES_ALLOWED` | Optional JSON array of allowed locale codes, e.g. `["en","es","fr"]`. When not set all locales will be available on the frontend | `[]` |
+| `LOCALE_DEFAULT` | Default locale code the server suggests, e.g. `pt`. When not set the server defaults to `en` | `en` |
 
 The secure cookie flag is set only if running in 'production' mode.
 
