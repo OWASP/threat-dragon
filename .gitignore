@@ -84,11 +84,15 @@
 !td.server/src/providers/
 !td.server/src/providers/*.js
 !td.server/src/repositories/
+!td.server/src/constants/
+!td.server/src/constants/*.js
 !td.server/src/repositories/*.js
 !td.server/test/
 !td.server/test/*.spec.js
 !td.server/test/config/
 !td.server/test/config/*.spec.js
+!td.server/test/constants/
+!td.server/test/constants/*.spec.js
 !td.server/test/controllers/
 !td.server/test/controllers/*.spec.js
 !td.server/test/env/
