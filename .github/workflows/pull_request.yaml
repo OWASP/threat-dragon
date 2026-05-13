@@ -307,6 +307,9 @@ jobs:
       - name: Install front-end
         run: npm clean-install
 
+      - name: Pre Dev
+        run: npm run predev
+
       - name: Run visual regression tests
         run: npm run test:visual
 
