@@ -25,7 +25,7 @@ const sendResponse = (fn, req, res, logger) => {
 /**
  * Wraps an async function (promise) to be sent using a standardized JSON format
  * This catches errors and logs them using the logger
- * @param {function(): Promise<{localEnabled: boolean, githubEnabled, bitbucketEnabled}>} asyncFn
+ * @param {function(): Promise<{localEnabled: boolean, githubEnabled: boolean, bitbucketEnabled: boolean, gitlabEnabled: boolean, googleEnabled: boolean, allowedLocales: string[], defaultLocale: string}>} asyncFn
  * @param {*} req
  * @param {*} res
  * @param {*} logger
