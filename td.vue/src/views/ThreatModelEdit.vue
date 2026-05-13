@@ -106,15 +106,17 @@
                                 class="mb-3"
                             >
                                 <b-input-group-prepend>
-                                    <b-dropdown variant="secondary" class="select-diagram-type" :text="model.detail.diagrams[idx].diagramType === 'EOP' ? $t('threatmodel.diagram.eop.select') : model.detail.diagrams[idx].diagramType">
-                                        <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'CIA')">{{ $t('threatmodel.diagram.cia.select') }}</b-dropdown-item-button>
-                                        <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'CIADIE')">{{ $t('threatmodel.diagram.die.select') }}</b-dropdown-item-button>
-                                        <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'LINDDUN')">{{ $t('threatmodel.diagram.linddun.select') }}</b-dropdown-item-button>
-                                        <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'PLOT4ai')">{{ $t('threatmodel.diagram.plot4ai.select') }}</b-dropdown-item-button>
-                                        <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'STRIDE')">{{ $t('threatmodel.diagram.stride.select') }}</b-dropdown-item-button>
-                                        <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'EOP')">{{ $t('threatmodel.diagram.eop.select') }}</b-dropdown-item-button>
-                                        <b-dropdown-item-button @click="onDiagramTypeClick(idx, 'Generic')">{{ $t('threatmodel.diagram.generic.select') }}</b-dropdown-item-button>
-                                    </b-dropdown>
+                                    <td-dropdown variant="secondary" class="select-diagram-type" :text="model.detail.diagrams[idx].diagramType === 'EOP' ? $t('threatmodel.diagram.eop.select') : model.detail.diagrams[idx].diagramType">
+                                        <template #default="{ close }">
+                                            <button type="button" class="td-dropdown-item" @click="onDiagramTypeClick(idx, 'CIA'); close()">{{ $t('threatmodel.diagram.cia.select') }}</button>
+                                            <button type="button" class="td-dropdown-item" @click="onDiagramTypeClick(idx, 'CIADIE'); close()">{{ $t('threatmodel.diagram.die.select') }}</button>
+                                            <button type="button" class="td-dropdown-item" @click="onDiagramTypeClick(idx, 'LINDDUN'); close()">{{ $t('threatmodel.diagram.linddun.select') }}</button>
+                                            <button type="button" class="td-dropdown-item" @click="onDiagramTypeClick(idx, 'PLOT4ai'); close()">{{ $t('threatmodel.diagram.plot4ai.select') }}</button>
+                                            <button type="button" class="td-dropdown-item" @click="onDiagramTypeClick(idx, 'STRIDE'); close()">{{ $t('threatmodel.diagram.stride.select') }}</button>
+                                            <button type="button" class="td-dropdown-item" @click="onDiagramTypeClick(idx, 'EOP'); close()">{{ $t('threatmodel.diagram.eop.select') }}</button>
+                                            <button type="button" class="td-dropdown-item" @click="onDiagramTypeClick(idx, 'Generic'); close()">{{ $t('threatmodel.diagram.generic.select') }}</button>
+                                        </template>
+                                    </td-dropdown>
                                 </b-input-group-prepend>
                                 <b-form-input
                                     v-model="model.detail.diagrams[idx].title"
@@ -198,6 +200,7 @@
 import { mapState } from 'vuex';
 
 import { getProviderType } from '@/service/provider/providers.js';
+import TdDropdown from '@/components/Dropdown.vue';
 import TdFormButton from '@/components/FormButton.vue';
 import TdFormTags from '@/components/FormTags.vue';
 import tmActions from '@/store/actions/threatmodel.js';
@@ -205,6 +208,7 @@ import tmActions from '@/store/actions/threatmodel.js';
 export default {
     name: 'ThreatModelEdit',
     components: {
+        TdDropdown,
         TdFormButton,
         TdFormTags
     },
