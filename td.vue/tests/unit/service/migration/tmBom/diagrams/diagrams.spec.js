@@ -1,5 +1,6 @@
 import diagrams from '@/service/migration/tmBom/diagrams/diagrams';
 import tmBomModel from '../tmbom-test-model';
+import tdModel from '../td-test-model';
 
 describe('service/migration/tmBom/diagrams/diagrams.js', () => {
     let testDiagrams;
@@ -44,5 +45,20 @@ describe('service/migration/tmBom/diagrams/diagrams.js', () => {
             expect(testDiagrams).toHaveLength(1);
         });
 
+    });
+
+    describe('convert', () => {
+        let noCompatibilityModel = JSON.parse(JSON.stringify(tdModel));
+        delete noCompatibilityModel.detail.compatibility.diagrams;
+
+        it('copies saved diagrams from compatibility', () => {
+            testDiagrams = diagrams.convert(tdModel);
+            expect(testDiagrams[0].length).toBeGreaterThan(1);
+        });
+
+        it('defaults when no compatibility', () => {
+            testDiagrams = diagrams.convert(noCompatibilityModel);
+            expect(testDiagrams[0]).toBe(undefined);
+        });
     });
 });

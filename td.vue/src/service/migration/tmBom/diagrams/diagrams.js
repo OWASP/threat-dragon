@@ -44,13 +44,8 @@ const checkEdges = (edges, nodes) => {
 };
 
 const convert = (model) => {
-    let diagrams = new Array();
-
-    if (!model.detail.diagrams) {
-	    diagrams = [];
-    }
-
-    return diagrams;
+    // TM-BOM diagrams are external diagram definitions with no equivalent in Threat Dragon
+    return model.detail.compatibility.diagrams || [];
 };
 
 const merge = (model, version) => {

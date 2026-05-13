@@ -31,17 +31,17 @@ describe('service/migration/tmBom/scope.js', () => {
                 let noDescription = JSON.parse(JSON.stringify(tdModel));
                 delete noDescription.summary.description;
                 testScope = scope.convert(noDescription);
-	            expect(testScope.description.length).toBeGreaterThan(0);
+	            expect(testScope.description.length).toBeGreaterThan(1);
 	        });
 
 	        it('provides scope compatibility defaults', () => {
                 let noCompatibility = JSON.parse(JSON.stringify(tdModel));
                 delete noCompatibility.summary.compatibility;
                 testScope = scope.convert(noCompatibility);
-                expect(testScope.business_criticality).not.toBeNull();
-                expect(testScope.data_sensitivity).not.toBeNull();
-                expect(testScope.exposure).not.toBeNull();
-                expect(testScope.tier).not.toBeNull();
+                expect(testScope.business_criticality.length).toBeGreaterThan(1);
+                expect(testScope.data_sensitivity[0].length).toBeGreaterThan(1);
+                expect(testScope.exposure.length).toBeGreaterThan(1);
+                expect(testScope.tier.length).toBeGreaterThan(1);
 	        });
 	    });
     });

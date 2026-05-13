@@ -2972,7 +2972,10 @@
     ],
     "diagramTop": 4,
     "reviewer": "Test reviewer",
-    "threatTop": 50
+    "threatTop": 50,
+    "compatibility": {
+        "diagrams": ["Test detail compatibility diagram0"]
+    }
   },
   "version": "2.6.1",
   "compatibility": {

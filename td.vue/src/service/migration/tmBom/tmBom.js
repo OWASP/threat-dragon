@@ -1,6 +1,7 @@
 import summary from './summary';
 import detail from './detail';
 import scope from './scope';
+import diagrams from './diagrams/diagrams';
 
 /* why use a hard coded Threat Dragon version here?
  * the build version may increase for Threat Dragon, but this conversion / migration
@@ -29,16 +30,17 @@ const exportAsTmbom = (model) => {
 
     if (model.compatibility) {
         // optional key values
-		createKey(model.compatibility, tmModel, 'description');
+        createKey(model.compatibility, tmModel, 'description');
         createKey(model.compatibility, tmModel, 'frozen');
-		createKey(model.compatibility, tmModel, 'released_at');
-		createKey(model.compatibility, tmModel, 'product_release_date');
+        createKey(model.compatibility, tmModel, 'released_at');
+        createKey(model.compatibility, tmModel, 'product_release_date');
         createKey(model.compatibility, tmModel, 'release_docs_link');
         createKey(model.compatibility, tmModel, 'reviewed_at');
         createKey(model.compatibility, tmModel, 'repo_link');
     }
 
     tmModel.scope = scope.convert(model);
+    tmModel.diagrams = diagrams.convert(model);
 
     console.debug(JSON.stringify(tmModel, null, 2));
     return tmModel;
@@ -84,7 +86,7 @@ const read = (model) => {
 
 // write a TM-BOM file
 const write = (model) => {
-    // not supported yet, so return a nearly empty TM=BOM
+    // not supported yet, so return a nearly empty TM-BOM
     return {
         version: tmbomVersion,
         scope: {
