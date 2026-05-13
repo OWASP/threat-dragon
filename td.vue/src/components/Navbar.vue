@@ -93,12 +93,12 @@ $icon-height: 1.2rem;
   align-items: center;
 }
 
-.td-admin-nav-dropdown>>>.td-dropdown-toggle {
+.td-admin-nav-dropdown :deep(.td-dropdown-toggle) {
   padding: 0;
 }
 
-.td-admin-nav-dropdown>>>.td-dropdown-toggle-link:hover,
-.td-admin-nav-dropdown>>>.td-dropdown-toggle-link:focus {
+.td-admin-nav-dropdown :deep(.td-dropdown-toggle-link:hover),
+.td-admin-nav-dropdown :deep(.td-dropdown-toggle-link:focus) {
   background-color: transparent;
 }
 
