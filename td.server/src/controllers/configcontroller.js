@@ -1,9 +1,8 @@
+import { buildConfig } from '../helpers/config.helper.js';
+import env from '../env/Env';
 import { ERROR_CODES } from '../constants/errorCodes.js';
 import { ERROR_MESSAGES } from '../constants/errorMessages.js';
-
-import { buildConfig } from '../helpers/config.helper.js';
 import { isNullish } from '../helpers/validators.helper.js';
-import env from '../env/Env';
 import loggerHelper from '../helpers/logger.helper.js';
 import responseWrapper from './responseWrapper';
 
@@ -65,8 +64,7 @@ export const createConfigController = (deps = {}) => {
     const loadConfig = createConfigLoader(deps);
 
     return {
-        config: (req, res) =>
-            responseWrapper.sendResponse(loadConfig, req, res, deps.loggerDep || logger)
+        config: (req, res) => responseWrapper.sendResponse(loadConfig, req, res, deps.loggerDep || logger)
     };
 };
 
