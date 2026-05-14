@@ -127,7 +127,7 @@ export default {
 
             // sometimes the branch is not immediately available, so we wait for it (only for 30 seconds)
             for (let i = 0; i < 30; i++) {
-                await this.$store.dispatch(branchActions.fetch, 1);
+                await this.$store.dispatch(branchActions.fetch, { page: 1 });
                 if (this.branchNames.includes(this.newBranchName)) {
                     break;
                 }

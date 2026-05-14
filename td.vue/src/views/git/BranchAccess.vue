@@ -93,7 +93,7 @@ export default {
             this.$store.dispatch(repoActions.selected, this.$route.params.repository);
         }
 
-        this.$store.dispatch(branchActions.fetch, 1);
+        this.$store.dispatch(branchActions.fetch, { page: 1 });
     },
     methods: {
         selectRepoClick() {
@@ -110,7 +110,7 @@ export default {
             this.$router.push({ name: routeName, params });
         },
         paginate(page) {
-            this.$store.dispatch(branchActions.fetch, page, this.searchQuery);
+            this.$store.dispatch(branchActions.fetch, { page });
         },
         toggleNewBranchDialog(){
             this.showNewBranchDialog = !this.showNewBranchDialog;
@@ -118,3 +118,4 @@ export default {
     }
 };
 </script>
+

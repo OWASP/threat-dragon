@@ -1,25 +1,21 @@
 import { REPOSITORY_CLEAR, REPOSITORY_FETCH, REPOSITORY_SELECTED } from '@/store/actions/repository.js';
 import repoModule, { clearState } from '@/store/modules/repository.js';
 import threatmodelApi from '@/service/api/threatmodelApi.js';
+import { createStoreMocks } from '../../helpers/store';
 
 describe('store/modules/repository.js', () => {
-    const mocks = {
-        commit: () => {},
-        dispatch: () => {},
-        rootState: {
-            auth: {
-                jwt: 'test'
-            }
-        }
-    };
+    let apiSpy;
+    const mocks = createStoreMocks();
 
     beforeEach(() => {
         jest.spyOn(mocks, 'commit');
         jest.spyOn(mocks, 'dispatch');
+        apiSpy = jest.spyOn(threatmodelApi, 'reposAsync');
     });
 
     afterEach(() => {
         clearState(repoModule.state);
+        apiSpy.mockRestore();
     });
 
     describe('state', () => {
@@ -28,19 +24,13 @@ describe('store/modules/repository.js', () => {
         });
 
         it('defines a selected string', () => {
-            expect(repoModule.state.selected).toEqual('');
+            expect(repoModule.state.selected).toBe('');
         });
 
-        it('defines a page number', () => {
-            expect(repoModule.state.page).toEqual(1);
-        });
-
-        it('defines a pageNext bool', () => {
-            expect(repoModule.state.pageNext).toEqual(false);
-        });
-
-        it('defines a pagePrev bool', () => {
-            expect(repoModule.state.pagePrev).toEqual(false);
+        it('defines pagination defaults', () => {
+            expect(repoModule.state.page).toBe(1);
+            expect(repoModule.state.pageNext).toBe(false);
+            expect(repoModule.state.pagePrev).toBe(false);
         });
     });
 
@@ -50,85 +40,79 @@ describe('store/modules/repository.js', () => {
             expect(mocks.commit).toHaveBeenCalledWith(REPOSITORY_CLEAR);
         });
 
+        it('commits the selected repo', () => {
+            repoModule.actions[REPOSITORY_SELECTED](mocks, 'my-repo');
+            expect(mocks.commit).toHaveBeenCalledWith(REPOSITORY_SELECTED, 'my-repo');
+        });
+
         describe('fetch', () => {
-            const repos = [ 'foo', 'bar' ];
-            const pagination = {
-                page: 1,
-                next: true,
-                prev: false
-            };
+            const repos = ['foo', 'bar'];
+            const pagination = { page: 1, next: true, prev: false };
 
             beforeEach(async () => {
-                jest.spyOn(threatmodelApi, 'reposAsync').mockResolvedValue({ data: { repos, pagination }});
-                await repoModule.actions[REPOSITORY_FETCH](mocks, 1);
+                apiSpy.mockResolvedValue({ data: { repos, pagination } });
+                await repoModule.actions[REPOSITORY_FETCH](mocks, { page: 1, searchQuery: '' });
             });
 
-            it('dispatches the clear event', () => {
+            it('dispatches clear before fetching', () => {
                 expect(mocks.dispatch).toHaveBeenCalledWith(REPOSITORY_CLEAR);
             });
 
-            it('commits the fetch action', () => {
-                expect(mocks.commit).toHaveBeenCalledWith(
-                    REPOSITORY_FETCH,
-                    {
-                        'repos': repos,
-                        'page': pagination.page,
-                        'pageNext': pagination.next,
-                        'pagePrev': pagination.prev
-                    }
-                );
+            it('commits the fetch result with pagination', () => {
+                expect(mocks.commit).toHaveBeenCalledWith(REPOSITORY_FETCH, {
+                    repos,
+                    page: pagination.page,
+                    pageNext: pagination.next,
+                    pagePrev: pagination.prev,
+                });
+            });
+
+            it('passes page and searchQuery to the API', () => {
+                expect(apiSpy).toHaveBeenCalledWith(1, '');
             });
         });
 
-        it('commits the selected repo', () => {
-            const repo = 'repo';
-            repoModule.actions[REPOSITORY_SELECTED](mocks, repo);
-            expect(mocks.commit).toHaveBeenCalledWith(REPOSITORY_SELECTED, repo);
+        describe('fetch with different parameters', () => {
+            const p = { page: 1, next: false, prev: false };
+
+            it('passes page 3 and search query to reposAsync', async () => {
+                apiSpy.mockResolvedValue({ data: { repos: ['filtered-repo'], pagination: p } });
+                await repoModule.actions[REPOSITORY_FETCH](mocks, { page: 3, searchQuery: 'owasp' });
+                expect(apiSpy).toHaveBeenCalledWith(3, 'owasp');
+            });
+
+            it('dispatches clear before the async API call', async () => {
+                apiSpy.mockResolvedValue({ data: { repos: [], pagination: p } });
+                await repoModule.actions[REPOSITORY_FETCH](mocks, { page: 1, searchQuery: '' });
+                expect(mocks.dispatch).toHaveBeenCalledWith(REPOSITORY_CLEAR);
+            });
         });
     });
 
     describe('mutations', () => {
         describe('clear', () => {
             beforeEach(() => {
-                repoModule.state.all.push('test1');
-                repoModule.state.all.push('test2');
+                repoModule.state.all.push('test1', 'test2');
                 repoModule.state.selected = 'github';
-                repoModule.state.page = 1;
-                repoModule.state.pageNext = false;
-                repoModule.state.pagePrev = false;
+                repoModule.state.page = 5;
+                repoModule.state.pageNext = true;
+                repoModule.state.pagePrev = true;
                 repoModule.mutations[REPOSITORY_CLEAR](repoModule.state);
             });
 
-            it('empties the all array', () => {
+            it('resets all state properties', () => {
                 expect(repoModule.state.all).toHaveLength(0);
-            });
-
-            it('resets the selected property', () => {
-                expect(repoModule.state.selected).toEqual('');
-            });
-
-            it('resets the page property', () => {
-                expect(repoModule.state.page).toEqual(1);
-            });
-
-            it('resets the pageNext property', () => {
-                expect(repoModule.state.pageNext).toEqual(false);
-            });
-
-            it('resets the pagePrev property', () => {
-                expect(repoModule.state.pagePrev).toEqual(false);
+                expect(repoModule.state.selected).toBe('');
+                expect(repoModule.state.page).toBe(1);
+                expect(repoModule.state.pageNext).toBe(false);
+                expect(repoModule.state.pagePrev).toBe(false);
             });
         });
 
         describe('selected', () => {
-            const repo = 'test';
-
-            beforeEach(() => {
-                repoModule.mutations[REPOSITORY_SELECTED](repoModule.state, repo);
-            });
-
             it('sets the repo prop', () => {
-                expect(repoModule.state.selected).toEqual(repo);
+                repoModule.mutations[REPOSITORY_SELECTED](repoModule.state, 'my-repo');
+                expect(repoModule.state.selected).toBe('my-repo');
             });
         });
     });
