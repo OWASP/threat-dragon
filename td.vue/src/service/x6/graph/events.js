@@ -90,8 +90,8 @@ const cellAdded = (graph) => ({ cell }) => {
 
     mouseLeave({ cell });
 
-    // boundary boxes must not overlap other diagram components
-    if (cell.shape === 'trust-boundary-box') {
+    // boundary shapes must not overlap other diagram components
+    if (cell.shape === 'trust-boundary-box' || cell.shape === 'trust-boundary-curve') {
         cell.zIndex = -1;
     }
 
