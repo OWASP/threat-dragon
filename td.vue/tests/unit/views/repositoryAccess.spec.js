@@ -44,14 +44,14 @@ describe('views/RepositoryAccess.vue', () => {
             expect(mockStore.dispatch).toHaveBeenCalledWith(PROVIDER_SELECTED, 'local');
         });
 
-        it('fetches with default page 1 and empty search', () => {
+        it('fetches with default page 1', () => {
             mountComponent({ provider: PROVIDER }, {});
-            expect(mockStore.dispatch).toHaveBeenCalledWith(REPOSITORY_FETCH, { page: 1, searchQuery: '' });
+            expect(mockStore.dispatch).toHaveBeenCalledWith(REPOSITORY_FETCH, { page: 1 });
         });
 
         it('uses the page from the route query', () => {
             mountComponent({ provider: PROVIDER }, { page: 3 });
-            expect(mockStore.dispatch).toHaveBeenCalledWith(REPOSITORY_FETCH, { page: 3, searchQuery: '' });
+            expect(mockStore.dispatch).toHaveBeenCalledWith(REPOSITORY_FETCH, { page: 3 });
         });
 
         it('does not re-dispatch an already-matched provider', () => {
@@ -181,6 +181,12 @@ describe('views/RepositoryAccess.vue', () => {
             wrapper.vm.searchQuery = '';
             wrapper.vm.paginate(3);
             expect(mockStore.dispatch).toHaveBeenCalledWith(REPOSITORY_FETCH, { page: 3, searchQuery: '' });
+        });
+
+        it('paginates with empty searchQuery when no filter is active', () => {
+            wrapper.vm.searchQuery = '';
+            wrapper.vm.paginate(5);
+            expect(mockStore.dispatch).toHaveBeenCalledWith(REPOSITORY_FETCH, { page: 5, searchQuery: '' });
         });
 
         it('preserves the current filter when paginating', () => {

@@ -60,7 +60,7 @@ export default {
             page = this.$route.query.page;
         }
 
-        this.$store.dispatch(repoActions.fetch, { page, searchQuery: '' });
+        this.$store.dispatch(repoActions.fetch, { page });
     },
     methods: {
         onRepoClick(repoName) {
