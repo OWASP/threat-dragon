@@ -215,8 +215,12 @@
 !td.vue/tests/e2e/desktop/support/*.js
 !td.vue/tests/e2e/fixtures/
 !td.vue/tests/e2e/fixtures/*.json
+!td.vue/tests/e2e/mock-server/
+!td.vue/tests/e2e/mock-server/*.js
 !td.vue/tests/e2e/specs/
 !td.vue/tests/e2e/specs/*.cy.js
+!td.vue/tests/e2e/specs/git/
+!td.vue/tests/e2e/specs/git/*.cy.js
 !td.vue/tests/e2e/specs/smokes/
 !td.vue/tests/e2e/specs/smokes/*.cy.js
 !td.vue/tests/e2e/specs/threatmodel/

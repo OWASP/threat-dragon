@@ -2,6 +2,13 @@
 // run by the CI pipeline using cypress
 
 const { defineConfig } = require('cypress');
+const { createMockApp } = require('./tests/e2e/mock-server/threatDragonBackEndServerMock');
+
+// Start the mock server on port 3000 to support pagination and other mock-dependent tests
+const mockApp = createMockApp();
+const mockServer = mockApp.listen(3000, () => {
+    console.log('[mock] CI mock server listening on port 3000');
+});
 
 module.exports = defineConfig({
     fixturesFolder: 'tests/e2e/fixtures',
@@ -14,3 +21,6 @@ module.exports = defineConfig({
         baseUrl: 'http://localhost:3000/'
     }
 });
+
+// Keep the process alive so the mock server stays up
+process.on('exit', () => mockServer.close());

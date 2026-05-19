@@ -26,7 +26,7 @@ const state = {
 
 const actions = {
     [BRANCH_CLEAR]: ({ commit }) => commit(BRANCH_CLEAR),
-    [BRANCH_FETCH]: async ({ commit, dispatch, rootState }, page = 1) => {
+    [BRANCH_FETCH]: async ({ commit, dispatch, rootState }, { page = 1 } = {}) => {
         dispatch(BRANCH_CLEAR);
         const resp = await threatmodelApi.branchesAsync(rootState.repo.selected, page);
         commit(BRANCH_FETCH, {
@@ -64,3 +64,4 @@ export default {
     mutations,
     getters
 };
+

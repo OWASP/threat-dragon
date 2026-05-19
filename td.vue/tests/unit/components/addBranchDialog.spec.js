@@ -87,36 +87,33 @@ describe('components/AddBranchDialog.vue', () => {
     });
 
     describe('addBranch', () => {
-        let dispatch;
+        let branches, commit, dispatch;
 
         beforeEach(() => {
-            const branches = ['main', 'develop', 'feature'];
-            dispatch = jest.fn((branchActions, payload) => {
-                if(branchActions === 'BRANCH_CREATE') {
+            branches = ['main', 'develop', 'feature'];
+            commit = jest.fn();
+            dispatch = jest.fn((action, payload) => {
+                if (action === 'BRANCH_CREATE') {
                     const { branchName } = payload;
                     branches.push(branchName);
+                    return Promise.resolve();
                 }
-
-                if (branchActions === 'BRANCH_FETCH') {
-                    return wrapper.setProps({ branches: [...branches] });
+                if (action === 'BRANCH_FETCH') {
+                    wrapper.setProps({ branches: [...branches] });
+                    return Promise.resolve();
                 }
-
                 return Promise.resolve();
             });
             wrapper = shallowMount(AddBranchDialog, {
                 localVue,
-                propsData: {
-                    branches
-                },
+                propsData: { branches },
                 mocks: {
                     $t: key => key,
-                    $store: {
-                        dispatch
-                    }
+                    $store: { dispatch, commit }
                 },
                 data() {
                     return {
-                        newBranchName:  'new-branch',
+                        newBranchName: 'new-branch',
                         refBranch: 'main'
                     };
                 }
@@ -129,9 +126,15 @@ describe('components/AddBranchDialog.vue', () => {
         });
 
         it('closes the dialog after adding the branch', async () => {
-            await wrapper.setData({ newBranchName: 'new-branch', refBranch: 'main'});
+            await wrapper.setData({ newBranchName: 'new-branch', refBranch: 'main' });
             await wrapper.vm.addBranch();
             expect(wrapper.emitted('close-dialog')).toHaveLength(1);
         });
+
+        it('dispatches BRANCH_FETCH with { page: 1 } when polling for the new branch', async () => {
+            await wrapper.vm.addBranch();
+            expect(dispatch).toHaveBeenCalledWith('BRANCH_FETCH', { page: 1 });
+        });
     });
 });
+

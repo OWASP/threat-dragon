@@ -91,6 +91,9 @@ export default {
         },
         localFilter(newFilter) {
             this.$emit('update:filter', newFilter);
+        },
+        page(newPage) {
+            this.pageRef = newPage;
         }
     },
     props: {
@@ -175,3 +178,4 @@ export default {
     }
 };
 </script>
+

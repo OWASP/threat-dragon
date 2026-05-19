@@ -60,7 +60,7 @@ export default {
             page = this.$route.query.page;
         }
 
-        this.$store.dispatch(repoActions.fetch, page);
+        this.$store.dispatch(repoActions.fetch, { page });
     },
     methods: {
         onRepoClick(repoName) {
@@ -71,8 +71,9 @@ export default {
             this.$router.push({ name: `${this.providerType}Branch`, params, query: this.$route.query });
         },
         paginate(page) {
-            this.$store.dispatch(repoActions.fetch, page, this.searchQuery);
+            this.$store.dispatch(repoActions.fetch, { page, searchQuery: this.searchQuery });
         }
     }
 };
 </script>
+
