@@ -368,6 +368,8 @@ jobs:
     name: Site e2e tests
     runs-on: ubuntu-24.04
     needs: e2e_smokes
+    env:
+      CI_MOCK_ENABLED: 'false'
     defaults:
       run:
         working-directory: td.vue

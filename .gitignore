@@ -223,8 +223,8 @@
 !td.vue/tests/e2e/mock-server/*.js
 !td.vue/tests/e2e/specs/
 !td.vue/tests/e2e/specs/*.cy.js
-!td.vue/tests/e2e/specs/git/
-!td.vue/tests/e2e/specs/git/*.cy.js
+!td.vue/tests/e2e/specs/pagination/
+!td.vue/tests/e2e/specs/pagination/*.cy.js
 !td.vue/tests/e2e/specs/smokes/
 !td.vue/tests/e2e/specs/smokes/*.cy.js
 !td.vue/tests/e2e/specs/threatmodel/
