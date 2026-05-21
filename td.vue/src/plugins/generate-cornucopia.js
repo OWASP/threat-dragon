@@ -10,7 +10,10 @@ const API_LANGS = [
     { lang: 'en', type: 'webapp' },
 
     // mobileapp currently only supports english
-    { lang: 'en', type: 'mobileapp' }
+    { lang: 'en', type: 'mobileapp' },
+
+    // companion currently only supports english
+    { lang: 'en', type: 'companion' }
 ];
 
 const OUT_DIR = path.resolve(__dirname, '..', 'service', 'schema');
