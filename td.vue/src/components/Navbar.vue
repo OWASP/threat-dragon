@@ -19,19 +19,21 @@
           <font-awesome-icon icon="sign-out-alt" class="td-fa-nav" v-b-tooltip.hover
             :title="$t('nav.logOut')"></font-awesome-icon>
         </b-nav-item>
-        <!-- This is the dropdown from admin actions(manage tempaltes) -->
-        <b-nav-item-dropdown v-if="isAdmin" id="my-nav-dropdown" toggle-class="nav-link-custom" right >
-          <!-- Custom toggle content -->
+        <!-- This is the dropdown from admin actions(manage templates) -->
+        <li v-if="isAdmin" class="nav-item td-admin-nav-dropdown">
+          <td-dropdown id="my-nav-dropdown" class="nav-link-custom" variant="link" right no-caret>
           <template #button-content>
             <font-awesome-icon icon="cog" class="td-fa-nav text-white" v-b-tooltip.hover
               :title="$t('nav.contentManagement')" />
           </template>
 
-          <!-- Dropdown items -->
-          <b-dropdown-item @click="onManageTemplates">
-            Manage Templates
-          </b-dropdown-item>
-        </b-nav-item-dropdown>
+          <template #default="{ close }">
+            <button type="button" class="td-dropdown-item" @click="onManageTemplates(); close()">
+              Manage Templates
+            </button>
+          </template>
+          </td-dropdown>
+        </li>
 
 
         <b-nav-item href="https://www.threatdragon.com/docs/" target="_blank" rel="noopener noreferrer" id="nav-docs">
@@ -86,6 +88,20 @@ $icon-height: 1.2rem;
   }
 }
 
+.td-admin-nav-dropdown {
+  display: flex;
+  align-items: center;
+}
+
+.td-admin-nav-dropdown :deep(.td-dropdown-toggle) {
+  padding: 0;
+}
+
+.td-admin-nav-dropdown :deep(.td-dropdown-toggle-link:hover),
+.td-admin-nav-dropdown :deep(.td-dropdown-toggle-link:focus) {
+  background-color: transparent;
+}
+
 @media (max-width: 576px) {
 
   /* This is the typical breakpoint for phones */
@@ -114,11 +130,13 @@ $icon-height: 1.2rem;
 import { mapGetters } from 'vuex';
 
 import { LOGOUT } from '@/store/actions/auth.js';
+import TdDropdown from './Dropdown.vue';
 import TdLocaleSelect from './LocaleSelect.vue';
 
 export default {
     name: 'TdNavbar',
     components: {
+        TdDropdown,
         TdLocaleSelect
     },
     computed: {

@@ -62,20 +62,26 @@
                             </div>
 
                             <!-- Burger menu -->
-                            <b-dropdown right variant="link" class="template-actions">
+                            <td-dropdown right variant="link" no-caret class="template-actions">
                                 <template #button-content>
                                     <font-awesome-icon icon="ellipsis-v"></font-awesome-icon>
                                 </template>
-                                <b-dropdown-item @click="onEditTemplate(template)">
-                                    <font-awesome-icon icon="edit" class="mr-2"></font-awesome-icon>
-                                    {{ $t('forms.edit') }}
-                                </b-dropdown-item>
-                                <b-dropdown-divider></b-dropdown-divider>
-                                <b-dropdown-item @click="onDeleteTemplate(template)" variant="danger">
-                                    <font-awesome-icon icon="trash" class="mr-2"></font-awesome-icon>
-                                    {{ $t('forms.delete') }}
-                                </b-dropdown-item>
-                            </b-dropdown>
+                                <template #default="{ close }">
+                                    <button type="button" class="td-dropdown-item" @click="onEditTemplate(template); close()">
+                                        <font-awesome-icon icon="edit" class="mr-2"></font-awesome-icon>
+                                        {{ $t('forms.edit') }}
+                                    </button>
+                                    <div class="td-dropdown-divider"></div>
+                                    <button
+                                        type="button"
+                                        class="td-dropdown-item td-dropdown-item-danger"
+                                        @click="onDeleteTemplate(template); close()"
+                                    >
+                                        <font-awesome-icon icon="trash" class="mr-2"></font-awesome-icon>
+                                        {{ $t('forms.delete') }}
+                                    </button>
+                                </template>
+                            </td-dropdown>
                         </b-list-group-item>
                     </b-list-group>
 
@@ -107,6 +113,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import { v4 } from 'uuid';
+import TdDropdown from '@/components/Dropdown.vue';
 import TdFormTags from '@/components/FormTags.vue';
 import templateActions from '@/store/actions/template.js';
 import schema from '@/service/schema/ajv.js';
@@ -114,6 +121,7 @@ import schema from '@/service/schema/ajv.js';
 export default {
     name: 'ManageTemplates',
     components: {
+        TdDropdown,
         TdFormTags
     },
     data() {
@@ -293,8 +301,4 @@ export default {
     cursor: pointer;
 }
 
-.template-actions>>>.btn::after,
-.template-actions>>>.dropdown-toggle::after {
-    display: none !important;
-}
 </style>

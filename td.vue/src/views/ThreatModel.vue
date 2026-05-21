@@ -50,12 +50,19 @@
                     <td-form-button id="td-report-btn" :onBtnClick="onReportClick" icon="file-alt"
                         :text="$t('forms.report')" />
                     <!-- REPLACE the export template button with dropdown -->
-                    <b-dropdown right :text="$t('forms.manage')" id="manage-model-btn" v-if="enableTemplates">
-                        <b-dropdown-item @click="onExportTemplateClick" id="export-template-option">
-                            <font-awesome-icon icon="file-import" ></font-awesome-icon>
-                            {{ $t('forms.exportTemplate') }}
-                        </b-dropdown-item>
-                    </b-dropdown>
+                    <td-dropdown right variant="secondary" :text="$t('forms.manage')" id="manage-model-btn" v-if="enableTemplates">
+                        <template #default="{ close }">
+                            <button
+                                type="button"
+                                class="td-dropdown-item"
+                                @click="(evt) => { onExportTemplateClick(evt); close(); }"
+                                id="export-template-option"
+                            >
+                                <font-awesome-icon icon="file-import" ></font-awesome-icon>
+                                {{ $t('forms.exportTemplate') }}
+                            </button>
+                        </template>
+                    </td-dropdown>
                     <td-form-button id="td-close-btn" :onBtnClick="onCloseClick" icon="times"
                         :text="$t('forms.closeModel')" />
                 </b-btn-group>
@@ -88,6 +95,7 @@
 import { mapState } from 'vuex';
 
 import { getProviderType } from '@/service/provider/providers.js';
+import TdDropdown from '@/components/Dropdown.vue';
 import TdFormButton from '@/components/FormButton.vue';
 import TdThreatModelSummaryCard from '@/components/ThreatModelSummaryCard.vue';
 import tmActions from '@/store/actions/threatmodel.js';
@@ -95,6 +103,7 @@ import tmActions from '@/store/actions/threatmodel.js';
 export default {
     name: 'ThreatModel',
     components: {
+        TdDropdown,
         TdFormButton,
         TdThreatModelSummaryCard
     },
