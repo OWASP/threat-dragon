@@ -93,6 +93,35 @@ describe('components/Dropdown.vue', () => {
         expect(wrapper.find('.td-dropdown-menu').exists()).toEqual(false);
     });
 
+    it('closes an open dropdown when another dropdown is opened', async () => {
+        wrapper = mount(
+            {
+                components: { TdDropdown },
+                template: `
+                    <div>
+                        <td-dropdown text="First" class="first-dropdown">
+                            <button type="button" class="first-action">First action</button>
+                        </td-dropdown>
+                        <td-dropdown text="Second" class="second-dropdown">
+                            <button type="button" class="second-action">Second action</button>
+                        </td-dropdown>
+                    </div>
+                `
+            },
+            {
+                attachTo: document.body
+            }
+        );
+
+        await wrapper.find('.first-dropdown .td-dropdown-toggle').trigger('click');
+        expect(wrapper.find('.first-dropdown .td-dropdown-menu').exists()).toEqual(true);
+
+        await wrapper.find('.second-dropdown .td-dropdown-toggle').trigger('click');
+
+        expect(wrapper.find('.first-dropdown .td-dropdown-menu').exists()).toEqual(false);
+        expect(wrapper.find('.second-dropdown .td-dropdown-menu').exists()).toEqual(true);
+    });
+
     it('closes the menu when pressing escape', async () => {
         mountComponent();
 
@@ -131,12 +160,44 @@ describe('components/Dropdown.vue', () => {
         expect(wrapper.find('.td-dropdown-menu-right').exists()).toEqual(true);
     });
 
+    it('left aligns menus by default', async () => {
+        mountComponent();
+
+        await findToggle().trigger('click');
+
+        expect(wrapper.find('.td-dropdown-menu').classes()).not.toContain('td-dropdown-menu-right');
+    });
+
     it('does not right align menus by default', async () => {
         mountComponent();
 
         await findToggle().trigger('click');
 
         expect(wrapper.find('.td-dropdown-menu-right').exists()).toEqual(false);
+    });
+
+    it('uses the primary button variant by default', () => {
+        mountComponent();
+
+        expect(findToggle().classes()).toContain('td-dropdown-toggle-primary');
+    });
+
+    it('supports secondary button variants', () => {
+        mountComponent({ variant: 'secondary' });
+
+        expect(findToggle().classes()).toContain('td-dropdown-toggle-secondary');
+    });
+
+    it('supports link button variants', () => {
+        mountComponent({ variant: 'link' });
+
+        expect(findToggle().classes()).toContain('td-dropdown-toggle-link');
+    });
+
+    it('can hide the toggle caret', () => {
+        mountComponent({ noCaret: true });
+
+        expect(findToggle().classes()).toContain('td-dropdown-toggle-no-caret');
     });
 
     it('removes the outside click listener on unmount', () => {

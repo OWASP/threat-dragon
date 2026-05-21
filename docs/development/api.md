@@ -53,7 +53,7 @@ APIs with no authorisation:
 | `/api/logout` | GET | Logout that will always succeed |
 | `/api/oauth/return` | GET | OAuth return request |
 | `/api/oauth/:provider` | GET | Provides access and refresh tokens if authorised |
-| `/api/config` | GET | Provides the list of configured providers |
+| `/api/config` | GET | Provides the server configuration including OAuth provider flags and locale settings |
 | `/api/threatmodel/organization` | GET | Provides repository provider hostname |
 
 ### Provider Types

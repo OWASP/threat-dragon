@@ -1,7 +1,8 @@
-import { BootstrapVue, BDropdown } from 'bootstrap-vue';
+import { BootstrapVue } from 'bootstrap-vue';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
+import TdDropdown from '@/components/Dropdown.vue';
 import TdFormButton from '@/components/FormButton.vue';
 import TdGraphButtons from '@/components/GraphButtons.vue';
 
@@ -237,13 +238,21 @@ describe('components/GraphButtons.vue', () => {
     describe('export', () => {
         beforeEach(() => {
             btn = wrapper
-                .findAllComponents(BDropdown)
+                .findAllComponents(TdDropdown)
                 .filter((x) => x.attributes('id') === 'export-graph-btn')
                 .at(0);
         });
 
         it('has the export translation text', () => {
             expect(btn.attributes('text')).toEqual('forms.export');
+        });
+
+        it('right aligns the export menu', () => {
+            expect(btn.attributes('right')).toEqual('true');
+        });
+
+        it('uses the secondary variant', () => {
+            expect(btn.attributes('variant')).toEqual('secondary');
         });
 
         it('has a dropdown item for PNG', () => {

@@ -43,14 +43,16 @@
             :title="$t('threatmodel.buttons.toggleGrid')"
             text="" />
 
-        <b-dropdown right :text="$t('forms.export')" id="export-graph-btn">
-            <b-dropdown-item @click="exportPNG" id="export-graph-png">
-                PNG
-            </b-dropdown-item>
-            <b-dropdown-item @click="exportSVG" id="export-graph-svg">
-                SVG
-            </b-dropdown-item>
-        </b-dropdown>
+        <td-dropdown right variant="secondary" :text="$t('forms.export')" id="export-graph-btn">
+            <template #default="{ close }">
+                <button type="button" class="td-dropdown-item" @click="exportPNG(); close()" id="export-graph-png">
+                    PNG
+                </button>
+                <button type="button" class="td-dropdown-item" @click="exportSVG(); close()" id="export-graph-svg">
+                    SVG
+                </button>
+            </template>
+        </td-dropdown>
 
         <td-form-button
             :onBtnClick="closeDiagram"
@@ -69,11 +71,13 @@
 <script>
 import { mapState } from 'vuex';
 
+import TdDropdown from '@/components/Dropdown.vue';
 import TdFormButton from '@/components/FormButton.vue';
 
 export default {
     name: 'TdGraphButtons',
     components: {
+        TdDropdown,
         TdFormButton
     },
     computed: mapState({
