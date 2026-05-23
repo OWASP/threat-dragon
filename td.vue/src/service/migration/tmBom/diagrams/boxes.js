@@ -4,6 +4,12 @@ const padding = 125;
 // a 'typical' node is width 160 and height 80
 const nodeGeometry = {width: 160 + padding, height: 80 + padding, padding: padding};
 
+const convert = (_model) => { // eslint-disable-line no-unused-vars
+    let trust_zones = new Array();
+
+    return trust_zones;
+};
+
 const countNodes = (model, trust_zone) => {
     let count = 0;
     let zones = new Array();
@@ -97,6 +103,7 @@ const merge = (model) => {
 };
 
 export default {
+    convert,
     merge,
     nodeGeometry
 };

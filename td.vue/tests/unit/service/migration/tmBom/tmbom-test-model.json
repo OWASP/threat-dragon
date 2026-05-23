@@ -1,6 +1,6 @@
 {
-    "$schema": "https://github.com/OWASP/www-project-threat-model-library/blob/v1.0.1/threat-model.schema.json",
-    "version": "1.0.2",
+    "$schema": "https://github.com/OWASP/www-project-threat-model-library/blob/v1.0.2/threat-model.schema.json",
+    "version": "2.7.0",
     "scope": {
       "title": "Test title scope",
       "description": "Test description scope",

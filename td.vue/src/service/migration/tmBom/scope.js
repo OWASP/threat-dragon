@@ -12,7 +12,6 @@ const convert = (model) => {
     scope.exposure = model.summary.compatibility?.exposure || 'internal';
     scope.tier = model.summary.compatibility?.tier || 'non_critical';
 
-    console.debug('scope : ' + JSON.stringify(scope, null, 2));
     return scope;
 };
 

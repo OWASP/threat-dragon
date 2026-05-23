@@ -4,6 +4,12 @@ import boxes from './boxes';
 const padding = boxes.nodeGeometry.padding;
 const nodeSize = { width: boxes.nodeGeometry.width, height: boxes.nodeGeometry.height };
 
+const convert = (_model) => { // eslint-disable-line no-unused-vars
+    let nodes  = {actors: [], components: [], data_stores: []};
+
+    return nodes;
+};
+
 export const createNodes = (model, zone) => {
     let nodes = new Array();
     let zIndex = 0;
@@ -89,5 +95,6 @@ export const merge = (model) => {
 };
 
 export default {
+    convert,
     merge
 };

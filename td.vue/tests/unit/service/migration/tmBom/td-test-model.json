@@ -6,7 +6,9 @@
     "id": 0,
     "compatibility": {
       "business_criticality": "low",
-      "data_sensitivity": ["biz"],
+      "data_sensitivity": [
+        "biz"
+      ],
       "exposure": "external",
       "tier": "non_critical"
     }
@@ -93,13 +95,6 @@
                 "store2",
                 "store3"
               ]
-            },
-            "tools": {
-              "items": [
-                "boundary",
-                "button-remove"
-              ],
-              "name": null
             }
           },
           {
@@ -257,7 +252,9 @@
                   "type": "Generic",
                   "mitigation": "Test mitigation threat0",
                   "modelType": "Generic",
-                  "id": "threat0"
+                  "id": "threat0",
+                  "new": false,
+                  "score": "10"
                 },
                 {
                   "status": "Mitigated",
@@ -267,7 +264,9 @@
                   "type": "Generic",
                   "mitigation": "Test mitigation threat1",
                   "modelType": "Generic",
-                  "id": "threat1"
+                  "id": "threat1",
+                  "new": false,
+                  "score": "5"
                 },
                 {
                   "status": "Mitigated",
@@ -277,9 +276,18 @@
                   "type": "Generic",
                   "mitigation": "Test mitigation threat2",
                   "modelType": "Generic",
-                  "id": "threat2"
+                  "id": "threat2",
+                  "new": false,
+                  "score": "55"
                 }
               ]
+            },
+            "tools": {
+              "items": [
+                "boundary",
+                "button-remove"
+              ],
+              "name": null
             }
           },
           {
@@ -727,7 +735,8 @@
                   "type": "Generic",
                   "mitigation": "Test mitigation threat4",
                   "modelType": "Generic",
-                  "id": "threat4"
+                  "id": "threat4",
+                  "score": "Test text"
                 }
               ]
             }
@@ -850,7 +859,8 @@
                   "type": "Generic",
                   "mitigation": "Test mitigation threat5",
                   "modelType": "Generic",
-                  "id": "threat5"
+                  "id": "threat5",
+                  "score": 33
                 }
               ]
             }
@@ -1884,8 +1894,8 @@
                 "text": "Test title component5"
               },
               "body": {
-                "stroke": "#333333",
-                "strokeWidth": 1.5,
+                "stroke": "red",
+                "strokeWidth": 2.5,
                 "strokeDasharray": null
               }
             },
@@ -1982,7 +1992,7 @@
               "outOfScope": false,
               "isTrustBoundary": false,
               "reasonOutOfScope": "",
-              "hasOpenThreats": false,
+              "hasOpenThreats": true,
               "handlesCardPayment": false,
               "handlesGoodsOrServices": false,
               "isWebApplication": false,
@@ -2974,7 +2984,13 @@
     "reviewer": "Test reviewer",
     "threatTop": 50,
     "compatibility": {
-        "diagrams": ["Test detail compatibility diagram0"]
+      "diagrams": [
+        {
+          "title": "Test title compatibility diagram0",
+          "type": "svg",
+          "source": "Test source compatibility diagram0"
+        }
+      ]
     }
   },
   "version": "2.6.1",

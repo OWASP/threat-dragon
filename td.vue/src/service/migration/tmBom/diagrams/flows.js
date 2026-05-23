@@ -1,5 +1,11 @@
 import defaultProperties from '@/service/entity/default-properties.js';
 
+const convert = (_model) => { // eslint-disable-line no-unused-vars
+    let data_flows = new Array();
+
+    return data_flows;
+};
+
 const merge = (model) => {
     let flows = new Array();
     let zIndex = 0;
@@ -22,5 +28,6 @@ const merge = (model) => {
 };
 
 export default {
+    convert,
     merge
 };

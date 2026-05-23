@@ -1,16 +1,15 @@
-import summary from './summary';
+import boxes from './diagrams/boxes';
 import detail from './detail';
-import scope from './scope';
 import diagrams from './diagrams/diagrams';
+import flows from './diagrams/flows';
+import nodes from './diagrams/nodes';
+import schema from '@/assets/schema/threat-model.schema';
+import scope from './scope';
+import summary from './summary';
+import threats from './diagrams/threats/threats';
 
-/* why use a hard coded Threat Dragon version here?
- * the build version may increase for Threat Dragon, but this conversion / migration
- * has been written for a particular version of Threat Dragon
- * wich may not be the latest given in package.lock
- * Note : when this is revised, then change this version to match
- */
-const tdVersion = '2.6.1';
-const tmbomVersion = '1.0.2';
+const tdVersion = require('../../../../package.json').version;
+const tmbomVersion = tdVersion;
 
 const createKey = (source, target, key) => {
     if (Object.hasOwn(source, key)) {
@@ -18,32 +17,41 @@ const createKey = (source, target, key) => {
     }
 };
 
-// export a Threat Dragon file to TM-BOM format
-// required keys for TM-BOM:
-// version, scope, trust_zones, trust_boundaries
-// actors, components, data_stores, data_sets, data_flows
+// export a Threat Dragon file to TM-BOM format, required keys for TM-BOM:
+// version, scope, trust_zones, trust_boundaries, actors, components
+// data_stores, data_sets, data_flows
 const exportAsTmbom = (model) => {
-    let tmModel = new Object();
+    let tmbom = {
+        $schema: schema.$id,
+        version: model.compatibility?.version || tmbomVersion,
+        scope: scope.convert(model),
+        diagrams: diagrams.convert(model),
+        trust_zones: boxes.convert(model),
+        trust_boundaries: [],
+        actors: nodes.convert(model).actors,
+        components: nodes.convert(model).components,
+        data_stores: nodes.convert(model).data_stores,
+        data_sets: [],
+        data_flows: flows.convert(model),
+        threat_personas: threats.convert(model).threat_personas,
+        threats: threats.convert(model).threats,
+        controls: threats.convert(model).controls,
+        risks: threats.convert(model).risks
+    };
 
     // compatibility object exists if original file was also TM-BOM
-    tmModel.version = model.compatibility?.version || tmbomVersion;
-
     if (model.compatibility) {
         // optional key values
-        createKey(model.compatibility, tmModel, 'description');
-        createKey(model.compatibility, tmModel, 'frozen');
-        createKey(model.compatibility, tmModel, 'released_at');
-        createKey(model.compatibility, tmModel, 'product_release_date');
-        createKey(model.compatibility, tmModel, 'release_docs_link');
-        createKey(model.compatibility, tmModel, 'reviewed_at');
-        createKey(model.compatibility, tmModel, 'repo_link');
+        createKey(model.compatibility, tmbom, 'description');
+        createKey(model.compatibility, tmbom, 'frozen');
+        createKey(model.compatibility, tmbom, 'released_at');
+        createKey(model.compatibility, tmbom, 'product_release_date');
+        createKey(model.compatibility, tmbom, 'release_docs_link');
+        createKey(model.compatibility, tmbom, 'reviewed_at');
+        createKey(model.compatibility, tmbom, 'repo_link');
     }
 
-    tmModel.scope = scope.convert(model);
-    tmModel.diagrams = diagrams.convert(model);
-
-    console.debug(JSON.stringify(tmModel, null, 2));
-    return tmModel;
+    return tmbom;
 };
 
 // import a TM-BOM file to Threat Dragon format
@@ -57,6 +65,8 @@ export const importTmbom = (model) => {
 
     // optional values need to be preserved but only if present
     createKey(model, compatibility, 'frozen');
+    createKey(model, compatibility, 'released_at');
+    createKey(model, compatibility, 'product_release_date');
     createKey(model, compatibility, 'release_docs_link');
     createKey(model, compatibility, 'reviewed_at');
     createKey(model, compatibility, 'repo_link');

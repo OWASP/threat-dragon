@@ -53,7 +53,7 @@ describe('service/migration/tmBom/diagrams/diagrams.js', () => {
 
         it('copies saved diagrams from compatibility', () => {
             testDiagrams = diagrams.convert(tdModel);
-            expect(testDiagrams[0].length).toBeGreaterThan(1);
+            expect(testDiagrams[0].title.length).toBeGreaterThan(1);
         });
 
         it('defaults when no compatibility', () => {
