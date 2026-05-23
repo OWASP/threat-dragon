@@ -257,7 +257,7 @@
                   "score": "10"
                 },
                 {
-                  "status": "Mitigated",
+                  "status": "Open",
                   "severity": "Medium",
                   "description": "Test description threat1",
                   "title": "Test title threat1",
@@ -269,7 +269,7 @@
                   "score": "5"
                 },
                 {
-                  "status": "Mitigated",
+                  "status": "NotApplicable",
                   "severity": "High",
                   "description": "Test description threat2",
                   "title": "Test title threat2",

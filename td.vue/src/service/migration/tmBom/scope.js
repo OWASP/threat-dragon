@@ -10,7 +10,7 @@ const convert = (model) => {
     scope.business_criticality = model.summary.compatibility?.business_criticality || 'moderate';
     scope.data_sensitivity = model.summary.compatibility?.data_sensitivity || ['op'];
     scope.exposure = model.summary.compatibility?.exposure || 'internal';
-    scope.tier = model.summary.compatibility?.tier || 'non_critical';
+    scope.tier = model.summary.compatibility?.tier || 'important';
 
     return scope;
 };
