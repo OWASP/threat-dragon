@@ -1,10 +1,49 @@
 import boxes from '@/service/migration/tmBom/diagrams/boxes';
+import tdModel from '../td-test-model';
 import tmBomModel from '../tmbom-test-model';
 
 describe('service/migration/tmBom/diagrams/boxes.js', () => {
-    let testBoundaryBoxes = boxes.merge(tmBomModel);
 
-    describe('import TM-BOM trust zones', () => {
+    describe('convert/export TM-BOM trust zones', () => {
+        let trustZones;
+        let nodes;
+        beforeEach(() => {
+            nodes = [{id: 'actor0'}, {id: 'actor1'}, {id: 'component1'}, {id: 'component2'}, {id: 'store1'}, {id: 'store2'}];
+            trustZones = boxes.convert(tdModel, nodes);
+        });
+
+        it('converts boundary boxes to trust zones', () => {
+            expect(trustZones.length).toBeGreaterThan(4);
+            expect(trustZones.findIndex((x) => x.symbolic_name === 'trust-boundary-box0')).toBeGreaterThanOrEqual(0);
+        });
+
+        it('converts boundary curves to trust zones', () => {
+            expect(trustZones.findIndex((x) => x.symbolic_name === 'trust-boundary-curve0')).toBeGreaterThanOrEqual(0);
+        });
+
+        it('populates the trust zones', () => {
+            expect(trustZones.find((x) => x.symbolic_name === undefined)).toBeUndefined();
+            expect(trustZones.find((x) => x.title === undefined)).toBeUndefined();
+            expect(trustZones.find((x) => x.description === undefined)).toBeUndefined();
+        });
+
+        it('provides the node trust zones', () => {
+            expect(nodes.find((x) => x.trust_zone === 'trust-boundary-box1')).toBeDefined();
+            expect(nodes.find((x) => x.trust_zone === 'trust-boundary-box2')).toBeDefined();
+            expect(trustZones.find((x) => x.trust_zone === 'trust-boundary-curve0')).toBeUndefined();
+        });
+
+        it('selects the node trust zones', () => {
+            expect(nodes.find((x) => x.trust_zone === undefined)).toBeDefined();
+        });
+    });
+
+    describe('merge/import TM-BOM trust zones', () => {
+        let testBoundaryBoxes;
+        beforeEach(() => {
+            testBoundaryBoxes = boxes.merge(tmBomModel);
+        });
+
         it('finds the boundary boxes', () => {
             expect(testBoundaryBoxes).toHaveLength(tmBomModel.trust_zones.length);
         });

@@ -1,14 +1,24 @@
-import summary from '@/service/migration/tmBom/summary';
-import scope from '@/service/migration/tmBom/scope';
+import boxes from '@/service/migration/tmBom/diagrams/boxes';
 import detail from '@/service/migration/tmBom/detail';
+import diagrams from '@/service/migration/tmBom/diagrams/diagrams';
+import flows from '@/service/migration/tmBom/diagrams/flows';
+import nodes from '@/service/migration/tmBom/diagrams/nodes';
+import scope from '@/service/migration/tmBom/scope';
+import summary from '@/service/migration/tmBom/summary';
+import threats from '@/service/migration/tmBom/diagrams/threats/threats';
 import tmBom from '@/service/migration/tmBom/tmBom';
 
 import tmBomModel from './tmbom-test-model';
 import tdModel from './td-test-model';
 
+jest.mock('@/service/migration/tmBom/diagrams/boxes');
+jest.mock('@/service/migration/tmBom/detail');
+jest.mock('@/service/migration/tmBom/diagrams/diagrams');
+jest.mock('@/service/migration/tmBom/diagrams/flows');
+jest.mock('@/service/migration/tmBom/diagrams/nodes');
 jest.mock('@/service/migration/tmBom/scope');
 jest.mock('@/service/migration/tmBom/summary');
-jest.mock('@/service/migration/tmBom/detail');
+jest.mock('@/service/migration/tmBom/diagrams/threats/threats');
 
 const mockCombinedModel = {
     version: '2.x.x',
@@ -25,12 +35,16 @@ describe('exportAsTmbom', () => {
 
     describe('export to TM-BOM format', () => {
         beforeEach(() => {
+            boxes.convert.mockReturnValue([]);
+            diagrams.convert.mockReturnValue([]);
+            flows.convert.mockReturnValue([]);
+            nodes.convert.mockReturnValue({actors: [], components: [], data_stores: []});
             scope.convert.mockReturnValue(tmBomModel.scope);
+            threats.convert.mockReturnValue({controls: [], risks: [], threats: [], threat_personas: []});
             testModel = tmBom.exportAsTmbom(tdModel);
         });
 
         it('provides mandatory values', () => {
-            console.debug(JSON.stringify(testModel, null, 2));
             expect(testModel.$schema).toContain('threat-model.schema.json');
             expect(testModel.version).toBe(tdModel.compatibility.version);
         });
@@ -50,7 +64,12 @@ describe('exportAsTmbom', () => {
 
     describe('handles missing TM-BOM objects', () => {
         beforeEach(() => {
+            boxes.convert.mockReturnValue([]);
+            diagrams.convert.mockReturnValue([]);
+            flows.convert.mockReturnValue([]);
+            nodes.convert.mockReturnValue({actors: [], components: [], data_stores: []});
             scope.convert.mockReturnValue(tmBomModel.summary);
+            threats.convert.mockReturnValue({controls: [], risks: [], threats: [], threat_personas: []});
         });
 
         it('defaults absent required values', () => {

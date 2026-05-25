@@ -41,17 +41,17 @@
             },
             "attrs": {
               "label": {
-                "text": "Test title boundary-box3"
+                "text": "Test title trust-boundary-box3"
               }
             },
             "visible": true,
             "shape": "trust-boundary-box",
             "zIndex": -4,
-            "id": "boundary-box3",
+            "id": "trust-boundary-box3",
             "data": {
               "type": "tm.BoundaryBox",
-              "name": "Test title boundary-box3",
-              "description": "Test description boundary-box3",
+              "name": "Test title trust-boundary-box3",
+              "description": "Test description trust-boundary-box3",
               "isTrustBoundary": true,
               "hasOpenThreats": false,
               "crossingFlows": [],
@@ -69,20 +69,21 @@
             },
             "attrs": {
               "label": {
-                "text": "Test title boundary-box2"
+                "text": "Test title trust-boundary-box2"
               }
             },
             "visible": true,
             "shape": "trust-boundary-box",
             "zIndex": -3,
-            "id": "boundary-box2",
+            "id": "trust-boundary-box2",
             "data": {
               "type": "tm.BoundaryBox",
-              "name": "Test title boundary-box2",
-              "description": "Test description boundary-box2",
+              "name": "Test title trust-boundary-box2",
+              "description": "Test description trust-boundary-box2",
               "isTrustBoundary": true,
               "hasOpenThreats": false,
               "crossingFlows": [
+                "flow2",
                 "flow5"
               ],
               "containedElements": [
@@ -108,17 +109,17 @@
             },
             "attrs": {
               "label": {
-                "text": "Test title boundary-box0"
+                "text": "Test title trust-boundary-box0"
               }
             },
             "visible": true,
             "shape": "trust-boundary-box",
             "zIndex": -1,
-            "id": "boundary-box0",
+            "id": "trust-boundary-box0",
             "data": {
               "type": "tm.BoundaryBox",
-              "name": "Test title boundary-box0",
-              "description": "Test description boundary-box0",
+              "name": "Test title trust-boundary-box0",
+              "description": "Test description trust-boundary-box0",
               "isTrustBoundary": true,
               "hasOpenThreats": false,
               "crossingFlows": [
@@ -565,7 +566,7 @@
               "protocol": "",
               "threats": [],
               "trustBoundaryIds": [
-                "boundary-box0"
+                "trust-boundary-box0"
               ]
             },
             "labels": [
@@ -1144,7 +1145,9 @@
               "isPublicNetwork": false,
               "protocol": "",
               "threats": [],
-              "trustBoundaryIds": []
+              "trustBoundaryIds": [
+                "trust-boundary-box2"
+              ]
             },
             "labels": [
               {
@@ -1190,8 +1193,8 @@
               "port": ""
             },
             "target": {
-              "cell": "actor3",
-              "port": ""
+              "x": 470,
+              "y": 1300
             },
             "vertices": []
           },
@@ -2031,7 +2034,7 @@
             "connector": "smooth",
             "data": {
               "type": "tm.Flow",
-              "name": "Test title flow5",
+              "name": "",
               "description": "Test description flow5",
               "outOfScope": false,
               "isTrustBoundary": false,
@@ -2043,17 +2046,17 @@
               "protocol": "",
               "threats": [],
               "trustBoundaryIds": [
-                "boundary-box2"
+                "trust-boundary-box2"
               ]
             },
             "labels": [
               {
                 "attrs": {
                   "label": {
-                    "text": "Data Flow"
+                    "text": ""
                   },
                   "labelText": {
-                    "text": "Test title flow5",
+                    "text": "",
                     "textAnchor": "middle",
                     "textVerticalAnchor": "middle"
                   },
@@ -2378,6 +2381,41 @@
         "cells": [
           {
             "position": {
+              "x": 820,
+              "y": 330
+            },
+            "size": {
+              "width": 855,
+              "height": 615
+            },
+            "attrs": {
+              "label": {
+                "text": "Test title trust-boundary-box1"
+              }
+            },
+            "visible": true,
+            "shape": "trust-boundary-box",
+            "zIndex": -2,
+            "id": "trust-boundary-box1",
+            "data": {
+              "type": "tm.BoundaryBox",
+              "name": "Test title trust-boundary-box1",
+              "description": "Test description trust-boundary-box1",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false,
+              "crossingFlows": [
+                "2d6d2f08-3934-4244-93a2-968f5324a529"
+              ],
+              "containedElements": [
+                "actor1",
+                "component1",
+                "store0",
+                "store1"
+              ]
+            }
+          },
+          {
+            "position": {
               "x": 882.5,
               "y": 392.5
             },
@@ -2574,6 +2612,126 @@
               "port": ""
             },
             "vertices": []
+          },
+          {
+            "position": {
+              "x": 1197.5,
+              "y": 557.5
+            },
+            "size": {
+              "width": 100,
+              "height": 100
+            },
+            "attrs": {
+              "text": {
+                "text": "Test title component1"
+              },
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 1.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 1,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "43b06a2f-a791-4221-b90c-3a4d5af6afbf"
+                },
+                {
+                  "group": "right",
+                  "id": "6f82d29b-059e-42f5-b3ca-d14d42c91562"
+                },
+                {
+                  "group": "bottom",
+                  "id": "dd0ec19f-826f-4190-b234-fd2f8c6196ee"
+                },
+                {
+                  "group": "left",
+                  "id": "724a5702-ecf4-4117-b6a6-186425e3cb28"
+                }
+              ]
+            },
+            "id": "component1",
+            "data": {
+              "type": "tm.Process",
+              "name": "Test title component1",
+              "description": "Test description component1",
+              "outOfScope": false,
+              "isTrustBoundary": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "handlesCardPayment": false,
+              "handlesGoodsOrServices": false,
+              "isWebApplication": false,
+              "privilegeLevel": "",
+              "threats": []
+            }
           },
           {
             "position": {
@@ -2824,26 +2982,156 @@
             }
           },
           {
+            "shape": "trust-boundary-curve",
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Boundary",
+              "name": "",
+              "description": "Test description trust-boundary-curve2",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false,
+              "crossingFlows": [],
+              "containedElements": []
+            },
+            "labels": [
+              ""
+            ],
+            "id": "trust-boundary-curve2",
+            "source": {
+              "x": 464,
+              "y": 403
+            },
+            "target": {
+              "x": 564,
+              "y": 503
+            }
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": "4 3"
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Test title flow6",
+              "description": "Test description flow6",
+              "outOfScope": true,
+              "isTrustBoundary": false,
+              "reasonOutOfScope": "Test reason for out of scope flow6",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [],
+              "trustBoundaryIds": []
+            },
+            "labels": [
+              "Test title flow6"
+            ],
+            "id": "flow6",
+            "source": {
+              "x": 434,
+              "y": 608
+            },
+            "target": {
+              "x": 534,
+              "y": 708
+            }
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Test title flow7",
+              "description": "Test description flow7",
+              "outOfScope": false,
+              "isTrustBoundary": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [],
+              "trustBoundaryIds": [
+                "trust-boundary-box1"
+              ]
+            },
+            "labels": [
+              "Test title flow7"
+            ],
+            "id": "flow7",
+            "source": {
+              "cell": "",
+              "port": ""
+            },
+            "target": {
+              "cell": "component1",
+              "port": "43b06a2f-a791-4221-b90c-3a4d5af6afbf"
+            }
+          }
+        ],
+        "description": "Test description diagram1"
+      },
+      {
+        "id": 4,
+        "title": "Test title diagram2",
+        "diagramType": "EOP",
+        "placeholder": "New EoP games diagram description",
+        "thumbnail": "./public/content/images/thumbnail.eop.jpg",
+        "version": "2.6.1",
+        "cells": [
+          {
             "position": {
-              "x": 1197.5,
-              "y": 557.5
+              "x": 230,
+              "y": 250
             },
             "size": {
-              "width": 100,
-              "height": 100
+              "width": 112.5,
+              "height": 60
             },
             "attrs": {
-              "text": {
-                "text": "Test title component1"
-              },
               "body": {
-                "stroke": "#333333",
-                "strokeWidth": 1.5,
+                "stroke": "red",
+                "strokeWidth": 2.5,
                 "strokeDasharray": null
               }
             },
             "visible": true,
-            "shape": "process",
+            "shape": "actor",
             "zIndex": 1,
             "ports": {
               "groups": {
@@ -2911,78 +3199,164 @@
               "items": [
                 {
                   "group": "top",
-                  "id": "43b06a2f-a791-4221-b90c-3a4d5af6afbf"
+                  "id": "f66be180-cd1c-45dd-b101-38838a8ab167"
                 },
                 {
                   "group": "right",
-                  "id": "6f82d29b-059e-42f5-b3ca-d14d42c91562"
+                  "id": "e61d6075-75b4-417d-9c8f-fe0e2556773e"
                 },
                 {
                   "group": "bottom",
-                  "id": "dd0ec19f-826f-4190-b234-fd2f8c6196ee"
+                  "id": "38886200-e4c2-449c-bc4e-5be823a71e2d"
                 },
                 {
                   "group": "left",
-                  "id": "724a5702-ecf4-4117-b6a6-186425e3cb28"
+                  "id": "24922c40-2b3e-4a29-ac87-ddd2edcf1ef5"
                 }
               ]
             },
-            "id": "component1",
+            "id": "actor6",
             "data": {
-              "type": "tm.Process",
-              "name": "Test title component1",
-              "description": "Test description component1",
-              "outOfScope": false,
+              "type": "tm.Actor",
+              "name": "Test title actor6",
+              "description": "Test description actor6",
               "isTrustBoundary": false,
+              "outOfScope": false,
               "reasonOutOfScope": "",
-              "hasOpenThreats": false,
-              "handlesCardPayment": false,
-              "handlesGoodsOrServices": false,
-              "isWebApplication": false,
-              "privilegeLevel": "",
-              "threats": []
+              "hasOpenThreats": true,
+              "providesAuthentication": false,
+              "threats": [
+                {
+                  "id": "threat13",
+                  "title": "Test title threat13",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": null,
+                  "eopGameId": "cornucopia",
+                  "description": "Test description threat13",
+                  "mitigation": "Test mitigation threat13",
+                  "modelType": "EOP",
+                  "new": false,
+                  "number": 51,
+                  "score": "2",
+                  "cardSuit": "AUTHENTICATION",
+                  "cardNumber": "AT2"
+                },
+                {
+                  "id": "threat14",
+                  "title": "Test title threat14",
+                  "status": "Mitigated",
+                  "severity": "Critical",
+                  "type": null,
+                  "eopGameId": "cornucopia-mobileapp",
+                  "description": "Test description threat14",
+                  "mitigation": "Test mitigation threat14",
+                  "modelType": "EOP",
+                  "new": false,
+                  "number": 52,
+                  "score": "50",
+                  "cardSuit": "Wild Card",
+                  "cardNumber": "JOBM"
+                }
+              ]
+            },
+            "tools": {
+              "items": [
+                "boundary",
+                "button-remove"
+              ],
+              "name": null
             }
           },
           {
-            "position": {
-              "x": 820,
-              "y": 330
-            },
-            "size": {
-              "width": 855,
-              "height": 615
-            },
-            "attrs": {
-              "label": {
-                "text": "Test title boundary-box1"
-              }
-            },
-            "visible": true,
-            "shape": "trust-boundary-box",
-            "zIndex": -2,
-            "id": "boundary-box1",
+            "shape": "trust-boundary-curve",
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
             "data": {
-              "type": "tm.BoundaryBox",
-              "name": "Test title boundary-box1",
-              "description": "Test description boundary-box1",
+              "type": "tm.Boundary",
+              "name": "Test name trust-boundary-curve1",
+              "description": "Test description trust-boundary-curve1",
               "isTrustBoundary": true,
               "hasOpenThreats": false,
               "crossingFlows": [],
-              "containedElements": [
-                "actor1",
-                "component1",
-                "store0",
-                "store1"
-              ]
+              "containedElements": []
+            },
+            "labels": [
+              "Test title trust-boundary-curve1"
+            ],
+            "id": "trust-boundary-curve1",
+            "source": {
+              "x": 110,
+              "y": 430
+            },
+            "target": {
+              "x": 390,
+              "y": 510
+            }
+          },
+          {
+            "shape": "trust-boundary-curve",
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Boundary",
+              "name": "Test name trust-boundary-curve0",
+              "description": "Test description trust-boundary-curve0",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false,
+              "crossingFlows": [],
+              "containedElements": []
+            },
+            "labels": [
+              "Test title trust-boundary-curve0"
+            ],
+            "id": "trust-boundary-curve0",
+            "source": {
+              "x": 400,
+              "y": 360
+            },
+            "target": {
+              "x": 650,
+              "y": 460
+            },
+            "vertices": [
+              {
+                "x": 540,
+                "y": 390
+              }
+            ],
+            "tools": {
+              "items": [
+                "boundary",
+                "button-remove",
+                "vertices",
+                "source-arrowhead",
+                "target-arrowhead"
+              ],
+              "name": null
             }
           }
         ],
-        "description": "Test description diagram1"
+        "description": "Test description diagram2"
+      },
+      {
+        "id": 5,
+        "title": "Test title diagram3",
+        "diagramType": "CIA",
+        "placeholder": "New CIA diagram description",
+        "thumbnail": "./public/content/images/thumbnail.cia.jpg",
+        "version": "2.6.1",
+        "cells": [],
+        "description": "Test description diagram3"
       }
     ],
-    "diagramTop": 4,
+    "diagramTop": 6,
     "reviewer": "Test reviewer",
-    "threatTop": 50,
+    "threatTop": 52,
     "compatibility": {
       "diagrams": [
         {

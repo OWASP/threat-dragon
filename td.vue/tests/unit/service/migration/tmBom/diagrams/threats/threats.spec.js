@@ -2,28 +2,76 @@ import controls from '@/service/migration/tmBom/diagrams/threats/controls';
 import assumptions from '@/service/migration/tmBom/diagrams/assumptions';
 import risks from '@/service/migration/tmBom/diagrams/threats/risks';
 import threats from '@/service/migration/tmBom/diagrams/threats/threats';
-import tmBom from '../../tmbom-test-model';
-//import { threats as mockThreats } from './mockTdThreats.json';
+import tdModel from '../../td-test-model';
+import tmBomModel from '../../tmbom-test-model';
 
-jest.mock('@/service/migration/tmBom/diagrams/threats/controls');
-controls.merge.mockImplementation((_model, threats) => threats);
 jest.mock('@/service/migration/tmBom/diagrams/assumptions');
-assumptions.merge.mockImplementation((_model, threats) => threats);
+jest.mock('@/service/migration/tmBom/diagrams/threats/controls');
 jest.mock('@/service/migration/tmBom/diagrams/threats/risks');
+assumptions.merge.mockImplementation((_model, threats) => threats);
+controls.merge.mockImplementation((_model, threats) => threats);
 risks.merge.mockImplementation((_model, threats) => threats);
 
 describe('service/migration/tmBom/diagrams/threats/threats.js', () => {
 
-    describe('findThreats', () => {
-        let tdThreats = threats.merge(tmBom);
+    describe('convert/export TM-BOM threats', () => {
+        let tmbomThreats;
+        
+        beforeEach(() => {
+            tmbomThreats = threats.convert(tdModel);
+        });
+
+        it('converts TM-BOM threats', () => {
+            expect(tmbomThreats.controls.length).toBeGreaterThan(4);
+            expect(tmbomThreats.risks.length).toBeGreaterThan(4);
+            expect(tmbomThreats.threats.length).toBeGreaterThan(4);
+        });
+
+        it('provides single TM-BOM threat persona', () => {
+            expect(tmbomThreats.threat_personas).toHaveLength(1);
+        });
+
+        it('populates the array of risks', () => {
+            expect(tmbomThreats.risks.find((x) => x.symbolic_name === undefined)).toBeUndefined();
+            expect(tmbomThreats.risks.find((x) => x.title === undefined)).toBeUndefined();
+            expect(tmbomThreats.risks.find((x) => x.description === undefined)).toBeUndefined();
+            expect(tmbomThreats.risks.find((x) => x.threats[0] === undefined)).toBeUndefined();
+            expect(tmbomThreats.risks.find((x) => x.likelihood !== 'certain')).toBeUndefined();
+            expect(tmbomThreats.risks.find((x) => x.impact === undefined)).toBeUndefined();
+            expect(tmbomThreats.risks.find((x) => x.impact_description === undefined)).toBeUndefined();
+            expect(tmbomThreats.risks.find((x) => x.score < 0)).toBeUndefined();
+            expect(tmbomThreats.risks.find((x) => x.level !== 'high')).toBeUndefined();
+        });
+
+        it('populates the array of controls', () => {
+		    expect(tmbomThreats.controls.find((x) => x.symbolic_name === undefined)).toBeUndefined();
+		    expect(tmbomThreats.controls.find((x) => x.title === undefined)).toBeUndefined();
+		    expect(tmbomThreats.controls.find((x) => x.description === undefined)).toBeUndefined();
+		    expect(tmbomThreats.controls.find((x) => x.threats[0] === undefined)).toBeUndefined();
+		    expect(tmbomThreats.controls.find((x) => x.status === undefined)).toBeUndefined();
+		    expect(tmbomThreats.controls.find((x) => x.priority === undefined)).toBeUndefined();
+        });
+
+        it('populates the array of threats', () => {
+		    expect(tmbomThreats.threats.find((x) => x.symbolic_name === undefined)).toBeUndefined();
+		    expect(tmbomThreats.threats.find((x) => x.title === undefined)).toBeUndefined();
+		    expect(tmbomThreats.threats.find((x) => x.description === undefined)).toBeUndefined();
+		    expect(tmbomThreats.threats.find((x) => x.threat_persona === undefined)).toBeUndefined();
+		    expect(tmbomThreats.threats.find((x) => x.event === undefined)).toBeUndefined();
+		    expect(tmbomThreats.threats.find((x) => x.sources[0] !== 'adversary')).toBeUndefined();
+        });
+    });
+
+    describe('merge/import TM-BOM threats', () => {
+        let tdThreats = threats.merge(tmBomModel);
 
         it('finds the threats', () => {
-            expect(tdThreats).toHaveLength(tmBom.threats.length);
+            expect(tdThreats).toHaveLength(tmBomModel.threats.length);
         });
 
         it('copies the id', () => {
-            expect(tdThreats[0].id).toEqual(tmBom.threats[0].symbolic_name);
-            expect(tdThreats[4].id).toEqual(tmBom.threats[4].symbolic_name);
+            expect(tdThreats[0].id).toEqual(tmBomModel.threats[0].symbolic_name);
+            expect(tdThreats[4].id).toEqual(tmBomModel.threats[4].symbolic_name);
         });
 
         it('adds the title', () => {

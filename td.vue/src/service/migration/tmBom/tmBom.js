@@ -21,22 +21,24 @@ const createKey = (source, target, key) => {
 // version, scope, trust_zones, trust_boundaries, actors, components
 // data_stores, data_sets, data_flows
 const exportAsTmbom = (model) => {
+    let tmbomNodes = nodes.convert(model);
+    let tmbomThreats = threats.convert(model);
     let tmbom = {
         $schema: schema.$id,
         version: model.compatibility?.version || tmbomVersion,
         scope: scope.convert(model),
         diagrams: diagrams.convert(model),
-        trust_zones: boxes.convert(model),
+        trust_zones: boxes.convert(model, tmbomNodes),
         trust_boundaries: [],
-        actors: nodes.convert(model).actors,
-        components: nodes.convert(model).components,
-        data_stores: nodes.convert(model).data_stores,
+        actors: tmbomNodes.actors,
+        components: tmbomNodes.components,
+        data_stores: tmbomNodes.data_stores,
         data_sets: [],
         data_flows: flows.convert(model),
-        threat_personas: threats.convert(model).threat_personas,
-        threats: threats.convert(model).threats,
-        controls: threats.convert(model).controls,
-        risks: threats.convert(model).risks
+        threat_personas: tmbomThreats.threat_personas,
+        threats: tmbomThreats.threats,
+        controls: tmbomThreats.controls,
+        risks: tmbomThreats.risks
     };
 
     // compatibility object exists if original file was also TM-BOM
