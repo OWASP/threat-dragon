@@ -29,6 +29,7 @@ describe('service/migration/tmBom/diagrams/threats/threats.js', () => {
 
         it('provides single TM-BOM threat persona', () => {
             expect(tmbomThreats.threat_personas).toHaveLength(1);
+            expect(tmbomThreats.threat_personas[0]).toMatchObject(threats.defaults.threatPersona);
         });
 
         it('populates the array of risks', () => {
@@ -36,11 +37,11 @@ describe('service/migration/tmBom/diagrams/threats/threats.js', () => {
             expect(tmbomThreats.risks.find((x) => x.title === undefined)).toBeUndefined();
             expect(tmbomThreats.risks.find((x) => x.description === undefined)).toBeUndefined();
             expect(tmbomThreats.risks.find((x) => x.threats[0] === undefined)).toBeUndefined();
-            expect(tmbomThreats.risks.find((x) => x.likelihood !== 'certain')).toBeUndefined();
+            expect(tmbomThreats.risks.find((x) => x.likelihood !== threats.defaults.likelihood)).toBeUndefined();
             expect(tmbomThreats.risks.find((x) => x.impact === undefined)).toBeUndefined();
             expect(tmbomThreats.risks.find((x) => x.impact_description === undefined)).toBeUndefined();
             expect(tmbomThreats.risks.find((x) => x.score < 0)).toBeUndefined();
-            expect(tmbomThreats.risks.find((x) => x.level !== 'high')).toBeUndefined();
+            expect(tmbomThreats.risks.find((x) => x.level !== threats.defaults.riskLevelBand)).toBeUndefined();
         });
 
         it('populates the array of controls', () => {
@@ -58,7 +59,7 @@ describe('service/migration/tmBom/diagrams/threats/threats.js', () => {
 		    expect(tmbomThreats.threats.find((x) => x.description === undefined)).toBeUndefined();
 		    expect(tmbomThreats.threats.find((x) => x.threat_persona === undefined)).toBeUndefined();
 		    expect(tmbomThreats.threats.find((x) => x.event === undefined)).toBeUndefined();
-		    expect(tmbomThreats.threats.find((x) => x.sources[0] !== 'adversary')).toBeUndefined();
+		    expect(tmbomThreats.threats.find((x) => x.sources[0] !== threats.defaults.source)).toBeUndefined();
         });
     });
 
