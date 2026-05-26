@@ -8,11 +8,16 @@ describe('service/migration/tmBom/diagrams/boxes.js', () => {
         let trustZones;
         let nodes;
         beforeEach(() => {
-            nodes = [{id: 'actor0'}, {id: 'actor1'}, {id: 'component1'}, {id: 'component2'}, {id: 'store1'}, {id: 'store2'}];
+            nodes = {
+                actors: [{id: 'actor0'}, {id: 'actor1'}, {id: 'test-actor'}],
+                components: [{id: 'component1'}, {id: 'component2'}, {id: 'test-component'}],
+                data_stores: [{id: 'store1'}, {id: 'store2'}, {id: 'test-store'}]
+            };
             trustZones = boxes.convert(tdModel, nodes);
         });
 
         it('converts boundary boxes to trust zones', () => {
+            console.debug(JSON.stringify(trustZones, null, 2));
             expect(trustZones.length).toBeGreaterThan(4);
             expect(trustZones.findIndex((x) => x.symbolic_name === 'trust-boundary-box0')).toBeGreaterThanOrEqual(0);
         });
@@ -27,14 +32,23 @@ describe('service/migration/tmBom/diagrams/boxes.js', () => {
             expect(trustZones.find((x) => x.description === undefined)).toBeUndefined();
         });
 
-        it('provides the node trust zones', () => {
-            expect(nodes.find((x) => x.trust_zone === 'trust-boundary-box1')).toBeDefined();
-            expect(nodes.find((x) => x.trust_zone === 'trust-boundary-box2')).toBeDefined();
-            expect(trustZones.find((x) => x.trust_zone === 'trust-boundary-curve0')).toBeUndefined();
+        it('provides actors with trust zones', () => {
+            expect(nodes.actors.find((x) => x.trust_zone === 'trust-boundary-box1')).toBeDefined();
+            expect(nodes.actors.find((x) => x.trust_zone === 'trust-boundary-box2')).toBeUndefined();
+            expect(nodes.actors.find((x) => x.trust_zone === 'trust-boundary-curve0')).toBeUndefined();
+            expect(nodes.actors.find((x) => x.trust_zone === undefined)).toBeDefined();
         });
 
-        it('selects the node trust zones', () => {
-            expect(nodes.find((x) => x.trust_zone === undefined)).toBeDefined();
+        it('provides components with trust zones', () => {
+            expect(nodes.components.find((x) => x.trust_zone === 'trust-boundary-box1')).toBeDefined();
+            expect(nodes.components.find((x) => x.trust_zone === 'trust-boundary-box2')).toBeDefined();
+            expect(nodes.components.find((x) => x.trust_zone === undefined)).toBeDefined();
+        });
+
+        it('provides data stores with trust zones', () => {
+            expect(nodes.data_stores.find((x) => x.trust_zone === 'trust-boundary-box1')).toBeDefined();
+            expect(nodes.data_stores.find((x) => x.trust_zone === 'trust-boundary-box2')).toBeDefined();
+            expect(nodes.data_stores.find((x) => x.trust_zone === undefined)).toBeDefined();
         });
     });
 

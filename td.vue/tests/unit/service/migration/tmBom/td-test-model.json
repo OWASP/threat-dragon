@@ -2992,9 +2992,7 @@
               "name": "",
               "description": "Test description trust-boundary-curve2",
               "isTrustBoundary": true,
-              "hasOpenThreats": false,
-              "crossingFlows": [],
-              "containedElements": []
+              "hasOpenThreats": false
             },
             "labels": [
               ""
