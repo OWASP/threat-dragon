@@ -12,7 +12,7 @@ const flowReference = (diagram, reference) => {
         }
     }
 	
-    return {type: 'unidentified', object: reference};
+    return {type: 'unknown', object: 'unidentified'};
 };
 
 const convert = (model) => {
