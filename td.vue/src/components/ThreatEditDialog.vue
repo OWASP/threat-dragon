@@ -377,11 +377,14 @@ export default {
         },
         selectedGameId(newGameId) {
             if (!this.isLoadingThreat && newGameId) {
-                const suits = this.activeGame?.getSuits() ?? [];
+                const game = getGame(newGameId);
+                const suits = game?.getSuits() ?? [];
                 if (suits.length > 0) {
                     this.card.suit = suits[0].value;
-                    const cards = this.activeGame?.getCardsBySuit(this.card.suit) ?? [];
-                    this.card.number = cards.length > 0 ? cards[0].value : null;
+                    this.$nextTick(() => {
+                        const cards = game?.getCardsBySuit(suits[0].value) ?? [];
+                        this.card.number = cards.length > 0 ? cards[cards.length - 1].value : null;
+                    });
                 }
             }
         }
