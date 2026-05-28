@@ -5,9 +5,6 @@ on:
     - cron: '45 6 * * *'
   workflow_dispatch:
 
-permissions:
-  contents: read
-
 env:
   IMAGE_NAME: threatdragon/owasp-threat-dragon:latest
 
@@ -18,6 +15,7 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       actions: write
+      contents: read
     steps:
       - name: Delete stale workflow runs
         uses: Mattraks/delete-workflow-runs@5bf9a1dac5c4d041c029f0a8370ddf0c5cb5aeb7 # v2.1.0
@@ -31,6 +29,10 @@ jobs:
         uses: otto-de/purge-deprecated-workflow-runs@4781dc30eb7236b195e896b9a26b14296341b63a # v4.0.10
         with:
           token: ${{ github.token }}
+          remove-obsolete: true
+          remove-failed: true
+          remove-older-than: 2w2w *
+          remove-skipped: true
 
   stale:
     name: Tidy pull requests
