@@ -28,6 +28,7 @@ CN
 CMS
 CodeQL
 Config
+cooldowns
 cron
 CVE
 CVEs
