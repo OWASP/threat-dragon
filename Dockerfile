@@ -4,7 +4,8 @@ ARG         NODE_VERSION=24.15.0
 FROM        node:$NODE_VERSION-alpine AS base-node
 RUN         apk -U upgrade
 WORKDIR     /app
-RUN         npm i -g npm@latest
+COPY        .npmrc /app/.npmrc
+RUN         NPM_CONFIG_USERCONFIG=/app/.npmrc npm i -g npm@latest
 RUN         chown -R node:node /app
 USER        node
 
@@ -15,8 +16,8 @@ FROM        base-node AS build
 RUN         mkdir -p boms td.server td.vue td.vue/src/service/schema/api_json
 
 COPY        package-lock.json package.json /app/
-COPY        ./td.server/package-lock.json ./td.server/package.json ./td.server/
-COPY        ./td.vue/package-lock.json ./td.vue/package.json ./td.vue/
+COPY        ./td.server/.npmrc ./td.server/package-lock.json ./td.server/package.json ./td.server/
+COPY        ./td.vue/.npmrc ./td.vue/package-lock.json ./td.vue/package.json ./td.vue/
 
 COPY        ./td.server/.babelrc ./td.server/
 COPY        ./td.server/src/ ./td.server/src/
@@ -26,8 +27,7 @@ COPY        ./td.vue/*.config.js ./td.vue/
 
 RUN         npm clean-install --ignore-scripts
 RUN         cd td.server && npm clean-install
-# TODO: Remove --legacy-peer-deps when Vue3 migration is complete
-RUN         cd td.vue && npm clean-install --legacy-peer-deps
+RUN         cd td.vue && npm clean-install
 RUN         npm run build
 RUN         cd td.server && npm run make-sbom
 RUN         cp td.server/sbom.json        boms/threat-dragon-server-bom.json && \
@@ -54,7 +54,7 @@ FROM        base-node
 COPY        --chown=node:node --from=build-docs /td.docs/_site /app/docs
 COPY        --chown=node:node --from=build /app/boms /app/boms
 
-COPY        --chown=node:node ./td.server/package-lock.json ./td.server/package.json ./td.server/
+COPY        --chown=node:node ./td.server/.npmrc ./td.server/package-lock.json ./td.server/package.json ./td.server/
 RUN         cd td.server && npm clean-install --omit dev --ignore-scripts
 COPY        --chown=node:node --from=build /app/td.server/dist ./td.server/dist
 COPY        --chown=node:node --from=build /app/td.vue/dist ./dist

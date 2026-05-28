@@ -295,8 +295,7 @@ jobs:
             ${{ runner.os }}-
 
       - name: Install clean packages
-        # TODO: remove --legacy-peer-deps after the Vue 3 migration
-        run: npm clean-install --legacy-peer-deps
+        run: npm clean-install
 
       - name: Build Linux desktop app
         run: npm run build:desktop -- --linux AppImage --x64 --publish never

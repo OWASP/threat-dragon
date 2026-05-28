@@ -13,7 +13,8 @@ The following controls are in place to assist with dependency management of the 
 - Trivy scanning per commit for SCA and OS dependency management within docker
 - Trivy scanning daily on the latest build in the default branch
 - Dependabot alerts
-- `npm` for dependency resolution and auditing
+- Dependabot cooldowns and `npm` minimum release age set to 10 days
+- `npm` version 11.10.0 or higher is required for dependency resolution, minimum release age, and auditing
 
 ### Fixing a vulnerable dependency
 
