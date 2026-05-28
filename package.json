@@ -52,6 +52,16 @@
     "url": "https://owasp.org/www-project-threat-dragon/"
   },
   "license": "Apache-2.0",
+  "engines": {
+    "npm": ">=11.10.0"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "npm",
+      "version": ">=11.10.0",
+      "onFail": "error"
+    }
+  },
   "homepage": "https://owasp.org/www-project-threat-dragon/",
   "repository": {
     "type": "git",
