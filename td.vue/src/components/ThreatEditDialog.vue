@@ -373,6 +373,10 @@ export default {
         'card.suit'(newSuit, oldSuit) {
             if (!this.isLoadingThreat && newSuit !== oldSuit) {
                 this.card.number = null;
+                this.$nextTick(() => {
+                    const cards = this.activeGame?.getCardsBySuit(newSuit) ?? [];
+                    this.card.number = cards.length > 0 ? cards[cards.length - 1].value : null;
+                });
             }
         },
         selectedGameId(newGameId) {
