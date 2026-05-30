@@ -2,10 +2,10 @@
     <b-container fluid>
         <b-row>
             <b-col>
-                <b-jumbotron class="text-center">
+                <td-hero class="text-center">
                     <h4>{{ $t('template.select') }}</h4>
                     <p class="lead">{{ $t('template.selectDescription') }}</p>
-                </b-jumbotron>
+                </td-hero>
             </b-col>
         </b-row>
 
@@ -108,9 +108,13 @@ import tmActions from '@/store/actions/threatmodel.js';
 import schema from '@/service/schema/ajv.js';
 import { getProviderType } from '@/service/provider/providers';
 import { providerTypes } from '@/service/provider/providerTypes';
+import TdHero from '@/components/Hero.vue';
 
 export default {
     name: 'TemplateGallery',
+    components: {
+        TdHero
+    },
     data() {
         return {
             searchQuery: ''

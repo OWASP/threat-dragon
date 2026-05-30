@@ -1,4 +1,4 @@
-import { BootstrapVue, BContainer, BJumbotron, BImg } from 'bootstrap-vue';
+import { BootstrapVue, BContainer, BImg } from 'bootstrap-vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
@@ -8,6 +8,7 @@ import HomePage from '@/views/HomePage.vue';
 import loginApi from '@/service/api/loginApi.js';
 import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
 import router from '@/router/index.js';
+import TdHero from '@/components/Hero.vue';
 import TdProviderLoginButton from '@/components/ProviderLoginButton.vue';
 
 describe('HomePage.vue', () => {
@@ -64,8 +65,8 @@ describe('HomePage.vue', () => {
                 expect(wrapper.findComponent(BContainer).exists()).toBe(true);
             });
 
-            it('has a jumbotron', () => {
-                expect(wrapper.findComponent(BJumbotron).exists()).toBe(true);
+            it('has a hero section', () => {
+                expect(wrapper.findComponent(TdHero).exists()).toBe(true);
             });
 
             it('displays the title', () => {

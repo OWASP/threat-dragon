@@ -2,11 +2,11 @@
     <b-container fluid>
         <b-row>
             <b-col>
-                <b-jumbotron class="text-center">
+                <td-hero class="text-center">
                     <h4>
                         {{ $t('demo.select') }}
                     </h4>
-                </b-jumbotron>
+                </td-hero>
             </b-col>
         </b-row>
         <b-row>
@@ -31,12 +31,16 @@ import { getProviderType } from '@/service/provider/providers.js';
 import { providerTypes } from '@/service/provider/providerTypes.js';
 import demo from '@/service/demo/index.js';
 import isElectron from 'is-electron';
+import TdHero from '@/components/Hero.vue';
 import tmActions from '@/store/actions/threatmodel.js';
 import schema from '@/service/schema/ajv';
 import tmBom from '@/service/migration/tmBom/tmBom';
 
 export default {
     name: 'SelectDemoModel',
+    components: {
+        TdHero
+    },
     data() {
         return {
             models: demo.models

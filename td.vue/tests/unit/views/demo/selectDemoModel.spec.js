@@ -1,9 +1,10 @@
-import { BootstrapVue, BJumbotron, BListGroupItem } from 'bootstrap-vue';
+import { BootstrapVue, BListGroupItem } from 'bootstrap-vue';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
 import demoThreatModel from '@/service/demo/v2-threat-model';
 import SelectDemoModel from '@/views/demo/SelectDemoModel.vue';
+import TdHero from '@/components/Hero.vue';
 
 describe('views/demo/SelectDemoModel.vue', () => {
 
@@ -38,7 +39,7 @@ describe('views/demo/SelectDemoModel.vue', () => {
     });
 
     it('displays the title', () => {
-        expect(wrapper.findComponent(BJumbotron).text()).toEqual('demo.select');
+        expect(wrapper.findComponent(TdHero).text()).toEqual('demo.select');
     });
 
     it('displays the Demo Threat Model', () => {

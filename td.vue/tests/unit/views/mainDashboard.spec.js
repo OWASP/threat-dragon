@@ -1,10 +1,11 @@
-import { BootstrapVue, BJumbotron } from 'bootstrap-vue';
+import { BootstrapVue } from 'bootstrap-vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
 import MainDashboard from '@/views/MainDashboard.vue';
 import DashboardAction from '@/components/DashboardAction.vue';
+import TdHero from '@/components/Hero.vue';
 
 describe('MainDashboard.vue', () => {
     let wrapper, localVue, mockStore;
@@ -39,8 +40,11 @@ describe('MainDashboard.vue', () => {
         expect(wrapper.exists()).toBe(true);
     });
 
-    it('has a jumbotron welcoming the user', () => {
-        expect(wrapper.findComponent(BJumbotron).text()).toContain('dashboard.welcome.description');
+    it('has a hero section welcoming the user', () => {
+        const hero = wrapper.findComponent(TdHero);
+
+        expect(hero.props('header')).toBe('dashboard.welcome.title');
+        expect(hero.text()).toContain('dashboard.welcome.description');
     });
 
     it('has multiple actions', () => {
