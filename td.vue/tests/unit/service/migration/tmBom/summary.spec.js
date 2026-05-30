@@ -1,8 +1,7 @@
 import assumptions from '@/service/migration/tmBom/diagrams/assumptions';
 import summary from '@/service/migration/tmBom/summary';
 
-import tmBomModel from './test-model';
-import tdModel from './v2-threat-model';
+import tmBomModel from './tmbom-test-model';
 
 jest.mock('@/service/migration/tmBom/diagrams/assumptions');
 
@@ -52,47 +51,6 @@ describe('service/migration/tmBom/summary.js', () => {
                 assumptions.summary.mockReturnValue([]);
                 testSummary = summary.merge(tmBomModel);
 	            expect(testSummary.description).not.toContain('#1');
-	        });
-	    });
-    });
-
-    describe('writes TM-BOM', () => {
-        let testScope;
-
-	    describe('recreates TM-BOM scope', () => {
-	        beforeEach(() => {
-	            testScope = summary.write(tdModel);
-	        });
-	
-	        it('populates the scope values', () => {
-	            expect(testScope.title).toBe(tdModel.summary.title);
-	            expect(testScope.description).toBe(tdModel.summary.description);
-	        });
-	
-	        it('reinstates the compatibility values to scope', () => {
-	            expect(testScope.business_criticality).toBe(tdModel.summary.compatibility.business_criticality);
-	            expect(testScope.data_sensitivity).toBe(tdModel.summary.compatibility.data_sensitivity);
-	            expect(testScope.exposure).toBe(tdModel.summary.compatibility.exposure);
-	            expect(testScope.tier).toBe(tdModel.summary.compatibility.tier);
-	        });
-	    });
-
-	    describe('provides TM-BOM scope defaults', () => {
-	        it('creates default scope values', () => {
-                let noDescription = JSON.parse(JSON.stringify(tdModel));
-                delete noDescription.summary.description;
-                testScope = summary.write(noDescription);
-	            expect(testScope.description.length).toBeGreaterThan(0);
-	        });
-
-	        it('provides scope compatibility defaults', () => {
-                let noCompatibility = JSON.parse(JSON.stringify(tdModel));
-                delete noCompatibility.summary.compatibility;
-                testScope = summary.write(noCompatibility);
-                expect(testScope.business_criticality).not.toBeNull();
-                expect(testScope.data_sensitivity).not.toBeNull();
-                expect(testScope.exposure).not.toBeNull();
-                expect(testScope.tier).not.toBeNull();
 	        });
 	    });
     });

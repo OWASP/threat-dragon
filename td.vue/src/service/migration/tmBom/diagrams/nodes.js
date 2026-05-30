@@ -3,6 +3,42 @@ import boxes from './boxes';
 
 const padding = boxes.nodeGeometry.padding;
 const nodeSize = { width: boxes.nodeGeometry.width, height: boxes.nodeGeometry.height };
+export const defaults = {actorType: 'third_party', storeType: 'object'};
+
+export const convert = (model) => {
+    let nodes  = {actors: [], components: [], data_stores: []};
+
+    // there may be no diagrams or no cells within a diagram
+    model.detail.diagrams?.forEach((diagram) => {
+        diagram.cells?.forEach((cell) => {
+            if (cell.data.type === 'tm.Actor') {
+                nodes.actors.push({
+                    symbolic_name: cell.id,
+                    title: cell.data.name,
+                    description: cell.data.description,
+                    type: defaults.actorType,
+                    permissions: 'Default permissions exported by Threat Dragon'
+                });
+            } else if (cell.data.type === 'tm.Process') {
+                nodes.components.push({
+                    symbolic_name: cell.id,
+                    title: cell.data.name,
+                    description: cell.data.description
+                });
+            } else if (cell.data.type === 'tm.Store') {
+                nodes.data_stores.push({
+                    symbolic_name: cell.id,
+                    title: cell.data.name,
+                    description: cell.data.description,
+                    type: defaults.storeType
+                });
+            }
+            // other cell types, such as trust boundary boxes, handled elsewhere    
+        });
+    });
+
+    return nodes;
+};
 
 export const createNodes = (model, zone) => {
     let nodes = new Array();
@@ -89,5 +125,6 @@ export const merge = (model) => {
 };
 
 export default {
+    convert,
     merge
 };

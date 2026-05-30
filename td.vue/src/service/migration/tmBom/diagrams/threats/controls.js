@@ -1,14 +1,11 @@
 import boundaries from './boundaries';
 
 const mitigated = ['Mitigated', 'assumed', 'active', 'retired', 'wont_do'];
+const tdSeverity = ['TBD', 'Low', 'Medium', 'High', 'Critical'];
+const tmBomPriority = ['none', 'low', 'medium', 'high', 'critical'];
 
-const findSeverity = (severity, priority) => {
-    const tdSeverities = ['TBD', 'Low', 'Medium', 'High', 'Critical'];
-    const tmBomPriorities = ['none', 'low', 'medium', 'high', 'critical'];
-
-    let highestPriority = tmBomPriorities.indexOf(priority) > tdSeverities.indexOf(severity) ? priority : severity;
-
-    return highestPriority[0].toUpperCase() + highestPriority.slice(1);
+const calcSeverity = (severity, priority) => {
+    return tmBomPriority.indexOf(priority) > tdSeverity.indexOf(severity) ? tdSeverity[tmBomPriority.indexOf(priority)] : severity;
 };
 
 const merge = (model, tdThreats) => {
@@ -21,7 +18,7 @@ const merge = (model, tdThreats) => {
                     tdThreat.mitigation += '\n' + control.status.replaceAll('_', ' ') + ': ' + control.title + '\n';
                     tdThreat.mitigation += control.description + '\n';
                     tdThreat.status = mitigated.includes(tdThreat.status) || mitigated.includes(control.status) ? 'Mitigated' : 'Open';
-                    tdThreat.severity = findSeverity(tdThreat.severity, control.priority);
+                    tdThreat.severity = calcSeverity(tdThreat.severity, control.priority);
                 }
             });
         }

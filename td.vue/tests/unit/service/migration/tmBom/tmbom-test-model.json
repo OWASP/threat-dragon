@@ -1,6 +1,6 @@
 {
-    "$schema": "https://github.com/OWASP/www-project-threat-model-library/blob/v1.0.1/threat-model.schema.json",
-    "version": "1.0.2",
+    "$schema": "https://github.com/OWASP/www-project-threat-model-library/blob/v1.0.2/threat-model.schema.json",
+    "version": "2.7.0",
     "scope": {
       "title": "Test title scope",
       "description": "Test description scope",
@@ -11,8 +11,10 @@
     },
     "description": "Test description",
     "frozen": false,
+    "released_at": "2025-05-10",
+    "product_release_date": "2025-05-11",
     "release_docs_link": "https://example.com/release_docs_link",
-    "reviewed_at": "2025-05-28",
+    "reviewed_at": "2025-05-12",
     "repo_link": "https://example.com/repo_link",
     "diagrams": [
         {

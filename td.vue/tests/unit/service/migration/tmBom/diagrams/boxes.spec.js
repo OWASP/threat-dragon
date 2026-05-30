@@ -1,10 +1,63 @@
 import boxes from '@/service/migration/tmBom/diagrams/boxes';
-import tmBomModel from '../test-model';
+import tdModel from '../td-test-model';
+import tmBomModel from '../tmbom-test-model';
 
 describe('service/migration/tmBom/diagrams/boxes.js', () => {
-    let testBoundaryBoxes = boxes.merge(tmBomModel);
 
-    describe('import TM-BOM trust zones', () => {
+    describe('convert/export TM-BOM trust zones', () => {
+        let trustZones;
+        let nodes;
+        beforeEach(() => {
+            nodes = {
+                actors: [{id: 'actor0'}, {id: 'actor1'}, {id: 'test-actor'}],
+                components: [{id: 'component1'}, {id: 'component2'}, {id: 'test-component'}],
+                data_stores: [{id: 'store1'}, {id: 'store2'}, {id: 'test-store'}]
+            };
+            trustZones = boxes.convert(tdModel, nodes);
+        });
+
+        it('converts boundary boxes to trust zones', () => {
+            console.debug(JSON.stringify(trustZones, null, 2));
+            expect(trustZones.length).toBeGreaterThan(4);
+            expect(trustZones.findIndex((x) => x.symbolic_name === 'trust-boundary-box0')).toBeGreaterThanOrEqual(0);
+        });
+
+        it('converts boundary curves to trust zones', () => {
+            expect(trustZones.findIndex((x) => x.symbolic_name === 'trust-boundary-curve0')).toBeGreaterThanOrEqual(0);
+        });
+
+        it('populates the trust zones', () => {
+            expect(trustZones.find((x) => x.symbolic_name === undefined)).toBeUndefined();
+            expect(trustZones.find((x) => x.title === undefined)).toBeUndefined();
+            expect(trustZones.find((x) => x.description === undefined)).toBeUndefined();
+        });
+
+        it('provides actors with trust zones', () => {
+            expect(nodes.actors.find((x) => x.trust_zone === 'trust-boundary-box1')).toBeDefined();
+            expect(nodes.actors.find((x) => x.trust_zone === 'trust-boundary-box2')).toBeUndefined();
+            expect(nodes.actors.find((x) => x.trust_zone === 'trust-boundary-curve0')).toBeUndefined();
+            expect(nodes.actors.find((x) => x.trust_zone === undefined)).toBeDefined();
+        });
+
+        it('provides components with trust zones', () => {
+            expect(nodes.components.find((x) => x.trust_zone === 'trust-boundary-box1')).toBeDefined();
+            expect(nodes.components.find((x) => x.trust_zone === 'trust-boundary-box2')).toBeDefined();
+            expect(nodes.components.find((x) => x.trust_zone === undefined)).toBeDefined();
+        });
+
+        it('provides data stores with trust zones', () => {
+            expect(nodes.data_stores.find((x) => x.trust_zone === 'trust-boundary-box1')).toBeDefined();
+            expect(nodes.data_stores.find((x) => x.trust_zone === 'trust-boundary-box2')).toBeDefined();
+            expect(nodes.data_stores.find((x) => x.trust_zone === undefined)).toBeDefined();
+        });
+    });
+
+    describe('merge/import TM-BOM trust zones', () => {
+        let testBoundaryBoxes;
+        beforeEach(() => {
+            testBoundaryBoxes = boxes.merge(tmBomModel);
+        });
+
         it('finds the boundary boxes', () => {
             expect(testBoundaryBoxes).toHaveLength(tmBomModel.trust_zones.length);
         });

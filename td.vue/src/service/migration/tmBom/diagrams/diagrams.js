@@ -43,6 +43,19 @@ const checkEdges = (edges, nodes) => {
     });
 };
 
+// TM-BOM diagrams are external diagram definitions with no equivalent in Threat Dragon
+// however it would be good to create an SVG of each Threat Dragon diagram and pass it here
+// using something like:
+//   graph = diagramService.draw(container, diagram);
+//   graph.exportSVG(`diagram-title.svg`);
+const convert = (model) => {
+    let diagrams = new Array();
+    if (model.detail.compatibility?.diagrams) {
+        diagrams = model.detail.compatibility.diagrams;
+    }
+    return diagrams;
+};
+
 const merge = (model, version) => {
     const thumbnail = './public/content/images/thumbnail.jpg';
     var diagrams = new Array();
@@ -82,5 +95,6 @@ const merge = (model, version) => {
 };
 
 export default {
+    convert,
     merge
 };
