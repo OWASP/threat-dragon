@@ -2,11 +2,11 @@
     <div>
         <b-row>
             <b-col>
-                <b-jumbotron :header="$t('dashboard.welcome.title')">
+                <td-hero :header="$t('dashboard.welcome.title')">
                     <p>
                         {{ $t('dashboard.welcome.description') }}
                     </p>
-                </b-jumbotron>
+                </td-hero>
             </b-col>
         </b-row>
         <b-row >
@@ -38,13 +38,15 @@
 import { mapState } from 'vuex';
 
 import TdDashboardAction from '@/components/DashboardAction.vue';
+import TdHero from '@/components/Hero.vue';
 import { getDashboardActions } from '@/service/provider/providers.js';
 import tmActions from '@/store/actions/threatmodel.js';
 
 export default {
     name: 'MainDashboard',
     components: {
-        TdDashboardAction
+        TdDashboardAction,
+        TdHero
     },
     computed: mapState({
         actions: (state) => getDashboardActions(state.provider.selected)

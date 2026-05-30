@@ -1,6 +1,6 @@
 <template>
     <b-container fluid>
-        <b-jumbotron id="welcome-jumbotron">
+        <td-hero id="welcome-jumbotron">
             <b-row class="text-center mb-2">
                 <b-col md="12">
                     <h1 class="display-3 text-center">{{ $t("home.title") }}</h1>
@@ -31,7 +31,7 @@
                     </b-row>
                 </b-col>
             </b-row>
-        </b-jumbotron>
+        </td-hero>
     </b-container>
 </template>
 
@@ -57,6 +57,7 @@
 <script>
 import {allProviders} from '@/service/provider/providers.js';
 import isElectron from 'is-electron';
+import TdHero from '@/components/Hero.vue';
 import TdProviderLoginButton from '@/components/ProviderLoginButton.vue';
 import configActions from '@/store/actions/config.js';
 import {mapState} from 'vuex';
@@ -102,6 +103,7 @@ export default {
         }
     },
     components: {
+        TdHero,
         TdProviderLoginButton,
     },};
 </script>

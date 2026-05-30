@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { shallowMount, createLocalVue, RouterLinkStub } from '@vue/test-utils';
 
 import TdDashboardAction from '@/components/DashboardAction.vue';
+import TdHero from '@/components/Hero.vue';
 
 describe('components/DashboardAction.vue', () => {
     const to = '/somewhere',
@@ -68,6 +69,14 @@ describe('components/DashboardAction.vue', () => {
     it('sets the font awesome icon value', () => {
         const fa = wrapper.findComponent(FontAwesomeIcon);
         expect(fa.attributes(icon)).toEqual(`${iconPreface},${icon}`);
+    });
+
+    it('renders the action content in a hero section', () => {
+        const hero = wrapper.findComponent(TdHero);
+
+        expect(hero.exists()).toBe(true);
+        expect(hero.classes()).toContain('action-pane');
+        expect(hero.text()).toContain(`dashboard.actions.${description}`);
     });
 
     it('reads the description value', () => {

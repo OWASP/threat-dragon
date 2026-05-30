@@ -1,7 +1,8 @@
-import { BootstrapVue, BJumbotron, BListGroupItem } from 'bootstrap-vue';
+import { BootstrapVue, BListGroupItem } from 'bootstrap-vue';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 
 import SelectionPage from '@/components/SelectionPage.vue';
+import TdHero from '@/components/Hero.vue';
 
 const tMock = key => key;
 
@@ -33,8 +34,8 @@ describe('components/SelectionPage.vue', () => {
             });
         });
 
-        it('shows the jumbotron text', () => {
-            expect(wrapper.findComponent(BJumbotron).text()).toBe('Hello, world!');
+        it('shows the hero text', () => {
+            expect(wrapper.findComponent(TdHero).text()).toBe('Hello, world!');
         });
 
         it('displays the items', () => {

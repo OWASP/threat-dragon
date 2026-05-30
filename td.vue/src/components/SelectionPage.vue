@@ -2,11 +2,11 @@
     <b-container fluid>
         <b-row>
             <b-col>
-                <b-jumbotron class="text-center">
+                <td-hero class="text-center">
                     <h4>
                         <slot></slot>
                     </h4>
-                </b-jumbotron>
+                </td-hero>
             </b-col>
         </b-row>
         <b-row>
@@ -77,8 +77,13 @@
 </template>
 
 <script>
+import TdHero from '@/components/Hero.vue';
+
 export default {
     name: 'TdSelectionPage',
+    components: {
+        TdHero
+    },
     data() {
         return {
             pageRef: this.page,
@@ -178,4 +183,3 @@ export default {
     }
 };
 </script>
-

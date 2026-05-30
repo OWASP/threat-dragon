@@ -2,10 +2,10 @@
     <b-container fluid>
         <b-row>
             <b-col>
-                <b-jumbotron class="text-center">
+                <td-hero class="text-center">
                     <h4>{{ $t('template.manage') }}</h4>
                     <p class="lead">{{ $t('template.manageDescription') }}</p>
-                </b-jumbotron>
+                </td-hero>
             </b-col>
         </b-row>
 
@@ -115,6 +115,7 @@ import { mapGetters } from 'vuex';
 import { v4 } from 'uuid';
 import TdDropdown from '@/components/Dropdown.vue';
 import TdFormTags from '@/components/FormTags.vue';
+import TdHero from '@/components/Hero.vue';
 import templateActions from '@/store/actions/template.js';
 import schema from '@/service/schema/ajv.js';
 
@@ -122,7 +123,8 @@ export default {
     name: 'ManageTemplates',
     components: {
         TdDropdown,
-        TdFormTags
+        TdFormTags,
+        TdHero
     },
     data() {
         return {

@@ -1,7 +1,7 @@
 <template>    
     <b-col lg="4">
     <router-link :to="to" class="action-pane-link">
-        <b-jumbotron class="text-center action-pane">
+        <td-hero class="text-center action-pane">
                 <font-awesome-icon
                 :icon="[iconPreface, icon]"
                 size="4x"
@@ -9,7 +9,7 @@
                 ></font-awesome-icon>
             <br />
             {{ $t(`dashboard.actions.${description}`) }}
-        </b-jumbotron>
+        </td-hero>
             </router-link>
     </b-col>
 </template>
@@ -33,8 +33,13 @@ box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 </style>
 
 <script>
+import TdHero from '@/components/Hero.vue';
+
 export default {
     name: 'TdDashboardAction',
+    components: {
+        TdHero
+    },
     props: {
         to: {
             type: String,

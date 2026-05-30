@@ -2,11 +2,11 @@
     <div>
         <b-row>
             <b-col>
-                <b-jumbotron class="text-center">
+                <td-hero class="text-center">
                     <h4>
                         {{ $t('forms.open') }} / {{ $t('dashboard.actions.importExisting') }}
                     </h4>
-                </b-jumbotron>
+                </td-hero>
             </b-col>
         </b-row>
         <b-row>
@@ -59,6 +59,7 @@ import { mapState } from 'vuex';
 import isElectron from 'is-electron';
 import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
+import TdHero from '@/components/Hero.vue';
 import tmActions from '@/store/actions/threatmodel.js';
 import schema from '@/service/schema/ajv';
 import { importTmbom } from '@/service/migration/tmBom/tmBom';
@@ -80,7 +81,8 @@ const pickerFileOptions = {
 export default {
     name: 'ImportModel',
     components: {
-        TdFormButton
+        TdFormButton,
+        TdHero
     },
     computed: {
         ...mapState({
