@@ -353,6 +353,7 @@ const messages = {
         exportHtml: 'Raportti HTML',
         exportPdf: 'Raportti PDF',
         exportTd: 'Original (Threat Dragon)',
+        exportTemplate: 'Raportti Template',
         exportOtm: 'Open Threat Model (OTM)',
         import: 'Tuo',
         ok: 'OK',
@@ -368,9 +369,7 @@ const messages = {
         saveModelAs: 'Tallenna Uhkamalli Nimellä',
         search: 'Etsi',
         next: 'Seuraava',
-        previous: 'Edellinen',
-        manage : 'Manage...',
-        exportTemplate: 'Export As Template',
+        previous: 'Edellinen'
     },
     cards: {
         details: 'Kortin tiedot',

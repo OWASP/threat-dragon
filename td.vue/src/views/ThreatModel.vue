@@ -49,10 +49,9 @@
                         :text="$t('forms.edit')" />
                     <td-form-button id="td-report-btn" :onBtnClick="onReportClick" icon="file-alt"
                         :text="$t('forms.report')" />
-                    <!-- REPLACE the export template button with dropdown -->
-                    <td-dropdown right variant="secondary" :text="$t('forms.manage')" id="manage-model-btn" v-if="enableTemplates">
+                    <td-dropdown right variant="secondary" :text="$t('forms.export')" id="manage-model-btn">
                         <template #default="{ close }">
-                            <button
+                            <button v-if="enableTemplates"
                                 type="button"
                                 class="td-dropdown-item"
                                 @click="(evt) => { onExportTemplateClick(evt); close(); }"
@@ -60,6 +59,9 @@
                             >
                                 <font-awesome-icon icon="file-import" ></font-awesome-icon>
                                 {{ $t('forms.exportTemplate') }}
+                            </button>
+                            <button type="button" class="td-dropdown-item" id="export-tmbom-option" @click="(evt) => { onExportTmBomClick(evt); close(); }" >
+                                <font-awesome-icon icon="file-import" ></font-awesome-icon> {{ $t('forms.exportTmBom') }}
                             </button>
                         </template>
                     </td-dropdown>
@@ -135,6 +137,33 @@ export default {
                 ? 'localThreatModelExportTemplate'
                 : `${this.providerType}ThreatModelExportTemplate`;
             this.$router.push({ name: routeName, params: this.$route.params });
+        },
+        async onExportTmBomClick(evt) {
+            evt.preventDefault();
+            console.debug('onExportTmBomClick');
+
+            // Validate title exists before creating/saving
+            if (!this.model.summary.title || this.model.summary.title.trim() === '') {
+                this.$toast.error('Threat model must have a title');
+                return;
+            }
+
+            const isCreating = this.$route.name === 'gitThreatModelCreate' || this.$route.name === 'googleThreatModelCreate';
+
+            if (isCreating) {
+                const result = await this.$store.dispatch(tmActions.create);
+                // Only navigate to edit route if create was successful
+                if (result) {
+                    const params = Object.assign({}, this.$route.params, {
+                        threatmodel: this.model.summary.title
+                    });
+                    this.$router.replace({ name: `${this.providerType}ThreatModelEdit`, params });
+                }
+            } else {
+                // Force selection of file name on TM-BOM export
+                await this.$store.dispatch(tmActions.update, { fileName: '' });
+                await this.$store.dispatch(tmActions.saveModel);
+            }
         },
         getThumbnailUrl(diagram) {
             if (!diagram || !diagram.diagramType) {

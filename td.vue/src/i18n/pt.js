@@ -353,6 +353,7 @@ const messages = {
         exportHtml: 'Relatório HTML',
         exportPdf: 'Relatório PDF',
         exportTd: 'Original (Threat Dragon)',
+        exportTemplate: 'como Template',
         exportOtm: 'Open Threat Model (OTM)',
         import: 'Importar',
         ok: 'OK',
@@ -368,9 +369,7 @@ const messages = {
         saveModelAs: 'Guardar Modelo Como',
         search: 'Pesquisar',
         next: 'próximo',
-        previous: 'anterior',
-        manage: 'Gerir...',
-        exportTemplate: 'Exportar como Template'
+        previous: 'anterior'
     },
     cards: {
         details: 'Detalhes do cartão',

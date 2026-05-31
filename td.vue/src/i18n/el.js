@@ -353,6 +353,7 @@ const messages = {
         exportHtml: 'Αναφορά HTML',
         exportPdf: 'Αναφορά PDF',
         exportTd: 'Πρωτότυπο (Threat Dragon)',
+        exportTemplate: 'Αναφορά Template',
         exportOtm: 'Open Threat Model (OTM)',
         import: 'Εισαγωγή',
         ok: 'OK',
@@ -368,9 +369,7 @@ const messages = {
         saveModelAs: 'Αποθήκευση Μοντέλου ως',
         search: 'Αναζήτηση',
         next: 'Επόμενο',
-        previous: 'προηγούμενος',
-        manage : 'Manage...',
-        exportTemplate: 'Export As Template',
+        previous: 'προηγούμενος'
     },
     cards: {
         details: 'Λεπτομέρειες κάρτας',

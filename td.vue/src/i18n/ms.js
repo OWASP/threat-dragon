@@ -353,6 +353,7 @@ const messages = {
         exportHtml: 'Laporan HTML',
         exportPdf: 'Laporan PDF',
         exportTd: 'Asal (Threat Dragon)',
+        exportTemplate: 'Laporan Template',
         exportOtm: 'Ancaman Terbuka Model (OTM)',
         import: 'Import',
         ok: 'OK',
@@ -368,9 +369,7 @@ const messages = {
         saveModelAs: 'Simpan Model Sebagai',
         search: 'Carian',
         next: 'seterusnya',
-        previous: 'sebelumnya',
-        manage : 'Manage...',
-        exportTemplate: 'Export As Template',
+        previous: 'sebelumnya'
     },
     cards: {
         details: 'Butiran kad',

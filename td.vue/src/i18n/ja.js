@@ -353,6 +353,7 @@ const messages = {
         exportHtml: 'HTMLとして保存',
         exportPdf: 'PDFとして保存',
         exportTd: 'オリジナル(Threat Dragon)',
+        exportTemplate: 'Template として保存',
         exportOtm: '脅威モデル(OTM)を開く',
         import: 'インポート',
         ok: 'OK',
@@ -368,9 +369,7 @@ const messages = {
         saveModelAs: '名前を付けてモデルを保存',
         search: '検索',
         next: '次',
-        previous: '前の',
-        manage : 'Manage...',
-        exportTemplate: 'Export As Template',
+        previous: '前の'
     },
     cards: {
         details: 'カードの詳細',

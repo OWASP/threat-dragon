@@ -353,6 +353,7 @@ const messages = {
         exportHtml: 'تقرير HTML',
         exportPdf: 'تقرير PDF',
         exportTd: 'Original (Threat Dragon)',
+        exportTemplate: 'تقرير Template',
         exportOtm: 'Open Threat Model (OTM)',
         import: 'استيراد',
         ok: 'موافق',
@@ -368,9 +369,7 @@ const messages = {
         saveModelAs: 'حفظ النموذج كـ',
         search: 'بحث',
         next: 'التالي',
-        previous: 'السابق',
-        manage : 'Manage...',
-        exportTemplate: 'Export As Template',
+        previous: 'السابق'
     },
     cards: {
         details: 'تفاصيل البطاقة',
