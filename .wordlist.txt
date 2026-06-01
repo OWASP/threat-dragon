@@ -19,6 +19,7 @@ Bluesky
 BOM
 Brasil
 BrowserStack
+bundler
 CentOS
 chai
 chruby
@@ -29,6 +30,7 @@ CMS
 CodeQL
 Config
 cooldowns
+cooldown
 cron
 CVE
 CVEs
@@ -69,6 +71,7 @@ githubusercontent
 gitlab
 GitLab
 gridlines
+handoff
 hin
 hostname
 https
@@ -94,6 +97,7 @@ linux
 localhost
 LTS
 MacOS
+md
 misconfigurations
 mitigations
 Mitigations
@@ -121,19 +125,23 @@ postfix
 pre
 PRs
 PWD
+pyspelling
 remediations
 renderer
 repo
 repos
+roadmap
 sast
 SAST
 SCA
+semver
 Sinon
 schemas
 snapcraft
 sudo
 Suomi
 SHA
+SHAs
 SVG
 SY
 TBC

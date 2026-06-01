@@ -16,5 +16,6 @@ matrix:
       - pre
   sources:
   - 'docs/**/*.md'
+  - 'AGENTS.md'
   default_encoding: utf-8
 
