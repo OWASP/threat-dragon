@@ -38,6 +38,9 @@
 !minimal.env
 !package.json
 !package-lock.json
+!scripts/
+!scripts/README.md
+!scripts/*.sh
 
 # documentation site
 !docs/
