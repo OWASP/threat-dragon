@@ -373,6 +373,23 @@ export default {
         'card.suit'(newSuit, oldSuit) {
             if (!this.isLoadingThreat && newSuit !== oldSuit) {
                 this.card.number = null;
+                this.$nextTick(() => {
+                    const cards = this.activeGame?.getCardsBySuit(newSuit) ?? [];
+                    this.card.number = cards.length > 0 ? cards[cards.length - 1].value : null;
+                });
+            }
+        },
+        selectedGameId(newGameId) {
+            if (!this.isLoadingThreat && newGameId) {
+                const game = getGame(newGameId);
+                const suits = game?.getSuits() ?? [];
+                if (suits.length > 0) {
+                    this.card.suit = suits[0].value;
+                    this.$nextTick(() => {
+                        const cards = game?.getCardsBySuit(suits[0].value) ?? [];
+                        this.card.number = cards.length > 0 ? cards[cards.length - 1].value : null;
+                    });
+                }
             }
         }
     },
