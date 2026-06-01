@@ -2,9 +2,9 @@
   <div>
     <td-navbar />
     <b-container fluid id="app">
-      <b-overlay style="max-height: 100vh;" :show="isLoading" spinner-variant="primary">
+      <td-overlay style="max-height: 100vh;" :show="isLoading">
         <router-view />
-      </b-overlay>
+      </td-overlay>
     </b-container>
   </div>
 </template>
@@ -46,11 +46,13 @@ import { mapState } from 'vuex';
 
 import { LOADER_FINISHED } from '@/store/actions/loader.js';
 import TdNavbar from '@/components/Navbar.vue';
+import TdOverlay from '@/components/Overlay.vue';
 
 export default {
     name: 'TdApp',
     components: {
-        TdNavbar
+        TdNavbar,
+        TdOverlay
     },
     computed: mapState({
         isLoading: (state) => state.loader.loading
