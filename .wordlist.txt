@@ -30,6 +30,7 @@ CMS
 CodeQL
 Config
 cooldowns
+cooldown
 cron
 CVE
 CVEs
@@ -70,6 +71,7 @@ githubusercontent
 gitlab
 GitLab
 gridlines
+handoff
 hin
 hostname
 https
