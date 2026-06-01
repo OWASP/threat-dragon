@@ -151,8 +151,6 @@ module.exports = {
                 options.source = 'src';
                 options.img = 'src';
                 options.image = 'xlink:href';
-                options['b-img'] = 'src';
-                options['b-img-lazy'] = ['src', 'blank-src'];
                 options.compilerOptions = {
                     ...options.compilerOptions,
                     // Sets the compatability mode to 2, meaning "vue 2"

@@ -31,10 +31,12 @@
                         </h6>
                     </template>
                     <a href="#" @click.prevent="editDiagram(diagram)">
-                        <!-- "thumbnail": "./public/content/images/thumbnail.jpg", --> <b-img-lazy
-                            class="m-auto d-block td-diagram-thumb"
+                        <!-- "thumbnail": "./public/content/images/thumbnail.jpg", --> <td-image
+                            class="td-diagram-thumb"
                             :src="require(`../assets/${diagram.thumbnail ? diagram.thumbnail.split('/').pop() : 'thumbnail.jpg'}`)"
-                            :alt="diagram.title" />
+                            :alt="diagram.title"
+                            lazy
+                        />
                     </a>
                     <h6 v-if=diagram.description class="diagram-description-text">
                         {{ diagram.description }}
@@ -86,6 +88,8 @@
 }
 
 .td-diagram-thumb {
+    display: block;
+    margin: auto;
     max-width: 200px;
     max-height: 160px;
 }
@@ -97,6 +101,7 @@ import { mapState } from 'vuex';
 import { getProviderType } from '@/service/provider/providers.js';
 import TdDropdown from '@/components/Dropdown.vue';
 import TdFormButton from '@/components/FormButton.vue';
+import TdImage from '@/components/Image.vue';
 import TdThreatModelSummaryCard from '@/components/ThreatModelSummaryCard.vue';
 import tmActions from '@/store/actions/threatmodel.js';
 
@@ -105,6 +110,7 @@ export default {
     components: {
         TdDropdown,
         TdFormButton,
+        TdImage,
         TdThreatModelSummaryCard
     },
     computed: mapState({
