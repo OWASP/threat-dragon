@@ -202,7 +202,6 @@ const createBootstrapCompat = (name, tag = 'div') => defineComponent({
 const BootstrapButtonCompat = createClickableCompat('BButton');
 const BootstrapDropdownItemCompat = createClickableCompat('BDropdownItem');
 const BootstrapListGroupItemCompat = createClickableCompat('BListGroupItem', 'a');
-const BootstrapNavItemCompat = createClickableCompat('BNavItem', 'a');
 const BootstrapCardTextCompat = createBootstrapCompat('BCardText');
 const BootstrapModalCompat = createBootstrapCompat('BModal');
 const BootstrapFormInputCompat = createBootstrapCompat('BFormInput', 'input');
@@ -219,7 +218,6 @@ const bootstrapComponentStubs = {
     BFormTextarea: BootstrapFormTextareaCompat,
     BListGroupItem: BootstrapListGroupItemCompat,
     BModal: BootstrapModalCompat,
-    BNavItem: BootstrapNavItemCompat,
     BTable: BootstrapTableCompat
 };
 
