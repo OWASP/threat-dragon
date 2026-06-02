@@ -1,15 +1,19 @@
-import { BootstrapVue, BContainer, BImg } from 'bootstrap-vue';
+import { BootstrapVue, BContainer } from 'bootstrap-vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
 import { AUTH_SET_LOCAL } from '@/store/actions/auth.js';
+import configActions from '@/store/actions/config.js';
 import HomePage from '@/views/HomePage.vue';
 import loginApi from '@/service/api/loginApi.js';
 import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
 import router from '@/router/index.js';
 import TdHero from '@/components/Hero.vue';
+import TdImage from '@/components/Image.vue';
 import TdProviderLoginButton from '@/components/ProviderLoginButton.vue';
+
+jest.mock('@/assets/threatdragon_logo_image.svg', () => 'threatdragon_logo_image.svg');
 
 describe('HomePage.vue', () => {
     const redirectUrl = 'https://threatdragon.org';
@@ -32,6 +36,7 @@ describe('HomePage.vue', () => {
                 },
                 actions: {
                     [AUTH_SET_LOCAL]: () => {},
+                    [configActions.fetch]: () => {},
                     [PROVIDER_SELECTED]: () => {}
                 }
             });
@@ -74,7 +79,7 @@ describe('HomePage.vue', () => {
             });
 
             it('displays the threat dragon logo', () => {
-                expect(wrapper.findComponent(BImg).attributes('src'))
+                expect(wrapper.findComponent(TdImage).props('src'))
                     .toContain('threatdragon_logo_image');
             });
 
