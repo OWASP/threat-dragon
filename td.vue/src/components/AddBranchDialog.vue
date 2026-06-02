@@ -13,7 +13,7 @@
     >
         <form @submit.prevent="addBranch">
             <b-row>
-                <b-col lg="12" class="pb-2">
+                <b-col lg="12" class="td-add-branch-field">
                     <b-form-group id="input-group-1" :label="$t('branch.name')" label-for="branchName">
                         <b-form-input
                             type="text"
@@ -32,7 +32,7 @@
                 </b-col>
             </b-row>
             <b-row>
-                <b-col lg="12" class="pb-2">
+                <b-col lg="12" class="td-add-branch-field">
                     <b-form-group id="input-group-2" :label="$t('branch.refBranch')" label-for="refBranch">
                         <td-form-select id="refBranch" v-model="refBranch" :options="branchNames" size="md"
                             required />
@@ -41,28 +41,42 @@
             </b-row>
         </form>
         <hr/>
-        <div class="d-flex justify-content-end">
-            <b-overlay
+        <div class="td-add-branch-actions">
+            <td-overlay
                 :show="wait"
-                variant="light"
-                blur="true"
-                opacity="0.8"
-                spinner-small
+                small
             >
-                <b-button variant="primary" type="submit" @click="addBranch" class="m-1">{{ $t('branch.add') }}</b-button>
-            </b-overlay>
-            <b-button variant="secondary" @click="closeDialog" class="m-1">{{ $t('branch.cancel') }}</b-button>
+                <b-button variant="primary" type="submit" @click="addBranch" class="td-add-branch-button">{{ $t('branch.add') }}</b-button>
+            </td-overlay>
+            <b-button variant="secondary" @click="closeDialog" class="td-add-branch-button">{{ $t('branch.cancel') }}</b-button>
         </div>
     </b-modal>
 </template>
+<style lang="scss" scoped>
+.td-add-branch-actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}
+
+.td-add-branch-field {
+    padding-bottom: 0.5rem;
+}
+
+.td-add-branch-button {
+    margin: 0.25rem;
+}
+</style>
 <script>
 import TdFormSelect from '@/components/FormSelect.vue';
+import TdOverlay from '@/components/Overlay.vue';
 import branchActions from '@/store/actions/branch.js';
 
 export default {
     name: 'AddBranchModal',
     components: {
-        TdFormSelect
+        TdFormSelect,
+        TdOverlay
     },
     props: {
         branches: {

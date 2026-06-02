@@ -2,6 +2,7 @@ import { BootstrapVue, BModal, BFormInput, BButton } from 'bootstrap-vue';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import AddBranchDialog from '@/components/AddBranchDialog.vue';
 import TdFormSelect from '@/components/FormSelect.vue';
+import TdOverlay from '@/components/Overlay.vue';
 
 describe('components/AddBranchDialog.vue', () => {
     let localVue, wrapper;
@@ -40,6 +41,10 @@ describe('components/AddBranchDialog.vue', () => {
 
         it('displays the add button', () => {
             expect(wrapper.findAllComponents(BButton).at(0).text()).toBe('branch.add');
+        });
+
+        it('wraps the add button in the Threat Dragon overlay', () => {
+            expect(wrapper.findComponent(TdOverlay).exists()).toBe(true);
         });
 
         it('displays the cancel button', () => {
@@ -137,4 +142,3 @@ describe('components/AddBranchDialog.vue', () => {
         });
     });
 });
-
