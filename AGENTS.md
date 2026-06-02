@@ -43,7 +43,7 @@ regardless of whether the contributor is carbon-based, silicon-based, or legally
 6. Agents may point out docs gaps, but a human must write the final docs text.
 7. Agents may test docs with markdown linting, spellcheck, link checks, and local docs builds.
 8. Agents may edit code, tests, configuration, workflows, and maintainer scripts when explicitly asked.
-9. Agents must declare AI assistance in PR handoff text when a human will use the work in a PR.
+9. Agents must remind users of expectations when opening a PR: adhere to the template and include the AI disclosure.
 10. Agents must not open issues, comment on GitHub, open PRs, approve PRs, merge, release, or publish.
 11. Agents must not commit or push unless a human explicitly asks for that exact git action.
 12. Keep PR-sized work small and reviewer-friendly: one bug, feature, or chore per change.
