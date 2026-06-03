@@ -413,7 +413,7 @@ export default {
                     'Trying to access a non-existent threatId: ' + threatId
                 );
             } else {
-                this.selectedGameId = this.threat.eopGameId;
+                this.selectedGameId = this.threat.type || this.threat.eopGameId;
                 this.card.suit = this.activeGame?.getCardCategory(this.threat.cardNumber);
                 this.card.number = this.threat.cardNumber;
                 this.number = this.threat.number;
@@ -472,10 +472,9 @@ export default {
                 threatRef.number = this.number;
                 threatRef.score = this.threat.score;
                 if (threatRef.modelType === 'EOP') {
-                    threatRef.eopGameId = this.selectedGameId;
                     threatRef.cardSuit = this.card.suit;
                     threatRef.cardNumber = this.card.number;
-                    threatRef.type = null;
+                    threatRef.type = this.selectedGameId;
                 } else {
                     threatRef.type = this.threat.type;
                 }
