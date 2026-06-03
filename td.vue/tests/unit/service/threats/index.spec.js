@@ -121,6 +121,30 @@ describe('service/threats/index.js', () => {
         });
     });
 
+
+    describe('create new EOP threat', () => {
+        let threat;
+
+        beforeEach(() => {
+            threat = createNewTypedThreat('EOP');
+        });
+
+        it('has a typed title', () => {
+            expect(threat.title).toEqual('New EoP threat');
+        });
+
+        it('has cornucopia as type', () => {
+            expect(threat.type).toEqual('cornucopia');
+        });
+
+        it('has no eopGameId field', () => {
+            expect(threat.eopGameId).toBeUndefined();
+        });
+
+        it('has an EOP modelType', () => {
+            expect(threat.modelType).toEqual('EOP');
+        });
+    });
     describe('hasOpenThreats', () => {
         it('returns false if there is no data', () => {
             expect(threats.hasOpenThreats(null))
