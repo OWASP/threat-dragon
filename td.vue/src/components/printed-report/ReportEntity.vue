@@ -5,7 +5,7 @@
             <em v-if="outOfScope">- {{ $t('threatmodel.properties.outOfScope') }}</em>
         </div>
         <p class="entity-description" v-if="outOfScope"><b>{{ $t('threatmodel.properties.reasonOutOfScope') }}:</b> {{ entity.data.reasonOutOfScope }}</p>
-        <p class="entity-description" v-if="entity.data.description">{{ $t('threatmodel.properties.description') }}: {{ entity.data.description }}</p>
+        <p class="entity-description" v-if="entity.data.description" v-html="renderedDescription"></p>
         <p class="entity-description" v-if="showProperties">{{ properties }}</p>
         <table class="table">
             <thead>
@@ -60,6 +60,7 @@
 </style>
 
 <script>
+import { marked } from 'marked';
 import threatService from '@/service/threats/index.js';
 
 export default {
@@ -84,6 +85,9 @@ export default {
         }
     },
     computed: {
+        renderedDescription: function () {
+            return this.entity.data.description ? marked( this.$t('threatmodel.properties.description') + ': ' + this.entity.data.description) : null;
+        },
         dataType: function () {
             const entityType = this.entity.data.type.replace('tm.', '').replace('td.', '');
             return this.$t(`threatmodel.shapes.${this.toCamelCase(entityType)}`);
