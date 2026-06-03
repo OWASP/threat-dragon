@@ -158,7 +158,6 @@ export default {
         mitigation: { type: String },
         modelType: { type: String },
         number: { type: Number },
-        eopGameId: { type: String },
         cardSuit: { type: String },
         cardNumber: { type: String }
     },
@@ -176,7 +175,6 @@ export default {
                 mitigation: t.mitigation || this.mitigation || '',
                 modelType: t.modelType || this.modelType || '',
                 number: t.number || this.number || null,
-                eopGameId: t.eopGameId || this.eopGameId || '',
                 cardSuit: t.cardSuit || this.cardSuit || '',
                 cardNumber: t.cardNumber || this.cardNumber || ''
             };
@@ -191,8 +189,7 @@ export default {
         mitigationResolved() { return this.threatData.mitigation; },
         modelTypeResolved() { return this.threatData.modelType; },
         numberResolved() { return this.threatData.number; },
-        eopGameIdResolved() { return this.threatData.eopGameId; },
-        cardSuitResolved() { return getGame(this.threatData.eopGameId)?.getCardCategory(this.threatData.cardNumber); },
+        cardSuitResolved() { return getGame(this.threatData.type)?.getCardCategory(this.threatData.cardNumber); },
         cardNumberResolved() { return this.threatData.cardNumber; }
     },
 
