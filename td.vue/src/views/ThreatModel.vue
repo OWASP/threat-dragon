@@ -12,7 +12,7 @@
                 <b-card :header="$t('threatmodel.description')">
                     <b-row class="tm-card">
                         <b-col>
-                            <p id="tm_description">{{ model.summary.description }}</p>
+                            <p id="tm_description" v-html="renderedSummary"></p>
                         </b-col>
                     </b-row>
                 </b-card>
@@ -97,6 +97,7 @@
 
 <script>
 import { mapState } from 'vuex';
+import { marked } from 'marked';
 
 import { getProviderType } from '@/service/provider/providers.js';
 import TdDropdown from '@/components/Dropdown.vue';
@@ -113,12 +114,17 @@ export default {
         TdImage,
         TdThreatModelSummaryCard
     },
-    computed: mapState({
-        enableTemplates: (state) => ['github', 'local'].includes(state.provider.selected),
-        model: (state) => state.threatmodel.data,
-        providerType: (state) => getProviderType(state.provider.selected),
-        version: (state) => state.packageBuildVersion
-    }),
+    computed: {
+        ...mapState({
+            enableTemplates: (state) => ['github', 'local'].includes(state.provider.selected),
+            model: (state) => state.threatmodel.data,
+            providerType: (state) => getProviderType(state.provider.selected),
+            version: (state) => state.packageBuildVersion
+        }),
+        renderedSummary: function () {
+            return this.model.summary.description ? marked(this.model.summary.description) : null;
+        }
+    },
     methods: {
         onEditClick(evt) {
             evt.preventDefault();

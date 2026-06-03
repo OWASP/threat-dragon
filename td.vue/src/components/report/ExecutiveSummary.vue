@@ -4,7 +4,8 @@
             <b-col>
                 <b-card :header="$t('report.executiveSummary')">
                     <h3 class="td-description-title">{{ $t('threatmodel.description') }}</h3>
-                    <p class="td-summary">{{ summary || $t('report.notProvided') }}</p>
+                    <p class="mt-2 td-summary" v-if="renderedSummary" v-html="renderedSummary"></p>
+                    <p class="mt-2 td-summary" v-else>{{ $t('report.notProvided') }}</p>
 
                     <h3 class="td-report-summary">{{ $t('report.summary') }}</h3>
                     <b-table
@@ -27,6 +28,8 @@
 </style>
 
 <script>
+import { marked } from 'marked';
+
 export default {
     name: 'TdExecutiveSummary',
     props: {
@@ -40,6 +43,9 @@ export default {
         }
     },
     computed: {
+        renderedSummary: function () {
+            return this.summary ? marked(this.summary) : null;
+        },
         tableRows: function () {
             let totalStats = [
                 { metric: this.$t('report.threatStats.total'), total: this.threatsTotal },

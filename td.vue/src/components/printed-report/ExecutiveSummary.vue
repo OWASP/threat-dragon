@@ -6,9 +6,8 @@
         <div class="page-subtitle td-description">
             {{ $t('threatmodel.description') }}
         </div>
-        <div class="mt-2 td-summary">
-            {{ summary || $t('report.notProvided') }}
-        </div>
+        <div class="mt-2 td-summary" v-if="renderedSummary" v-html="renderedSummary"></div>
+        <div class="mt-2 td-summary" v-else>{{ $t('report.notProvided') }}</div>
         <div class="page-subtitle td-report-summary">
             {{ $t('report.summary') }}
         </div>
@@ -70,6 +69,8 @@
 </style>
 
 <script>
+import { marked } from 'marked';
+
 export default {
     name: 'TdPrintExecutiveSummary',
     props: {
@@ -83,6 +84,9 @@ export default {
         }
     },
     computed: {
+        renderedSummary: function () {
+            return this.summary ? marked(this.summary) : null;
+        },
         threatsTotal: function () {
             return this.threats.length;
         },
