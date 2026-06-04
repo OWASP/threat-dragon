@@ -220,6 +220,56 @@ describe('repositories/gitlabrepo.js', () => {
         it('should get the branch contents', () => {
             expect(mockClient.Repositories.allRepositoryTrees).to.have.been.calledWith("undefined/repo", info.branchInfo);
         });
+
+        describe('when the GitLab model root directory does not exist', () => {
+            afterEach(() => {
+                mockClient.Repositories.allRepositoryTrees.resetBehavior();
+                mockClient.Repositories.allRepositoryTrees.returns(Promise.resolve({
+                    data: [],
+                    paginationInfo: {next: 3, previous: 1}
+                }));
+            });
+
+            it('sets the status code for a Gitbeaker 404', async () => {
+                const notFoundError = {
+                    name: 'GitbeakerRequestError',
+                    cause: {
+                        response: {
+                            status: 404
+                        }
+                    }
+                };
+                mockClient.Repositories.allRepositoryTrees.rejects(notFoundError);
+
+                try {
+                    await threatModelRepository.modelsAsync(branchInfo, accessToken);
+                    expect.fail('Expected modelsAsync to throw');
+                } catch (error) {
+                    expect(error).to.equal(notFoundError);
+                    expect(error.statusCode).to.equal(404);
+                }
+            });
+
+            it('does not change non-404 Gitbeaker errors', async () => {
+                const serverError = {
+                    name: 'GitbeakerRequestError',
+                    cause: {
+                        response: {
+                            status: 500
+                        }
+                    }
+                };
+                mockClient.Repositories.allRepositoryTrees.rejects(serverError);
+
+                try {
+                    await threatModelRepository.modelsAsync(branchInfo, accessToken);
+                    expect.fail('Expected modelsAsync to throw');
+                } catch (error) {
+                    expect(error).to.equal(serverError);
+                    expect(error.statusCode).to.be.undefined;
+                }
+            });
+        });
     });
 
     describe('modelAsync', () => {

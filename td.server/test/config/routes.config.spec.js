@@ -11,6 +11,7 @@ import routeConfig from '../../src/config/routes.config.js';
 import threatmodelController from '../../src/controllers/threatmodelcontroller.js';
 import configcontroller from "../../src/controllers/configcontroller";
 import googleProviderThreatmodelController from '../../src/controllers/googleProviderThreatmodelController.js';
+import reverseproxy from '../../src/config/reverseproxy.config.js';
 
 describe('config/routes.config.js routes', () => {
     let mockApp;
@@ -101,6 +102,14 @@ describe('config/routes.config.js routes', () => {
             );
         });
 
+        it('routes decoded GET /api/threatmodel/:organisation/*repo/branches', () => {
+            expect(mockRouter.get).to.have.been.calledWith(
+                '/api/threatmodel/:organisation/*repo/branches',
+                reverseproxy.middleware,
+                threatmodelController.branches
+            );
+        });
+
         it('routes GET /api/threatmodel/organisation', () => {
             expect(mockRouter.get).to.have.been.calledWith(
                 '/api/threatmodel/organisation',
@@ -115,9 +124,25 @@ describe('config/routes.config.js routes', () => {
             );
         });
 
+        it('routes decoded GET /api/threatmodel/:organisation/*repo/:branch/models', () => {
+            expect(mockRouter.get).to.have.been.calledWith(
+                '/api/threatmodel/:organisation/*repo/:branch/models',
+                reverseproxy.middleware,
+                threatmodelController.models
+            );
+        });
+
         it('routes GET /api/threatmodel/:organisation/:repo/:branch/:model/data', () => {
             expect(mockRouter.get).to.have.been.calledWith(
                 '/api/threatmodel/:organisation/:repo/:branch/:model/data',
+                threatmodelController.model
+            );
+        });
+
+        it('routes decoded GET /api/threatmodel/:organisation/*repo/:branch/:model/data', () => {
+            expect(mockRouter.get).to.have.been.calledWith(
+                '/api/threatmodel/:organisation/*repo/:branch/:model/data',
+                reverseproxy.middleware,
                 threatmodelController.model
             );
         });
@@ -130,6 +155,14 @@ describe('config/routes.config.js routes', () => {
             );
         });*/
 
+        it('routes decoded POST /api/threatmodel/:organisation/*repo/:branch/createBranch', () => {
+            expect(mockRouter.post).to.have.been.calledWith(
+                '/api/threatmodel/:organisation/*repo/:branch/createBranch',
+                reverseproxy.middleware,
+                threatmodelController.createBranch
+            );
+        });
+
         it('routes POST /api/threatmodel/:organisation/:repo/:branch/:model/create', () => {
             expect(mockRouter.post).to.have.been.calledWith(
                 '/api/threatmodel/:organisation/:repo/:branch/:model/create',
@@ -137,9 +170,25 @@ describe('config/routes.config.js routes', () => {
             );
         });
 
+        it('routes decoded POST /api/threatmodel/:organisation/*repo/:branch/:model/create', () => {
+            expect(mockRouter.post).to.have.been.calledWith(
+                '/api/threatmodel/:organisation/*repo/:branch/:model/create',
+                reverseproxy.middleware,
+                threatmodelController.create
+            );
+        });
+
         it('routes PUT /api/threatmodel/:organisation/:repo/:branch/:model/update', () => {
             expect(mockRouter.put).to.have.been.calledWith(
                 '/api/threatmodel/:organisation/:repo/:branch/:model/update',
+                threatmodelController.update
+            );
+        });
+
+        it('routes decoded PUT /api/threatmodel/:organisation/*repo/:branch/:model/update', () => {
+            expect(mockRouter.put).to.have.been.calledWith(
+                '/api/threatmodel/:organisation/*repo/:branch/:model/update',
+                reverseproxy.middleware,
                 threatmodelController.update
             );
         });
