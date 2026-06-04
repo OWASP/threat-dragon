@@ -1,7 +1,5 @@
-ARG         NODE_VERSION=24.16.0
-
 # The base image with updates applied
-FROM        node:$NODE_VERSION-alpine AS base-node
+FROM        node:24.16.0-alpine@sha256:2bdb65ed1dab192432bc31c95f94155ca5ad7fc1392fb7eb7526ab682fa5bf14 AS base-node
 RUN         apk -U upgrade
 WORKDIR     /app
 COPY        .npmrc /app/.npmrc
@@ -36,7 +34,7 @@ RUN         cp td.server/sbom.json        boms/threat-dragon-server-bom.json && 
             cp td.vue/dist/.sbom/bom.xml  boms/threat-dragon-site-bom.xml
 
 
-FROM        ruby:4.0-slim-bookworm AS build-docs
+FROM        ruby:4.0-slim-bookworm@sha256:53c027bbb00469b5237eabadde82b0b7f0e1c38c4b0090c78b8553b85fcee2ff AS build-docs
 RUN         apt-get update \
             && apt-get install -y --no-install-recommends \
             build-essential \
