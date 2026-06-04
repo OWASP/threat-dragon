@@ -25,7 +25,7 @@ to download, configure and run a Docker container.
 
 Some provider APIs, including GitLab, require namespaced repository names to be URL encoded.
 Reverse proxies will return redirect responses to normalize URLs. This behavior is not compatible
-with Threat Dragon v2.6.2 and below. If you are recieving unexpected 404 responses with such a 
+with Threat Dragon v2.6.2 and below. If you are receiving unexpected 404 responses with such a
 configuration, please check your reverse proxy configuration for settings like `escapedSlashesAction`.
 
 ### Desktop application

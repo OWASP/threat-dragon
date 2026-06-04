@@ -104,6 +104,7 @@ Mitigations
 modelRef
 ModelRef
 msa
+namespaced
 nav
 npm
 npx
