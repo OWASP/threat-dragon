@@ -165,9 +165,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # platform manifests not (yet) supported, so split out architectures
-      - name: Build  for amd64 and push latest
-        id: docker_build_amd64
+      - name: Build for supported architectures and push latest
+        id: docker_build
         uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf # v7.2.0
         with:
           context: ./
@@ -177,22 +176,11 @@ jobs:
           tags:  ${{ env.IMAGE_NAME }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
-          platforms: linux/amd64
-          load: true
-
-      - name: Build for arm64 and push latest-arm64
-        id: docker_build_arm64
-        uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf # v7.2.0
-        with:
-          context: ./
-          file: ./Dockerfile
-          builder: ${{ steps.buildx.outputs.name }}
-          push: true
-          tags:  ${{ env.IMAGE_NAME }}-arm64
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
-          platforms: linux/arm64
-          load: true
+          # If you add more platforms, make sure to include them in ./pull_request.yaml too!
+          platforms: linux/amd64,linux/arm64
+          # Do not load the image heare, as multiplatform images can't be loaded that way
+          # The following docker run will instead pull from the registry we just pushed to
+          load: false
 
       - name: fetch app SBOMs
         run: docker run --rm --entrypoint tar "$IMAGE_ID" -c boms | tar -xv
