@@ -1,15 +1,15 @@
+import { auth, drive } from "@googleapis/drive";
 import env from '../env/Env.js';
-import { google } from 'googleapis';
 
 const getClient = (accessToken) => {
-    const oauth2Client = new google.auth.OAuth2(env.get().config.GOOGLE_CLIENT_ID, env.get().config.GOOGLE_CLIENT_SECRET, env.get().config.GOOGLE_REDIRECT_URI);
+    const oauth2Client = new auth.OAuth2(env.get().config.GOOGLE_CLIENT_ID, env.get().config.GOOGLE_CLIENT_SECRET, env.get().config.GOOGLE_REDIRECT_URI);
     oauth2Client.setCredentials({ access_token: accessToken });
     return oauth2Client;
 };
 
 const getFolderDetailsAsync = async (folderId, accessToken) => {
     const auth = getClient(accessToken);
-    const driveClient = google.drive({ version: 'v3', auth });
+    const driveClient = drive({ version: 'v3', auth });
 
     const res = await driveClient.files.get({
         fileId: folderId,
@@ -21,7 +21,7 @@ const getFolderDetailsAsync = async (folderId, accessToken) => {
 
 const listFilesInFolderAsync = async (folderId, pageToken, accessToken) => {
     const auth = getClient(accessToken);
-    const driveClient = google.drive({ version: 'v3', auth });
+    const driveClient = drive({ version: 'v3', auth });
 
     const res = await driveClient.files.list({
         q: `'${folderId}' in parents and (mimeType='application/vnd.google-apps.folder' or mimeType='application/json')`,
@@ -38,7 +38,7 @@ const listFilesInFolderAsync = async (folderId, pageToken, accessToken) => {
 
 const getFolderParentIdAsync = async (folderId, accessToken) => {
     const auth = getClient(accessToken);
-    const driveClient = google.drive({ version: 'v3', auth });
+    const driveClient = drive({ version: 'v3', auth });
 
     const res = await driveClient.files.get({
         fileId: folderId,
@@ -52,7 +52,7 @@ const getFolderParentIdAsync = async (folderId, accessToken) => {
 
 const getFileContentAsync = async (fileId, accessToken) => {
     const auth = getClient(accessToken);
-    const driveClient = google.drive({ version: 'v3', auth });
+    const driveClient = drive({ version: 'v3', auth });
 
     const res = await driveClient.files.get({
         fileId: fileId,
@@ -64,7 +64,7 @@ const getFileContentAsync = async (fileId, accessToken) => {
 
 const createFileInFolderAsync = async (folderId, fileName, fileContent, accessToken) => {
     const auth = getClient(accessToken);
-    const driveClient = google.drive({ version: 'v3', auth });
+    const driveClient = drive({ version: 'v3', auth });
 
     const fileMetadata = {
         name: fileName,
@@ -87,7 +87,7 @@ const createFileInFolderAsync = async (folderId, fileName, fileContent, accessTo
 
 const updateFileAsync = async (fileId, fileContent, accessToken) => {
     const auth = getClient(accessToken);
-    const driveClient = google.drive({ version: 'v3', auth });
+    const driveClient = drive({ version: 'v3', auth });
 
     const media = {
         mimeType: 'application/json',
@@ -105,7 +105,7 @@ const updateFileAsync = async (fileId, fileContent, accessToken) => {
 
 const deleteFileAsync = async (fileId, accessToken) => {
     const auth = getClient(accessToken);
-    const driveClient = google.drive({ version: 'v3', auth });
+    const driveClient = drive({ version: 'v3', auth });
 
     await driveClient.files.delete({
         fileId: fileId,
