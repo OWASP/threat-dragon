@@ -68,8 +68,8 @@ export const modelsAsync = async (branchInfo, accessToken) => {
         );
         return [models];
     } catch (e) {
-        if (e.name === 'GitbeakerRequestError' && e.cause.description.includes('Not Found')) {
-            return [[]];
+        if (e?.name === 'GitbeakerRequestError' && e?.cause?.response?.status === 404) {
+            e.statusCode = 404;
         }
         throw e;
     }
