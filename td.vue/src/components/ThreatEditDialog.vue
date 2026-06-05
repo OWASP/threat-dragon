@@ -267,6 +267,7 @@ import { CELL_DATA_UPDATED } from '@/store/actions/cell.js';
 import tmActions from '@/store/actions/threatmodel.js';
 import dataChanged from '@/service/x6/graph/data-changed.js';
 import threatModels from '@/service/threats/models/index.js';
+import { getStatusOptions } from '@/service/threats/status.js';
 import TdFormRadioGroup from '@/components/FormRadioGroup.vue';
 import TdFormSelect from '@/components/FormSelect.vue';
 import { getGame, getAllGames } from '../service/threats/models/eop';
@@ -299,17 +300,7 @@ export default {
             return res;
         },
         statuses() {
-            return [
-                {
-                    value: 'NotApplicable',
-                    text: this.$t('threats.status.notApplicable'),
-                },
-                { value: 'Open', text: this.$t('threats.status.open') },
-                {
-                    value: 'Mitigated',
-                    text: this.$t('threats.status.mitigated'),
-                },
-            ];
+            return getStatusOptions((key) => this.$t(key));
         },
         priorities() {
             return [

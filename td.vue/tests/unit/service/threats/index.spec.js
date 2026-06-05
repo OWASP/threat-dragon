@@ -177,6 +177,18 @@ describe('service/threats/index.js', () => {
             expect(threats.hasOpenThreats(data))
                 .toEqual(true);
         });
+
+        it('returns false if the only threats are accepted, transferred or avoided', () => {
+            const data = {
+                threats: [
+                    { status: 'Accepted' },
+                    { status: 'Transferred' },
+                    { status: 'Avoided' }
+                ]
+            };
+            expect(threats.hasOpenThreats(data))
+                .toEqual(false);
+        });
     });
 
     /**
@@ -315,6 +327,32 @@ describe('service/threats/index.js', () => {
             };
             const res = threats.filterForDiagram(data, { showMitigated: false });
             expect(res).toHaveLength(1);
+        });
+
+        it('hides accepted, transferred and avoided threats when showMitigated is false', () => {
+            const data = {
+                threats: [
+                    { status: 'Open' },
+                    { status: 'Accepted' },
+                    { status: 'Transferred' },
+                    { status: 'Avoided' },
+                    { status: 'NotApplicable' }
+                ]
+            };
+            const res = threats.filterForDiagram(data, { showMitigated: false });
+            expect(res.map(x => x.status)).toEqual(['Open', 'NotApplicable']);
+        });
+
+        it('shows accepted, transferred and avoided threats when showMitigated is true', () => {
+            const data = {
+                threats: [
+                    { status: 'Accepted' },
+                    { status: 'Transferred' },
+                    { status: 'Avoided' }
+                ]
+            };
+            const res = threats.filterForDiagram(data, { showMitigated: true });
+            expect(res).toHaveLength(3);
         });
     });
 

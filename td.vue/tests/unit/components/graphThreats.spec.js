@@ -85,6 +85,27 @@ describe('components/GraphThreats.vue', () => {
             expect(wrapper.find('.threat-icon.gray-icon').exists()).toEqual(true);
         });
 
+        it('displays a green check for accepted', () => {
+            const propsData = getDefaultPropsData();
+            propsData.status = 'Accepted';
+            wrapper = getWrapper(propsData);
+            expect(wrapper.find('.threat-icon.green-icon').exists()).toEqual(true);
+        });
+
+        it('displays a green check for transferred', () => {
+            const propsData = getDefaultPropsData();
+            propsData.status = 'Transferred';
+            wrapper = getWrapper(propsData);
+            expect(wrapper.find('.threat-icon.green-icon').exists()).toEqual(true);
+        });
+
+        it('displays a green check for avoided', () => {
+            const propsData = getDefaultPropsData();
+            propsData.status = 'Avoided';
+            wrapper = getWrapper(propsData);
+            expect(wrapper.find('.threat-icon.green-icon').exists()).toEqual(true);
+        });
+
         it('displays a darkred circle for critical severity', () => {
             const propsData = getDefaultPropsData();
             propsData.severity = 'Critical';
