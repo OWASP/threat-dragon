@@ -10,7 +10,7 @@ usage() {
 Usage: td-trivy-check.sh [options]
 
 Build the local Threat Dragon Docker image for linux/amd64 and scan it with
-Trivy using the same ignore file, fail level, and skip-files list used in CI.
+Trivy using the same ignore file and skip-files list used in CI.
 
 Options:
   --repo-dir PATH      Threat Dragon checkout. Defaults to TD_REPO_DIR,
@@ -124,7 +124,6 @@ docker run \
     "$trivy_image" \
     image \
     --exit-code 1 \
-    --severity CRITICAL,HIGH \
     --ignorefile /workspace/.trivyignore \
     --skip-files "$skip_files" \
     "$target_image"
