@@ -431,12 +431,12 @@ jobs:
           file: ./Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           tags:  ${{ env.IMAGE_NAME }}
+          load: false
           outputs: type=oci,dest=/tmp/${{ env.IMAGE_NAME }}.tar
           cache-from: type=gha
           cache-to: type=gha,mode=max
           # If you add more platforms, make sure to include them in ./push.yaml too!
           platforms: linux/amd64,linux/arm64
-          load: true
           sbom: true
           provenance: mode=max
 
