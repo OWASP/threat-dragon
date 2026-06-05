@@ -423,15 +423,6 @@ jobs:
         with:
           install: true
 
-      - name: Cache Docker layers
-        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile') }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-
-            ${{ runner.os }}-
-
       - name: Build for all supported architectures to test buildability
         id: docker_build
         uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf # v7.2.0
@@ -441,8 +432,8 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           tags:  ${{ env.IMAGE_NAME }}
           outputs: type=oci,dest=/tmp/${{ env.IMAGE_NAME }}.tar
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           # If you add more platforms, make sure to include them in ./push.yaml too!
           platforms: linux/amd64,linux/arm64
           load: true
@@ -459,13 +450,6 @@ jobs:
         run: |
           docker load --input /tmp/${{ env.IMAGE_NAME }}.tar
           docker image ls -a
-
-      - # Temp fix for large cache bug
-        # https://github.com/docker/build-push-action/issues/252
-        name: Move cache
-        run: |
-          rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
   scan_image_with_trivy:
     name: Scan with Trivy
