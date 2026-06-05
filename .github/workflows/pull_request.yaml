@@ -446,6 +446,8 @@ jobs:
           # If you add more platforms, make sure to include them in ./push.yaml too!
           platforms: linux/amd64,linux/arm64
           load: true
+          sbom: true
+          provenance: mode=max
 
       - name: Upload docker local image
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
