@@ -167,9 +167,9 @@ jobs:
           tags:  ${{ env.IMAGE_NAME }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          # If you add more platforms, make sure to include them in ./pull_request.yaml too!
+          # If you add more platforms, make sure to include them in ./pull_request.yaml and ./release.yaml too!
           platforms: linux/amd64,linux/arm64
-          # Do not load the image heare, as multiplatform images can't be loaded that way
+          # Do not load the image here, as multiplatform images can't be loaded that way
           # The following docker run will instead pull from the registry we just pushed to
           load: false
           sbom: true
