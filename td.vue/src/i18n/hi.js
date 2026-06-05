@@ -354,6 +354,7 @@ const messages = {
         exportPdf: 'पीडीएफ रिपोर्टें',
         exportTd: 'Original (Threat Dragon)',
         exportTemplate: 'As Template',
+        exportTmBom: 'As TM-BOM',
         exportOtm: 'Open Threat Model (OTM)',
         import: 'आयात',
         ok: 'ठीक है',

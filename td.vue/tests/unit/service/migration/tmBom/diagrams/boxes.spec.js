@@ -9,15 +9,14 @@ describe('service/migration/tmBom/diagrams/boxes.js', () => {
         let nodes;
         beforeEach(() => {
             nodes = {
-                actors: [{id: 'actor0'}, {id: 'actor1'}, {id: 'test-actor'}],
-                components: [{id: 'component1'}, {id: 'component2'}, {id: 'test-component'}],
-                data_stores: [{id: 'store1'}, {id: 'store2'}, {id: 'test-store'}]
+                actors: [{symbolic_name: 'actor0'}, {symbolic_name: 'actor1'}, {symbolic_name: 'test-actor'}],
+                components: [{symbolic_name: 'component1'}, {symbolic_name: 'component2'}, {symbolic_name: 'test-component'}],
+                data_stores: [{symbolic_name: 'store1'}, {symbolic_name: 'store2'}, {symbolic_name: 'test-store'}]
             };
             trustZones = boxes.convert(tdModel, nodes);
         });
 
         it('converts boundary boxes to trust zones', () => {
-            console.debug(JSON.stringify(trustZones, null, 2));
             expect(trustZones.length).toBeGreaterThan(4);
             expect(trustZones.findIndex((x) => x.symbolic_name === 'trust-boundary-box0')).toBeGreaterThanOrEqual(0);
         });

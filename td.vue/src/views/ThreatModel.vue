@@ -140,30 +140,8 @@ export default {
         },
         async onExportTmBomClick(evt) {
             evt.preventDefault();
-            console.debug('onExportTmBomClick');
-
-            // Validate title exists before creating/saving
-            if (!this.model.summary.title || this.model.summary.title.trim() === '') {
-                this.$toast.error('Threat model must have a title');
-                return;
-            }
-
-            const isCreating = this.$route.name === 'gitThreatModelCreate' || this.$route.name === 'googleThreatModelCreate';
-
-            if (isCreating) {
-                const result = await this.$store.dispatch(tmActions.create);
-                // Only navigate to edit route if create was successful
-                if (result) {
-                    const params = Object.assign({}, this.$route.params, {
-                        threatmodel: this.model.summary.title
-                    });
-                    this.$router.replace({ name: `${this.providerType}ThreatModelEdit`, params });
-                }
-            } else {
-                // Force selection of file name on TM-BOM export
-                await this.$store.dispatch(tmActions.update, { fileName: '' });
-                await this.$store.dispatch(tmActions.saveModel);
-            }
+            const tmBom = this.$store.getters.tmBomExport;
+            console.debug('Export to TM-BOM ' + JSON.stringify(tmBom, null, 2));
         },
         getThumbnailUrl(diagram) {
             if (!diagram || !diagram.diagramType) {
@@ -182,7 +160,6 @@ export default {
         let threatTop = this.model.detail.threatTop === undefined ? 100 : this.model.detail.threatTop;
         let diagramTop = this.model.detail.diagramTop === undefined ? 10 : this.model.detail.diagramTop;
         let update = { diagramTop: diagramTop, version: this.version, threatTop: threatTop };
-        console.debug('updates: ' + JSON.stringify(update));
         this.$store.dispatch(tmActions.update, update);
         // if a diagram has just been closed, the history insists on marking the model as modified
         this.$store.dispatch(tmActions.notModified);

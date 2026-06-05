@@ -354,6 +354,7 @@ const messages = {
         exportPdf: 'Speichern als PDF',
         exportTd: 'Original (Threat Dragon)',
         exportTemplate: 'Export As Template',
+        exportTmBom: 'As TM-BOM',
         exportOtm: 'Open Threat Model (OTM)',
         import: 'Importieren',
         ok: 'OK',

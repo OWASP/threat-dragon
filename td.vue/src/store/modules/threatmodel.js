@@ -14,18 +14,19 @@ import {
     THREATMODEL_DIAGRAM_SELECTED,
     THREATMODEL_FETCH,
     THREATMODEL_FETCH_ALL,
+    THREATMODEL_LOAD_DEMOS,
     THREATMODEL_MODIFIED,
     THREATMODEL_NOT_MODIFIED,
     THREATMODEL_RESTORE,
     THREATMODEL_SAVE,
     THREATMODEL_SELECTED,
     THREATMODEL_STASH,
-    THREATMODEL_UPDATE,
     THREATMODEL_TEMPLATE_DOWNLOAD,
     THREATMODEL_TEMPLATE_LOAD,
-    THREATMODEL_LOAD_DEMOS
+    THREATMODEL_UPDATE
 } from '@/store/actions/threatmodel';
 import save from '@/service/save';
+import tmBom from '@/service/migration/tmBom/tmBom';
 import threatmodelApi from '@/service/api/threatmodelApi';
 import googleDriveApi from '@/service/api/googleDriveApi';
 import { FOLDER_SELECTED } from '../actions/folder';
@@ -42,7 +43,6 @@ const state = {
 };
 
 const stashThreatModel = (theState, threatModel) => {
-    console.debug('Stash threat model');
     theState.data = threatModel;
     theState.stash = JSON.stringify(threatModel);
 };
@@ -125,7 +125,6 @@ const actions = {
         commit(THREATMODEL_RESTORE, originalModel);
     },
     [THREATMODEL_SAVE]: async ({ dispatch, commit, rootState, state }) => {
-        console.debug('Save threat model action');
         if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
             // desktop responds later with its own STASH and NOT_MODIFIED
             window.electronAPI.modelSave(toDesktopSavePayload(state.data), state.fileName);
@@ -188,24 +187,8 @@ const actions = {
 
 
     },
-
-    /**
-     * Loads a template into the threat model state, regenerating cell and port IDs
-     * 
-     * Creates a new threat model from a template by deep cloning the model data and
-     * regenerating UUIDs for all diagram cells and ports to ensure uniqueness.
-     * Diagram IDs are preserved as they are model-scoped.
-     * 
-     * @async
-     * @param {Object} context - Vuex action context
-     * @param {Function} context.commit - Vuex commit function
-     * @param {Object} templateData - Template model data (threat model JSON structure)
-     * @returns {Promise<void>}
-     */
     [THREATMODEL_TEMPLATE_LOAD]: async ({ commit }, { templateData }) => {
         console.debug('Load template action');
-
-        // Convert template → model
         const model = JSON.parse(JSON.stringify(templateData)); // deep clone
 
         // Regenerate all cell and port IDs (diagram IDs stay as-is)
@@ -303,11 +286,9 @@ const mutations = {
         state.modified = true;
     },
     [THREATMODEL_RESTORE]: (state, originalThreatModel) => {
-        console.debug('Threatmodel restored');
         stashThreatModel(state, originalThreatModel);
     },
     [THREATMODEL_SELECTED]: (state, threatModel) => {
-        console.debug('Threatmodel selected');
         stashThreatModel(state, threatModel);
     },
     [THREATMODEL_STASH]: (state) => {
@@ -341,11 +322,13 @@ const getters = {
         }
         return contribs.map(x => x.name);
     },
+    isV1Model: (state) => Object.keys(state.data).length > 0 && (state.data.version == null || state.data.version.startsWith('1.')),
     modelChanged: (state) => {
-        console.debug('model modified: ' + state.modified);
         return state.modified;
     },
-    isV1Model: (state) => Object.keys(state.data).length > 0 && (state.data.version == null || state.data.version.startsWith('1.'))
+    tmBomExport: (state) => {
+        return tmBom.exportAsTmbom(state.data);
+    }
 };
 
 export const clearState = (state) => {
@@ -357,7 +340,7 @@ export const clearState = (state) => {
     state.modifiedDiagram = {};
     state.selectedDiagram = {};
     if (isElectron()) {
-        // advise electron server that the model has closed
+        // advise electron server that the model has closed this file
         window.electronAPI.modelClosed(state.fileName);
     }
     state.fileName = '';

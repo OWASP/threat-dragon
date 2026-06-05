@@ -9,7 +9,6 @@ import summary from './summary';
 import threats from './diagrams/threats/threats';
 
 const tdVersion = require('../../../../package.json').version;
-const tmbomVersion = tdVersion;
 
 const createKey = (source, target, key) => {
     if (Object.hasOwn(source, key)) {
@@ -25,7 +24,7 @@ const exportAsTmbom = (model) => {
     let tmbomThreats = threats.convert(model);
     let tmbom = {
         $schema: schema.$id,
-        version: model.compatibility?.version || tmbomVersion,
+        version: model.compatibility?.version || tdVersion,
         scope: scope.convert(model),
         diagrams: diagrams.convert(model),
         trust_zones: boxes.convert(model, tmbomNodes),
@@ -100,7 +99,7 @@ const read = (model) => {
 const write = (model) => {
     // not supported yet, so return a nearly empty TM-BOM
     return {
-        version: tmbomVersion,
+        version: tdVersion,
         scope: {
             title: model.tmBom.scope.title,
             description: 'Empty Threat Model Bill of Materials (TM-BOM)',
