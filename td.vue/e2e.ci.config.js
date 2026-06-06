@@ -21,6 +21,7 @@ if (useMockServer) {
 const excludeSpecPattern = [ 'tests/e2e/specs/smokes/*.cy.js', 'tests/e2e/specs/visual/*.cy.js' ];
 if (!useMockServer) {
     excludeSpecPattern.push('tests/e2e/specs/pagination/*.cy.js');
+    excludeSpecPattern.push('tests/e2e/specs/gitlab/*.cy.js');
 }
 
 module.exports = defineConfig({
