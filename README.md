@@ -4,8 +4,8 @@
 </p>
 
 [![GitHub license](https://img.shields.io/github/license/owasp/threat-dragon.svg)](license.txt)
-[![Build status](https://github.com/OWASP/threat-dragon/actions/workflows/push.yaml/badge.svg?event=push)][build]
-[![GitHub release](https://img.shields.io/github/v/release/owasp/threat-dragon.svg)][latest]
+[![Build status](https://img.shields.io/github/check-runs/OWASP/threat-dragon/main?label=CI)][build]
+[![GitHub release](https://img.shields.io/github/v/release/owasp/threat-dragon?sort=semver)][latest]
 [![OWASP Lab](https://img.shields.io/badge/owasp-lab%20project-f7b73c.svg)](https://owasp.org/projects/)
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/9266/badge)][practices]
 
