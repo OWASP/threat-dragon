@@ -36,7 +36,7 @@ RUN         cp td.server/sbom.json        boms/threat-dragon-server-bom.json && 
             cp td.vue/dist/.sbom/bom.xml  boms/threat-dragon-site-bom.xml
 
 
-FROM        ruby:4.0-slim-bookworm AS build-docs
+FROM        ruby:4.0.5-slim-bookworm AS build-docs
 RUN         apt-get update \
             && apt-get install -y --no-install-recommends \
             build-essential \
