@@ -86,6 +86,8 @@ The best chance of success for a pull request to be reviewed and accepted:
 7. avoid coding using [generative AI](#use-of-ai-for-coding);
   if you must then understand fully the changes and keep sprawl to a minimum
 
+If CI fails,`scripts/td-pr-check.sh` runs the local equivalents of the PR workflow locally.
+
 We appreciate contributions always,
 but make sure you have been **assigned the issue** before you submit any pull request
 otherwise the pull request is very likely to be discarded.
