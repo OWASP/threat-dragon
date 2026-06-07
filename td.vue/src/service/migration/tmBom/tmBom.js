@@ -19,7 +19,7 @@ const createKey = (source, target, key) => {
 // export a Threat Dragon file to TM-BOM format, required keys for TM-BOM:
 // version, scope, trust_zones, trust_boundaries, actors, components
 // data_stores, data_sets, data_flows
-const exportAsTmbom = (model) => {
+export const exportAsTmbom = (model) => {
     let tmbomNodes = nodes.convert(model);
     let tmbomThreats = threats.convert(model);
     let tmbom = {

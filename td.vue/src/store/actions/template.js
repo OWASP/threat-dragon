@@ -7,6 +7,8 @@ export const TEMPLATE_FETCH_MODEL_BY_ID = 'TEMPLATE_FETCH_MODEL_BY_ID';
 export const TEMPLATE_SET_TEMPLATES = 'TEMPLATE_SET_TEMPLATES';// mutation ot set templates fetched from backend
 export const TEMPLATE_BOOTSTRAP = 'TEMPLATE_BOOTSTRAP';
 export const TEMPLATE_SET_CONTENT_REPO_STATUS = 'TEMPLATE_SET_CONTENT_REPO_STATUS';// mutation to set content repo status
+export const TEMPLATE_DOWNLOAD = 'THREATMODEL_TEMPLATE_DOWNLOAD';
+export const TEMPLATE_LOAD = 'TEMPLATE_LOAD';
 
 export default {
     fetchAll: TEMPLATE_FETCH_ALL,
@@ -15,5 +17,7 @@ export default {
     update: TEMPLATE_UPDATE,
     delete: TEMPLATE_DELETE,
     fetchModelById: TEMPLATE_FETCH_MODEL_BY_ID,
-    bootstrap: TEMPLATE_BOOTSTRAP
+    bootstrap: TEMPLATE_BOOTSTRAP,
+    templateDownload: TEMPLATE_DOWNLOAD,
+    templateLoad: TEMPLATE_LOAD
 };

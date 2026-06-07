@@ -16,11 +16,9 @@ import {
     THREATMODEL_SAVE,
     THREATMODEL_SELECTED,
     THREATMODEL_STASH,
-    THREATMODEL_TEMPLATE_DOWNLOAD,
-    THREATMODEL_TEMPLATE_LOAD,
     THREATMODEL_UPDATE
-} from '@/store/actions/threatmodel.js';
-import threatmodel from '@/store/actions/threatmodel.js';
+} from '@/store/actions/threatmodel';
+import threatmodel from '@/store/actions/threatmodel';
 
 describe('store/actions/threatmodel.js', () => {
     it('defines a clear action', () => {
@@ -106,16 +104,6 @@ describe('store/actions/threatmodel.js', () => {
     it('defines a set immutable copy action', () => {
         expect(THREATMODEL_STASH).toBeDefined();
         expect(threatmodel.stash).toBeDefined();
-    });
-
-    it('defines a template download action', () => {
-        expect(THREATMODEL_TEMPLATE_DOWNLOAD).toBeDefined();
-        expect(threatmodel.templateDownload).toBeDefined();
-    });
-
-    it('defines a template load action', () => {
-        expect(THREATMODEL_TEMPLATE_LOAD).toBeDefined();
-        expect(threatmodel.templateLoad).toBeDefined();
     });
 
     it('defines an update action', () => {

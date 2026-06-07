@@ -84,7 +84,7 @@ import { mapState } from 'vuex';
 import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
 import TdFormTags from '@/components/FormTags.vue';
-import tmActions from '@/store/actions/threatmodel.js';
+import templateActions from '@/store/actions/template.js';
 
 export default {
     name: 'ExportTemplate',
@@ -122,7 +122,7 @@ export default {
                 tags: this.templateTags
             };
             
-            await this.$store.dispatch(tmActions.templateDownload, templateMetadata);
+            await this.$store.dispatch(templateActions.templateDownload, this.model, templateMetadata);
             
             // Navigate back to threat model view using the current route context
             const isLocalRoute = this.$route.name && this.$route.name.startsWith('local');

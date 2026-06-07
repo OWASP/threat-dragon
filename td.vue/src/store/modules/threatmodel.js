@@ -1,9 +1,7 @@
-import Vue from 'vue';
-
 import demo from '@/service/demo/index.js';
-import isElectron from 'is-electron';
 import { getProviderType } from '@/service/provider/providers';
 import { providerTypes } from '@/service/provider/providerTypes';
+import { FOLDER_SELECTED } from '@/store/actions/folder';
 import {
     THREATMODEL_CLEAR,
     THREATMODEL_CONTRIBUTORS_UPDATED,
@@ -21,16 +19,12 @@ import {
     THREATMODEL_SAVE,
     THREATMODEL_SELECTED,
     THREATMODEL_STASH,
-    THREATMODEL_TEMPLATE_DOWNLOAD,
-    THREATMODEL_TEMPLATE_LOAD,
     THREATMODEL_UPDATE
 } from '@/store/actions/threatmodel';
 import save from '@/service/save';
-import tmBom from '@/service/migration/tmBom/tmBom';
-import threatmodelApi from '@/service/api/threatmodelApi';
 import googleDriveApi from '@/service/api/googleDriveApi';
-import { FOLDER_SELECTED } from '../actions/folder';
-import { v4 } from 'uuid';
+import threatmodelApi from '@/service/api/threatmodelApi';
+import tmbom from '@/service/migration/tmBom/tmBom';
 
 const state = {
     all: [],
@@ -50,7 +44,13 @@ const stashThreatModel = (theState, threatModel) => {
 const toDesktopSavePayload = (threatModel) => JSON.parse(JSON.stringify(threatModel));
 
 const actions = {
-    [THREATMODEL_CLEAR]: ({ commit }) => commit(THREATMODEL_CLEAR),
+    [THREATMODEL_CLEAR]: ({ rootState, commit }) => {
+        if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
+            // advise electron server that the model has closed this file
+            window.electronAPI.modelClosed(state.fileName);
+        }
+        commit(THREATMODEL_CLEAR);
+    },
     [THREATMODEL_CONTRIBUTORS_UPDATED]: ({ commit }, contributors) => commit(THREATMODEL_CONTRIBUTORS_UPDATED, contributors),
     [THREATMODEL_CREATE]: async ({ dispatch, commit, rootState, state }) => {
         console.debug('Create threat model action');
@@ -87,9 +87,7 @@ const actions = {
         dispatch(THREATMODEL_CLEAR);
         let resp;
         if (getProviderType(rootState.provider.selected) === providerTypes.google) {
-            resp = await googleDriveApi.modelAsync(
-                threatModel
-            );
+            resp = await googleDriveApi.modelAsync(threatModel);
         } else {
             resp = await threatmodelApi.modelAsync(
                 rootState.repo.selected,
@@ -146,94 +144,7 @@ const actions = {
     [THREATMODEL_SELECTED]: ({ commit }, threatModel) => commit(THREATMODEL_SELECTED, threatModel),
     [THREATMODEL_STASH]: ({ commit }) => commit(THREATMODEL_STASH),
     [THREATMODEL_NOT_MODIFIED]: ({ commit }) => commit(THREATMODEL_NOT_MODIFIED),
-    [THREATMODEL_UPDATE]: ({ commit }, update) => commit(THREATMODEL_UPDATE, update),
-    [THREATMODEL_TEMPLATE_DOWNLOAD]: async ({ state }, templateMetadata) => {
-        console.debug('Download template action');
-
-        const model = JSON.parse(JSON.stringify(state.data));
-
-        // Blank out instance-specific fields
-        model.summary.id = '';
-        model.summary.owner = '';
-        model.summary.title = templateMetadata.name || '';
-        model.summary.description = templateMetadata.description || '';
-
-        if (model.detail.reviewer !== undefined) {
-            model.detail.reviewer = '';
-        }
-
-        if (model.detail.contributors) {
-            model.detail.contributors = [];
-        }
-
-        // Create the template structure
-        const templateData = {
-            templateMetadata: {
-                id: v4(), // Don't forget the GUID!
-                name: templateMetadata.name,
-                description: templateMetadata.description,
-                tags: templateMetadata.tags,
-                modelRef: v4()
-            },
-            model: model
-        };
-
-        // Calculate filename once
-        const fileName = `${templateMetadata.name}.json`;
-
-        // CALL THE NEW FUNCTION
-        // Pass data and filename explicitly. No confusing 'state' wrapper needed.
-        return await save.template(templateData, fileName);
-
-
-    },
-    [THREATMODEL_TEMPLATE_LOAD]: async ({ commit }, { templateData }) => {
-        console.debug('Load template action');
-        const model = JSON.parse(JSON.stringify(templateData)); // deep clone
-
-        // Regenerate all cell and port IDs (diagram IDs stay as-is)
-        const idMap = {};
-
-        model.detail.diagrams.forEach(diagram => {
-
-            // First pass: map all cell and port IDs
-            if (diagram.cells && Array.isArray(diagram.cells)) {
-                diagram.cells.forEach(cell => {
-                    idMap[cell.id] = v4();
-
-                    if (cell.ports?.items) {
-                        cell.ports.items.forEach(port => {
-                            idMap[port.id] = v4();
-                        });
-                    }
-                });
-
-                // Second pass: apply new IDs and update references
-                diagram.cells.forEach(cell => {
-                    cell.id = idMap[cell.id];
-
-                    if (cell.ports?.items) {
-                        cell.ports.items.forEach(port => {
-                            port.id = idMap[port.id];
-                        });
-                    }
-
-                    if (cell.source?.cell) {
-                        cell.source.cell = idMap[cell.source.cell];
-                        cell.source.port = idMap[cell.source.port];
-                    }
-
-                    if (cell.target?.cell) {
-                        cell.target.cell = idMap[cell.target.cell];
-                        cell.target.port = idMap[cell.target.port];
-                    }
-                });
-            }
-        });
-
-        commit(THREATMODEL_SELECTED, model);
-
-    }
+    [THREATMODEL_UPDATE]: ({ commit }, update) => commit(THREATMODEL_UPDATE, update)
 };
 
 const mutations = {
@@ -243,44 +154,33 @@ const mutations = {
             ? contributors
             : (contributors ? [contributors] : []);
         state.data.detail.contributors.length = 0;
-        normalizedContributors.forEach((name, idx) => Vue.set(state.data.detail.contributors, idx, { name }));
+        normalizedContributors.forEach((name, idx) => state.data.detail.contributors[idx] = { name });
     },
     [THREATMODEL_DIAGRAM_CLOSED]: (state) => {
         state.modified = false;
         state.modifiedDiagram = {};
-        console.debug('Threatmodel diagram closed to edits');
     },
     [THREATMODEL_DIAGRAM_MODIFIED]: (state, diagram) => {
         if (diagram && Object.keys(state.modifiedDiagram).length !== 0) {
-            // const idx = state.data.detail.diagrams.findIndex(x => x.id === diagram.id);
-            // console.debug('Threatmodel diagram modified: ' + diagram.id + ' at index: ' + idx);
             state.modifiedDiagram = diagram;
-            if (state.modified === false) {
-                console.debug('model (diagram) now modified');
-                state.modified = true;
-            }
+            state.modified = true;
         }
     },
     [THREATMODEL_DIAGRAM_SAVED]: (state, diagram) => {
         const idx = state.data.detail.diagrams.findIndex(x => x.id === diagram.id);
-        console.debug('Threatmodel diagram saved: ' + diagram.id + ' at index: ' + idx);
-        // beware: this will trigger a redraw of the diagram, ?possibly to the wrong canvas size?
-        Vue.set(state, 'selectedDiagram', diagram);
-        // beware ^^
-        Vue.set(state.data.detail.diagrams, idx, diagram);
-        Vue.set(state.data, 'version', diagram.version);
+        state.selectedDiagram = diagram;
+        state.data.detail.diagrams[idx] = diagram;
+        state.data.version = diagram.version;
         stashThreatModel(state, state.data);
     },
     [THREATMODEL_DIAGRAM_SELECTED]: (state, diagram) => {
-        Vue.set(state, 'selectedDiagram', diagram);
+        state.selectedDiagram = diagram;
         state.modifiedDiagram = diagram;
-        const idx = state.data.detail.diagrams.findIndex(x => x.id === diagram.id);
-        console.debug('Threatmodel diagram selected for edits: ' + diagram.id + ' at index: ' + idx);
     },
     [THREATMODEL_FETCH]: (state, threatModel) => stashThreatModel(state, threatModel),
     [THREATMODEL_FETCH_ALL]: (state, models) => {
         state.all.length = 0;
-        models.forEach((model, idx) => Vue.set(state.all, idx, model));
+        models.forEach((model, idx) => state.all[idx] = model);
     },
     [THREATMODEL_MODIFIED]: (state) => {
         state.modified = true;
@@ -292,25 +192,24 @@ const mutations = {
         stashThreatModel(state, threatModel);
     },
     [THREATMODEL_STASH]: (state) => {
-        Vue.set(state, 'stash', JSON.stringify(state.data));
+        state.stash = JSON.stringify(state.data);
     },
     [THREATMODEL_NOT_MODIFIED]: (state) => {
         state.modified = false;
     },
     [THREATMODEL_UPDATE]: (state, update) => {
         if (update.version) {
-            Vue.set(state.data, 'version', update.version);
+            state.data.version = update.version;
         }
         if (update.diagramTop) {
-            Vue.set(state.data.detail, 'diagramTop', update.diagramTop);
+            state.data.detail.diagramTop = update.diagramTop;
         }
         if (update.threatTop) {
-            Vue.set(state.data.detail, 'threatTop', update.threatTop);
+            state.data.detail.threatTop = update.threatTop;
         }
         if (update.fileName) {
-            Vue.set(state, 'fileName', update.fileName);
+            state.fileName = update.fileName;
         }
-        console.debug('Threatmodel update: ' + JSON.stringify(update));
     }
 };
 
@@ -327,22 +226,17 @@ const getters = {
         return state.modified;
     },
     tmBomExport: (state) => {
-        return tmBom.exportAsTmbom(state.data);
+        return tmbom.exportAsTmbom(state.data);
     }
 };
 
 export const clearState = (state) => {
-    console.debug('Threatmodel cleared');
     state.all.length = 0;
     state.data = {};
     state.stash = '';
     state.modified = false;
     state.modifiedDiagram = {};
     state.selectedDiagram = {};
-    if (isElectron()) {
-        // advise electron server that the model has closed this file
-        window.electronAPI.modelClosed(state.fileName);
-    }
     state.fileName = '';
 };
 

@@ -104,7 +104,6 @@
 <script>
 import { mapGetters, mapState } from 'vuex';
 import templateActions from '@/store/actions/template.js';
-import tmActions from '@/store/actions/threatmodel.js';
 import schema from '@/service/schema/ajv.js';
 import { getProviderType } from '@/service/provider/providers';
 import { providerTypes } from '@/service/provider/providerTypes';
@@ -188,7 +187,7 @@ export default {
                     }
 
                     // Load template (regenerates IDs and sets as current model, current model set in the action)
-                    await this.$store.dispatch(tmActions.templateLoad, {
+                    await this.$store.dispatch(templateActions.templateLoad, {
                         templateData: templateData.model
                     });
 
@@ -230,7 +229,7 @@ export default {
                 );
 
                 // Load template (regenerates IDs and sets as current model, current model set in the action)
-                await this.$store.dispatch(tmActions.templateLoad, {
+                await this.$store.dispatch(templateActions.templateLoad, {
                     templateData: templateData.content
                 });
 
