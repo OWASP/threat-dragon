@@ -1,3 +1,5 @@
+const shared = require('../eslint.shared.js');
+
 module.exports = {
     env: {
         'node': true
@@ -17,12 +19,9 @@ module.exports = {
         'vue'
     ],
     rules: {
+        ...shared.rules,
         'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-        'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-        semi: 2,
-        quotes: ['error', 'single', { avoidEscape: true, allowTemplateLiterals: true }],
-        indent: ['error', 4],
-        'no-mixed-spaces-and-tabs': ['error', 'smart-tabs']
+        'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
     },
     overrides: [
         {
