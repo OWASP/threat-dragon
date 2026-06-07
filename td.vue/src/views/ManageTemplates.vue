@@ -265,7 +265,7 @@ export default {
                 console.error('Error saving template:', error);
                 
                 // Check for duplicate template error
-                if (error.response?.status === 400 ) {
+                if (error.response?.status === 400) {
                     this.$toast.error(this.$t('template.errors.duplicateTemplate'));
                 } else {
                     this.$toast.error(this.$t('template.warnings.templateSave'));

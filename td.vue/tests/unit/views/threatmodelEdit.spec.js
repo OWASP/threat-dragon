@@ -4,7 +4,7 @@ import Vuex from 'vuex';
 
 import ThreatModelEdit from '@/views/ThreatModelEdit.vue';
 import TdFormTags from '@/components/FormTags.vue';
-import { THREATMODEL_CONTRIBUTORS_UPDATED, THREATMODEL_RESTORE, THREATMODEL_NOT_MODIFIED,  } from '@/store/actions/threatmodel.js';
+import { THREATMODEL_CONTRIBUTORS_UPDATED, THREATMODEL_RESTORE, THREATMODEL_NOT_MODIFIED, } from '@/store/actions/threatmodel.js';
 
 describe('views/ThreatmodelEdit.vue', () => {
     const contributors = ['foo', 'bar' ];
@@ -37,7 +37,7 @@ describe('views/ThreatmodelEdit.vue', () => {
                             description
                         },
                         detail: {
-                            contributors: contributors.map(x =>  ({ name: x })),
+                            contributors: contributors.map(x => ({ name: x })),
                             diagrams,
                             reviewer
                         }
@@ -233,7 +233,7 @@ describe('views/ThreatmodelEdit.vue', () => {
             });
 
             it('adds a new diagram', () => {
-                expect(mockStore.state.threatmodel.data.detail.diagrams).toHaveLength(diagramCount  + 1);
+                expect(mockStore.state.threatmodel.data.detail.diagrams).toHaveLength(diagramCount + 1);
             });
         });
 
@@ -261,7 +261,7 @@ describe('views/ThreatmodelEdit.vue', () => {
             });
 
             it('removes the diagram', () => {
-                expect(mockStore.state.threatmodel.data.detail.diagrams).toHaveLength(diagramCount  - 1);
+                expect(mockStore.state.threatmodel.data.detail.diagrams).toHaveLength(diagramCount - 1);
             });
         });
     });

@@ -5,7 +5,7 @@
 import axios from 'axios';
 
 import env from '../env/Env.js';
-import repositories from "../repositories";
+import repositories from '../repositories';
 
 const name = 'bitbucket';
 
@@ -59,17 +59,17 @@ const getOauthReturnUrl = (code) => {
 const completeLoginAsync = async (code) => {
     const url = `${getBitbucketUrl()}/site/oauth2/access_token`;
     const form = new FormData();
-    form.append("grant_type", "authorization_code");
-    form.append("client_id", env.get().config.BITBUCKET_CLIENT_ID);
-    form.append("client_secret", env.get().config.BITBUCKET_CLIENT_SECRET);
-    form.append("code", code);
+    form.append('grant_type', 'authorization_code');
+    form.append('client_id', env.get().config.BITBUCKET_CLIENT_ID);
+    form.append('client_secret', env.get().config.BITBUCKET_CLIENT_SECRET);
+    form.append('code', code);
     const options = {
         headers: {
             'Content-Type': `multipart/form-data; boundary=${form._boundary}`,
         }
     };
 
-    repositories.set("bitbucketrepo");
+    repositories.set('bitbucketrepo');
     const repo = repositories.get();
     const providerResp = await axios.post(url, form, options);
     const fullUser = await repo.userAsync(providerResp.data.access_token);

@@ -10,7 +10,7 @@ const fs = require('fs');
 const buildVersion = require('../../package.json').version;
 
 // provided by electron server bootstrap
-var mainWindow;
+let mainWindow;
 
 // access the i18n message strings
 import ar from '@/i18n/ar.js';
@@ -30,7 +30,7 @@ import zh from '@/i18n/zh.js';
 
 const messages = { ar, de, el, en, es, fi, fr, hi, id, ja, ms, pt, 'pt-BR': ptBr, zh };
 const defaultLanguage = 'en';
-var language = defaultLanguage;
+let language = defaultLanguage;
 
 export const model = {
     fileDirectory: '',
@@ -39,7 +39,7 @@ export const model = {
 };
 
 export function getMenuTemplate () {
-    var menuTemplate = (isMacOS ? [{ role: 'appMenu' }] : []);
+    const menuTemplate = (isMacOS ? [{ role: 'appMenu' }] : []);
     menuTemplate.push(
         {
             label: messages[language].desktop.file.heading,
@@ -217,7 +217,7 @@ function openModelRequest (filename) {
 // open model file and send to renderer
 function openModelFile (filename) {
     logger.log.debug(messages[language].desktop.file.open + ': ' + filename);
-    var modelData;
+    let modelData;
 
     if (!filename.endsWith('.json')) {
         logger.log.warn(messages[language].threatmodel.errors.onlyJsonAllowed);
@@ -279,7 +279,7 @@ function saveModelDataAs (modelData, fileName) {
     if (fileName) {
         newName = fileName;
     }
-    var dialogOptions = {
+    const dialogOptions = {
         title: messages[language].desktop.file.saveAs,
         defaultPath: path.join(model.fileDirectory, newName),
         filters: [{ name: 'Threat Model', extensions: ['json'] }, { name: 'All Files', extensions: ['*'] }]
@@ -305,7 +305,7 @@ function saveModelDataAs (modelData, fileName) {
 
 // request that the renderer open a new model
 function newModel () {
-    let newName = 'new-model.json';
+    const newName = 'new-model.json';
     logger.log.debug(messages[language].desktop.file.new + ': ' + newName);
     mainWindow.webContents.send('new-model-request', newName);
 }
@@ -350,7 +350,7 @@ function saveModelData (modelData) {
 // Open saveAs file system dialog and write report contents as HTML
 function saveHTMLReport (htmlPath) {
     htmlPath += '.html';
-    var dialogOptions = {
+    const dialogOptions = {
         title: messages[language].forms.saveAS,
         defaultPath: htmlPath,
         filters: [{ name: 'HTML export', extensions: ['html'] }, { name: 'All Files', extensions: ['*'] }]
@@ -377,7 +377,7 @@ function saveHTMLReport (htmlPath) {
 // Open saveAs file system dialog and write PDF report
 function savePDFReport (pdfPath) {
     pdfPath += '.pdf';
-    var dialogOptions = {
+    const dialogOptions = {
         title: messages[language].forms.exportPdf,
         defaultPath: pdfPath,
         properties: ['openFile'],
@@ -415,7 +415,7 @@ function savePDFReport (pdfPath) {
 }
 
 function showAboutBox () {
-    var dialogOptions = {
+    const dialogOptions = {
         type: 'info',
         title: messages[language].desktop.help.about.about + ' ' + messages[language].home.title,
         icon: '../assets/threatdragon_logo_solid_image.svg',

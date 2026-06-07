@@ -17,7 +17,7 @@
     "cypress:update": "npx update-browserslist-db@latest",
     "predev": "node ./src/plugins/generate-cornucopia.js",
     "dev": "vue-cli-service serve",
-    "lint": "vue-cli-service lint",
+    "lint": "vue-cli-service lint --fix",
     "lint:desktop": "vue-cli-service lint src/desktop tests/unit/desktop",
     "pretest": "npm run lint && npm run lint:desktop && node ./src/plugins/generate-cornucopia.js",
     "serve": "vue-cli-service serve",

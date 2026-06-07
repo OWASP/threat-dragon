@@ -98,7 +98,7 @@ export default {
     methods: {
         onDropFile(event) {
             if (event.dataTransfer.files.length === 1) {
-                let file = event.dataTransfer.files[0];
+                const file = event.dataTransfer.files[0];
                 if (file.name.endsWith('.json')) {
                     file.text()
                         .then(text => {
@@ -119,7 +119,7 @@ export default {
                 // Chrome and Edge browsers return an array of file handles
                 try {
                     const [handle] = await window.showOpenFilePicker(pickerFileOptions);
-                    let file = await handle.getFile();
+                    const file = await handle.getFile();
                     if (file.name.endsWith('.json')) {
                         this.tmJson = await file.text();
                         this.$store.dispatch(tmActions.update, { fileName: file.name });

@@ -12,7 +12,7 @@ const merge = (model, tdThreats) => {
 
     model.controls?.forEach((control) => {
         control = boundaries.merge(model, control);
-        for (let threat of control.threats) {
+        for (const threat of control.threats) {
             tdThreats.forEach((tdThreat) => {
                 if (threat === tdThreat.id) {
                     tdThreat.mitigation += '\n' + control.status.replaceAll('_', ' ') + ': ' + control.title + '\n';

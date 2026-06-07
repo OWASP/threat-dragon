@@ -1,12 +1,12 @@
 import detail from '@/service/migration/tdV1/detail';
 import v1Model from './v1-threat-model';
 
-const emtpyV1Detail = {'detail': {'contributors': [],'diagrams': []}};
+const emtpyV1Detail = {'detail': {'contributors': [], 'diagrams': []}};
 const testVersion = 'testVersion';
 
 describe('service/migration/tdV1/detail.js', () => {
     let v2Detail;
-    let v1NoDiagramModel = JSON.parse(JSON.stringify(v1Model));
+    const v1NoDiagramModel = JSON.parse(JSON.stringify(v1Model));
     delete v1NoDiagramModel.detail.diagrams;
 
     describe('reads version 1 model', () => {

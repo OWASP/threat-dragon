@@ -75,14 +75,14 @@ describe('service/migration/tmBom/tmBom.js', () => {
             });
 
             it('defaults absent required values', () => {
-                let noCompatibilityModel = JSON.parse(JSON.stringify(tdModel));
+                const noCompatibilityModel = JSON.parse(JSON.stringify(tdModel));
                 delete noCompatibilityModel.compatibility;
                 testModel = tmBom.exportAsTmbom(noCompatibilityModel);
                 expect(testModel.version.length).toBeGreaterThanOrEqual(5);
             });
 
             it('defaults absent optional values', () => {
-                let noOptionsModel = JSON.parse(JSON.stringify(tdModel));
+                const noOptionsModel = JSON.parse(JSON.stringify(tdModel));
                 delete noOptionsModel.compatibility.frozen;
                 delete noOptionsModel.compatibility.repo_link;
                 testModel = tmBom.exportAsTmbom(noOptionsModel);
@@ -135,7 +135,7 @@ describe('service/migration/tmBom/tmBom.js', () => {
 
         describe('handles missing TM-BOM objects', () => {
             it('skips absent optional values', () => {
-                let noOptionsModel = JSON.parse(JSON.stringify(tmBomModel));
+                const noOptionsModel = JSON.parse(JSON.stringify(tmBomModel));
                 delete noOptionsModel.frozen;
                 delete noOptionsModel.repo_link;
                 testModel = tmBom.importTmbom(noOptionsModel);

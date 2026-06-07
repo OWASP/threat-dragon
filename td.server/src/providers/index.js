@@ -1,6 +1,6 @@
 import bitbucket from './bitbucket.js';
 import github from './github.js';
-import gitlab from "./gitlab";
+import gitlab from './gitlab';
 import google from './google.js';
 
 /**

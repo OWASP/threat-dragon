@@ -1,5 +1,5 @@
 import loggerHelper from '../helpers/logger.helper.js';
-import repositories from "../repositories";
+import repositories from '../repositories';
 import responseWrapper from './responseWrapper.js';
 
 const logger = loggerHelper.get('controllers/googleProviderThreatmodelController.js');

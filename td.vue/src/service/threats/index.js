@@ -45,7 +45,7 @@ const valuesToTranslations = {
 
 const convertToTranslationString = (val) => valuesToTranslations[val];
 
-export const createNewTypedThreat = function (modelType, cellType,number) {
+export const createNewTypedThreat = function (modelType, cellType, number) {
     let title, type;
 
     if (!modelType) {
@@ -59,8 +59,8 @@ export const createNewTypedThreat = function (modelType, cellType,number) {
 
     const freqMap = store.get().state.cell?.ref?.data.threatFrequency;
     if (freqMap) {
-        let min = freqMap[Object.keys(freqMap)[0]],choice=Object.keys(freqMap)[0];
-        Object.keys(freqMap).forEach((k)=>{
+        let min = freqMap[Object.keys(freqMap)[0]], choice=Object.keys(freqMap)[0];
+        Object.keys(freqMap).forEach((k) => {
             if(freqMap[k]<min)
             {
                 min = freqMap[k];

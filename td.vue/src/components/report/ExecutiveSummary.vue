@@ -41,12 +41,12 @@ export default {
     },
     computed: {
         tableRows: function () {
-            let totalStats = [
+            const totalStats = [
                 { metric: this.$t('report.threatStats.total'), total: this.threatsTotal },
                 { metric: this.$t('report.threatStats.mitigated'), total: this.threatsClosed },
                 { metric: this.$t('report.threatStats.notMitigated'), total: this.threatsOpen }
             ];
-            let openStats = [
+            const openStats = [
                 { metric: this.$t('report.threatStats.openCritical'), total: this.openCritical },
                 { metric: this.$t('report.threatStats.openHigh'), total: this.openHigh },
                 { metric: this.$t('report.threatStats.openMedium'), total: this.openMedium },

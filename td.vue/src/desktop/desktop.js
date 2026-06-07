@@ -104,7 +104,7 @@ export function registerDesktop (deps) {
     // Some APIs can only be used after this event occurs.
     app.on('ready', async () => {
         loggerApi.log.debug('Building the menu system for the default language');
-        let template = menuApi.getMenuTemplate();
+        const template = menuApi.getMenuTemplate();
         MenuApi.setApplicationMenu(MenuApi.buildFromTemplate(template));
 
         // Install Vue Devtools
@@ -172,7 +172,7 @@ export function registerDesktop (deps) {
     function handleUpdateMenu (_event, locale) {
         loggerApi.log.debug('Re-labeling the menu system for: ' + locale);
         menuApi.setLocale(locale);
-        let template = menuApi.getMenuTemplate();
+        const template = menuApi.getMenuTemplate();
         MenuApi.setApplicationMenu(MenuApi.buildFromTemplate(template));
     }
 

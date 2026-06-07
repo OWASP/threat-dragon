@@ -156,9 +156,9 @@ export default {
     },
     mounted() {
         // make sure we are compatible with version 1.x and early 2.x
-        let threatTop = this.model.detail.threatTop === undefined ? 100 : this.model.detail.threatTop;
-        let diagramTop = this.model.detail.diagramTop === undefined ? 10 : this.model.detail.diagramTop;
-        let update = { diagramTop: diagramTop, version: this.version, threatTop: threatTop };
+        const threatTop = this.model.detail.threatTop === undefined ? 100 : this.model.detail.threatTop;
+        const diagramTop = this.model.detail.diagramTop === undefined ? 10 : this.model.detail.diagramTop;
+        const update = { diagramTop: diagramTop, version: this.version, threatTop: threatTop };
         console.debug('updates: ' + JSON.stringify(update));
         this.$store.dispatch(tmActions.update, update);
         // if a diagram has just been closed, the history insists on marking the model as modified
