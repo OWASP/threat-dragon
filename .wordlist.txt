@@ -155,6 +155,7 @@ Trisqel
 trivy
 Trivy
 TSV
+txt
 UI
 Uncheck
 unpatched

@@ -7,6 +7,7 @@ import decodeRepoPaths from './decodeRepoPaths.config.js';
 import googleProviderThreatmodelController from '../controllers/googleProviderThreatmodelController.js';
 import healthcheck from '../controllers/healthz.js';
 import homeController from '../controllers/homecontroller.js';
+import metadataController from '../controllers/metadataController.js';
 import templateController from '../controllers/templateController.js';
 import threatmodelController from '../controllers/threatmodelcontroller.js';
 
@@ -21,6 +22,8 @@ const unauthRoutes = (router) => {
     router.get('/', homeController.index);
 
     router.get('/healthz', healthcheck.healthz);
+    router.get('/security.txt', metadataController.legacySecurityTxtRedirect);
+    router.get('/.well-known/security.txt', metadataController.securityTxt);
     router.get('/api/config', configController.config);
     router.get('/api/threatmodel/organisation', threatmodelController.organisation);
     
