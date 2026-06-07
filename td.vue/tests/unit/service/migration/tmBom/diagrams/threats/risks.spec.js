@@ -4,7 +4,7 @@ import { threats as mockTdThreats } from './mockTdThreats';
 
 describe('service/migration/tmBom/diagrams/threats/risks.js', () => {
     describe('updates threat descriptions', () => {
-        let threats = risks.merge(tmBomModel, mockTdThreats);
+        const threats = risks.merge(tmBomModel, mockTdThreats);
 
         it('provides the risk title', () => {
             expect(threats[0].description).toContain('Test title risk0');
@@ -58,9 +58,9 @@ describe('service/migration/tmBom/diagrams/threats/risks.js', () => {
     });
 
     describe('handles absence of risk', () => {
-        let emptyRisksModel = JSON.parse(JSON.stringify(tmBomModel));
+        const emptyRisksModel = JSON.parse(JSON.stringify(tmBomModel));
         delete emptyRisksModel.risks;
-        let threats = risks.merge(emptyRisksModel, mockTdThreats);
+        const threats = risks.merge(emptyRisksModel, mockTdThreats);
 
         it('preserves the threats', () => {
 		    expect(threats).toStrictEqual(mockTdThreats);

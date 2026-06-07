@@ -22,7 +22,7 @@ const convertPriority = {TBD: 'none', Low: 'low', Medium: 'medium', High: 'high'
 const convertControlStatus = {NotApplicable: 'wont_do', Open: 'under_review', Mitigated: 'active'};
 
 const convert = (model) => { 
-    let vulns = {
+    const vulns = {
         controls: [],
         risks: [],
         threats: [],
@@ -33,7 +33,7 @@ const convert = (model) => {
     model.detail.diagrams?.forEach((diagram) => {
         diagram.cells?.forEach((cell) => {
             cell.data.threats?.forEach((threat) => {
-                let riskScore = parseInt(threat.score) || 0;
+                const riskScore = parseInt(threat.score) || 0;
                 vulns.risks.push({
                     symbolic_name: uuidv4(),
                     title: threat.title,
@@ -69,7 +69,7 @@ const convert = (model) => {
 };
 
 const merge = (model) => {
-    let tdThreats = new Array();
+    let tdThreats = [];
 
     model.threats?.forEach((threat) => {
         let description = threat.description;
@@ -78,7 +78,7 @@ const merge = (model) => {
         description += '\nOn event : ' + threat.event;
 
         if (threat.attack_mechanisms) {
-            let mechanisms = threat.attack_mechanisms;
+            const mechanisms = threat.attack_mechanisms;
             description += '\nUsing attack mechanism : ';
             mechanisms.forEach((mechanism) => {
                 description += '\n' + ' CAPEC-' + mechanism.capec_id + ' : ' + mechanism.capec_title;
@@ -86,7 +86,7 @@ const merge = (model) => {
         }
 
         if (threat.weaknesses) {
-            let weaknesses = threat.weaknesses;
+            const weaknesses = threat.weaknesses;
             description += '\nExploiting weakness : ';
             weaknesses.forEach((weakness) => {
                 description += '\n' + ' CWE-' + weakness.cwe_id + ' : ' + weakness.cwe_title;
@@ -95,7 +95,7 @@ const merge = (model) => {
 
         // sources is a required key
         description += '\nExample attack vectors from :';
-        for (let source of threat.sources) {
+        for (const source of threat.sources) {
             description += '\n- ' + source.replaceAll('_', ' ');
         }
 

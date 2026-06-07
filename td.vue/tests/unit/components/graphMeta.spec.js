@@ -140,8 +140,8 @@ describe('components/GraphMeta.vue', () => {
         });
 
         it('emits the threatSelected event with the threat id', () => {
-            wrapper.vm.threatSelected('id1','new');
-            expect(emitter).toHaveBeenCalledWith('threatSelected', 'id1','new');
+            wrapper.vm.threatSelected('id1', 'new');
+            expect(emitter).toHaveBeenCalledWith('threatSelected', 'id1', 'new');
         });
     });
 
@@ -186,7 +186,7 @@ describe('components/GraphMeta.vue', () => {
                         }
                     }
                 },
-                actions:{ THREATMODEL_UPDATE: ()=> {}},
+                actions:{ THREATMODEL_UPDATE: () => {}},
             });
             wrapper = shallowMount(TdGraphMeta, {
                 localVue,
@@ -201,7 +201,7 @@ describe('components/GraphMeta.vue', () => {
         });
 
         it('adds a threat to the cell data', () => {
-            expect(wrapper.vm.threatSelected).toHaveBeenCalledWith(expect.anything(),'new');
+            expect(wrapper.vm.threatSelected).toHaveBeenCalledWith(expect.anything(), 'new');
         });
     });
 

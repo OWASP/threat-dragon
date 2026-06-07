@@ -12,7 +12,7 @@ const state = {
 const actions = {
     [CONFIG_CLEAR]: ({ commit }) => commit(CONFIG_CLEAR),
 
-    CONFIG_FETCH: async ( { commit, dispatch }) => {
+    CONFIG_FETCH: async ({ commit, dispatch }) => {
         dispatch(CONFIG_CLEAR);
         try {
             console.log('FETCHING');

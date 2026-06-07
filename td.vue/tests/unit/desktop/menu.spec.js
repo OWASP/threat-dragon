@@ -399,7 +399,7 @@ describe('desktop/menu.js', () => {
 
             it('modelOpened() should open a model', () => {
                 menu.modelOpened();
-                expect(model).toEqual( expect.objectContaining({fileDirectory: 'test directory', filePath: ''}) );
+                expect(model).toEqual(expect.objectContaining({fileDirectory: 'test directory', filePath: ''}));
                 expect(model.isOpen).toBeTruthy();
             });
 
@@ -414,7 +414,7 @@ describe('desktop/menu.js', () => {
             it('modelSave() should not save a closed model with a file path', () => {
                 model.isOpen = false;
                 menu.modelSave(mockData, mockFilename);
-                expect(model).toEqual( expect.objectContaining({fileDirectory: 'test directory', filePath: 'test path'}) );
+                expect(model).toEqual(expect.objectContaining({fileDirectory: 'test directory', filePath: 'test path'}));
                 expect(model.isOpen).toBe(false);
             });
 

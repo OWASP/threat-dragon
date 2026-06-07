@@ -38,7 +38,7 @@ describe('views/Threatmodel.vue', () => {
                             description
                         },
                         detail: {
-                            contributors: contributors.map(x =>  ({ name: x })),
+                            contributors: contributors.map(x => ({ name: x })),
                             diagrams,
                             reviewer
                         }

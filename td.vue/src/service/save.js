@@ -35,7 +35,7 @@ const local = async (state) => {
     let result = false;
     if ('showSaveFilePicker' in self) {
         result = await writeFile(state.data, `${state.data.summary.title}.json`);
-        if ( result ) {
+        if (result) {
             Vue.$toast.success(i18n.get().t('threatmodel.prompts.saved'));
         } else {
             Vue.$toast.warning(i18n.get().t('threatmodel.warnings.save'));
@@ -146,7 +146,7 @@ async function writeFile(data, fileName) {
         return false;
     }
 
-    if ( await verifyPermission(fileHandle) ) {
+    if (await verifyPermission(fileHandle)) {
         const writable = await fileHandle.createWritable();
         try {
             await writable.write({ type: 'write', position: 0, data: jsonData });

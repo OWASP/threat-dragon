@@ -1,7 +1,7 @@
 import assumptions from './diagrams/assumptions';
 
 const merge = (model) => {
-    let summary = new Object();
+    const summary = new Object();
 
     if (!model.scope) {
         console.warn('Missing TM-BOM scope which is a required object');
@@ -22,7 +22,7 @@ const merge = (model) => {
     };
 
     // add any assumptions to the description
-    let summaryAssumptions = assumptions.summary(model);
+    const summaryAssumptions = assumptions.summary(model);
     if (summaryAssumptions.length) {
         let id = 1;
         summary.description += '\n\n';

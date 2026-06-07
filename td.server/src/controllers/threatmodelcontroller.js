@@ -3,7 +3,7 @@ import { conflict, notFound, serverError } from './errors.js';
 import env from '../env/Env.js';
 import loggerHelper from '../helpers/logger.helper.js';
 import providers from '../providers';
-import repositories from "../repositories";
+import repositories from '../repositories';
 import responseWrapper from './responseWrapper.js';
 
 const logger = loggerHelper.get('controllers/threatmodelcontroller.js');
@@ -183,7 +183,7 @@ const getPagination = (headers, pageLinks, page) => {
         }
         return getPaginationFromPageLinks(pageLinks, page);
     } 
-        return getPaginationFromHeaders(headers, page);
+    return getPaginationFromHeaders(headers, page);
     
 };
 
@@ -217,17 +217,17 @@ const organisation = (req, res) => {
     const provider = providers.get(req.query.provider);
     let fullUrl;
     switch (provider.name) {
-        case 'github':
-            fullUrl = provider.getGithubUrl();
-            break;
-        case 'gitlab':
-            fullUrl = provider.getGitlabUrl();
-            break;
-        case 'bitbucket':
-            fullUrl = provider.getBitbucketUrl();
-            break;
-        default:
-            return notFound(`Unknown provider`, res, logger);
+    case 'github':
+        fullUrl = provider.getGithubUrl();
+        break;
+    case 'gitlab':
+        fullUrl = provider.getGitlabUrl();
+        break;
+    case 'bitbucket':
+        fullUrl = provider.getBitbucketUrl();
+        break;
+    default:
+        return notFound(`Unknown provider`, res, logger);
     }
 
     const parsed = new URL(fullUrl);

@@ -11,7 +11,6 @@ console.log('Server API protocol: ' + serverApiProtocol + ' and port: ' + server
 
 // Check if TLS credentials are available in the environment file
 const hasTlsCredentials = process.env.APP_USE_TLS && process.env.APP_TLS_CERT_PATH && process.env.APP_TLS_KEY_PATH && process.env.APP_HOSTNAME;
-let port;
 
 // Shared proxy configuration with request/response logging for visual debug
 const timestamp = () => new Date().toISOString();
@@ -53,7 +52,7 @@ const devServerConfig = hasTlsCredentials
         proxy: proxyConfig,
         allowedHosts: [appHostname],
     };
-port = devServerConfig.port;
+const port = devServerConfig.port;
 
 console.log(`Running on ${hasTlsCredentials ? `HTTPS (Port ${port})` : `HTTP (Port ${port})`}`);
 

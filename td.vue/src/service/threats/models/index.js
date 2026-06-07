@@ -5,8 +5,8 @@ import plot4ai from './plot4ai.js';
 import stride from './stride.js';
 
 const swapKeyValuePairs = (obj) => {
-    let swappedObj = {};
-    for (let key in obj) {
+    const swappedObj = {};
+    for (const key in obj) {
         if (Object.prototype.hasOwnProperty.call(obj, key)) {
             swappedObj[obj[key]] = key;
         }
@@ -123,11 +123,11 @@ const getThreatTypesByElement = (modelType, cellType) => {
     return swapKeyValuePairs(types);
 };
 
-const getFrequencyMapByElement = (modelType,cellType) => {
+const getFrequencyMapByElement = (modelType, cellType) => {
     let freqMap={};
     switch(modelType.toUpperCase()){
     case 'CIA':
-        freqMap = {confidentiality: 0,integrity: 0,availability: 0};
+        freqMap = {confidentiality: 0, integrity: 0, availability: 0};
         break;
     case 'DIE':
     case 'CIADIE':
@@ -135,42 +135,42 @@ const getFrequencyMapByElement = (modelType,cellType) => {
         break;
     case 'LINDDUN':
         if(cellType==='tm.Actor')
-            freqMap = {linkability: 0,identifiability: 0,unawareness: 0};
+            freqMap = {linkability: 0, identifiability: 0, unawareness: 0};
         else{
-            Object.keys(linddun.default).map((k)=>{freqMap[k]=0;});
+            Object.keys(linddun.default).map((k) => {freqMap[k]=0;});
         }
         break;
     case 'PLOT4AI':
         switch(cellType){
         case 'tm.Actor' :
-            Object.keys(plot4ai.actor).map((k)=>{freqMap[k]=0;});
+            Object.keys(plot4ai.actor).map((k) => {freqMap[k]=0;});
             break;
         case 'tm.Process' :
-            Object.keys(plot4ai.process).map((k)=>{freqMap[k]=0;});
+            Object.keys(plot4ai.process).map((k) => {freqMap[k]=0;});
             break;
         case 'tm.Store' :
-            Object.keys(plot4ai.store).map((k)=>{freqMap[k]=0;});
+            Object.keys(plot4ai.store).map((k) => {freqMap[k]=0;});
             break;
         case 'tm.Flow' :
         default:
-            Object.keys(plot4ai.flow).map((k)=>{freqMap[k]=0;});
+            Object.keys(plot4ai.flow).map((k) => {freqMap[k]=0;});
             break;
         }
         break;
     case 'STRIDE':
         switch(cellType){
         case 'tm.Actor' :
-            Object.keys(stride.actor).map((k)=>{freqMap[k]=0;});
+            Object.keys(stride.actor).map((k) => {freqMap[k]=0;});
             break;
         case 'tm.Process' :
-            Object.keys(stride.process).map((k)=>{freqMap[k]=0;});
+            Object.keys(stride.process).map((k) => {freqMap[k]=0;});
             break;
         case 'tm.Store' :
-            Object.keys(stride.store).map((k)=>{freqMap[k]=0;});
+            Object.keys(stride.store).map((k) => {freqMap[k]=0;});
             break;
         case 'tm.Flow' :
         default:
-            Object.keys(stride.flow).map((k)=>{freqMap[k]=0;});
+            Object.keys(stride.flow).map((k) => {freqMap[k]=0;});
             break;
         }
         break;

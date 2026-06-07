@@ -94,8 +94,8 @@ export default {
                 this.$store.dispatch(tmActions.diagramModified, updated);
             });
         },
-        threatSelected(threatId,state) {
-            this.$refs.threatEditDialog.editThreat(threatId,state);
+        threatSelected(threatId, state) {
+            this.$refs.threatEditDialog.editThreat(threatId, state);
         },
         threatSuggest(type){
             this.$refs.threatSuggestDialog.showModal(type);

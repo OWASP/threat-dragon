@@ -1,5 +1,5 @@
 const convert = (model) => {
-    let scope = new Object();
+    const scope = new Object();
     // required keys for TM-BOM scope:
     //    title, description, business_criticality, data_sensitivity, exposure, tier
 

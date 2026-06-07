@@ -48,7 +48,7 @@ const updateTemplateAsync = (templateMetadata) => {
  */
 const deleteTemplateAsync = (id) => {
     const [ encodedId ] = encodeUrlComponents(id);
-    return api.deleteAsync(`${resource}/${encodedId}`);  // No body, just URL
+    return api.deleteAsync(`${resource}/${encodedId}`); // No body, just URL
 };
 
 const fetchModelByIdAsync = (templateId) => {

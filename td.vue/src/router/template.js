@@ -1,5 +1,5 @@
 
-export const getTemplateRoutes = (providerType,pathPrefix) => [
+export const getTemplateRoutes = (providerType, pathPrefix) => [
     {
         path: `${pathPrefix}/export-template`,
         name: `${providerType}ThreatModelExportTemplate`,

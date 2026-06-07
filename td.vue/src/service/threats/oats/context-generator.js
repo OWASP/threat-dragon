@@ -1,7 +1,7 @@
 
 
-function fixupByContext(suggestions,modelType){
-    return suggestions.map((suggestion)=>{
+function fixupByContext(suggestions, modelType){
+    return suggestions.map((suggestion) => {
         switch(suggestion.type){
         case 'threats.model.linddun.linkability':
             if(modelType==='STRIDE')
@@ -55,7 +55,7 @@ function fixupByContext(suggestions,modelType){
 
 export const GetContextSuggestions = (element, model) => {
     const suggestions = [];
-    const diagram = (model == 'STRIDE' || model ==  'LINDDUN' || model == 'CIA')?model:'null';
+    const diagram = (model == 'STRIDE' || model == 'LINDDUN' || model == 'CIA')?model:'null';
     
     if((diagram==='null')||((element.type==='tm.Actor'&&!element.providesAuthentication)||(element.type==='tm.Flow'&&(!element.isPublicNetwork&&!element.isEncrypted))))
     {
@@ -91,7 +91,7 @@ export const GetContextSuggestions = (element, model) => {
         });
     }
     
-    if( (element.type==='tm.Flow'&&element.isEncrypted)){
+    if((element.type==='tm.Flow'&&element.isEncrypted)){
         suggestions.push({
             title: 'Vulnerable transport protocol',
             type: 'threats.model.linddun.disclosureOfInformation',
@@ -100,7 +100,7 @@ export const GetContextSuggestions = (element, model) => {
         });
     }
 
-    if( (element.type==='tm.Flow'&&element.isPublicNetwork)){
+    if((element.type==='tm.Flow'&&element.isPublicNetwork)){
         suggestions.push({
             title: 'Fingerprinting',
             type: 'threats.model.linddun.linkability',
@@ -109,7 +109,7 @@ export const GetContextSuggestions = (element, model) => {
         });
     }
     
-    if( (element.type==='tm.Process'&&element.privilegeLevel!==''&&element.privilegeLevel!==undefined)){
+    if((element.type==='tm.Process'&&element.privilegeLevel!==''&&element.privilegeLevel!==undefined)){
         suggestions.push({
             title: 'Least privilege',
             type: 'threats.model.linddun.unawareness',
@@ -127,7 +127,7 @@ export const GetContextSuggestions = (element, model) => {
         });
     }
     
-    if( (element.type==='tm.Process')){
+    if((element.type==='tm.Process')){
         suggestions.push({
             title: 'Vulnerability scanning',
             type: 'threats.model.linddun.disclosureOfInformation',
@@ -136,7 +136,7 @@ export const GetContextSuggestions = (element, model) => {
         });
     }
     
-    if( (element.type==='tm.Process')){
+    if((element.type==='tm.Process')){
         suggestions.push({
             title: 'Denial of Service',
             type: 'threats.model.linddun.unawareness',
@@ -145,7 +145,7 @@ export const GetContextSuggestions = (element, model) => {
         });
     }
     
-    if( (element.type==='tm.Process'&&element.handlesCardPayment)){
+    if((element.type==='tm.Process'&&element.handlesCardPayment)){
         suggestions.push({
             title: 'Carding',
             type: 'threats.model.linddun.disclosureOfInformation',
@@ -169,7 +169,7 @@ export const GetContextSuggestions = (element, model) => {
         });
     }
     
-    if( (element.type==='tm.Process'&&element.isWebApplication)){
+    if((element.type==='tm.Process'&&element.isWebApplication)){
         suggestions.push({
             title: 'Footprinting',
             type: 'threats.model.linddun.disclosureOfInformation',
@@ -178,7 +178,7 @@ export const GetContextSuggestions = (element, model) => {
         });
     }
     
-    if( (element.type==='tm.Process'&&element.handlesGoodsOrServices)){
+    if((element.type==='tm.Process'&&element.handlesGoodsOrServices)){
         suggestions.push({
             title: 'Footprinting',
             type: 'threats.model.linddun.unawareness',
@@ -198,7 +198,7 @@ export const GetContextSuggestions = (element, model) => {
             mitigation:'Defences include control of interaction frequency and anti-automation'
         });
     }
-    if( (element.type==='tm.Store')){
+    if((element.type==='tm.Store')){
         suggestions.push({
             title: 'Scraping',
             type: 'threats.model.linddun.linkability',
@@ -219,7 +219,7 @@ export const GetContextSuggestions = (element, model) => {
         });
     }
     
-    if( (element.type==='tm.Store'&&element.storesCredentials)){
+    if((element.type==='tm.Store'&&element.storesCredentials)){
         suggestions.push({
             title: 'Credential cracking',
             type: 'threats.model.linddun.disclosureOfInformation',
@@ -247,7 +247,7 @@ export const GetContextSuggestions = (element, model) => {
             mitigation:'Defences include providing anti-automation, guarding against brute force, and preventing abuse of functionality'
         });
     }
-    if( (element.type==='tm.Store'&&element.storesInventory)){
+    if((element.type==='tm.Store'&&element.storesInventory)){
         suggestions.push({
             title: 'Scalping',
             type: 'threats.model.linddun.unawareness',
@@ -255,7 +255,7 @@ export const GetContextSuggestions = (element, model) => {
             mitigation:'Defences against this automated threat include control of interaction frequency, enforcement of a single unique a action and enforcement of behavioral workflow'
         });    
     }
-    if( (element.type==='tm.Store'&&element.isEncrypted)){
+    if((element.type==='tm.Store'&&element.isEncrypted)){
         suggestions.push({
             title: 'Vulnerable encryption algorithms',
             type: 'threats.model.linddun.disclosureOfInformation',
@@ -263,7 +263,7 @@ export const GetContextSuggestions = (element, model) => {
             mitigation:'Use up to date cryptography for all signatures and encryption'
         });    
     }
-    if( (element.type==='tm.Store'&&element.isSigned)){
+    if((element.type==='tm.Store'&&element.isSigned)){
         suggestions.push({
             title: 'Vulnerable cryptography',
             type: 'threats.model.linddun.disclosureOfInformation',
@@ -271,7 +271,7 @@ export const GetContextSuggestions = (element, model) => {
             mitigation:'Use up to date cryptographic methods for checksums, signatures and certificates'
         });    
     }
-    if( (element.type==='tm.Store'&&element.isALog)){
+    if((element.type==='tm.Store'&&element.isALog)){
         suggestions.push({
             title: 'Log contains sensetive data',
             type: 'threats.model.linddun.disclosureOfInformation',
@@ -279,7 +279,7 @@ export const GetContextSuggestions = (element, model) => {
             mitigation:'Minimise any sensitive data contained in logs, consider encryption techniques'
         });    
     }
-    fixupByContext(suggestions,diagram);
+    fixupByContext(suggestions, diagram);
     return suggestions;
 };
 

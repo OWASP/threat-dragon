@@ -42,10 +42,10 @@ const hasPreviousPage = (response) => response.data.previous !== undefined && re
 
 //Migrate searchAsync required
 const searchAsync = (page, accessToken, searchQuerys) => getClient(accessToken).search().
-reposAsync({
-    page: page,
-    q: searchQuerys
-});
+    reposAsync({
+        page: page,
+        q: searchQuerys
+    });
 
 export const userAsync = (accessToken) => getClient(accessToken).users.getAuthedUser();
 

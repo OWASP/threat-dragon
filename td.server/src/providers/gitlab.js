@@ -5,7 +5,7 @@
 import axios from 'axios';
 
 import env from '../env/Env.js';
-import repositories from "../repositories";
+import repositories from '../repositories';
 
 const name = 'gitlab';
 
@@ -69,7 +69,7 @@ const completeLoginAsync = async (code) => {
     const providerResp = await axios.post(url, body, options);
 
 
-    repositories.set("gitlabrepo");
+    repositories.set('gitlabrepo');
     const repo = repositories.get();
     const fullUser = await repo.userAsync(providerResp.data.access_token);
 

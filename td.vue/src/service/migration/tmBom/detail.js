@@ -1,7 +1,7 @@
 import diagrams from './diagrams/diagrams';
 
 const merge = (model, version) => {
-    let allDiagrams = diagrams.merge(model, version);
+    const allDiagrams = diagrams.merge(model, version);
     
     return {
         contributors: [{ 'name': 'Imported from TM-BOM' }],

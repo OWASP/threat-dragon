@@ -275,7 +275,7 @@ export default {
             }
         },
         onAddDiagramClick() {
-            let newDiagram = {
+            const newDiagram = {
                 id: this.diagramTop,
                 title: this.$t('threatmodel.diagram.stride.defaultTitle'),
                 diagramType: 'STRIDE',
@@ -358,7 +358,7 @@ export default {
             this.$store.dispatch(tmActions.modified);
         },
         onDuplicateDiagramClick(idx) {
-            let newDiagram = JSON.parse(JSON.stringify(this.model.detail.diagrams[idx]));
+            const newDiagram = JSON.parse(JSON.stringify(this.model.detail.diagrams[idx]));
             newDiagram.id = this.diagramTop;
             this.$store.dispatch(tmActions.update, { diagramTop: this.diagramTop + 1 });
             this.model.detail.diagrams.push(newDiagram);

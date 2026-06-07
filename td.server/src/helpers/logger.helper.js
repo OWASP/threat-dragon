@@ -72,14 +72,14 @@ class Logger {
     transformToString (complexObject) {
         const cache = [];
         const resultString = JSON.stringify(complexObject, function(key, value) {
-          if (typeof value === "object" && value !== null) {
-            if (cache.indexOf(value) !== -1) {
-              // Circular reference found
-              return "[Circular]";
+            if (typeof value === 'object' && value !== null) {
+                if (cache.indexOf(value) !== -1) {
+                    // Circular reference found
+                    return '[Circular]';
+                }
+                cache.push(value);
             }
-            cache.push(value);
-          }
-          return value;
+            return value;
         });
         return resultString;
     }

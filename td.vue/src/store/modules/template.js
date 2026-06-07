@@ -13,11 +13,11 @@ import {
 import templateApi from '@/service/api/templateApi.js';
 
 const state = {
-    templates: [],// list of templates
+    templates: [], // list of templates
     contentRepo: {
-        status: null,        // null (initialized & working) | 'NOT_CONFIGURED' | 'REPO_NOT_FOUND' | 'NOT_INITIALIZED'
-        canInitialize: false,// determined by the permissions of the current user in context of the repo
-        repoName: null,      // Only populated for 'REPO_NOT_FOUND' scenario
+        status: null, // null (initialized & working) | 'NOT_CONFIGURED' | 'REPO_NOT_FOUND' | 'NOT_INITIALIZED'
+        canInitialize: false, // determined by the permissions of the current user in context of the repo
+        repoName: null, // Only populated for 'REPO_NOT_FOUND' scenario
     }
 };
 

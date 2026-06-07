@@ -1,7 +1,7 @@
 const merge = (model, control) => {
-    let newControl = JSON.parse(JSON.stringify(control));
+    const newControl = JSON.parse(JSON.stringify(control));
 
-    let boundary = find(model.trust_boundaries, newControl.trust_boundary);
+    const boundary = find(model.trust_boundaries, newControl.trust_boundary);
 
     if (boundary) {
         newControl.description += '\nApplied across boundaries ' + boundary.trust_zone_a + ' and ' + boundary.trust_zone_b;

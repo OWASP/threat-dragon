@@ -81,7 +81,7 @@ export default {
                 if (isElectron()) {
                     return {desktop: allProviders.desktop};
                 }
-                let providers = {};
+                const providers = {};
                 if (state.config.config) {
                     if (state.config.config.githubEnabled) {
                         providers.github = allProviders.github;

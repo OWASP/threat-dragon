@@ -1,7 +1,7 @@
 import diagrams from '@/service/migration/tdV1/diagrams/diagrams';
 
 const convertContributors = (contributors) => {
-    let v2contributors = new Array();
+    const v2contributors = [];
 	
     contributors?.forEach((contributor) => {
         // v1.x provided an object ID '$$hashKey' which has no equivalent for v2.x
