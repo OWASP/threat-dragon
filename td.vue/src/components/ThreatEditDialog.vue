@@ -146,12 +146,23 @@
                             :label="$t('threats.properties.status')"
                             label-for="status"
                         >
-                            <td-form-radio-group
+                            <td-dropdown
                                 id="status"
-                                v-model="threat.status"
-                                :options="statuses"
-                                buttons
-                            ></td-form-radio-group>
+                                variant="secondary"
+                                :text="selectedStatusText"
+                            >
+                                <template #default="{ close }">
+                                    <button
+                                        v-for="status in statuses"
+                                        :key="status.value"
+                                        type="button"
+                                        class="td-dropdown-item"
+                                        @click="threat.status = status.value; close()"
+                                    >
+                                        {{ status.text }}
+                                    </button>
+                                </template>
+                            </td-dropdown>
                         </b-form-group>
                     </b-col>
 
@@ -270,13 +281,15 @@ import threatModels from '@/service/threats/models/index.js';
 import { getStatusOptions } from '@/service/threats/status.js';
 import TdFormRadioGroup from '@/components/FormRadioGroup.vue';
 import TdFormSelect from '@/components/FormSelect.vue';
+import TdDropdown from '@/components/Dropdown.vue';
 import { getGame, getAllGames } from '../service/threats/models/eop';
 
 export default {
     name: 'TdThreatEditDialog',
     components: {
         TdFormRadioGroup,
-        TdFormSelect
+        TdFormSelect,
+        TdDropdown
     },
     computed: {
         ...mapState({
@@ -301,6 +314,9 @@ export default {
         },
         statuses() {
             return getStatusOptions((key) => this.$t(key));
+        },
+        selectedStatusText() {
+            return this.statuses.find((status) => status.value === this.threat.status)?.text || '';
         },
         priorities() {
             return [
