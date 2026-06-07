@@ -1,7 +1,7 @@
+import * as driveapi from '@googleapis/drive';
 import { expect } from 'chai';
-import sinon from 'sinon';
-import { google } from 'googleapis';
 import googledrive from '../../src/repositories/googledrive';
+import sinon from 'sinon';
 
 describe('Google Drive Service', () => {
     let sandbox;
@@ -21,12 +21,12 @@ describe('Google Drive Service', () => {
             },
         };
 
-        oauth2ClientStub = sandbox.stub(google.auth, 'OAuth2');
+        oauth2ClientStub = sandbox.stub(driveapi.auth, 'OAuth2');
         oauth2ClientStub.returns({
             setCredentials: sinon.stub(),
         });
         
-        sandbox.stub(google, 'drive').returns(mockDriveClient);
+        sandbox.stub(driveapi, 'drive').returns(mockDriveClient);
     });
 
     afterEach(() => {

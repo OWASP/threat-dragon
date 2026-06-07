@@ -423,16 +423,7 @@ jobs:
         with:
           install: true
 
-      - name: Cache Docker layers
-        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile') }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-
-            ${{ runner.os }}-
-
-      - name: Build for amd64
+      - name: Build for all supported architectures to test buildability
         id: docker_build
         uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf # v7.2.0
         with:
@@ -440,11 +431,30 @@ jobs:
           file: ./Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           tags:  ${{ env.IMAGE_NAME }}
+          load: false
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          # If you add more platforms, make sure to include them in ./push.yaml too!
+          platforms: linux/amd64,linux/arm64
+          sbom: true
+          provenance: mode=max,version=v1
+
+      - name: Build for amd64 only for further tests below
+        id: docker_build_amd64
+        uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf # v7.2.0
+        with:
+          context: ./
+          file: ./Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          tags:  ${{ env.IMAGE_NAME }}
+          load: false
           outputs: type=docker,dest=/tmp/${{ env.IMAGE_NAME }}.tar
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
+          # Should pull from the step before, so this one should be all cached
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           platforms: linux/amd64
-          load: true
+          # Note: no sbom or provenance, we need to produce the simplest image form
+          # so that "docker load" will like it afterwards
 
       - name: Upload docker local image
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -456,13 +466,6 @@ jobs:
         run: |
           docker load --input /tmp/${{ env.IMAGE_NAME }}.tar
           docker image ls -a
-
-      - # Temp fix for large cache bug
-        # https://github.com/docker/build-push-action/issues/252
-        name: Move cache
-        run: |
-          rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
   scan_image_with_trivy:
     name: Scan with Trivy
