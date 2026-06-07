@@ -204,6 +204,12 @@ for example `http://localhost:3000/`, but not in 'production' mode.
 | `REPO_SEARCH_QUERY` | Provides search string if repo search enabled | |
 | `REPO_ROOT_DIRECTORY` | Optional path where saved models are stored in the repo | |
 | `SERVER_API_PROTOCOL` | Protocol between server and front-end: `http` / `https` | `https` |
+| `SECURITY_TXT_ENABLED` | Optional `/.well-known/security.txt` | `false` |
+| `SECURITY_TXT_CONTACT` | Required if enabled - comma separated contact methods in priority order | |
+| `SECURITY_TXT_POLICY` | Optional policy URL for security.txt | |
+| `SECURITY_TXT_CANONICAL` | Optional canonical URL for the security.txt | |
+| `SECURITY_TXT_PREFERRED_LANGUAGES` | Optional languages supported by the security team | |
+| `SECURITY_TXT_EXPIRES` | Required if enabled - a valid RFC3339 ISO.8601-2, recommended to be no more than 1 year in the future | |
 
 __Note__ : the JWT refresh signing key should be different from the JWT signing key as they are different tokens.
 A JWT is used as the refresh token because it is tamper resistant and provides user context.
