@@ -83,10 +83,10 @@ The best chance of success for a pull request to be reviewed and accepted:
 4. provide enough description to explain how Threat Dragon worked before and works after the change
 5. extend the unit tests and functional tests to show the change working as expected
 6. the pull request must provide one change only, if there are further changes use further pull requests
-7. avoid coding using [generative AI](#use-of-ai-for-coding);
-  if you must then understand fully the changes and keep sprawl to a minimum
-
-If CI fails,`scripts/td-pr-check.sh` runs the local equivalents of the PR workflow locally.
+7. if coding using [generative AI](#use-of-ai-for-coding);
+  you must understand fully the changes and keep sprawl to a minimum
+8. ensure the GitHub Actions are passing; a [local script](`/scripts/td-pr-check.sh`) is available
+  to help debug if you need it.
 
 We appreciate contributions always,
 but make sure you have been **assigned the issue** before you submit any pull request

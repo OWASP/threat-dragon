@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
 script_name="td-build-desktop-linux-appimage.sh"
+script_dir="$(CDPATH= cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
+
+# shellcheck source=scripts/td-repo-root.sh
+. "$script_dir/td-repo-root.sh"
 
 usage() {
     cat <<'EOF'
@@ -77,6 +81,8 @@ while [ "$#" -gt 0 ]; do
     esac
     shift
 done
+
+td_require_repo_root "$script_name"
 
 need_command git
 need_command npm

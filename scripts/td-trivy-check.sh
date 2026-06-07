@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 
 script_name="td-trivy-check.sh"
+script_dir="$(CDPATH= cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
 default_target_image="threat-dragon:trivy-check"
 default_trivy_image="aquasec/trivy:latest"
 skip_files="/app/docs/configure/bitbucket.html,/app/docs/assets/search.json"
+
+# shellcheck source=scripts/td-repo-root.sh
+. "$script_dir/td-repo-root.sh"
 
 usage() {
     cat <<'EOF'
@@ -97,6 +101,8 @@ while [ "$#" -gt 0 ]; do
     esac
     shift
 done
+
+td_require_repo_root "$script_name"
 
 need_command git
 need_command docker

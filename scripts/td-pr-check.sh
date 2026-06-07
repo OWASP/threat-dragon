@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 script_name="td-pr-check.sh"
+script_dir="$(CDPATH= cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
 image_name="${TD_PR_IMAGE:-threat-dragon:pr-local}"
 lychee_image="${LYCHEE_IMAGE:-lycheeverse/lychee:0.23.0}"
 spellcheck_image="${SPELLCHECK_IMAGE:-jonasbn/github-action-spellcheck:0.60.0}"
@@ -8,6 +9,9 @@ zap_image="${ZAP_IMAGE:-ghcr.io/zaproxy/zaproxy:stable}"
 failures=""
 checks_run=""
 docker_built="false"
+
+# shellcheck source=scripts/td-repo-root.sh
+. "$script_dir/td-repo-root.sh"
 
 # Do not use set -e; every included check should run and be reported.
 if [ -t 1 ] && [ -z "${NO_COLOR:-}" ]; then
@@ -75,9 +79,6 @@ rerun_command() {
         desktop_unit_tests)
             echo "cd td.vue && npm clean-install && npm run lint:desktop && npm run test:desktop"
             ;;
-        e2e_smokes)
-            echo "cd td.vue && npm clean-install && npm run start:serve && npm run test:e2e-pr-smokes; npm run stop:serve"
-            ;;
         desktop_e2e_smokes)
             echo "cd td.vue && npm clean-install && $(desktop_e2e_build_command) && npm run test:e2e:desktop"
             ;;
@@ -107,9 +108,6 @@ run_check() {
     if [ "$status" -ne 0 ]; then
         echo "${red}✗${reset} $name failed with exit code $status" >&2
         echo "Rerun: $(rerun_command "$name")" >&2
-        if [ "$name" = "desktop_e2e_smokes" ]; then
-            echo "Note: headless Linux systems may need a display setup outside this script." >&2
-        fi
         record_failure "$name"
         record_check "$name" "failed"
     else
@@ -150,9 +148,6 @@ print_failures() {
     for failed_check in $failures; do
         echo "${red}✗${reset} $failed_check"
         echo "  Rerun: $(rerun_command "$failed_check")"
-        if [ "$failed_check" = "desktop_e2e_smokes" ]; then
-            echo "  Note: headless Linux systems may need a display setup outside this script."
-        fi
     done
 }
 
@@ -260,19 +255,6 @@ desktop_unit_tests() {
     )
 }
 
-e2e_smokes() {
-    (
-        cd td.vue || exit
-        npm clean-install &&
-            npm run start:serve &&
-            npm run test:e2e-pr-smokes
-    )
-    status="$?"
-
-    (cd td.vue && npm run stop:serve)
-    return "$status"
-}
-
 desktop_e2e_smokes() {
     (
         cd td.vue || exit
@@ -354,13 +336,14 @@ case "${1:-}" in
         ;;
 esac
 
+td_require_repo_root "$script_name"
+
 run_check markdown_lint
 run_check link_check
 run_check spell_check
 run_check server_unit_tests
 run_check site_unit_tests
 run_check desktop_unit_tests
-run_check e2e_smokes
 run_check desktop_e2e_smokes
 run_check e2e_tests
 run_check zap_scan

@@ -1,6 +1,7 @@
 # Scripts
 
 Helper scripts for local maintainer convenience; they are not part of the deployed application.
+These scripts should be run from the root of the repository, such as `./scripts/td-pr-check.sh`.
 
 | Script | Purpose |
 | ------ | ------- |
