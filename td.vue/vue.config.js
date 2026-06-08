@@ -86,10 +86,11 @@ module.exports = {
                 },
                 mac: {
                     category: 'public.app-category.developer-tools',
+                    executableName: 'Threat Dragon',
                     icon: './src/icons/icon.icns',
                     hardenedRuntime: true,
-                    entitlements: './node_modules/electron-builder-notarize/entitlements.mac.inherit.plist',
-                    entitlementsInherit: './node_modules/electron-builder-notarize/entitlements.mac.inherit.plist',
+                    entitlements: './node_modules/app-builder-lib/templates/entitlements.mac.plist',
+                    entitlementsInherit: './node_modules/app-builder-lib/templates/entitlements.mac.plist',
                     target: [
                         {
                             target: 'default',
