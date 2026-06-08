@@ -175,6 +175,25 @@ jobs:
           sbom: true
           provenance: mode=max,version=v1
 
+      # Required because multiplatform images can't be loaded directly
+      - name: Build for amd64 only to extract SBOM
+        id: docker_build_amd64
+        uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf # v7.2.0
+        with:
+          context: ./
+          file: ./Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          # Do not push, just for the docker run in the next line
+          push: false
+          tags:  ${{ env.IMAGE_NAME }}
+          # Should pull from the step before, so this one should be all cached
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          platforms: linux/amd64
+          load: true
+          # Note: no sbom or provenance, we need to produce the simplest image form
+          # so that the load will actually succeed
+
       - name: fetch app SBOMs
         run: docker run --rm --entrypoint tar "$IMAGE_ID" -c boms | tar -xv
         env:
