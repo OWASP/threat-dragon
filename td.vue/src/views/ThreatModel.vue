@@ -49,7 +49,7 @@
                         :text="$t('forms.edit')" />
                     <td-form-button id="td-report-btn" :onBtnClick="onReportClick" icon="file-alt"
                         :text="$t('forms.report')" />
-                    <td-dropdown right variant="secondary" :text="$t('forms.export')" id="manage-model-btn">
+                    <td-dropdown right variant="secondary" :text="$t('forms.export')" id="manage-model-btn" v-if="enableExport || enableTemplates">
                         <template #default="{ close }">
                             <button v-if="enableTemplates"
                                 type="button"
@@ -60,8 +60,14 @@
                                 <font-awesome-icon icon="file-import" ></font-awesome-icon>
                                 {{ $t('forms.exportTemplate') }}
                             </button>
-                            <button type="button" class="td-dropdown-item" id="export-tmbom-option" @click="(evt) => { onExportTmBomClick(evt); close(); }" >
-                                <font-awesome-icon icon="file-import" ></font-awesome-icon> {{ $t('forms.exportTmBom') }}
+                            <button v-if="enableExport"
+                                type="button"
+                                class="td-dropdown-item"
+                                @click="(evt) => { onExportTmBomClick(evt); close(); }"
+                                id="export-tmbom-option"
+                            >
+                                <font-awesome-icon icon="file-import" ></font-awesome-icon>
+                                {{ $t('forms.exportTmBom') }}
                             </button>
                         </template>
                     </td-dropdown>
@@ -97,6 +103,7 @@
 import { mapState } from 'vuex';
 
 import { getProviderType } from '@/service/provider/providers.js';
+import { writeFile } from '@/service/save.js';
 import TdDropdown from '@/components/Dropdown.vue';
 import TdFormButton from '@/components/FormButton.vue';
 import TdThreatModelSummaryCard from '@/components/ThreatModelSummaryCard.vue';
@@ -142,6 +149,7 @@ export default {
             evt.preventDefault();
             const tmBom = this.$store.getters.tmBomExport;
             console.debug('Export to TM-BOM ' + JSON.stringify(tmBom, null, 2));
+            await writeFile(tmBom, '');
         },
         getThumbnailUrl(diagram) {
             if (!diagram || !diagram.diagramType) {

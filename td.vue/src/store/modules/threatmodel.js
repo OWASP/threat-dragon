@@ -41,8 +41,6 @@ const stashThreatModel = (theState, threatModel) => {
     theState.stash = JSON.stringify(threatModel);
 };
 
-const toDesktopSavePayload = (threatModel) => JSON.parse(JSON.stringify(threatModel));
-
 const actions = {
     [THREATMODEL_CLEAR]: ({ rootState, commit }) => {
         if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
@@ -53,13 +51,11 @@ const actions = {
     },
     [THREATMODEL_CONTRIBUTORS_UPDATED]: ({ commit }, contributors) => commit(THREATMODEL_CONTRIBUTORS_UPDATED, contributors),
     [THREATMODEL_CREATE]: async ({ dispatch, commit, rootState, state }) => {
-        console.debug('Create threat model action');
+        let result = false;
         if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
             // desktop responds later with its own STASH and NOT_MODIFIED
-            window.electronAPI.modelSave(toDesktopSavePayload(state.data), state.fileName);
-            return true;
+            result = save.desktop(state.data, state.fileName);
         } else {
-            let result = false;
             if (getProviderType(rootState.provider.selected) === providerTypes.local) {
                 // save locally for web app when local login
                 result = await save.local(state);
@@ -76,8 +72,8 @@ const actions = {
                 dispatch(THREATMODEL_STASH);
                 commit(THREATMODEL_NOT_MODIFIED);
             }
-            return result;
         }
+        return result;
     },
     [THREATMODEL_DIAGRAM_CLOSED]: ({ commit }) => commit(THREATMODEL_DIAGRAM_CLOSED),
     [THREATMODEL_DIAGRAM_MODIFIED]: ({ commit }, diagram) => commit(THREATMODEL_DIAGRAM_MODIFIED, diagram),
@@ -110,7 +106,6 @@ const actions = {
     [THREATMODEL_MODIFIED]: ({ commit }) => commit(THREATMODEL_MODIFIED),
     [THREATMODEL_RESTORE]: async ({ commit, state, rootState }) => {
         let originalModel = JSON.parse(state.stash);
-        console.debug('Restore threat model action');
         if (getProviderType(rootState.provider.selected) !== providerTypes.local && getProviderType(rootState.provider.selected) !== providerTypes.desktop && getProviderType(rootState.provider.selected) !== providerTypes.google) {
             const originalTitle = (JSON.parse(state.stash)).summary.title;
             const resp = await threatmodelApi.modelAsync(
@@ -125,7 +120,7 @@ const actions = {
     [THREATMODEL_SAVE]: async ({ dispatch, commit, rootState, state }) => {
         if (getProviderType(rootState.provider.selected) === providerTypes.desktop) {
             // desktop responds later with its own STASH and NOT_MODIFIED
-            window.electronAPI.modelSave(toDesktopSavePayload(state.data), state.fileName);
+            save.desktop(state.data, state.fileName);
         } else {
             let result = false;
             if (getProviderType(rootState.provider.selected) === providerTypes.local) {
@@ -169,6 +164,7 @@ const mutations = {
     [THREATMODEL_DIAGRAM_SAVED]: (state, diagram) => {
         const idx = state.data.detail.diagrams.findIndex(x => x.id === diagram.id);
         state.selectedDiagram = diagram;
+        // potential bug? if index not found then not copied into array
         state.data.detail.diagrams[idx] = diagram;
         state.data.version = diagram.version;
         stashThreatModel(state, state.data);

@@ -1,5 +1,3 @@
-import Vue from 'vue';
-
 import { FOLDER_SELECTED } from '@/store/actions/folder';
 import {
     THREATMODEL_CLEAR,
@@ -81,7 +79,6 @@ describe('store/modules/threatmodel.js', () => {
             jest.spyOn(mocks, 'dispatch');
             mocks.rootState = getRootState();
             window.electronAPI = {
-                modelSave: jest.fn(),
                 modelClosed: jest.fn()
             };
         });
@@ -90,15 +87,17 @@ describe('store/modules/threatmodel.js', () => {
             clearState(threatmodelModule.state);
         });
 
-        it('commits the clear action', () => {
-            threatmodelModule.actions[THREATMODEL_CLEAR](mocks);
-            expect(mocks.commit).toHaveBeenCalledWith(THREATMODEL_CLEAR);
-        });
-
-        it('commits the clear action with desktop', () => {
-            mocks.rootState.provider.selected = 'desktop';
-            threatmodelModule.actions[THREATMODEL_CLEAR](mocks);
-            expect(window.electronAPI.modelClosed).toHaveBeenCalledTimes(1);
+        describe('commits the clear action', () => {
+            it('clear action', () => {
+                threatmodelModule.actions[THREATMODEL_CLEAR](mocks);
+                expect(mocks.commit).toHaveBeenCalledWith(THREATMODEL_CLEAR);
+            });
+    
+            it('clear action with desktop', () => {
+                mocks.rootState.provider.selected = 'desktop';
+                threatmodelModule.actions[THREATMODEL_CLEAR](mocks);
+                expect(window.electronAPI.modelClosed).toHaveBeenCalledTimes(1);
+            });
         });
 
         it('commits the contributors updated action', () => {
@@ -108,13 +107,8 @@ describe('store/modules/threatmodel.js', () => {
         });
 
         describe('create action with the data', () => {
-            const data = 'foobar';
 
             beforeEach(() => {
-                Vue.$toast = {
-                    success: jest.fn(),
-                    error: jest.fn()
-                };
                 mocks.state.data = {
                     summary: {
                         title: 'New Blank Model'
@@ -122,19 +116,32 @@ describe('store/modules/threatmodel.js', () => {
                 };
             });
 
+            describe('desktop provider', () => {
+                beforeEach(async () => {
+                    mocks.rootState.provider.selected = 'desktop';
+                    save.desktop = jest.fn().mockReturnValue(true);
+                    await threatmodelModule.actions[THREATMODEL_CREATE](mocks, 'tm');
+                });
+
+                it('creates file on desktop filesystem', () => {
+                    expect(save.desktop).toHaveBeenCalledTimes(1);
+                });
+
+                it('skips the rollback event', () => {
+                    expect(mocks.dispatch).not.toHaveBeenCalledWith(THREATMODEL_STASH);
+                    expect(mocks.commit).not.toHaveBeenCalledWith(THREATMODEL_NOT_MODIFIED);
+                });
+            });
+
             describe('git provider', () => {
                 describe('without error', () => {
                     beforeEach(async () => {
-                        jest.spyOn(threatmodelApi, 'createAsync').mockResolvedValue({ data });
+                        save.repoCreate = jest.fn().mockReturnValue(true);
                         await threatmodelModule.actions[THREATMODEL_CREATE](mocks, 'tm');
                     });
 
-                    it('calls the createAsync api', () => {
-                        expect(threatmodelApi.createAsync).toHaveBeenCalledTimes(1);
-                    });
-
-                    it('shows a toast success message', () => {
-                        expect(Vue.$toast.success).toHaveBeenCalledTimes(1);
+                    it('creates file in the repo', () => {
+                        expect(save.repoCreate).toHaveBeenCalledTimes(1);
                     });
 
                     it('dispatches the set rollback copy event', () => {
@@ -148,17 +155,55 @@ describe('store/modules/threatmodel.js', () => {
 
                 describe('with API error', () => {
                     beforeEach(async () => {
-                        jest.spyOn(threatmodelApi, 'createAsync').mockRejectedValue({ data });
-                        console.error = jest.fn();
+                        save.repoCreate = jest.fn().mockReturnValue(false);
                         await threatmodelModule.actions[THREATMODEL_CREATE](mocks, 'tm');
                     });
 
-                    it('logs the error', () => {
-                        expect(console.error).toHaveBeenCalledTimes(2);
+                    it('attempts to create file', () => {
+                        expect(save.repoCreate).toHaveBeenCalledTimes(1);
                     });
 
-                    it('shows a toast error message', () => {
-                        expect(Vue.$toast.error).toHaveBeenCalledTimes(1);
+                    it('skips the set rollback copy event', () => {
+                        expect(mocks.dispatch).not.toHaveBeenCalledWith(THREATMODEL_STASH);
+                        expect(mocks.commit).not.toHaveBeenCalledWith(THREATMODEL_NOT_MODIFIED);
+                    });
+                });
+            });
+
+            describe('google provider', () => {
+                describe('without error', () => {
+                    const data = 'foobar';
+    
+                    beforeEach(async () => {
+                        mocks.rootState.provider.selected = 'google';
+                        save.googleCreate = jest.fn().mockReturnValue({data});
+                        await threatmodelModule.actions[THREATMODEL_CREATE](mocks, 'tm');
+                    });
+    
+                    it('dispatches the folder event', () => {
+                        expect(mocks.dispatch).toHaveBeenCalledWith(FOLDER_SELECTED, data);
+                    });
+    
+                    it('dispatches the set rollback copy event', () => {
+                        expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_STASH);
+                        expect(mocks.commit).toHaveBeenCalledWith(THREATMODEL_NOT_MODIFIED);
+                    });
+                });
+    
+                describe('with missing folder', () => {
+                    beforeEach(async () => {
+                        mocks.rootState.provider.selected = 'google';
+                        save.googleCreate = jest.fn();
+                        await threatmodelModule.actions[THREATMODEL_CREATE](mocks, 'tm');
+                    });
+    
+                    it('skips the folder event', () => {
+                        expect(mocks.dispatch).not.toHaveBeenCalledWith(FOLDER_SELECTED, expect.anything());
+                    });
+    
+                    it('skips the rollback event', () => {
+                        expect(mocks.dispatch).not.toHaveBeenCalledWith(THREATMODEL_STASH);
+                        expect(mocks.commit).not.toHaveBeenCalledWith(THREATMODEL_NOT_MODIFIED);
                     });
                 });
             });
@@ -173,63 +218,10 @@ describe('store/modules/threatmodel.js', () => {
                 it('saves the file to local filesystem', () => {
                     expect(save.local).toHaveBeenCalledTimes(1);
                 });
-        
-                it('dispatches the set rollback copy event', () => {
-                    expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_STASH);
-                    expect(mocks.commit).toHaveBeenCalledWith(THREATMODEL_NOT_MODIFIED);
-                });
-            });
-
-            describe('desktop provider', () => {
-                beforeEach(async () => {
-                    mocks.rootState.provider.selected = 'desktop';
-                    window.electronAPI.modelSave = jest.fn();
-                    await threatmodelModule.actions[THREATMODEL_CREATE](mocks, 'tm');
-                });
-            
-                it('calls the electron api', () => {
-                    expect(window.electronAPI.modelSave).toHaveBeenCalledTimes(1);
-                });
-
-                it('skips the rollback event', () => {
-                    expect(mocks.dispatch).not.toHaveBeenCalledWith(THREATMODEL_STASH);
-                    expect(mocks.commit).not.toHaveBeenCalledWith(THREATMODEL_NOT_MODIFIED);
-                });
-            });
-
-            describe('google provider with folder', () => {
-                const data = 'foobar';
-
-                beforeEach(async () => {
-                    mocks.rootState.provider.selected = 'google';
-                    save.googleCreate = jest.fn().mockReturnValue({data});
-                    await threatmodelModule.actions[THREATMODEL_CREATE](mocks, 'tm');
-                });
-
-                it('dispatches the folder event', () => {
-                    expect(mocks.dispatch).toHaveBeenCalledWith(FOLDER_SELECTED, data);
-                });
 
                 it('dispatches the set rollback copy event', () => {
                     expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_STASH);
                     expect(mocks.commit).toHaveBeenCalledWith(THREATMODEL_NOT_MODIFIED);
-                });
-            });
-
-            describe('google provider with missing folder', () => {
-                beforeEach(async () => {
-                    mocks.rootState.provider.selected = 'google';
-                    save.googleCreate = jest.fn();
-                    await threatmodelModule.actions[THREATMODEL_CREATE](mocks, 'tm');
-                });
-
-                it('skips the folder event', () => {
-                    expect(mocks.dispatch).not.toHaveBeenCalledWith(FOLDER_SELECTED, expect.anything());
-                });
-
-                it('skips the rollback event', () => {
-                    expect(mocks.dispatch).not.toHaveBeenCalledWith(THREATMODEL_STASH);
-                    expect(mocks.commit).not.toHaveBeenCalledWith(THREATMODEL_NOT_MODIFIED);
                 });
             });
         });
@@ -371,17 +363,7 @@ describe('store/modules/threatmodel.js', () => {
             });
         });
 
-
         describe('threatmodel save', () => {
-            const data = 'foobar';
-
-            beforeEach(() => {
-                Vue.$toast = {
-                    success: jest.fn(),
-                    error: jest.fn()
-                };
-            });
-
             describe('desktop provider', () => {
                 beforeEach(async () => {
                     mocks.rootState.provider.selected = 'desktop';
@@ -390,45 +372,47 @@ describe('store/modules/threatmodel.js', () => {
                     await threatmodelModule.actions[THREATMODEL_SAVE](mocks, 'tm');
                 });
 
-                it('saves through the electron API without an extra diagramSaved commit', () => {
-                    expect(window.electronAPI.modelSave).toHaveBeenCalledWith(mocks.state.data, mocks.state.fileName);
-                    expect(mocks.commit).not.toHaveBeenCalledWith(THREATMODEL_DIAGRAM_SAVED, expect.anything());
+                it('saves to desktop filesystem', () => {
+                    expect(save.desktop).toHaveBeenCalledWith(mocks.state.data, mocks.state.fileName);
+                });
+
+                it('defers setting stash and modified flag', () => {
+                    expect(mocks.commit).not.toHaveBeenCalledWith(THREATMODEL_STASH);
+                    expect(mocks.commit).not.toHaveBeenCalledWith(THREATMODEL_NOT_MODIFIED);
                 });
             });
 
             describe('git provider', () => {
+
                 describe('without error', () => {
                     beforeEach(async () => {
-                        jest.spyOn(threatmodelApi, 'updateAsync').mockResolvedValue({ data });
+                        save.repo = jest.fn().mockReturnValue(true);
                         await threatmodelModule.actions[THREATMODEL_SAVE](mocks, 'tm');
+                    });
+
+                    it('saves the file to the repo', () => {
+                        expect(save.repo).toHaveBeenCalledTimes(1);
                     });
 
                     it('dispatches the set rollback copy event', () => {
                         expect(mocks.dispatch).toHaveBeenCalledWith(THREATMODEL_STASH);
-                    });
-
-                    it('calls the updateAsync api', () => {
-                        expect(threatmodelApi.updateAsync).toHaveBeenCalledTimes(1);
-                    });
-
-                    it('shows a toast success message', () => {
-                        expect(Vue.$toast.success).toHaveBeenCalledTimes(1);
+                        expect(mocks.commit).toHaveBeenCalledWith(THREATMODEL_NOT_MODIFIED);
                     });
                 });
 
                 describe('with API error', () => {
                     beforeEach(async () => {
-                        jest.spyOn(threatmodelApi, 'updateAsync').mockRejectedValue({ data });
-                        console.error = jest.fn();
+                        save.repo = jest.fn().mockReturnValue(false);
                         await threatmodelModule.actions[THREATMODEL_SAVE](mocks, 'tm');
                     });
 
-                    it('logs the error', () => {
-                        expect(console.error).toHaveBeenCalledTimes(2);
+                    it('calls repo', () => {
+                        expect(save.repo).toHaveBeenCalledTimes(1);
                     });
 
-                    it('shows a toast error message', () => {
-                        expect(Vue.$toast.error).toHaveBeenCalledTimes(1);
+                    it('skips the set rollback copy event', () => {
+                        expect(mocks.dispatch).not.toHaveBeenCalledWith(THREATMODEL_STASH);
+                        expect(mocks.commit).not.toHaveBeenCalledWith(THREATMODEL_NOT_MODIFIED);
                     });
                 });
             });
@@ -595,15 +579,43 @@ describe('store/modules/threatmodel.js', () => {
         });
 
         describe('threat model diagram saved', () => {
-			beforeEach(() => {
-				threatmodelModule.state.data.detail = {
-					diagrams: [
-						{id: 'foo', data: 'data-foo'},
-						{id: 'bar', data: 'data-bar'},
-						{id: 'baz', data: 'data-baz'}
-					]
-				}
-			});
+            const diagrams = [
+                {id: 'foo', title: 'title foo'},
+                {id: 'bar', title: 'title bar'},
+                {id: 'test', title: 'title test'}
+            ];
+            const newDiagram = {id: 'test', title: 'new test title', version: 'new test version'};
+            const unknownDiagram = {id: 'unknown', title: 'unknown title', version: 'unknown version'};
+
+            beforeEach(() => {
+                threatmodelModule.state.data = {version: 'version test', detail: {diagrams: diagrams}};
+                threatmodelModule.state.selectedDiagram = {};
+                threatmodelModule.state.stash = '';
+            });
+
+            it('saves the modified diagram', () => {
+                threatmodelModule.mutations[THREATMODEL_DIAGRAM_SAVED](threatmodelModule.state, newDiagram);
+                expect(threatmodelModule.state.selectedDiagram).toEqual(newDiagram);
+                expect(threatmodelModule.state.data.detail.diagrams.at(-1)).toEqual(newDiagram);
+            });
+
+            it('sets the overall version', () => {
+                threatmodelModule.mutations[THREATMODEL_DIAGRAM_SAVED](threatmodelModule.state, newDiagram);
+                expect(threatmodelModule.state.data.version).toEqual(newDiagram.version);
+            });
+
+            it('stashes the diagram', () => {
+                threatmodelModule.mutations[THREATMODEL_DIAGRAM_SAVED](threatmodelModule.state, newDiagram);
+                expect(threatmodelModule.state.stash).toEqual(JSON.stringify(threatmodelModule.state.data));
+            });
+
+            it('ignores an unknown diagram', () => {
+                threatmodelModule.mutations[THREATMODEL_DIAGRAM_SAVED](threatmodelModule.state, unknownDiagram);
+                expect(threatmodelModule.state.selectedDiagram).toEqual(unknownDiagram);
+                expect(threatmodelModule.state.data.detail.diagrams).toEqual(diagrams);
+                expect(threatmodelModule.state.data.version).toEqual(unknownDiagram.version);
+                expect(threatmodelModule.state.stash).toEqual(JSON.stringify(threatmodelModule.state.data));
+            });
         });
 
         describe('threat model diagram selected', () => {
@@ -709,24 +721,26 @@ describe('store/modules/threatmodel.js', () => {
 
         describe('threat model updated', () => {
             const update = { version: 'foo', fileName: 'bar', diagramTop: 11, threatTop: 22, unknown: 'test'};
+            const initialData = { version: 'bar', detail: {diagramTop: 0, threatTop: 0} };
 
             beforeEach(() => {
                 threatmodelModule.state.fileName = 'foo';
-                threatmodelModule.state.data = { version: 'bar', detail: {diagramTop: 0, threatTop: 0} };
+                threatmodelModule.state.data = initialData;
+            });
+
+            it('updates the threat model', () => {
                 threatmodelModule.mutations[THREATMODEL_UPDATE](threatmodelModule.state, update);
-            });
-
-            it('updates the threat model version', () => {
                 expect(threatmodelModule.state.data.version).toEqual(update.version);
-            });
-
-            it('updates the threat model fileName', () => {
                 expect(threatmodelModule.state.fileName).toEqual(update.fileName);
-            });
-
-            it('updates the threat model tops', () => {
                 expect(threatmodelModule.state.data.detail.diagramTop).toBe(update.diagramTop);
                 expect(threatmodelModule.state.data.detail.threatTop).toBe(update.threatTop);
+            });
+
+            it('ignores unknown threat model keys', () => {
+                threatmodelModule.mutations[THREATMODEL_UPDATE](threatmodelModule.state, {test_key: 'test'});
+                expect(threatmodelModule.state.data.version).toEqual(initialData.version);
+                expect(threatmodelModule.state.data.detail.diagramTop).toBe(initialData.detail.diagramTop);
+                expect(threatmodelModule.state.data.detail.threatTop).toBe(initialData.detail.threatTop);
             });
         });
     });

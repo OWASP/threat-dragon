@@ -21,8 +21,24 @@ describe('store.get()/index.js', () => {
         expect(store.state.branch).toBeInstanceOf(Object);
     });
 
+    it('defines the cell module', () => {
+	    expect(store.state.cell).toBeInstanceOf(Object);
+    });
+
+    it('defines the config module', () => {
+	    expect(store.state.config).toBeInstanceOf(Object);
+    });
+
+    it('defines the folder module', () => {
+	    expect(store.state.folder).toBeInstanceOf(Object);
+    });
+
     it('defines the loader module', () => {
         expect(store.state.loader).toBeInstanceOf(Object);
+    });
+
+    it('defines the locale module', () => {
+	    expect(store.state.locale).toBeInstanceOf(Object);
     });
 
     it('defines the provider module', () => {
@@ -33,11 +49,11 @@ describe('store.get()/index.js', () => {
         expect(store.state.repo).toBeInstanceOf(Object);
     });
 
-    it('defines the threatmodel module', () => {
-        expect(store.state.threatmodel).toBeInstanceOf(Object);
+    it('defines the template module', () => {
+        expect(store.state.template).toBeInstanceOf(Object);
     });
 
-    it('defines the cell module', () => {
-        expect(store.state.cell).toBeInstanceOf(Object);
+    it('defines the threatmodel module', () => {
+	    expect(store.state.threatmodel).toBeInstanceOf(Object);
     });
 });

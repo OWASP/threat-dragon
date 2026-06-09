@@ -5,10 +5,9 @@ import flows from './diagrams/flows';
 import nodes from './diagrams/nodes';
 import schema from '@/assets/schema/threat-model.schema';
 import scope from './scope';
+import { buildVersion } from '@/store';
 import summary from './summary';
 import threats from './diagrams/threats/threats';
-
-const tdVersion = require('../../../../package.json').version;
 
 const createKey = (source, target, key) => {
     if (Object.hasOwn(source, key)) {
@@ -24,7 +23,7 @@ export const exportAsTmbom = (model) => {
     let tmbomThreats = threats.convert(model);
     let tmbom = {
         $schema: schema.$id,
-        version: model.compatibility?.version || tdVersion,
+        version: model.compatibility?.version || buildVersion,
         scope: scope.convert(model),
         diagrams: diagrams.convert(model),
         trust_zones: boxes.convert(model, tmbomNodes),
@@ -74,8 +73,8 @@ export const importTmbom = (model) => {
 
     return {
         summary: summary.merge(model),
-        detail: detail.merge(model, tdVersion),
-        version: tdVersion,
+        detail: detail.merge(model, buildVersion),
+        version: buildVersion,
         compatibility
     };
 };
@@ -84,7 +83,7 @@ export const importTmbom = (model) => {
 const read = (model) => {
     // not supported yet, return an empty Threat Dragon model with TM-BOM attached
     return {
-        version: tdVersion,
+        version: buildVersion,
         summary: {
             title: model.scope.title,
             description: 'Empty Threat Dragon model from a TM-BOM',
@@ -99,7 +98,7 @@ const read = (model) => {
 const write = (model) => {
     // not supported yet, so return a nearly empty TM-BOM
     return {
-        version: tdVersion,
+        version: buildVersion,
         scope: {
             title: model.tmBom.scope.title,
             description: 'Empty Threat Model Bill of Materials (TM-BOM)',
