@@ -302,7 +302,6 @@ jobs:
         run: npm clean-install
 
       - name: Build MacOS disk image
-        env:
         run: npm run build:desktop -- --mac --publish never
 
       - name: Run desktop e2e smokes
