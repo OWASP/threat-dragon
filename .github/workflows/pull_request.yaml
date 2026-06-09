@@ -301,8 +301,9 @@ jobs:
       - name: Install clean packages
         run: npm clean-install
 
-      - name: Build macOS desktop app
-        run: npm run build:desktop -- --mac dir --publish never -c.productName="Threat Dragon"
+      - name: Build MacOS disk image
+        env:
+        run: npm run build:desktop -- --mac --publish never
 
       - name: Run desktop e2e smokes
         run: npm run test:e2e:desktop
