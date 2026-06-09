@@ -542,8 +542,8 @@ jobs:
             ${{ runner.os }}-node-
             ${{ runner.os }}-
 
-      - name: Install packages
-        run: npm install
+      - name: Install clean packages
+        run: npm clean-install
 
       - name: Build MacOS disk image
         env:

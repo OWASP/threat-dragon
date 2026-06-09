@@ -345,7 +345,7 @@ jobs:
         run: npm clean-install
 
       - name: Build Windows desktop app
-        run: npm run build:desktop -- --windows dir --x64 --publish never -c.productName="Threat Dragon"
+        run: npm run build:desktop -- --windows --publish never
 
       - name: Run desktop e2e smokes
         run: npm run test:e2e:desktop
