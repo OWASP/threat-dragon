@@ -81,6 +81,10 @@ describe('service/migration/tmBom/diagrams/threats/threats.js', () => {
         it('maps Avoided to the retired control status', () => {
             expect(threats.convert(buildModel('Avoided')).controls[0].status).toEqual('retired');
         });
+
+        it('maps Eliminated to the retired control status', () => {
+            expect(threats.convert(buildModel('Eliminated')).controls[0].status).toEqual('retired');
+        });
     });
 
     describe('merge/import TM-BOM threats', () => {

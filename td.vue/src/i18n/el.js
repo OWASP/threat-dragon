@@ -471,7 +471,11 @@ const messages = {
         status: {
             notApplicable: 'Δεν έχει εφαρμογή',
             open: 'Ανοιχτή',
-            mitigated: 'Καλύφθηκε'
+            mitigated: 'Καλύφθηκε',
+            accepted: 'Accepted',
+            transferred: 'Transferred',
+            avoided: 'Avoided',
+            eliminated: 'Eliminated'
         },
         severity: {
             tbd: 'TBD',
@@ -502,6 +506,10 @@ const messages = {
         threatStats: {
             total: 'Σύνολο απειλών',
             mitigated: 'Σύνολο μετριασμένων',
+            accepted: 'Total Accepted',
+            transferred: 'Total Transferred',
+            avoided: 'Total Avoided',
+            eliminated: 'Total Eliminated',
             notApplicable: 'Total Not Applicable',
             notMitigated: 'Μη μετριασμένες',
             openCritical: 'Ανοιχτές / Κρίσιμη Προτεραιότητα',

@@ -471,7 +471,11 @@ const messages = {
         status: {
             notApplicable: 'T/A',
             open: 'Buka',
-            mitigated: 'Ditangani'
+            mitigated: 'Ditangani',
+            accepted: 'Accepted',
+            transferred: 'Transferred',
+            avoided: 'Avoided',
+            eliminated: 'Eliminated'
         },
         severity: {
             tbd: 'TBD',
@@ -502,6 +506,10 @@ const messages = {
         threatStats: {
             total: 'Jumlah Ancaman',
             mitigated: 'Jumlah Ditangani',
+            accepted: 'Total Accepted',
+            transferred: 'Total Transferred',
+            avoided: 'Total Avoided',
+            eliminated: 'Total Eliminated',
             notApplicable: 'Total Not Applicable',
             notMitigated: 'Belum Ditangani',
             openCritical: 'Buka / Keutamaan Kritikal',

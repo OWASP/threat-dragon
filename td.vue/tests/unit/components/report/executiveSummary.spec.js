@@ -102,6 +102,11 @@ describe('components/report/ExecutiveSummary.vue', () => {
         expect(TdExecutiveSummary.computed.threatsAvoided.call(ctx)).toEqual(1);
     });
 
+    it('counts the eliminated threats', () => {
+        const ctx = { threats: [{ status: 'Eliminated' }] };
+        expect(TdExecutiveSummary.computed.threatsEliminated.call(ctx)).toEqual(1);
+    });
+
     it('includes a row for accepted threats when present', () => {
         setup({ summary: '', threats: [{ status: 'Accepted', severity: 'High' }] });
         expect(wrapper.vm.tableRows.some(r => r.metric === 'report.threatStats.accepted')).toEqual(true);
@@ -109,6 +114,11 @@ describe('components/report/ExecutiveSummary.vue', () => {
 
     it('omits the accepted row when there are none', () => {
         expect(wrapper.vm.tableRows.some(r => r.metric === 'report.threatStats.accepted')).toEqual(false);
+    });
+
+    it('includes a row for eliminated threats when present', () => {
+        setup({ summary: '', threats: [{ status: 'Eliminated', severity: 'High' }] });
+        expect(wrapper.vm.tableRows.some(r => r.metric === 'report.threatStats.eliminated')).toEqual(true);
     });
 
     it('gets the data test id from the row item', () => {

@@ -358,7 +358,7 @@
                             "type": "string"
                           },
                           "status": {
-                            "description": "The threat status as NA, Open, Mitigated, Accepted, Transferred or Avoided",
+                            "description": "The threat status as NA, Open, Mitigated, Accepted, Transferred, Avoided or Eliminated",
                             "type": "string"
                           },
                           "threatId": {

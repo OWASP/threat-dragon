@@ -1,113 +1,73 @@
 import {
-    THREAT_STATUS,
-    STATUS_ORDER,
-    RESOLVED_STATUSES,
+    threatStatus,
+    primaryStatuses,
+    treatmentStatuses,
     isOpen,
     isResolved,
-    getStatusOptions
+    getPrimaryStatusOptions,
+    getTreatmentStatusOptions
 } from '@/service/threats/status.js';
 
 describe('service/threats/status.js', () => {
-    describe('THREAT_STATUS constants', () => {
-        it('exposes the legacy statuses with their stored values', () => {
-            expect(THREAT_STATUS.NOT_APPLICABLE).toEqual('NotApplicable');
-            expect(THREAT_STATUS.OPEN).toEqual('Open');
-            expect(THREAT_STATUS.MITIGATED).toEqual('Mitigated');
-        });
-
-        it('exposes the new risk-treatment statuses', () => {
-            expect(THREAT_STATUS.ACCEPTED).toEqual('Accepted');
-            expect(THREAT_STATUS.TRANSFERRED).toEqual('Transferred');
-            expect(THREAT_STATUS.AVOIDED).toEqual('Avoided');
+    it('exposes stable stored status values', () => {
+        expect(threatStatus).toEqual({
+            notApplicable: 'NotApplicable',
+            open: 'Open',
+            mitigated: 'Mitigated',
+            accepted: 'Accepted',
+            transferred: 'Transferred',
+            avoided: 'Avoided',
+            eliminated: 'Eliminated'
         });
     });
 
-    describe('STATUS_ORDER', () => {
-        it('lists all six statuses', () => {
-            expect(STATUS_ORDER).toHaveLength(6);
-        });
-
-        it('keeps Open as the second option', () => {
-            expect(STATUS_ORDER[1]).toEqual('Open');
-        });
+    it('keeps NotApplicable and Open as primary statuses', () => {
+        expect(primaryStatuses).toEqual(['NotApplicable', 'Open']);
     });
 
-    describe('RESOLVED_STATUSES', () => {
-        it('contains Mitigated, Accepted, Transferred and Avoided', () => {
-            expect(RESOLVED_STATUSES).toEqual(['Mitigated', 'Accepted', 'Transferred', 'Avoided']);
-        });
-
-        it('does not contain Open', () => {
-            expect(RESOLVED_STATUSES).not.toContain('Open');
-        });
-
-        it('does not contain NotApplicable', () => {
-            expect(RESOLVED_STATUSES).not.toContain('NotApplicable');
-        });
+    it('lists all treatment statuses as resolved', () => {
+        expect(treatmentStatuses).toEqual([
+            'Mitigated',
+            'Accepted',
+            'Transferred',
+            'Avoided',
+            'Eliminated'
+        ]);
     });
 
-    describe('isOpen', () => {
-        it('is true for Open', () => {
-            expect(isOpen('Open')).toEqual(true);
-        });
-
-        it('is case insensitive', () => {
-            expect(isOpen('open')).toEqual(true);
-        });
-
-        it('is false for Mitigated', () => {
-            expect(isOpen('Mitigated')).toEqual(false);
-        });
-
-        it('is false for undefined', () => {
-            expect(isOpen(undefined)).toEqual(false);
-        });
+    it.each(['Open', 'open'])('recognizes %s as open', (status) => {
+        expect(isOpen(status)).toEqual(true);
     });
 
-    describe('isResolved', () => {
-        it('is true for Mitigated', () => {
-            expect(isResolved('Mitigated')).toEqual(true);
-        });
-
-        it('is true for Accepted', () => {
-            expect(isResolved('Accepted')).toEqual(true);
-        });
-
-        it('is true for Transferred', () => {
-            expect(isResolved('Transferred')).toEqual(true);
-        });
-
-        it('is true for Avoided', () => {
-            expect(isResolved('Avoided')).toEqual(true);
-        });
-
-        it('is case insensitive', () => {
-            expect(isResolved('avoided')).toEqual(true);
-        });
-
-        it('is false for Open', () => {
-            expect(isResolved('Open')).toEqual(false);
-        });
-
-        it('is false for NotApplicable', () => {
-            expect(isResolved('NotApplicable')).toEqual(false);
-        });
-
-        it('is false for an empty status', () => {
-            expect(isResolved('')).toEqual(false);
-        });
+    it.each(['Mitigated', undefined])('does not recognize %s as open', (status) => {
+        expect(isOpen(status)).toEqual(false);
     });
 
-    describe('getStatusOptions', () => {
-        const options = getStatusOptions((key) => key);
+    it.each(['Mitigated', 'Accepted', 'Transferred', 'Avoided', 'Eliminated', 'eliminated'])(
+        'recognizes %s as resolved',
+        (status) => {
+            expect(isResolved(status)).toEqual(true);
+        }
+    );
 
-        it('returns one option per status', () => {
-            expect(options).toHaveLength(6);
-        });
+    it.each(['Open', 'NotApplicable', ''])('does not recognize %s as resolved', (status) => {
+        expect(isResolved(status)).toEqual(false);
+    });
 
-        it('maps each value to its translation key via the translate function', () => {
-            const accepted = options.find((o) => o.value === 'Accepted');
-            expect(accepted.text).toEqual('threats.status.accepted');
-        });
+    it('builds translated primary status options', () => {
+        expect(getPrimaryStatusOptions((key) => key)).toEqual([
+            { value: 'NotApplicable', text: 'threats.status.notApplicable' },
+            { value: 'Open', text: 'threats.status.open' }
+        ]);
+    });
+
+    it('builds translated treatment status options', () => {
+        expect(getTreatmentStatusOptions((key) => key)).toEqual([
+            { value: 'Mitigated', text: 'threats.status.mitigated' },
+            { value: 'Accepted', text: 'threats.status.accepted' },
+            { value: 'Transferred', text: 'threats.status.transferred' },
+            { value: 'Avoided', text: 'threats.status.avoided' },
+            { value: 'Eliminated', text: 'threats.status.eliminated' }
+        ]);
     });
 });

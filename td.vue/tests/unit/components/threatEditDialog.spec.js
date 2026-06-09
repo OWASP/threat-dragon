@@ -5,7 +5,7 @@ import Vuex from 'vuex';
 import dataChanged from '@/service/x6/graph/data-changed.js';
 import TdFormRadioGroup from '@/components/FormRadioGroup.vue';
 import TdFormSelect from '@/components/FormSelect.vue';
-import TdDropdown from '@/components/Dropdown.vue';
+import TdThreatStatusSelector from '@/components/ThreatStatusSelector.vue';
 import TdThreatEditDialog from '@/components/ThreatEditDialog.vue';
 
 describe('components/ThreatEditDialog.vue', () => {
@@ -89,21 +89,12 @@ describe('components/ThreatEditDialog.vue', () => {
             expect(input.exists()).toEqual(true);
         });
 
-        it('has a status dropdown', () => {
-            const dropdown = wrapper.findAllComponents(TdDropdown)
+        it('has a threat status selector', () => {
+            const selector = wrapper.findAllComponents(TdThreatStatusSelector)
                 .filter(x => x.attributes('id') === 'status')
                 .at(0);
 
-            expect(dropdown.exists()).toEqual(true);
-        });
-
-        it('shows the selected status as the dropdown text', () => {
-            expect(wrapper.vm.selectedStatusText).toEqual('threats.status.open');
-        });
-
-        it('shows empty dropdown text for an unknown status', () => {
-            wrapper.vm.threat.status = 'Bogus';
-            expect(wrapper.vm.selectedStatusText).toEqual('');
+            expect(selector.exists()).toEqual(true);
         });
 
         it('has a score input', () => {

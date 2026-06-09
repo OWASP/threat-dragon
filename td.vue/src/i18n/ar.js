@@ -471,7 +471,11 @@ const messages = {
         status: {
             notApplicable: 'غير قابل للتطبيق',
             open: 'مفتوح',
-            mitigated: 'تم التخفيف'
+            mitigated: 'تم التخفيف',
+            accepted: 'Accepted',
+            transferred: 'Transferred',
+            avoided: 'Avoided',
+            eliminated: 'Eliminated'
         },
         severity: {
             tbd: 'سيتم الإعلان عنها',
@@ -502,6 +506,10 @@ const messages = {
         threatStats: {
             total: 'إجمالي التهديدات',
             mitigated: 'الإجمالي المُخفف',
+            accepted: 'Total Accepted',
+            transferred: 'Total Transferred',
+            avoided: 'Total Avoided',
+            eliminated: 'Total Eliminated',
             notApplicable: 'Total Not Applicable',
             notMitigated: 'الإجمالي غير المُخفف',
             openCritical: 'مفتوح / الأولوية الحرجة',

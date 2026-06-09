@@ -65,6 +65,9 @@ export default {
             if (this.threatsAvoided) {
                 totalStats.push({ metric: this.$t('report.threatStats.avoided'), total: this.threatsAvoided });
             }
+            if (this.threatsEliminated) {
+                totalStats.push({ metric: this.$t('report.threatStats.eliminated'), total: this.threatsEliminated });
+            }
             if (this.openTbd) {
                 openStats.push({ metric: this.$t('report.threatStats.openTbd'), total: this.openTbd });
             }
@@ -99,6 +102,11 @@ export default {
         threatsAvoided: function () {
             return this.threats
                 .filter(threat => threat.status === 'Avoided')
+                .length;
+        },
+        threatsEliminated: function () {
+            return this.threats
+                .filter(threat => threat.status === 'Eliminated')
                 .length;
         },
         threatsOpen: function () {

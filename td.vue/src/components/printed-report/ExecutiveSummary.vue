@@ -39,6 +39,10 @@
                     <th>{{ $t('report.threatStats.avoided') }}</th>
                     <td class="td-summary-avoided">{{ threatsAvoided }}</td>
                 </tr>
+                <tr v-if="threatsEliminated" >
+                    <th>{{ $t('report.threatStats.eliminated') }}</th>
+                    <td class="td-summary-eliminated">{{ threatsEliminated }}</td>
+                </tr>
                 <tr>
                     <th>{{ $t('report.threatStats.notMitigated') }}</th>
                     <td class="td-summary-not-mitigated">{{ threatsOpen }}</td>
@@ -121,6 +125,11 @@ export default {
         threatsAvoided: function () {
             return this.threats
                 .filter(threat => threat.status === 'Avoided')
+                .length;
+        },
+        threatsEliminated: function () {
+            return this.threats
+                .filter(threat => threat.status === 'Eliminated')
                 .length;
         },
         threatsOpen: function () {

@@ -471,7 +471,11 @@ const messages = {
         status: {
             notApplicable: '不适用',
             open: '未解决',
-            mitigated: '缓解'
+            mitigated: '缓解',
+            accepted: 'Accepted',
+            transferred: 'Transferred',
+            avoided: 'Avoided',
+            eliminated: 'Eliminated'
         },
         severity: {
             tbd: '待定',
@@ -502,6 +506,10 @@ const messages = {
         threatStats: {
             total: '威胁总数',
             mitigated: '已缓解总数',
+            accepted: 'Total Accepted',
+            transferred: 'Total Transferred',
+            avoided: 'Total Avoided',
+            eliminated: 'Total Eliminated',
             notApplicable: '不适用总计',
             notMitigated: '未缓解',
             openCritical: '未解决/关键优先级',

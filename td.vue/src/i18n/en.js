@@ -474,7 +474,8 @@ const messages = {
             mitigated: 'Mitigated',
             accepted: 'Accepted',
             transferred: 'Transferred',
-            avoided: 'Avoided'
+            avoided: 'Avoided',
+            eliminated: 'Eliminated'
         },
         severity: {
             tbd: 'TBD',
@@ -508,6 +509,7 @@ const messages = {
             accepted: 'Total Accepted',
             transferred: 'Total Transferred',
             avoided: 'Total Avoided',
+            eliminated: 'Total Eliminated',
             notApplicable: 'Total Not Applicable',
             notMitigated: 'Total Open',
             openCritical: 'Open / Critical Severity',

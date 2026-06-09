@@ -471,7 +471,11 @@ const messages = {
         status: {
             notApplicable: 'N/A',
             open: '未対応',
-            mitigated: '解決済み'
+            mitigated: '解決済み',
+            accepted: 'Accepted',
+            transferred: 'Transferred',
+            avoided: 'Avoided',
+            eliminated: 'Eliminated'
         },
         severity: {
             tbd: '未定',
@@ -502,6 +506,10 @@ const messages = {
         threatStats: {
             total: '脅威総数',
             mitigated: '対策済みの脅威',
+            accepted: 'Total Accepted',
+            transferred: 'Total Transferred',
+            avoided: 'Total Avoided',
+            eliminated: 'Total Eliminated',
             notApplicable: 'Total Not Applicable',
             notMitigated: '未対策の脅威',
             openCritical: '未対応 / 最優先事項',

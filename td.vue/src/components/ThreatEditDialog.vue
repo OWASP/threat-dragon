@@ -146,23 +146,10 @@
                             :label="$t('threats.properties.status')"
                             label-for="status"
                         >
-                            <td-dropdown
+                            <td-threat-status-selector
                                 id="status"
-                                variant="secondary"
-                                :text="selectedStatusText"
-                            >
-                                <template #default="{ close }">
-                                    <button
-                                        v-for="status in statuses"
-                                        :key="status.value"
-                                        type="button"
-                                        class="td-dropdown-item"
-                                        @click="threat.status = status.value; close()"
-                                    >
-                                        {{ status.text }}
-                                    </button>
-                                </template>
-                            </td-dropdown>
+                                v-model="threat.status"
+                            ></td-threat-status-selector>
                         </b-form-group>
                     </b-col>
 
@@ -278,10 +265,9 @@ import { CELL_DATA_UPDATED } from '@/store/actions/cell.js';
 import tmActions from '@/store/actions/threatmodel.js';
 import dataChanged from '@/service/x6/graph/data-changed.js';
 import threatModels from '@/service/threats/models/index.js';
-import { getStatusOptions } from '@/service/threats/status.js';
 import TdFormRadioGroup from '@/components/FormRadioGroup.vue';
 import TdFormSelect from '@/components/FormSelect.vue';
-import TdDropdown from '@/components/Dropdown.vue';
+import TdThreatStatusSelector from '@/components/ThreatStatusSelector.vue';
 import { getGame, getAllGames } from '../service/threats/models/eop';
 
 export default {
@@ -289,7 +275,7 @@ export default {
     components: {
         TdFormRadioGroup,
         TdFormSelect,
-        TdDropdown
+        TdThreatStatusSelector
     },
     computed: {
         ...mapState({
@@ -311,12 +297,6 @@ export default {
             }, this);
             if (!res.includes(this.threat.type)) res.push(this.threat.type);
             return res;
-        },
-        statuses() {
-            return getStatusOptions((key) => this.$t(key));
-        },
-        selectedStatusText() {
-            return this.statuses.find((status) => status.value === this.threat.status)?.text || '';
         },
         priorities() {
             return [

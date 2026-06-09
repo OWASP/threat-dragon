@@ -120,6 +120,10 @@ describe('components/report/ReportEntity.vue', () => {
             expect(wrapper.vm.translateStatus('Avoided')).toEqual('threats.status.avoided');
         });
 
+        it('translates eliminated status', () => {
+            expect(wrapper.vm.translateStatus('Eliminated')).toEqual('threats.status.eliminated');
+        });
+
         it('falls back to Unknown for an unrecognised status', () => {
             expect(wrapper.vm.translateStatus('Bogus')).toEqual('Unknown');
         });
