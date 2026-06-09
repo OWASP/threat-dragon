@@ -96,7 +96,15 @@ const getElectronBinaryPath = () => {
     }
 
     if (process.platform === 'win32') {
-        return join(process.cwd(), 'dist-desktop', 'win-unpacked', 'Threat Dragon.exe');
+        const windowsFolder = process.arch === 'arm64' ? 'win-arm64-unpacked' : 'win-unpacked';
+        const windowsUnpackedPath = join(process.cwd(), 'dist-desktop', windowsFolder);
+        const executable = fs.readdirSync(windowsUnpackedPath).find((entry) => entry.endsWith('.exe'));
+
+        if (!executable) {
+            throw new Error(`Could not find Windows desktop executable in ${windowsUnpackedPath}`);
+        }
+
+        return join(windowsUnpackedPath, executable);
     }
 
     throw new Error(`Unsupported desktop E2E platform: ${process.platform}`);
