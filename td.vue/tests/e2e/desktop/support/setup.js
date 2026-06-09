@@ -102,6 +102,44 @@ const getElectronBinaryPath = () => {
     throw new Error(`Unsupported desktop E2E platform: ${process.platform}`);
 };
 
+const isLinuxWaylandSession = () => process.platform === 'linux' && (
+    process.env.XDG_SESSION_TYPE === 'wayland' || Boolean(process.env.WAYLAND_DISPLAY)
+);
+
+const getLinuxOzoneFlag = () => {
+    if (process.platform !== 'linux') {
+        return null;
+    }
+
+    const ozonePlatform = process.env.TD_E2E_OZONE_PLATFORM;
+    if (ozonePlatform) {
+        return `--ozone-platform=${ozonePlatform}`;
+    }
+
+    return isLinuxWaylandSession() ? '--ozone-platform-hint=auto' : '--ozone-platform=x11';
+};
+
+const normalizeWaylandWindow = async (mainProcessClient) => {
+    if (!isLinuxWaylandSession()) {
+        return;
+    }
+
+    await mainProcessClient.evaluate(`
+        (() => {
+            const electron = process.mainModule.require('electron');
+            const [window] = electron.BrowserWindow.getAllWindows();
+
+            if (window) {
+                window.setResizable(false);
+                window.setSize(1400, 1000);
+                window.center();
+            }
+
+            return true;
+        })()
+    `);
+};
+
 const killProcess = async (processRef) => {
     if (!processRef) {
         return;
@@ -154,9 +192,9 @@ exports.mochaHooks = {
                     '--no-sandbox',
                     '--disable-gpu',
                     '--disable-dev-shm-usage',
-                    '--ozone-platform=x11',
+                    getLinuxOzoneFlag(),
                     `--user-data-dir=${electronUserDataDir}`
-                ],
+                ].filter(Boolean),
                 {
                     env: { ...process.env, ELECTRON_ENABLE_LOGGING: 'true' },
                     stdio: ['ignore', electronLog, nodeInspectorLog]
@@ -173,6 +211,7 @@ exports.mochaHooks = {
 
             const debugPort = fs.readFileSync(portFile, 'utf8').split('\n')[0].trim();
             await waitForElectronPageTarget(debugPort);
+            await normalizeWaylandWindow(mainProcessClient);
 
             chromedriverPort = await getFreePort();
             chromedriverProcess = spawn(chromedriverBinary, [`--port=${chromedriverPort}`, '--url-base=/', '--verbose'], {
