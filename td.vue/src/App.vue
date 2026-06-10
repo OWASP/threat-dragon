@@ -11,8 +11,6 @@
 
 <style lang="scss">
 #app {
-  font-size: 20px;
-  line-height: 1.42857143;
   margin-top: ($header-height + 15px);
 }
 </style>
