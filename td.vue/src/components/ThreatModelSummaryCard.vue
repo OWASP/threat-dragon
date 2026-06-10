@@ -23,7 +23,7 @@ export default {
             const kvs = [];
             kvs.push({ key: this.$t('threatmodel.owner'), value: this.model.summary.owner });
             kvs.push({ key: this.$t('threatmodel.reviewer'), value: this.model.detail.reviewer });
-            kvs.push({ key: this.$t('threatmodel.contributors'), value: this.model.detail.contributors.map(x => x.name).join(', ') });
+            kvs.push({ key: this.$t('threatmodel.contributors'), value: this.model.detail.contributors?.map(x => x.name).join(', ') || '' });
             return kvs;
         }
     },
