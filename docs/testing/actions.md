@@ -70,4 +70,4 @@ Threat Dragon: _making threat modeling less threatening_
 
 [browserstack]: https://www.browserstack.com/
 [browserstack-os]: https://www.browserstack.com/open-source
-[td-pr-check]: ../../scripts/td-pr-check.sh
+[td-pr-check]: https://github.com/OWASP/threat-dragon/blob/main/scripts/td-pr-check.sh
