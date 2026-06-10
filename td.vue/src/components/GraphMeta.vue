@@ -9,17 +9,6 @@
             <b-card header-tag="header">
                 <template #header>
                     {{ $t('threatmodel.threats') }}
-                    <b-btn
-                        :disabled="disableNewThreat"
-                        @click="newThreat()"
-                        v-if="!!cellRef"
-                        variant="primary"
-                        size="sm"
-                        class="float-right"
-                    >
-                        <font-awesome-icon icon="plus" class="mr-1"></font-awesome-icon>
-                        {{ $t('threats.newThreat') }}
-                    </b-btn>
                 </template>
                 <b-card-text v-if="!!cellRef">
                     <b-row>
@@ -40,21 +29,32 @@
                     {{ $t('threats.emptyThreat') }}
                 </b-card-text>
             </b-card>
+
+            <hr v-if="!disableNewThreat" />
+
+            <a href="#"
+                v-if="!disableNewThreat"
+                @click.prevent="newThreat()"
+                class="new-threat-by-type m-2"
+            >
+                <font-awesome-icon icon="plus"></font-awesome-icon>
+                {{ $t('threats.newThreat') }}
+            </a>
             <a href="#"
                 v-if="!disableNewThreat && diagram.diagramType !== 'EOP'"
                 @click.prevent="AddThreatByType()"
                 class="new-threat-by-type m-2"
             >
-                    <font-awesome-icon icon="plus"></font-awesome-icon>
-                    {{ $t('threats.newThreatByType') }}
+                <font-awesome-icon icon="plus"></font-awesome-icon>
+                {{ $t('threats.newThreatByType') }}
             </a>
             <a href="#"
                 v-if="!disableNewThreat && diagram.diagramType !== 'EOP'"
                 @click.prevent="AddThreatByContext()"
                 class="new-threat-by-type m-2"
             >
-                    <font-awesome-icon icon="plus"></font-awesome-icon>
-                    {{ $t('threats.newThreatByContext') }}
+                <font-awesome-icon icon="plus"></font-awesome-icon>
+                {{ $t('threats.newThreatByContext') }}
             </a>
         </b-col>
     </b-row>
