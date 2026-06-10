@@ -187,7 +187,7 @@ describe('HomePage.vue', () => {
             await w.vm.$nextTick();
 
             const buttons = w.findAllComponents(TdProviderLoginButton);
-            expect(buttons.length).toBe(2);
+            expect(buttons).toHaveLength(2);
         });
     });
 

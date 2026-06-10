@@ -82,7 +82,7 @@ const getters = {
         if (state.config && Array.isArray(state.config.allowedLocales) && state.config.allowedLocales.length > 0) {
             return state.config.allowedLocales;
         }
-        return [];  // empty = no restrictions, all supported locales allowed
+        return []; // empty = no restrictions, all supported locales allowed
     },
     defaultLocale: (state) => {
         return state.config?.defaultLocale ?? undefined;

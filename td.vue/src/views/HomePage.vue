@@ -101,50 +101,11 @@ export default {
     },
     computed:
         mapState({
-<<<<<<< HEAD
-            config: state => {
-    computed:
-        mapState({
             config: state => state.config?.config ?? null,
             configError: state => state.config?.configError ?? null,
             providers: (state) => resolveProviders(state.config?.config, isElectron()),
-        }),
-            },
-            providers: (state) => {
-                if (isElectron()) {
-                    return {desktop: allProviders.desktop};
-                }
-                const providers = {};
-                if (state.config.config) {
-                    if (state.config.config.githubEnabled) {
-                        providers.github = allProviders.github;
-                    }
-                    if (state.config.config.bitbucketEnabled) {
-                        providers.bitbucket = allProviders.bitbucket;
-                    }
-                    if (state.config.config.gitlabEnabled) {
-                        providers.gitlab = allProviders.gitlab;
-                    }
-                    if (state.config.config.googleEnabled) {
-                        providers.google = allProviders.google;
-                    }
-                    if (state.config.config.localEnabled) {
-                        providers.local = allProviders.local;
-                    }
-                } else {
-                    // default if no backend server running
-                    providers.local = allProviders.local;
-                }
-                return providers;
-            },
-=======
-            config: state => state.config?.config ?? null,
-            configError: state => state.config?.configError ?? null,
-            providers: (state) => resolveProviders(state.config?.config, isElectron()),
->>>>>>> 1447b4b3 (feat(ui): add HomePage loading state and config errors)
         }),
     async mounted() {
-
         if (isElectron()) {
             await this.$store.dispatch(RESOLVE_LOCALE);
         } else {

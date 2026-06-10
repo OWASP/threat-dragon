@@ -1,6 +1,4 @@
-import { DEFAULT_LOCALE, SUPPORTED_LOCALES, t, tc } from '@/i18n/index.js';
-import i18nFactory from '@/i18n/index.js';
-
+import i18nFactory, { DEFAULT_LOCALE, SUPPORTED_LOCALES, t, tc } from '@/i18n/index.js';
 describe('i18n/index.js', () => {
     describe('DEFAULT_LOCALE', () => {
         it('uses en as the supported default locale', () => {
@@ -19,7 +17,7 @@ describe('i18n/index.js', () => {
             expect(Array.isArray(SUPPORTED_LOCALES)).toBe(true);
             expect(Object.isFrozen(SUPPORTED_LOCALES)).toBe(true);
             expect(SUPPORTED_LOCALES).toEqual(expect.arrayContaining(expected));
-            expect(SUPPORTED_LOCALES.length).toEqual(expected.length);
+            expect(SUPPORTED_LOCALES).toHaveLength(expected.length);
         });
 
         it('excludes ru and uk (hidden locales)', () => {
@@ -144,4 +142,5 @@ describe('i18n/index.js', () => {
         });
     });
 });
+
 

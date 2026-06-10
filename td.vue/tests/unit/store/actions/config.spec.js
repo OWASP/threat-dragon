@@ -1,6 +1,4 @@
-import { CONFIG_CLEAR, CONFIG_FETCH, CONFIG_LOADED, CONFIG_ERROR } from '@/store/actions/config.js';
-import configActions from '@/store/actions/config.js';
-
+import configActions, { CONFIG_CLEAR, CONFIG_FETCH, CONFIG_LOADED, CONFIG_ERROR } from '@/store/actions/config.js';
 describe('store/actions/config.js', () => {
     it('defines the clear action', () => {
         expect(CONFIG_CLEAR).not.toBeUndefined();
