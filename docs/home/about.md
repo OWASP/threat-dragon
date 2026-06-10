@@ -53,21 +53,28 @@ The application comes in two variants:
 
 ### Internationalization
 
-The following translations are built into the Threat Dragon application:
+The following translations are built into the Threat Dragon application (locale codes follow
+[IETF BCP 47](https://tools.ietf.org/html/bcp47)):
 
-* العربية (ara-SY)
-* Deutsch (deu-DE)
-* English (eng-US)
-* Ελληνικά (ell-GR)
-* español (spa-ES)
-* Suomi; (fin-FI)
-* français (fra-CA)
-* मानक हिन्दी (hin-IN)
-* Bahasa Indonesia (ind-ID)
-* 日本語 (jpn)
-* português (por-BR)
-* Malay (msa-MY)
-* 中文 (zho-CN)
+* العربية (`ar`)
+* Deutsch (`de`)
+* Ελληνικά (`el`)
+* English (`en`)
+* Español (`es`)
+* Suomi (`fi`)
+* Français (`fr`)
+* मानक हिन्दी (`hi`)
+* Bahasa Indonesia (`id`)
+* 日本語 (`ja`)
+* Malay (`ms`)
+* Português (`pt`)
+* Português do Brasil (`pt-BR`)
+* 中文 (`zh`)
+
+The set of available locales can be **restricted** by the server configuration via the `LOCALES_ALLOWED` environment
+variable (see the [configuration guide]({{ '/configure/configure.html' | relative_url }})). When no restriction is
+configured, all supported locales are shown. The server can also set a preferred `LOCALE_DEFAULT` that takes effect
+for users whose browser language does not match any supported locale.
 
 ### Demonstration site
 
