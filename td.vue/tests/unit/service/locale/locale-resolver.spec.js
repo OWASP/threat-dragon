@@ -665,7 +665,7 @@ describe('service/locale/locale-resolver.js', () => {
     });
 
 
-     // If ever flaky, we want to know!
+    // If ever flaky, we want to know!
     describe('real Intl canonicalization', () => {
         it('matches base language from canonicalized browser locale when region differs', () => {
             jest.restoreAllMocks();
