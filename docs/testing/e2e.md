@@ -184,6 +184,48 @@ If you are new to cypress, we strongly suggest reading through the
 The introduction document is a bit lengthy,
 but does a good job of preparing you to begin writing tests using cypress.
 
+### Test setup: the `launchThreatDragon` command
+
+All spec files should call `cy.launchThreatDragon()` in their `beforeEach` (or `before`) hook. This custom command
+(replacing the previous `beforeEach` in `support/e2e.js`) does the following:
+
+1. Intercepts the `GET /api/config` request so the test can wait for it
+2. Clears `sessionStorage` to start with a clean state
+3. Visits the application root (`/`)
+4. Waits for the `/api/config` call to complete
+5. Waits for the loading spinner (`spinner-border`) to disappear
+6. Asserts that the local login button is visible
+
+```javascript
+// Example spec setup
+beforeEach(() => {
+    cy.launchThreatDragon();
+});
+```
+
+This ensures every test waits for the server configuration to load before interacting with the UI. If you are writing a
+new spec file, import the startup command (it is automatically loaded via `support/e2e.js`) and add the call in your
+`beforeEach` hook.
+
+### Global `beforeEach` refactored
+
+Previously a global `beforeEach` in `td.vue/tests/e2e/support/e2e.js` handled visiting the application. This has been
+removed in favour of the explicit `cy.launchThreatDragon()` command in each spec file. This gives each test suite
+control over when to start (e.g. if it needs to mock the config endpoint differently).
+
+### Locale section tests
+
+A dedicated locale test suite lives in `td.vue/tests/e2e/specs/locale-section.cy.js`. These tests verify:
+
+- The `LocaleSelect` component renders with the correct set of available locales
+- Locale switching works and persists
+- The locale dropdown respects server-configured `allowedLocales` restrictions when mocked
+- The i18n fallback chain works via the config API
+
+The mock server at `td.vue/tests/e2e/mock-server/threatDragonBackEndServerMock.js` serves a `/api/config` endpoint
+with `allowedLocales: []` (no restriction) and `defaultLocale: 'en'` by default. Tests can override this via
+`cy.intercept()` if they need to test specific locale restrictions.
+
 Note that
 
 - `td.vue/e2e.ci.config.js` and `td.vue/e2e.smokes.ci.config.js` are used by the CI pipeline on pull-request and merge
