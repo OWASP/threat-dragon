@@ -2,9 +2,7 @@
     <b-row>
         <b-col md="6">
             <b-card :header="`${$t('threatmodel.properties.title')}`">
-                <b-card-body>
-                    <td-graph-properties />
-                </b-card-body>
+                <td-graph-properties />
             </b-card>
         </b-col>
         <b-col md="6">
@@ -23,26 +21,24 @@
                         {{ $t('threats.newThreat') }}
                     </b-btn>
                 </template>
-                <b-card-body>
-                    <b-card-text v-if="!!cellRef">
-                        <b-row>
-                            <b-col
-                                md="4"
-                                v-for="(threat, idx) in threats || []"
-                                :key="idx"
-                            >
-                                <td-graph-threats
-                                    :threat="threat"
-                                    @threatSelected="threatSelected"
-                                />
-                            </b-col>
-                        </b-row>
-                    </b-card-text>
-                    <b-card-text
-                        v-if="!cellRef || !cellRef.data">
-                        {{ $t('threats.emptyThreat') }}
-                    </b-card-text>
-                </b-card-body>
+                <b-card-text v-if="!!cellRef">
+                    <b-row>
+                        <b-col
+                            md="4"
+                            v-for="(threat, idx) in threats || []"
+                            :key="idx"
+                        >
+                            <td-graph-threats
+                                :threat="threat"
+                                @threatSelected="threatSelected"
+                            />
+                        </b-col>
+                    </b-row>
+                </b-card-text>
+                <b-card-text
+                    v-if="!cellRef || !cellRef.data">
+                    {{ $t('threats.emptyThreat') }}
+                </b-card-text>
             </b-card>
             <a href="#"
                 v-if="!disableNewThreat && diagram.diagramType !== 'EOP'"
