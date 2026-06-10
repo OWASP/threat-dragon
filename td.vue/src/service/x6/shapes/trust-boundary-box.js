@@ -21,7 +21,7 @@ export const TrustBoundaryBox = Shape.Rect.define({
             text: '',
             textAnchor : 'bottom',
             textVerticalAnchor : 'top',
-            refX: '15%',
+            refX: '12',
             refY: '12'
         }
     }
