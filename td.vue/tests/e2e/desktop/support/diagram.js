@@ -46,7 +46,7 @@ const openNewThreatDialog = async () => {
     const browser = getBrowser();
 
     await browser.execute(() => {
-        const button = Array.from(document.querySelectorAll('button')).find(
+        const button = Array.from(document.querySelectorAll('a')).find(
             (candidate) => (candidate.textContent || '').trim() === 'New Threat'
         );
         button?.click();
