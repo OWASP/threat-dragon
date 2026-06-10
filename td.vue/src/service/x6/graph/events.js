@@ -150,6 +150,49 @@ const cellSelected = (graph) => ({ cell }) => {
     dataChanged.setType(cell);
 };
 
+const cellDoubleClicked = ({ cell, x, y }) => {
+    // When cell.insertVertex is available, this is an edge.
+    if (cell?.insertVertex) {
+        const edgeView = cell.model.graph.findViewByCell(cell);
+
+        if (edgeView) {
+            // Search vertex that might have been clicked
+            let clickedVertex = null;
+
+            cell.getVertices().forEach((vertex, i) => {
+                const dX = vertex.x - x;
+                const dY = vertex.y - y;
+                const diff = Math.sqrt(dX * dX + dY * dY);
+
+                if (diff > 20) {
+                    return;
+                }
+
+                // Take the nearest one
+                if (clickedVertex && clickedVertex.diff < diff) {
+                    return;
+                }
+
+                clickedVertex = {
+                    vertex: i,
+                    diff: diff,
+                };
+            });
+
+            if (!clickedVertex) {
+                // Create a vertex when none exist
+                const previousVertexIndex = edgeView.getVertexIndex(x, y);
+                cell.insertVertex({ x, y }, previousVertexIndex);
+            } else {
+                // Delete the found vertex
+                cell.removeVertexAt(clickedVertex.vertex);
+            }
+
+            store.get().dispatch(THREATMODEL_MODIFIED);
+        }
+    }
+};
+
 const cellUnselected = ({ cell }) => {
     console.debug('cell unselected');
     mouseLeave({ cell });
@@ -166,7 +209,7 @@ const listen = (graph) => {
     graph.on('resize', canvasResized);
     graph.on('edge:change:vertices', edgeChangeVertices(graph));
     graph.on('edge:connected', edgeConnected(graph));
-    graph.on('edge:dblclick', cellSelected);
+    graph.on('edge:dblclick', cellDoubleClicked);
     graph.on('edge:move', cellSelected);
     graph.on('cell:mouseleave', mouseLeave);
     graph.on('cell:mouseenter', mouseEnter);
@@ -182,7 +225,7 @@ const removeListeners = (graph) => {
     graph.off('resize', canvasResized);
     graph.off('edge:change:vertices', edgeChangeVertices(graph));
     graph.off('edge:connected', edgeConnected(graph));
-    graph.off('edge:dblclick', cellSelected);
+    graph.off('edge:dblclick', cellDoubleClicked);
     graph.off('edge:move', cellSelected);
     graph.off('cell:mouseleave', mouseLeave);
     graph.off('cell:mouseenter', mouseEnter);
