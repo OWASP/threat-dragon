@@ -80,7 +80,6 @@
 .page {
     display: flex;
     flex-direction: column;
-    white-space: pre-wrap;
 }
 </style>
 

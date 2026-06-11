@@ -40,10 +40,15 @@
 </template>
 
 <style lang="scss" scoped>
+table {
+    :deep(p) {
+        margin-bottom: 0;
+    }
+}
+
 .report-box {
     display: flex;
     flex-direction: column;
-    white-space: pre-wrap;
 }
 
 .entity-title {
@@ -55,7 +60,6 @@
 
 .entity-description {
     padding: 15px;
-    white-space: pre-wrap;
 }
 </style>
 

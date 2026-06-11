@@ -40,9 +40,12 @@
 </template>
 
 <style lang="scss" scoped>
+:deep(p) {
+    margin-bottom: 0.5rem;
+}
+
 .td-threat-data {
     width: 99%;
-    white-space: pre-wrap;
 }
 
 .entity-title {
@@ -54,7 +57,6 @@
 
 .entity-description {
     padding: 15px;
-    white-space: pre-wrap;
 }
 </style>
 
