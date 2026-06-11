@@ -275,7 +275,7 @@ jobs:
   visual_regression_tests:
     name: Site visual regression
     runs-on: ubuntu-24.04
-    needs: site_unit_tests
+    needs: e2e_tests
     defaults:
       run:
         working-directory: td.vue
@@ -306,8 +306,16 @@ jobs:
       - name: Install front-end
         run: npm clean-install
 
+      - name: Install server
+        working-directory: td.server
+        run: npm clean-install
+
       - name: Pre Dev
         run: npm run predev
+
+      - name: Start server
+        working-directory: td.server
+        run: npm run start:server
 
       - name: Run visual regression tests
         run: npm run test:visual
