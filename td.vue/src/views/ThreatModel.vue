@@ -76,7 +76,6 @@
 <style lang="scss" scoped>
 .tm-card {
     font-size: 14px;
-    white-space: pre-wrap;
 }
 
 .diagram-header-text a {

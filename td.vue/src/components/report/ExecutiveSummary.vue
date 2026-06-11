@@ -21,12 +21,6 @@
     </div>
 </template>
 
-<style lang="scss" scoped>
-.td-summary {
-    white-space: pre-wrap;
-}
-</style>
-
 <script>
 import { marked } from 'marked';
 
