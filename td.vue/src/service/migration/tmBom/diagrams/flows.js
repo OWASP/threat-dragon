@@ -5,7 +5,7 @@ const flowReference = (diagram, reference) => {
     if (reference === undefined) {
         return {type: 'dangling', object: 'unidentified'};
     }
-	
+
     for (const cell of diagram.cells) {
         if (cell.id === reference) {
             return {type: cell.data.type, object: reference};

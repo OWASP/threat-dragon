@@ -18,7 +18,7 @@ import {
     THREATMODEL_STASH,
     THREATMODEL_UPDATE
 } from '@/store/actions/threatmodel';
-import threatmodel from '@/store/actions/threatmodel';
+import threatmodel from '@/store/actions/threatmodel'; // eslint-disable-line no-duplicate-imports
 
 describe('store/actions/threatmodel.js', () => {
     it('defines a clear action', () => {

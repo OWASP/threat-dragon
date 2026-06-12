@@ -2,7 +2,7 @@ import {
     TEMPLATE_DOWNLOAD,
     TEMPLATE_LOAD
 } from '@/store/actions/template';
-import template from '@/store/actions/template';
+import template from '@/store/actions/template'; // eslint-disable-line no-duplicate-imports
 
 describe('store/actions/threatmodel.js', () => {
     it('defines a template download action', () => {
