@@ -6,6 +6,7 @@ import axios from 'axios';
 
 import env from '../env/Env.js';
 import loggerHelper from '../helpers/logger.helper.js';
+import oauthHelper from '../helpers/oauth.helper.js';
 import repositories from '../repositories';
 
 const logger = loggerHelper.get('providers/github.js');
@@ -41,18 +42,7 @@ const getOauthRedirectUrl = () => {
     return `${getGithubUrl()}/login/oauth/authorize?scope=${scope}&client_id=${env.get().config.GITHUB_CLIENT_ID}`;
 };
 
-/**
- * Gets the return URL for our application, returning from github
- * @param {string} code
- * @returns {String}
- */
-const getOauthReturnUrl = (code) => {
-    let returnUrl = `/#/oauth-return?code=${code}`;
-    if (env.get().config.NODE_ENV === 'development') {
-        returnUrl = `http://localhost:8080${returnUrl}`;
-    }
-    return returnUrl;
-};
+const getOauthReturnUrl = (code) => oauthHelper.getOauthReturnUrl(code);
 
 /**
  * Finishes the OAuth login, issues a JWT

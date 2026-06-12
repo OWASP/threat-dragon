@@ -4,6 +4,7 @@
  */
 import axios from 'axios';
 import env from '../env/Env.js';
+import oauthHelper from '../helpers/oauth.helper.js';
 
 const name = 'google';
 
@@ -23,18 +24,7 @@ const getOauthRedirectUrl = () => {
     return `https://accounts.google.com/o/oauth2/auth?response_type=code&scope=${scope}&client_id=${env.get().config.GOOGLE_CLIENT_ID}&redirect_uri=${encodeURIComponent(redirectUri)}`;
 };
 
-/**
- * Gets the return URL for our application, returning from Google
- * @param {string} code
- * @returns {String}
- */
-const getOauthReturnUrl = (code) => {
-    let returnUrl = `/#/oauth-return?code=${code}`;
-    if (env.get().config.NODE_ENV === 'development') {
-        returnUrl = `http://localhost:8080${returnUrl}`;
-    }
-    return returnUrl;
-};
+const getOauthReturnUrl = (code) => oauthHelper.getOauthReturnUrl(code);
 
 /**
  * Finishes the OAuth login, issues a JWT
