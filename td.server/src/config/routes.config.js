@@ -2,10 +2,12 @@ import express from 'express';
 
 import auth from '../controllers/auth.js';
 import bearer from './bearer.config.js';
-import configController from "../controllers/configcontroller";
+import configController from '../controllers/configcontroller';
+import decodeRepoPaths from './decodeRepoPaths.config.js';
 import googleProviderThreatmodelController from '../controllers/googleProviderThreatmodelController.js';
 import healthcheck from '../controllers/healthz.js';
 import homeController from '../controllers/homecontroller.js';
+import metadataController from '../controllers/metadataController.js';
 import templateController from '../controllers/templateController.js';
 import threatmodelController from '../controllers/threatmodelcontroller.js';
 
@@ -20,6 +22,8 @@ const unauthRoutes = (router) => {
     router.get('/', homeController.index);
 
     router.get('/healthz', healthcheck.healthz);
+    router.get('/security.txt', metadataController.legacySecurityTxtRedirect);
+    router.get('/.well-known/security.txt', metadataController.securityTxt);
     router.get('/api/config', configController.config);
     router.get('/api/threatmodel/organisation', threatmodelController.organisation);
     
@@ -39,7 +43,7 @@ const unauthRoutes = (router) => {
 const routes = (router) => {
     router.post('/api/logout', auth.logout);
     router.post('/api/token/refresh', auth.refresh);
-   // Template routes
+    // Template routes
     router.post('/api/templates/bootstrap', templateController.bootstrapTemplateRepository);// bootstrap template repo
     router.get('/api/templates/', templateController.listTemplates);// list all templates
     router.post('/api/templates/import', templateController.importTemplate);// import a new template
@@ -49,16 +53,22 @@ const routes = (router) => {
 
     router.get('/api/threatmodel/repos', threatmodelController.repos);
     router.get('/api/threatmodel/:organisation/:repo/branches', threatmodelController.branches);
+    router.get('/api/threatmodel/:organisation/*repo/branches', decodeRepoPaths.middleware, threatmodelController.branches);
     router.get('/api/threatmodel/:organisation/:repo/:branch/models', threatmodelController.models);
+    router.get('/api/threatmodel/:organisation/*repo/:branch/models', decodeRepoPaths.middleware, threatmodelController.models);
     router.get('/api/threatmodel/:organisation/:repo/:branch/:model/data', threatmodelController.model);
+    router.get('/api/threatmodel/:organisation/*repo/:branch/:model/data', decodeRepoPaths.middleware, threatmodelController.model);
 
     router.post('/api/threatmodel/:organisation/:repo/:branch/createBranch', threatmodelController.createBranch);
+    router.post('/api/threatmodel/:organisation/*repo/:branch/createBranch', decodeRepoPaths.middleware, threatmodelController.createBranch);
 
     // removed because of security denial of service concerns (denial of models)
     //router.delete('/api/threatmodel/:organisation/:repo/:branch/:model', threatmodelController.deleteModel);
 
     router.post('/api/threatmodel/:organisation/:repo/:branch/:model/create', threatmodelController.create);
+    router.post('/api/threatmodel/:organisation/*repo/:branch/:model/create', decodeRepoPaths.middleware, threatmodelController.create);
     router.put('/api/threatmodel/:organisation/:repo/:branch/:model/update', threatmodelController.update);
+    router.put('/api/threatmodel/:organisation/*repo/:branch/:model/update', decodeRepoPaths.middleware, threatmodelController.update);
 
     // Google Drive routes
     router.get('/api/googleproviderthreatmodel/folders', googleProviderThreatmodelController.folders);

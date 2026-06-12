@@ -1,5 +1,5 @@
 import env from '../env/Env.js';
-import {Gitlab} from "@gitbeaker/rest";
+import {Gitlab} from '@gitbeaker/rest';
 
 
 const repoRootDirectory = () => env.get().config.GITLAB_REPO_ROOT_DIRECTORY || env.get().config.REPO_ROOT_DIRECTORY;
@@ -68,8 +68,8 @@ export const modelsAsync = async (branchInfo, accessToken) => {
         );
         return [models];
     } catch (e) {
-        if (e.name === 'GitbeakerRequestError' && e.cause.description.includes('Not Found')) {
-            return [[]];
+        if (e?.name === 'GitbeakerRequestError' && e?.cause?.response?.status === 404) {
+            e.statusCode = 404;
         }
         throw e;
     }
@@ -105,10 +105,10 @@ export const updateAsync = (modelInfo, accessToken) => {
 };
 
 export const deleteAsync = (modelInfo, accessToken) => getClient(accessToken).RepositoryFiles.remove(getRepoFullName(modelInfo),
-        getModelPath(modelInfo),
-        modelInfo.branch,
-        'Deleted by OWASP Threat Dragon',
-    );
+    getModelPath(modelInfo),
+    modelInfo.branch,
+    'Deleted by OWASP Threat Dragon',
+);
 
 export const createBranchAsync = (repoInfo, accessToken) => {
     const client = getClient(accessToken);

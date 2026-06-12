@@ -85,9 +85,9 @@ describe('service/migration/tmBom/diagrams/flows.js', () => {
         });
 
         describe('handles model with no data flows', () => {
-            let noDataFlowsModel = JSON.parse(JSON.stringify(tmBomModel));
+            const noDataFlowsModel = JSON.parse(JSON.stringify(tmBomModel));
             delete noDataFlowsModel.data_flows;
-            let dataFlows = flows.merge(noDataFlowsModel);
+            const dataFlows = flows.merge(noDataFlowsModel);
 
             it('adds no data flows', () => {
                 expect(dataFlows).toEqual([]);

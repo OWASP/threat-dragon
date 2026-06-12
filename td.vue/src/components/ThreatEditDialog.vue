@@ -373,6 +373,23 @@ export default {
         'card.suit'(newSuit, oldSuit) {
             if (!this.isLoadingThreat && newSuit !== oldSuit) {
                 this.card.number = null;
+                this.$nextTick(() => {
+                    const cards = this.activeGame?.getCardsBySuit(newSuit) ?? [];
+                    this.card.number = cards.length > 0 ? cards[cards.length - 1].value : null;
+                });
+            }
+        },
+        selectedGameId(newGameId) {
+            if (!this.isLoadingThreat && newGameId) {
+                const game = getGame(newGameId);
+                const suits = game?.getSuits() ?? [];
+                if (suits.length > 0) {
+                    this.card.suit = suits[0].value;
+                    this.$nextTick(() => {
+                        const cards = game?.getCardsBySuit(suits[0].value) ?? [];
+                        this.card.number = cards.length > 0 ? cards[cards.length - 1].value : null;
+                    });
+                }
             }
         }
     },
@@ -396,7 +413,7 @@ export default {
                     'Trying to access a non-existent threatId: ' + threatId
                 );
             } else {
-                this.selectedGameId = this.threat.eopGameId;
+                this.selectedGameId = this.threat.type || this.threat.eopGameId;
                 this.card.suit = this.activeGame?.getCardCategory(this.threat.cardNumber);
                 this.card.number = this.threat.cardNumber;
                 this.number = this.threat.number;
@@ -455,10 +472,9 @@ export default {
                 threatRef.number = this.number;
                 threatRef.score = this.threat.score;
                 if (threatRef.modelType === 'EOP') {
-                    threatRef.eopGameId = this.selectedGameId;
                     threatRef.cardSuit = this.card.suit;
                     threatRef.cardNumber = this.card.number;
-                    threatRef.type = null;
+                    threatRef.type = this.selectedGameId;
                 } else {
                     threatRef.type = this.threat.type;
                 }

@@ -1,0 +1,31 @@
+{
+    "compilerOptions": {
+        "target": "ES2021",
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "checkJs": false
+    },
+    "typeAcquisition": {
+        "enable": true,
+        "include": [
+            "node",
+            "express",
+            "mocha",
+            "chai",
+            "sinon",
+            "supertest"
+        ]
+    },
+    "include": [
+        "src/**/*.js",
+        "test/**/*.js",
+        "dev.js",
+        "index.js"
+    ],
+    "exclude": [
+        "coverage",
+        "dist",
+        "node_modules"
+    ]
+}

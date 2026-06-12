@@ -111,9 +111,9 @@ describe('service/migration/tmBom/diagrams/boxes.js', () => {
     });
 
     describe('handle absence of TM-BOM trust zones', () => {
-        let reducedModel = JSON.parse(JSON.stringify(tmBomModel));
-        delete(reducedModel.trust_zones);
-        let testBoundaryBoxes = boxes.merge(reducedModel);
+        const reducedModel = JSON.parse(JSON.stringify(tmBomModel));
+        delete (reducedModel.trust_zones);
+        const testBoundaryBoxes = boxes.merge(reducedModel);
 
         it('provides empty boundary box array', () => {
             expect(testBoundaryBoxes).toHaveLength(0);

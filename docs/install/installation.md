@@ -21,6 +21,13 @@ The web application is also provided in a Docker image, and this is provided by 
 Follow the Docker [instructions]({{ '/install/docker.html' | relative_url }})
 to download, configure and run a Docker container.
 
+### Note on Reverse Proxies
+
+Some provider APIs, including GitLab, require namespaced repository names to be URL encoded.
+Reverse proxies will return redirect responses to normalize URLs. This behavior is not compatible
+with Threat Dragon v2.6.2 and below. If you are receiving unexpected 404 responses with such a
+configuration, please check your reverse proxy configuration for settings like `escapedSlashesAction`.
+
 ### Desktop application
 
 Various installers can be downloaded from the Threat Dragon [releases area][releases]:

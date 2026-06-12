@@ -64,7 +64,7 @@ describe('service/migration/tmBom/diagrams/threats/threats.js', () => {
     });
 
     describe('merge/import TM-BOM threats', () => {
-        let tdThreats = threats.merge(tmBomModel);
+        const tdThreats = threats.merge(tmBomModel);
 
         it('finds the threats', () => {
             expect(tdThreats).toHaveLength(tmBomModel.threats.length);

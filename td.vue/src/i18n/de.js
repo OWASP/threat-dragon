@@ -82,7 +82,7 @@ const messages = {
     },
     repository: {
         select: 'Wählen Sie ein',
-        from: 'Repository aus folgender Liste',  //in line with Github wording https://docs.github.com/de/repositories
+        from: 'Repository aus folgender Liste', //in line with Github wording https://docs.github.com/de/repositories
         noneFound: 'Kein Repository gefunden. Legen Sie zum Starten eine neues Repository an.'
     },
     branch: {

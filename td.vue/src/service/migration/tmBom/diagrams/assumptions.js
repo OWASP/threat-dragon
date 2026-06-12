@@ -20,7 +20,7 @@ const merge = (model, components) => {
 
 // the summary holds any assumptions that are not associated with a component
 const summary = (model) => {
-    let summaryAssumptions = new Array();
+    const summaryAssumptions = [];
 
     model.assumptions?.forEach((assumption) => {
         if (!assumption.topics) {

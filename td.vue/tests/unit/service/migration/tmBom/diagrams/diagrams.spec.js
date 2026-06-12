@@ -37,7 +37,7 @@ describe('service/migration/tmBom/diagrams/diagrams.js', () => {
 
     describe('merge main diagram', () => {
         beforeEach(() => {
-            delete(tmBomModel.diagrams);
+            delete (tmBomModel.diagrams);
             testDiagrams = diagrams.merge(tmBomModel, version);
         });
 
@@ -48,7 +48,7 @@ describe('service/migration/tmBom/diagrams/diagrams.js', () => {
     });
 
     describe('convert', () => {
-        let noCompatibilityModel = JSON.parse(JSON.stringify(tdModel));
+        const noCompatibilityModel = JSON.parse(JSON.stringify(tdModel));
         delete noCompatibilityModel.detail.compatibility.diagrams;
 
         it('copies saved diagrams from compatibility', () => {

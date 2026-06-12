@@ -4,7 +4,7 @@ import tmBomModel from '../tmbom-test-model';
 describe('service/migration/tmBom/diagrams/assumptions.js', () => {
 
     describe('updates summary descriptions', () => {
-        let summaryAssumptions = assumptions.summary(tmBomModel);
+        const summaryAssumptions = assumptions.summary(tmBomModel);
 
         it('counts assumptions not associated with a component', () => {
             expect(summaryAssumptions).toHaveLength(2);
@@ -22,17 +22,17 @@ describe('service/migration/tmBom/diagrams/assumptions.js', () => {
     });
 
     describe('handles absence of assumptions', () => {
-        let noAssumptionsModel = JSON.parse(JSON.stringify(tmBomModel));
+        const noAssumptionsModel = JSON.parse(JSON.stringify(tmBomModel));
         delete noAssumptionsModel.assumptions;
 
 	    it('provides empty assumptions', () => {
-            let summaryAssumptions = assumptions.summary(noAssumptionsModel);
+            const summaryAssumptions = assumptions.summary(noAssumptionsModel);
 	        expect(summaryAssumptions).toHaveLength(0);
 	    });
 
         it('preserves summary descriptions', () => {
-            let components = [{data : {description: 'test description'}}];
-		    let componentAssumptions = assumptions.merge(noAssumptionsModel, components);
+            const components = [{data : {description: 'test description'}}];
+		    const componentAssumptions = assumptions.merge(noAssumptionsModel, components);
 		    expect(componentAssumptions).toHaveLength(1);
             expect(componentAssumptions[0].data.description).toEqual('test description');
         });

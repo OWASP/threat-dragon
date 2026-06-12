@@ -7,7 +7,7 @@ describe('service/github.provider.js', () => {
             let action;
 
             beforeEach(() => {
-                action = github.getDashboardActions().find(x=> x.key === 'openExisting');
+                action = github.getDashboardActions().find(x => x.key === 'openExisting');
             });
 
             it('links to the repository page', () => {
@@ -24,7 +24,7 @@ describe('service/github.provider.js', () => {
             let action;
 
             beforeEach(() => {
-                action = github.getDashboardActions().find(x=> x.key === 'createNew');
+                action = github.getDashboardActions().find(x => x.key === 'createNew');
             });
 
             it('links to the repository page', () => {
@@ -40,7 +40,7 @@ describe('service/github.provider.js', () => {
             let action;
 
             beforeEach(() => {
-                action = github.getDashboardActions().find(x=> x.key === 'readDemo');
+                action = github.getDashboardActions().find(x => x.key === 'readDemo');
             });
 
             it('links to the demo select page', () => {

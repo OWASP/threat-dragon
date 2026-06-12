@@ -7,6 +7,7 @@ import App from '@/App.vue';
 import i18nFactory from '@/i18n/index.js';
 import { LOADER_FINISHED } from '@/store/actions/loader.js';
 import Navbar from '@/components/Navbar.vue';
+import TdOverlay from '@/components/Overlay.vue';
 
 describe('App.vue', () => {
     let wrapper, localVue, mockStore;
@@ -45,5 +46,9 @@ describe('App.vue', () => {
 
     it('has a b-container', () => {
         expect(wrapper.find('#app').exists()).toBe(true);
+    });
+
+    it('uses the Threat Dragon overlay', () => {
+        expect(wrapper.findComponent(TdOverlay).exists()).toBe(true);
     });
 });

@@ -31,10 +31,12 @@
                         </h6>
                     </template>
                     <a href="#" @click.prevent="editDiagram(diagram)">
-                        <!-- "thumbnail": "./public/content/images/thumbnail.jpg", --> <b-img-lazy
-                            class="m-auto d-block td-diagram-thumb"
+                        <!-- "thumbnail": "./public/content/images/thumbnail.jpg", --> <td-image
+                            class="td-diagram-thumb"
                             :src="require(`../assets/${diagram.thumbnail ? diagram.thumbnail.split('/').pop() : 'thumbnail.jpg'}`)"
-                            :alt="diagram.title" />
+                            :alt="diagram.title"
+                            lazy
+                        />
                     </a>
                     <h6 v-if=diagram.description class="diagram-description-text">
                         {{ diagram.description }}
@@ -94,6 +96,8 @@
 }
 
 .td-diagram-thumb {
+    display: block;
+    margin: auto;
     max-width: 200px;
     max-height: 160px;
 }
@@ -106,6 +110,7 @@ import { getProviderType } from '@/service/provider/providers.js';
 import { writeFile } from '@/service/save.js';
 import TdDropdown from '@/components/Dropdown.vue';
 import TdFormButton from '@/components/FormButton.vue';
+import TdImage from '@/components/Image.vue';
 import TdThreatModelSummaryCard from '@/components/ThreatModelSummaryCard.vue';
 import tmActions from '@/store/actions/threatmodel.js';
 
@@ -114,6 +119,7 @@ export default {
     components: {
         TdDropdown,
         TdFormButton,
+        TdImage,
         TdThreatModelSummaryCard
     },
     computed: mapState({
@@ -165,9 +171,9 @@ export default {
     },
     mounted() {
         // make sure we are compatible with version 1.x and early 2.x
-        let threatTop = this.model.detail.threatTop === undefined ? 100 : this.model.detail.threatTop;
-        let diagramTop = this.model.detail.diagramTop === undefined ? 10 : this.model.detail.diagramTop;
-        let update = { diagramTop: diagramTop, version: this.version, threatTop: threatTop };
+        const threatTop = this.model.detail.threatTop === undefined ? 100 : this.model.detail.threatTop;
+        const diagramTop = this.model.detail.diagramTop === undefined ? 10 : this.model.detail.diagramTop;
+        const update = { diagramTop: diagramTop, version: this.version, threatTop: threatTop };
         this.$store.dispatch(tmActions.update, update);
         // if a diagram has just been closed, the history insists on marking the model as modified
         this.$store.dispatch(tmActions.notModified);

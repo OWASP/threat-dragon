@@ -6,7 +6,7 @@ import threats from './threats/threats';
 
 const assignThreats = (model, components) => {
 
-    for (let threat of threats.merge(model)) {
+    for (const threat of threats.merge(model)) {
         threat.components_affected?.forEach((componentAffected) => {
             components.forEach((component) => {
                 if (componentAffected === component.id) {
@@ -26,8 +26,8 @@ const assignThreats = (model, components) => {
 // antv/x6 drawing package throws an error if the source or target of a flow/edge are named but no cell exists of that name
 // so sift out early and warn on this easily-made error
 const checkEdges = (edges, nodes) => {
-    let ids = new Array();
-    for (let node of nodes) {
+    const ids = [];
+    for (const node of nodes) {
         ids.push(node.id);
     }
 
@@ -49,7 +49,7 @@ const checkEdges = (edges, nodes) => {
 //   graph = diagramService.draw(container, diagram);
 //   graph.exportSVG(`diagram-title.svg`);
 const convert = (model) => {
-    let diagrams = new Array();
+    let diagrams = [];
     if (model.detail.compatibility?.diagrams) {
         diagrams = model.detail.compatibility.diagrams;
     }
@@ -58,12 +58,12 @@ const convert = (model) => {
 
 const merge = (model, version) => {
     const thumbnail = './public/content/images/thumbnail.jpg';
-    var diagrams = new Array();
+    const diagrams = [];
     let diagramId = 0;
     const diagramNodes = nodes.merge(model);
     const diagramEdges = dataFlows.merge(model);
     checkEdges(diagramEdges, diagramNodes);
-    let cells = diagramNodes.concat(diagramEdges);
+    const cells = diagramNodes.concat(diagramEdges);
 
     // data sets and assumptions are merged into existing components
     dataSets.merge(model, cells);

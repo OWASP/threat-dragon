@@ -148,7 +148,7 @@ const deleteContentFileAsync = async (accessToken, fileName) => {
     return repo.deleteContentsAsync(
         path,
         `feat: delete template ${fileName}`,
-         sha,
+        sha,
         'main'
     );
 };

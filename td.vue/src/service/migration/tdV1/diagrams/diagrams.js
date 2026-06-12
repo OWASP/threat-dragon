@@ -2,7 +2,7 @@ import cells from './cells.js';
 import eng from '@/i18n/en.js';
 
 const getPlaceholder = (diagramType) => {
-    let type = diagramType.toLowerCase();
+    const type = diagramType.toLowerCase();
 
     // v1.x only had STRIDE, LINDDUN and CIA
     // so no fixups needed for types 'CIADIE' and 'EoP Games'
@@ -11,10 +11,10 @@ const getPlaceholder = (diagramType) => {
 };
 
 const read = (v1Diagrams, version) => {
-    let v2diagrams = new Array();
+    const v2diagrams = [];
 
     v1Diagrams?.forEach((v1Diagram) => {
-        let elements = cells.map(v1Diagram);
+        const elements = cells.map(v1Diagram);
 
         v2diagrams.push({
             description: '',

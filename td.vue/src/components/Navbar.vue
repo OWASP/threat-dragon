@@ -1,57 +1,78 @@
 <template>
-  <b-navbar toggleable="lg" fixed="top" id="navbar">
-    <b-navbar-brand :to="username ? '/dashboard' : '/'" class="td-brand">
-      <b-img src="@/assets/threatdragon_logo_image.svg" class="td-brand-img" alt="Threat Dragon Logo" />
+  <nav id="navbar" class="navbar navbar-expand-lg navbar-light fixed-top">
+    <router-link :to="username ? '/dashboard' : '/'" class="navbar-brand td-brand">
+      <img :src="threatDragonLogo" class="td-brand-img" alt="Threat Dragon Logo" />
       Threat Dragon v{{ this.$store.state.packageBuildVersion }}{{ this.$store.state.packageBuildState }}
-    </b-navbar-brand>
+    </router-link>
 
-    <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-    <b-collapse id="nav-collapse" is-nav>
-      <b-navbar-nav>
-        <b-nav-item>
-          <td-locale-select />
-        </b-nav-item>
-      </b-navbar-nav>
+    <button
+      class="navbar-toggler"
+      type="button"
+      aria-controls="nav-collapse"
+      :aria-expanded="isNavExpanded.toString()"
+      aria-label="Toggle navigation"
+      @click="toggleNav"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-      <b-navbar-nav class="ml-auto">
-        <b-nav-text v-show="username" class="logged-in-as">{{ $t('nav.loggedInAs') }} {{ username }}</b-nav-text>
-        <b-nav-item v-show="username" @click="onLogOut" id="nav-sign-out">
-          <font-awesome-icon icon="sign-out-alt" class="td-fa-nav" v-b-tooltip.hover
-            :title="$t('nav.logOut')"></font-awesome-icon>
-        </b-nav-item>
+    <div id="nav-collapse" class="navbar-collapse collapse" :class="{ show: isNavExpanded }">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="#" @click.prevent>
+            <td-locale-select />
+          </a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav ml-auto">
+        <li v-show="username" class="navbar-text logged-in-as">{{ $t('nav.loggedInAs') }} {{ username }}</li>
+        <li v-show="username" class="nav-item" id="nav-sign-out">
+          <a class="nav-link" href="#" @click="onLogOut">
+            <font-awesome-icon icon="sign-out-alt" class="td-fa-nav" v-b-tooltip.hover
+              :title="$t('nav.logOut')"></font-awesome-icon>
+          </a>
+        </li>
         <!-- This is the dropdown from admin actions(manage templates) -->
         <li v-if="isAdmin" class="nav-item td-admin-nav-dropdown">
           <td-dropdown id="my-nav-dropdown" class="nav-link-custom" variant="link" right no-caret>
-          <template #button-content>
-            <font-awesome-icon icon="cog" class="td-fa-nav text-white" v-b-tooltip.hover
-              :title="$t('nav.contentManagement')" />
-          </template>
+            <template #button-content>
+              <font-awesome-icon icon="cog" class="td-fa-nav text-white" v-b-tooltip.hover
+                :title="$t('nav.contentManagement')" />
+            </template>
 
-          <template #default="{ close }">
-            <button type="button" class="td-dropdown-item" @click="onManageTemplates(); close()">
-              Manage Templates
-            </button>
-          </template>
+            <template #default="{ close }">
+              <button type="button" class="td-dropdown-item" @click="onManageTemplates(); close()">
+                Manage Templates
+              </button>
+            </template>
           </td-dropdown>
         </li>
 
-
-        <b-nav-item href="https://www.threatdragon.com/docs/" target="_blank" rel="noopener noreferrer" id="nav-docs">
-          <font-awesome-icon icon="question-circle" class="td-fa-nav" v-b-tooltip.hover
-            :title="$t('desktop.help.docs')"></font-awesome-icon>
-        </b-nav-item>
-        <b-nav-item href="https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html"
-          target="_blank" rel="noopener noreferrer" id="nav-tm-cheat-sheet">
-          <font-awesome-icon icon="gift" class="td-fa-nav" v-b-tooltip.hover
-            :title="$t('desktop.help.sheets')"></font-awesome-icon>
-        </b-nav-item>
-        <b-nav-item href="https://owasp.org/www-project-threat-dragon/" target="_blank" rel="noopener noreferrer"
-          id="nav-owasp-td">
-          <b-img src="@/assets/owasp.svg" class="td-fa-nav td-owasp-logo" :title="$t('desktop.help.visit')" />
-        </b-nav-item>
-      </b-navbar-nav>
-    </b-collapse>
-  </b-navbar>
+        <li class="nav-item" id="nav-docs">
+          <a class="nav-link" href="https://www.threatdragon.com/docs/" target="_blank" rel="noopener noreferrer">
+            <font-awesome-icon icon="question-circle" class="td-fa-nav" v-b-tooltip.hover
+              :title="$t('desktop.help.docs')"></font-awesome-icon>
+          </a>
+        </li>
+        <li class="nav-item" id="nav-tm-cheat-sheet">
+          <a class="nav-link"
+            href="https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html"
+            target="_blank" rel="noopener noreferrer">
+            <font-awesome-icon icon="gift" class="td-fa-nav" v-b-tooltip.hover
+              :title="$t('desktop.help.sheets')"></font-awesome-icon>
+          </a>
+        </li>
+        <li class="nav-item" id="nav-owasp-td">
+          <a class="nav-link" href="https://owasp.org/www-project-threat-dragon/" target="_blank"
+            rel="noopener noreferrer">
+            <img :src="owaspLogo" class="td-fa-nav td-owasp-logo" :title="$t('desktop.help.visit')"
+              alt="OWASP Threat Dragon" />
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 </template>
 
 <style lang="scss" scoped>
@@ -129,6 +150,8 @@ $icon-height: 1.2rem;
 <script>
 import { mapGetters } from 'vuex';
 
+import threatDragonLogo from '@/assets/threatdragon_logo_image.svg';
+import owaspLogo from '@/assets/owasp.svg';
 import { LOGOUT } from '@/store/actions/auth.js';
 import TdDropdown from './Dropdown.vue';
 import TdLocaleSelect from './LocaleSelect.vue';
@@ -139,6 +162,13 @@ export default {
         TdDropdown,
         TdLocaleSelect
     },
+    data() {
+        return {
+            isNavExpanded: false,
+            owaspLogo,
+            threatDragonLogo
+        };
+    },
     computed: {
         ...mapGetters([
             'username',
@@ -146,6 +176,9 @@ export default {
         ])
     },
     methods: {
+        toggleNav() {
+            this.isNavExpanded = !this.isNavExpanded;
+        },
         async onLogOut(evt) {
             evt.preventDefault();
             await Promise.resolve(this.$router.push('/')).catch(error => {

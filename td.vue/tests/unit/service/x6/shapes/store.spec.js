@@ -1,4 +1,4 @@
-import { StoreShape }  from '@/service/x6/shapes/store.js';
+import { StoreShape } from '@/service/x6/shapes/store.js';
 
 describe('service/x6/shapes/store.js', () => {
     let victim;

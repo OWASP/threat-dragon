@@ -5,7 +5,7 @@ const padding = 125;
 const nodeGeometry = {width: 160 + padding, height: 80 + padding, padding: padding};
 
 const convert = (model, nodes) => {
-    let zones = new Array();
+    const zones = [];
 
     // there may be no diagrams, or no cells within a diagram, or no cells that are boundary boxes
     model.detail.diagrams?.forEach((diagram) => {
@@ -19,7 +19,7 @@ const convert = (model, nodes) => {
                 });
                 if (cell.data.containedElements) {
                     // containedElements is an array of node ids that are contained in the trust zone
-                    for (let element of cell.data.containedElements) {
+                    for (const element of cell.data.containedElements) {
                         let index = nodes.actors.findIndex((x) => x.symbolic_name === element);
                         if (index >= 0) {
                             nodes.actors[index].trust_zone = cell.id;
@@ -45,7 +45,7 @@ const convert = (model, nodes) => {
 
 const countNodes = (model, trustZone) => {
     let count = 0;
-    let zones = new Array();
+    const zones = [];
     model.trust_zones?.forEach((zone) => zones.push(zone.symbolic_name));
 
     model.actors?.forEach((actor) => {
@@ -70,7 +70,7 @@ const countNodes = (model, trustZone) => {
 };
 
 const dimensionZone = (model, trustZone) => {
-    let nodeCount = countNodes(model, trustZone);
+    const nodeCount = countNodes(model, trustZone);
     let nodesPerSide = 1;
 
     // the nodes are placed around the top and lhs edges of the trust boundary box
@@ -84,8 +84,8 @@ const dimensionZone = (model, trustZone) => {
 };
 
 const merge = (model) => {
-    let boundaryBoxes = new Array();
-    let position = {x: nodeGeometry.padding, y: nodeGeometry.padding};
+    const boundaryBoxes = [];
+    const position = {x: nodeGeometry.padding, y: nodeGeometry.padding};
 
     // nodes not in any trust zone are in a notional 'public' trust zone
     if (countNodes(model, undefined)) {
@@ -93,15 +93,15 @@ const merge = (model) => {
         position.x += nodeGeometry.width;
         position.y += nodeGeometry.height;
     }
-    let offset = {column: position.x, row: position.y};
+    const offset = {column: position.x, row: position.y};
 
     if (model.trust_zones) {
         let boxCount = 1;
         let zIndex = -1;
 
         model.trust_zones.forEach((zone) => {
-            let dimensions = dimensionZone(model, zone.symbolic_name);
-            let data = defaultProperties.defaultData('tm.BoundaryBox');
+            const dimensions = dimensionZone(model, zone.symbolic_name);
+            const data = defaultProperties.defaultData('tm.BoundaryBox');
             data.name = zone.title;
             data.description = zone.description;
 

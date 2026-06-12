@@ -6,7 +6,7 @@ import axios from 'axios';
 
 import env from '../env/Env.js';
 import loggerHelper from '../helpers/logger.helper.js';
-import repositories from "../repositories";
+import repositories from '../repositories';
 
 const logger = loggerHelper.get('providers/github.js');
 
@@ -74,7 +74,7 @@ const completeLoginAsync = async (code) => {
 
     const providerResp = await axios.post(url, body, options);
 
-    repositories.set("githubrepo");
+    repositories.set('githubrepo');
     const repo = repositories.get();
     const fullUser = await repo.userAsync(providerResp.data.access_token);
     const contentRepoName = env.get().config.GITHUB_CONTENT_REPO;

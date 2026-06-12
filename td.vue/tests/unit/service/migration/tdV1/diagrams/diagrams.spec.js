@@ -62,7 +62,7 @@ describe('service/migration/tdV1/diagrams/diagrams.js', () => {
     });
 
     describe('reads model with no diagrams', () => {
-        let emptyDiagrams = new Array();
+        const emptyDiagrams = [];
 
         it('converts diagrams', () => {
             v2Diagrams = diagrams.read(emptyDiagrams, testVersion);

@@ -7,7 +7,7 @@ import tdModel from './td-test-model';
 describe('service/migration/tmBom/tmBom.exportAsTmbom', () => {
 
     describe('export/convert new model', () => {
-        let testModel = tmBom.exportAsTmbom(newModel);
+        const testModel = tmBom.exportAsTmbom(newModel);
 
         it('provides meta-data', () => {
             expect(testModel.$schema).toContain('threat-model.schema.json');
@@ -58,7 +58,7 @@ describe('service/migration/tmBom/tmBom.exportAsTmbom', () => {
     });
 
     describe('export/convert test model', () => {
-        let testModel = tmBom.exportAsTmbom(tdModel);
+        const testModel = tmBom.exportAsTmbom(tdModel);
 
         it('provides meta-data', () => {
             expect(testModel.$schema).toContain('threat-model.schema.json');
@@ -109,7 +109,7 @@ describe('service/migration/tmBom/tmBom.exportAsTmbom', () => {
     });
 
     describe('export/convert demo model', () => {
-        let testModel = tmBom.exportAsTmbom(demoModel);
+        const testModel = tmBom.exportAsTmbom(demoModel);
 
         it('provides meta-data', () => {
             expect(testModel.$schema).toContain('threat-model.schema.json');

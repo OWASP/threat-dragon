@@ -1,16 +1,18 @@
-import express from 'express';
 import { expect } from 'chai';
+import express from 'express';
 import sinon from 'sinon';
 
 import auth from '../../src/controllers/auth.js';
 import bearer from '../../src/config/bearer.config.js';
+import configcontroller from "../../src/controllers/configcontroller";
+import decodeRepoPaths from '../../src/config/decodeRepoPaths.config.js';
+import { getMockApp } from '../mocks/express.mocks.js';
+import googleProviderThreatmodelController from '../../src/controllers/googleProviderThreatmodelController.js';
 import healthcheck from '../../src/controllers/healthz.js';
 import homeController from '../../src/controllers/homecontroller.js';
-import { getMockApp } from '../mocks/express.mocks.js';
+import metadataController from '../../src/controllers/metadataController.js';
 import routeConfig from '../../src/config/routes.config.js';
 import threatmodelController from '../../src/controllers/threatmodelcontroller.js';
-import configcontroller from "../../src/controllers/configcontroller";
-import googleProviderThreatmodelController from '../../src/controllers/googleProviderThreatmodelController.js';
 
 describe('config/routes.config.js routes', () => {
     let mockApp;
@@ -52,6 +54,23 @@ describe('config/routes.config.js routes', () => {
         it('routes GET /api/config', () => {
             expect(mockRouter.get).to.have.been.calledWith('/api/config', configcontroller.config);
         });
+    });
+
+    describe('security.txt', () => {
+        it('redirects /security.txt to /.well-known/security.txt', () => {
+            expect(mockRouter.get).to.have.been.calledWith(
+                '/security.txt',
+                metadataController.legacySecurityTxtRedirect
+            );
+        });
+
+        it('routes /.well-known/security.txt', () => {
+            expect(mockRouter.get).to.have.been.calledWith(
+                '/.well-known/security.txt',
+                metadataController.securityTxt
+            );
+        });
+
     });
 
     describe('login/logout', () => {
@@ -101,6 +120,14 @@ describe('config/routes.config.js routes', () => {
             );
         });
 
+        it('routes decoded GET /api/threatmodel/:organisation/*repo/branches', () => {
+            expect(mockRouter.get).to.have.been.calledWith(
+                '/api/threatmodel/:organisation/*repo/branches',
+                decodeRepoPaths.middleware,
+                threatmodelController.branches
+            );
+        });
+
         it('routes GET /api/threatmodel/organisation', () => {
             expect(mockRouter.get).to.have.been.calledWith(
                 '/api/threatmodel/organisation',
@@ -115,9 +142,25 @@ describe('config/routes.config.js routes', () => {
             );
         });
 
+        it('routes decoded GET /api/threatmodel/:organisation/*repo/:branch/models', () => {
+            expect(mockRouter.get).to.have.been.calledWith(
+                '/api/threatmodel/:organisation/*repo/:branch/models',
+                decodeRepoPaths.middleware,
+                threatmodelController.models
+            );
+        });
+
         it('routes GET /api/threatmodel/:organisation/:repo/:branch/:model/data', () => {
             expect(mockRouter.get).to.have.been.calledWith(
                 '/api/threatmodel/:organisation/:repo/:branch/:model/data',
+                threatmodelController.model
+            );
+        });
+
+        it('routes decoded GET /api/threatmodel/:organisation/*repo/:branch/:model/data', () => {
+            expect(mockRouter.get).to.have.been.calledWith(
+                '/api/threatmodel/:organisation/*repo/:branch/:model/data',
+                decodeRepoPaths.middleware,
                 threatmodelController.model
             );
         });
@@ -130,6 +173,14 @@ describe('config/routes.config.js routes', () => {
             );
         });*/
 
+        it('routes decoded POST /api/threatmodel/:organisation/*repo/:branch/createBranch', () => {
+            expect(mockRouter.post).to.have.been.calledWith(
+                '/api/threatmodel/:organisation/*repo/:branch/createBranch',
+                decodeRepoPaths.middleware,
+                threatmodelController.createBranch
+            );
+        });
+
         it('routes POST /api/threatmodel/:organisation/:repo/:branch/:model/create', () => {
             expect(mockRouter.post).to.have.been.calledWith(
                 '/api/threatmodel/:organisation/:repo/:branch/:model/create',
@@ -137,9 +188,25 @@ describe('config/routes.config.js routes', () => {
             );
         });
 
+        it('routes decoded POST /api/threatmodel/:organisation/*repo/:branch/:model/create', () => {
+            expect(mockRouter.post).to.have.been.calledWith(
+                '/api/threatmodel/:organisation/*repo/:branch/:model/create',
+                decodeRepoPaths.middleware,
+                threatmodelController.create
+            );
+        });
+
         it('routes PUT /api/threatmodel/:organisation/:repo/:branch/:model/update', () => {
             expect(mockRouter.put).to.have.been.calledWith(
                 '/api/threatmodel/:organisation/:repo/:branch/:model/update',
+                threatmodelController.update
+            );
+        });
+
+        it('routes decoded PUT /api/threatmodel/:organisation/*repo/:branch/:model/update', () => {
+            expect(mockRouter.put).to.have.been.calledWith(
+                '/api/threatmodel/:organisation/*repo/:branch/:model/update',
+                decodeRepoPaths.middleware,
                 threatmodelController.update
             );
         });
@@ -152,21 +219,21 @@ describe('config/routes.config.js routes', () => {
                 googleProviderThreatmodelController.folders
             );
         });
-    
+
         it('routes POST /api/googleproviderthreatmodel/:folder/create', () => {
             expect(mockRouter.post).to.have.been.calledWith(
                 '/api/googleproviderthreatmodel/:folder/create',
                 googleProviderThreatmodelController.create
             );
         });
-    
+
         it('routes PUT /api/googleproviderthreatmodel/:file/update', () => {
             expect(mockRouter.put).to.have.been.calledWith(
                 '/api/googleproviderthreatmodel/:file/update',
                 googleProviderThreatmodelController.update
             );
         });
-    
+
         it('routes GET /api/googleproviderthreatmodel/:file/data', () => {
             expect(mockRouter.get).to.have.been.calledWith(
                 '/api/googleproviderthreatmodel/:file/data',
@@ -174,7 +241,7 @@ describe('config/routes.config.js routes', () => {
             );
         });
     });
-    
+
 
     it('adds bearer token middleware', () => {
         expect(mockRouter.use).to.have.been.calledWith(bearer.middleware);

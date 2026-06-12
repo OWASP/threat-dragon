@@ -41,7 +41,7 @@ describe('service/migration/tmBom/summary.js', () => {
 
 	    describe('handles empty TM-BOM objects', () => {
 	        it('provides empty scope', () => {
-                let noScopeModel = JSON.parse(JSON.stringify(tmBomModel));
+                const noScopeModel = JSON.parse(JSON.stringify(tmBomModel));
                 delete noScopeModel.scope;
                 testSummary = summary.merge(noScopeModel);
 	            expect(testSummary).toStrictEqual({});

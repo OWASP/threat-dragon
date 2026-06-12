@@ -50,12 +50,12 @@
   "dependencies": {
     "@babel/runtime": "^7.29.2",
     "@gitbeaker/rest": "^43.8.0",
+    "@googleapis/drive": "^20.2.0",
     "axios": "^1.16.0",
     "bitbucket": "^2.11.0",
     "dotenv": "^16.0.3",
     "express": "^5.0.1",
     "express-rate-limit": "^8.5.1",
-    "googleapis": ">=171.4.0",
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.3",
     "octonode": "^0.10.2",

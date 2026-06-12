@@ -122,12 +122,12 @@ export default {
         init() {
             this.$store.dispatch(CELL_UNSELECTED);
         },
-        threatSelected(threatId,state) {
+        threatSelected(threatId, state) {
             console.debug('selected threat ID: ' + threatId);
-            this.$emit('threatSelected', threatId,state);
+            this.$emit('threatSelected', threatId, state);
         },
         newThreat() {
-            const threat = createNewTypedThreat(this.diagram.diagramType, this.cellRef.data.type,this.threatTop+1);
+            const threat = createNewTypedThreat(this.diagram.diagramType, this.cellRef.data.type, this.threatTop+1);
             console.debug('new threat ID: ' + threat.id);
             this.cellRef.data.threats.push(threat);
             this.cellRef.data.hasOpenThreats = this.cellRef.data.threats.length > 0;
@@ -135,13 +135,13 @@ export default {
             this.$store.dispatch(tmActions.modified);
             this.$store.dispatch(CELL_DATA_UPDATED, this.cellRef.data);
             dataChanged.updateStyleAttrs(this.cellRef);
-            this.threatSelected(threat.id,'new');
+            this.threatSelected(threat.id, 'new');
         },
         AddThreatByType(){
-            this.$emit('threatSuggest','type');
+            this.$emit('threatSuggest', 'type');
         },
         AddThreatByContext(){
-            this.$emit('threatSuggest','context');
+            this.$emit('threatSuggest', 'context');
         }
     },
 };

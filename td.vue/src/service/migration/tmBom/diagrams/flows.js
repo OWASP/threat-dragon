@@ -5,9 +5,9 @@ const flowReference = (diagram, reference) => {
     if (reference === undefined) {
         return {type: 'dangling', object: 'unidentified'};
     }
-
-    for (let cell of diagram.cells) {
-        if (cell.id === reference ) {
+	
+    for (const cell of diagram.cells) {
+        if (cell.id === reference) {
             return {type: cell.data.type, object: reference};
         }
     }
@@ -16,7 +16,7 @@ const flowReference = (diagram, reference) => {
 };
 
 const convert = (model) => {
-    let dataFlows = new Array();
+    const dataFlows = [];
 
     // there may be no diagrams, or no cells within a diagram
     model.detail.diagrams?.forEach((diagram) => {
@@ -39,12 +39,12 @@ const convert = (model) => {
 };
 
 const merge = (model) => {
-    let flows = new Array();
+    const flows = [];
     let zIndex = 0;
 
     if (model.data_flows) {
-        for (let dataFlow of model.data_flows) {
-            let flow = defaultProperties.defaultEntity('tm.Flow');
+        for (const dataFlow of model.data_flows) {
+            const flow = defaultProperties.defaultEntity('tm.Flow');
             flow.data.name = flow.labels[0].attrs.labelText.text = dataFlow.title;
             flow.data.description = dataFlow.description;
             flow.data.isEncrypted = dataFlow.encrypted;

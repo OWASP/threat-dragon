@@ -6,7 +6,7 @@ const nodeSize = { width: boxes.nodeGeometry.width, height: boxes.nodeGeometry.h
 export const defaults = {actorType: 'third_party', storeType: 'object'};
 
 export const convert = (model) => {
-    let nodes  = {actors: [], components: [], data_stores: []};
+    const nodes = {actors: [], components: [], data_stores: []};
 
     // there may be no diagrams or no cells within a diagram
     model.detail.diagrams?.forEach((diagram) => {
@@ -41,14 +41,14 @@ export const convert = (model) => {
 };
 
 export const createNodes = (model, zone) => {
-    let nodes = new Array();
+    const nodes = [];
     let zIndex = 0;
-    let zones = new Array();
+    const zones = [];
     model.trust_zones?.forEach((zone) => zones.push(zone.symbolic_name));
 
     model.actors?.forEach((actor) => {
         if ((actor.trust_zone === zone) || (!zones.includes(actor.trust_zone) && zone === undefined)) {
-            let node = defaultProperties.defaultEntity('tm.Actor');
+            const node = defaultProperties.defaultEntity('tm.Actor');
             node.label = node.data.name = actor.title;
             node.data.description = actor.description;
             node.id = actor.symbolic_name;
@@ -59,7 +59,7 @@ export const createNodes = (model, zone) => {
 
     model.components?.forEach((component) => {
         if ((component.trust_zone === zone) || (!zones.includes(component.trust_zone) && zone === undefined)) {
-            let process = defaultProperties.defaultEntity('tm.Process');
+            const process = defaultProperties.defaultEntity('tm.Process');
             process.data.name = process.attrs.text.text = component.title;
             process.data.description = component.description;
             process.id = component.symbolic_name;
@@ -70,7 +70,7 @@ export const createNodes = (model, zone) => {
 
     model.data_stores?.forEach((data_store) => {
         if ((data_store.trust_zone === zone) || (!zones.includes(data_store.trust_zone) && zone === undefined)) {
-            let store = defaultProperties.defaultEntity('tm.Store');
+            const store = defaultProperties.defaultEntity('tm.Store');
             store.data.name = store.attrs.text.text = data_store.title;
             store.data.description = data_store.description;
             store.id = data_store.symbolic_name;
@@ -84,9 +84,9 @@ export const createNodes = (model, zone) => {
 
 // place nodes within a zone
 export const placeNodes = (nodes, position) => {
-    let components = new Array();
-    let origin = { x: position.x + (padding / 2), y: position.y + (padding / 2) };
-    let place = { x: origin.x, y: origin.y };
+    const components = [];
+    const origin = { x: position.x + (padding / 2), y: position.y + (padding / 2) };
+    const place = { x: origin.x, y: origin.y };
     let count = 0;
 
     nodes?.forEach((node) => {
@@ -106,10 +106,10 @@ export const placeNodes = (nodes, position) => {
 
 // place the TM-BOM nodes as components in the TD diagram
 export const merge = (model) => {
-    let trustBoundaryBoxes = boxes.merge(model);
+    const trustBoundaryBoxes = boxes.merge(model);
 
     // public zone components are not in any trust boundary
-    let publicNodes = createNodes(model, undefined);
+    const publicNodes = createNodes(model, undefined);
     // place public zone components around the edges of the diagram
     let nodes = placeNodes(publicNodes, { x: 0, y: 0 });
 

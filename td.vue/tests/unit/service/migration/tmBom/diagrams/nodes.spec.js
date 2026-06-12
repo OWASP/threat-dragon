@@ -88,22 +88,22 @@ describe('service/migration/tmBom/diagrams/nodes.js', () => {
         describe('assign nodes to trust zones', () => {
  
             it('creates nodes in untrusted zone', () => {
-                let components = createNodes(tmBomModel);
+                const components = createNodes(tmBomModel);
                 expect(components).toHaveLength(6);
             });
 
             it('creates components in first zone', () => {
-                let components = createNodes(tmBomModel, 'trust-zone0');
+                const components = createNodes(tmBomModel, 'trust-zone0');
                 expect(components).toHaveLength(1);
             });
 
             it('creates components in third zone', () => {
-                let components = createNodes(tmBomModel, 'trust-zone2');
+                const components = createNodes(tmBomModel, 'trust-zone2');
                 expect(components).toHaveLength(7);
             });
 
             it('creates no components in last zone', () => {
-                let components = createNodes(tmBomModel, 'trust-zone3');
+                const components = createNodes(tmBomModel, 'trust-zone3');
                 expect(components).toHaveLength(0);
             });
         });
@@ -146,9 +146,9 @@ describe('service/migration/tmBom/diagrams/nodes.js', () => {
         });
 
         describe('handles absence of trust zones', () => {
-            let emptyZonesTmBom = JSON.parse(JSON.stringify(tmBomModel));
-            delete(emptyZonesTmBom.trust_zones);
-            let components = merge(emptyZonesTmBom);
+            const emptyZonesTmBom = JSON.parse(JSON.stringify(tmBomModel));
+            delete (emptyZonesTmBom.trust_zones);
+            const components = merge(emptyZonesTmBom);
 
             it('merges all nodes as public', () => {
                 expect(components).toHaveLength(tmBomModel.actors.length
@@ -158,9 +158,9 @@ describe('service/migration/tmBom/diagrams/nodes.js', () => {
         });
 
         describe('handles absence of actors', () => {
-            let emptyActorsTmBom = JSON.parse(JSON.stringify(tmBomModel));
-            delete(emptyActorsTmBom.actors);
-            let components = merge(emptyActorsTmBom);
+            const emptyActorsTmBom = JSON.parse(JSON.stringify(tmBomModel));
+            delete (emptyActorsTmBom.actors);
+            const components = merge(emptyActorsTmBom);
 
             it('merges nodes and boxes', () => {
                 expect(components).toHaveLength(tmBomModel.components.length
@@ -170,9 +170,9 @@ describe('service/migration/tmBom/diagrams/nodes.js', () => {
         });
 
         describe('handles absence of components', () => {
-            let emptyComponentsTmBom = JSON.parse(JSON.stringify(tmBomModel));
-            delete(emptyComponentsTmBom.components);
-            let components = merge(emptyComponentsTmBom);
+            const emptyComponentsTmBom = JSON.parse(JSON.stringify(tmBomModel));
+            delete (emptyComponentsTmBom.components);
+            const components = merge(emptyComponentsTmBom);
 
             it('merges nodes and boxes', () => {
                 expect(components).toHaveLength(tmBomModel.actors.length
@@ -182,9 +182,9 @@ describe('service/migration/tmBom/diagrams/nodes.js', () => {
         });
 
         describe('handles absence of data stores', () => {
-            let emptyStoresTmBom = JSON.parse(JSON.stringify(tmBomModel));
-            delete(emptyStoresTmBom.data_stores);
-            let components = merge(emptyStoresTmBom);
+            const emptyStoresTmBom = JSON.parse(JSON.stringify(tmBomModel));
+            delete (emptyStoresTmBom.data_stores);
+            const components = merge(emptyStoresTmBom);
 
             it('merges nodes and boxes', () => {
                 expect(components).toHaveLength(tmBomModel.actors.length
@@ -194,12 +194,12 @@ describe('service/migration/tmBom/diagrams/nodes.js', () => {
         });
 
         describe('handles absence of diagram nodes', () => {
-            let emptyNodesTmBom = JSON.parse(JSON.stringify(tmBomModel));
-            delete(emptyNodesTmBom.actors);
-            delete(emptyNodesTmBom.components);
-            delete(emptyNodesTmBom.data_stores);
+            const emptyNodesTmBom = JSON.parse(JSON.stringify(tmBomModel));
+            delete (emptyNodesTmBom.actors);
+            delete (emptyNodesTmBom.components);
+            delete (emptyNodesTmBom.data_stores);
 
-            let components = merge(emptyNodesTmBom);
+            const components = merge(emptyNodesTmBom);
 
             it('merges nodes and boxes', () => {
                 expect(components).toHaveLength(tmBomModel.trust_zones.length);

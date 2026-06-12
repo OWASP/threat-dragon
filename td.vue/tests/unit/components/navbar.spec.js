@@ -1,11 +1,3 @@
-import {
-    BootstrapVue,
-    BNavbarBrand,
-    BImg,
-    BCollapse,
-    BNavbarNav,
-    BNavItem
-} from 'bootstrap-vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
@@ -13,17 +5,32 @@ import Vuex from 'vuex';
 import { LOGOUT } from '@/store/actions/auth.js';
 import Navbar from '@/components/Navbar.vue';
 
+jest.mock('@/assets/threatdragon_logo_image.svg', () => 'threatdragon_logo_image.svg');
+jest.mock('@/assets/owasp.svg', () => 'owasp.svg');
+
+const RouterLinkStub = {
+    name: 'RouterLink',
+    props: {
+        to: {
+            type: String,
+            required: true
+        }
+    },
+    template: '<a :href="\'#\' + to"><slot /></a>'
+};
+
 describe('components/Navbar.vue', () => {
     let wrapper, localVue, mockStore, routerMock;
 
     beforeEach(() => {
         localVue = createLocalVue();
-        localVue.use(BootstrapVue);
         localVue.component('font-awesome-icon', FontAwesomeIcon);
+        localVue.directive('b-tooltip', {});
         localVue.use(Vuex);
         routerMock = { push: jest.fn() };
         mockStore = new Vuex.Store({
             getters: {
+                isAdmin: () => false,
                 username: () => 'foobar'
             },
             dispatch: () => {}
@@ -34,6 +41,9 @@ describe('components/Navbar.vue', () => {
             mocks: {
                 $router: routerMock,
                 $t: key => key
+            },
+            stubs: {
+                RouterLink: RouterLinkStub
             }
         });
     });
@@ -42,22 +52,22 @@ describe('components/Navbar.vue', () => {
         let navbarBrand;
 
         beforeEach(() => {
-            navbarBrand = wrapper.findComponent(BNavbarBrand);
+            navbarBrand = wrapper.find('.navbar-brand');
         });
         it('renders the navbar-brand', () => {
             expect(navbarBrand.exists()).toBe(true);
         });
 
         it('routes to the dashboard page', () => {
-            expect(navbarBrand.attributes('to')).toEqual('/dashboard');
+            expect(navbarBrand.attributes('href')).toEqual('#/dashboard');
         });
 
         it('renders the brand image', () => {
-            expect(navbarBrand.findComponent(BImg).exists()).toBe(true);
+            expect(navbarBrand.find('img').exists()).toBe(true);
         });
 
         it('displays threatdragon_logo.svg', () => {
-            expect(navbarBrand.findComponent(BImg).attributes('src'))
+            expect(navbarBrand.find('img').attributes('src'))
                 .toContain('threatdragon_logo');
         });
     });
@@ -66,21 +76,25 @@ describe('components/Navbar.vue', () => {
         let collapse;
 
         beforeEach(() => {
-            collapse = wrapper.findComponent(BCollapse);
+            collapse = wrapper.find('#nav-collapse');
         });
 
-        it('renders the b-collapse', () => {
+        it('renders the collapse container', () => {
             expect(collapse.exists()).toBe(true);
+        });
+
+        it('toggles the nav collapse', async () => {
+            expect(collapse.classes()).not.toContain('show');
+            await wrapper.find('.navbar-toggler').trigger('click');
+            expect(collapse.classes()).toContain('show');
         });
     });
 
     describe('nav', () => {
-        let nav,
-            navItems;
+        let nav;
 
         beforeEach(() => {
-            nav = wrapper.findComponent(BNavbarNav);
-            navItems = wrapper.findAllComponents(BNavItem);
+            nav = wrapper.find('ul.navbar-nav');
         });
 
         it('renders the nav', () => {
@@ -91,9 +105,7 @@ describe('components/Navbar.vue', () => {
             let signOut;
 
             beforeEach(() => {
-                signOut = navItems
-                    .filter(x => x.attributes('id') === 'nav-sign-out')
-                    .at(0);
+                signOut = wrapper.find('#nav-sign-out');
                 mockStore.dispatch = jest.fn();
             });
 
@@ -107,12 +119,12 @@ describe('components/Navbar.vue', () => {
             });
 
             it('dispatches the logout event', async () => {
-                await signOut.trigger('click');
+                await signOut.find('a').trigger('click');
                 expect(mockStore.dispatch).toHaveBeenCalledWith(LOGOUT);
             });
 
             it('navigates to the home page', async () => {
-                await signOut.trigger('click');
+                await signOut.find('a').trigger('click');
                 expect(routerMock.push).toHaveBeenCalledWith('/');
             });
         });
@@ -121,9 +133,7 @@ describe('components/Navbar.vue', () => {
             let docs;
 
             beforeEach(() => {
-                docs = navItems
-                    .filter(x => x.attributes('id') === 'nav-docs')
-                    .at(0);
+                docs = wrapper.find('#nav-docs');
             });
 
             it('uses fa question-circle', () => {
@@ -136,9 +146,7 @@ describe('components/Navbar.vue', () => {
             let cheatSheet;
 
             beforeEach(() => {
-                cheatSheet = navItems
-                    .filter(x => x.attributes('id') === 'nav-tm-cheat-sheet')
-                    .at(0);
+                cheatSheet = wrapper.find('#nav-tm-cheat-sheet');
             });
 
             it('uses fa gift', () => {
@@ -151,13 +159,11 @@ describe('components/Navbar.vue', () => {
             let tdOwasp;
 
             beforeEach(() => {
-                tdOwasp = navItems
-                    .filter(x => x.attributes('id') === 'nav-owasp-td')
-                    .at(0);
+                tdOwasp = wrapper.find('#nav-owasp-td');
             });
 
             it('uses the OWASP image', () => {
-                expect(tdOwasp.findComponent(BImg).attributes('src'))
+                expect(tdOwasp.find('img').attributes('src'))
                     .toContain('owasp');
             });
         });

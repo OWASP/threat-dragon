@@ -9,8 +9,8 @@ describe('service/migration/tmBom/diagrams/threats/controls.js', () => {
 
     describe('updates the threats', () => {
         boundaries.merge.mockImplementation((_model, control) => control);
-        let tdThreats = JSON.parse(JSON.stringify(mockTdThreats));
-        let threats = controls.merge(tmBomModel, tdThreats);
+        const tdThreats = JSON.parse(JSON.stringify(mockTdThreats));
+        const threats = controls.merge(tmBomModel, tdThreats);
 
         it('adds the control title', () => {
             expect(threats[0].mitigation).toContain('Test title control0');
@@ -49,10 +49,10 @@ describe('service/migration/tmBom/diagrams/threats/controls.js', () => {
     });
 
     describe('handles absence of controls', () => {
-        let uncontrolsTmBomModel = Object.assign({}, tmBomModel);
-        delete(uncontrolsTmBomModel.controls);
+        const uncontrolsTmBomModel = Object.assign({}, tmBomModel);
+        delete (uncontrolsTmBomModel.controls);
         boundaries.merge.mockImplementation((_model, control) => control);
-        let threats = controls.merge(uncontrolsTmBomModel, mockTdThreats);
+        const threats = controls.merge(uncontrolsTmBomModel, mockTdThreats);
 
         it('skips boundaries', () => {
 		    expect(boundaries.merge).not.toHaveBeenCalled();

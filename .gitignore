@@ -19,6 +19,8 @@
 !.github/workflows/.zap-rules-web.tsv
 !.gitignore
 !.gitattributes
+!.editorconfig
+!eslint.shared.js
 !.lycheeignore
 !.markdownlint.yaml
 !.wordlist.txt
@@ -38,6 +40,9 @@
 !minimal.env
 !package.json
 !package-lock.json
+!scripts/
+!scripts/README.md
+!scripts/*.sh
 
 # documentation site
 !docs/
@@ -89,6 +94,7 @@
 !td.server/src/constants/*.js
 !td.server/src/repositories/*.js
 !td.server/test/
+!td.server/test/.eslintrc.js
 !td.server/test/*.spec.js
 !td.server/test/config/
 !td.server/test/config/*.spec.js
@@ -116,6 +122,7 @@
 !td.server/index.js
 !td.server/package.json
 !td.server/package-lock.json
+!td.server/jsconfig.json
 
 # Vue front end
 !td.vue
@@ -225,6 +232,8 @@
 !td.vue/tests/e2e/mock-server/*.js
 !td.vue/tests/e2e/specs/
 !td.vue/tests/e2e/specs/*.cy.js
+!td.vue/tests/e2e/specs/gitlab/
+!td.vue/tests/e2e/specs/gitlab/*.cy.js
 !td.vue/tests/e2e/specs/pagination/
 !td.vue/tests/e2e/specs/pagination/*.cy.js
 !td.vue/tests/e2e/specs/smokes/

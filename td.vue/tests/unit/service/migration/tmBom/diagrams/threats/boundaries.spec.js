@@ -3,7 +3,7 @@ import tmBomModel from '../../tmbom-test-model';
 
 const trust_boundary = {
     trust_zone_a: 'trust-zone0',
-    trust_zone_b: 'trust-zone1'    ,
+    trust_zone_b: 'trust-zone1',
 };
 
 const missingBoundary = {
@@ -34,7 +34,7 @@ describe('service/migration/tmBom/diagrams/threats/boundaries.js', () => {
     });
 
     describe('updates control description', () => {
-        let mockControl = {description: 'mock description', trust_boundary};
+        const mockControl = {description: 'mock description', trust_boundary};
         let control;
 
         beforeEach(() => {
@@ -64,10 +64,10 @@ describe('service/migration/tmBom/diagrams/threats/boundaries.js', () => {
     });
 
     describe('ignores controls with no boundaries', () => {
-        let mockControl = {description: 'mock description', missingBoundary}; 
+        const mockControl = {description: 'mock description', missingBoundary}; 
 
 	    it('preserves description', () => {
-            let control = boundaries.merge(tmBomModel, mockControl);
+            const control = boundaries.merge(tmBomModel, mockControl);
             expect(control.description).toEqual(mockControl.description);
 	    });
     });

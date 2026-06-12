@@ -19,9 +19,9 @@ const createKey = (source, target, key) => {
 // version, scope, trust_zones, trust_boundaries, actors, components
 // data_stores, data_sets, data_flows
 export const exportAsTmbom = (model) => {
-    let tmbomNodes = nodes.convert(model);
-    let tmbomThreats = threats.convert(model);
-    let tmbom = {
+    const tmbomNodes = nodes.convert(model);
+    const tmbomThreats = threats.convert(model);
+    const tmbom = {
         $schema: schema.$id,
         version: model.compatibility?.version || buildVersion,
         scope: scope.convert(model),
@@ -58,7 +58,7 @@ export const exportAsTmbom = (model) => {
 export const importTmbom = (model) => {
 
     // required values not used by TD but need to be preserved
-    let compatibility = {
+    const compatibility = {
         version: model.version,
         description: model.description,
     };
