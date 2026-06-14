@@ -86,9 +86,17 @@ const read = (model) => {
         version: buildVersion,
         summary: {
             title: model.scope.title,
+            owner: '',
             description: 'Empty Threat Dragon model from a TM-BOM',
+            id: 0
         },
-        detail: [],
+        detail: {
+            contributors: [],
+            diagrams: [],
+            diagramTop: 0,
+            reviewer: '',
+            threatTop: 0
+        },
         tmBom: model
     };
 
