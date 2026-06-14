@@ -180,7 +180,9 @@
     "systeminformation": "^5.31.6",
     "webpack-dev-server": ">=5.2.2",
     "ws": ">=8.18.0",
-    "yauzl": "^3.3.1"
+    "yauzl": "^3.3.1",
+    "shell-quote": ">=1.8.4",
+    "tmp": ">=0.2.7"
   },
   "main": "background.js",
   "resolutions": {
