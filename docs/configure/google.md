@@ -32,7 +32,8 @@ and 'test' alters the functionality in some subtle ways.
 
 - `NODE_ENV='development'`
 
-Note: when `NODE_ENV` is set to `development`, the OAuth redirect is hard-coded to `http://localhost:8080`. If the frontend runs on a different host or port, set `OAUTH_FRONTEND_RETURN_URL` to the correct base URL instead.
+Note: `NODE_ENV=development` hard-codes the OAuth redirect to `http://localhost:8080`.
+Set `OAUTH_FRONTEND_RETURN_URL` to override this if your frontend is on a different host or port.
 
 Server port number - this defaults to 3000, and it can be mapped to another port when running the docker command.
 So leave the server port at 3000 by not defining it, and it can then be mapped to external port 8080 using docker.
