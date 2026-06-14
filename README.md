@@ -17,7 +17,8 @@ It is used to draw threat modeling diagrams and to list threats for elements in 
 that provides an intuitive and accessible way to model threats.
 
 Threat Dragon is designed to be accessible for various types of teams, with an emphasis on flexibility and simplicity.
-The Project has [OWASP Production status][project] and follows the values and principles of the [threat modeling manifesto][manifesto].
+The Project has [OWASP Production status][project] and follows the values and principles
+of the [threat modeling manifesto][manifesto].
 
 This program is free software: you can redistribute it and/or modify it
 under the terms of the [Apache 2.0 License][license].

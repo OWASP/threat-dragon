@@ -18,7 +18,8 @@ and entering of associated threats along with their remediations.
 Threat Dragon supports STRIDE<sup>[1](#footnote1)</sup>, LINDDUN<sup>[2](#footnote2)</sup>,
 CIA<sup>[3](#footnote3)</sup>, CIA-DIE<sup>[4](#footnote4)</sup> and PLOT4ai<sup>[5](#footnote5)</sup>
 
-The Project has [OWASP Production status][project] and follows the values and principles of the [threat modeling manifesto][manifesto].
+The Project has [OWASP Production status][project] and follows the values and principles
+of the [threat modeling manifesto][manifesto].
 
 An [introduction](https://www.youtube.com/watch?v=hUOAoc6QGJo) to Threat Dragon is provided by
 the [OWASP Spotlight](https://www.youtube.com/playlist?list=PLUKo5k_oSrfOTl27gUmk2o-NBKvkTGw0T) series,
@@ -99,5 +100,6 @@ We strongly recommend using a self-hosted instance or the desktop application as
 Threat Dragon: _making threat modeling less threatening_
 
 [docker]: https://hub.docker.com/r/owasp/threat-dragon/tags
+[manifesto]: https://www.threatmodelingmanifesto.org/
 [project]: https://owasp.org/www-project-threat-dragon/
 [releases]: https://github.com/owasp/threat-dragon/releases
