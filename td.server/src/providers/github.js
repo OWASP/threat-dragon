@@ -42,6 +42,11 @@ const getOauthRedirectUrl = () => {
     return `${getGithubUrl()}/login/oauth/authorize?scope=${scope}&client_id=${env.get().config.GITHUB_CLIENT_ID}`;
 };
 
+/**
+ * Gets the return URL for our application, returning from github
+ * @param {string} code
+ * @returns {String}
+ */
 const getOauthReturnUrl = (code) => oauthHelper.getOauthReturnUrl(code);
 
 /**

@@ -24,6 +24,11 @@ const getOauthRedirectUrl = () => {
     return `https://accounts.google.com/o/oauth2/auth?response_type=code&scope=${scope}&client_id=${env.get().config.GOOGLE_CLIENT_ID}&redirect_uri=${encodeURIComponent(redirectUri)}`;
 };
 
+/**
+ * Gets the return URL for our application, returning from Google
+ * @param {string} code
+ * @returns {String}
+ */
 const getOauthReturnUrl = (code) => oauthHelper.getOauthReturnUrl(code);
 
 /**

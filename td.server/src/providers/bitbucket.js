@@ -39,6 +39,11 @@ const getOauthRedirectUrl = () => {
     return `${getBitbucketUrl()}/site/oauth2/authorize?scope=${scope}&response_type=code&client_id=${env.get().config.BITBUCKET_CLIENT_ID}`;
 };
 
+/**
+ * Gets the return URL for our application, returning from bitbucket
+ * @param {string} code
+ * @returns {String}
+ */
 const getOauthReturnUrl = (code) => oauthHelper.getOauthReturnUrl(code);
 
 /**

@@ -31,6 +31,11 @@ const getOauthRedirectUrl = () => {
     return `${getGitlabUrl()}/oauth/authorize?scope=${scope}&redirect_uri=${env.get().config.GITLAB_REDIRECT_URI}&response_type=code&client_id=${env.get().config.GITLAB_CLIENT_ID}`;
 };
 
+/**
+ * Gets the return URL for our application, returning from gitlab
+ * @param {string} code
+ * @returns {String}
+ */
 const getOauthReturnUrl = (code) => oauthHelper.getOauthReturnUrl(code);
 
 /**
