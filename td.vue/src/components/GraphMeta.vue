@@ -8,7 +8,18 @@
         <b-col md="6">
             <b-card header-tag="header">
                 <template #header>
-                    {{ $t('threatmodel.threats') }}
+                    <div class="threats-header">
+                        <span>{{ $t('threatmodel.threats') }}</span>
+                        <button
+                            v-if="!disableNewThreat"
+                            type="button"
+                            class="threats-header-action"
+                            @click="newThreat()"
+                        >
+                            <font-awesome-icon icon="plus" class="mr-1"></font-awesome-icon>
+                            {{ $t('threats.newThreat') }}
+                        </button>
+                    </div>
                 </template>
                 <b-card-text v-if="!!cellRef">
                     <b-row>
@@ -65,6 +76,29 @@
     color: $orange;
     font-size: 16px;
     padding: 15px;
+}
+.threats-header {
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+}
+.threats-header-action {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    color: $orange;
+    display: inline-flex;
+    font: inherit;
+    line-height: 1;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+}
+.threats-header-action:hover,
+.threats-header-action:focus {
+    color: darken($orange, 10%);
+    text-decoration: underline;
 }
 .props-header {
     a {
