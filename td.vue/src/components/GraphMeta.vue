@@ -16,7 +16,7 @@
                             class="threats-header-action"
                             @click="newThreat()"
                         >
-                            <font-awesome-icon icon="plus" class="mr-1"></font-awesome-icon>
+                            <font-awesome-icon icon="plus" class="threats-header-icon"></font-awesome-icon>
                             {{ $t('threats.newThreat') }}
                         </button>
                     </div>
@@ -82,6 +82,7 @@
     display: flex;
     gap: 1rem;
     justify-content: space-between;
+    line-height: 1.5;
 }
 .threats-header-action {
     align-items: center;
@@ -89,11 +90,16 @@
     border: 0;
     color: $orange;
     display: inline-flex;
-    font: inherit;
+    font-family: inherit;
+    font-size: 0.875rem;
+    font-weight: inherit;
     line-height: 1;
     margin: 0;
     padding: 0;
     white-space: nowrap;
+}
+.threats-header-icon {
+    margin-right: 0.25rem;
 }
 .threats-header-action:hover,
 .threats-header-action:focus {
