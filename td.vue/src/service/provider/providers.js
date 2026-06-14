@@ -61,9 +61,9 @@ export const providerNames = (() => {
     return Object.freeze(_providers);
 })();
 
-export const getDisplayName = (providerKey) => providers[providerKey].displayName;
+export const getDisplayName = (providerKey) => providers[providerKey]?.displayName || 'Logged out';
 
-export const getProviderType = (providerKey) => providers[providerKey].type;
+export const getProviderType = (providerKey) => providers[providerKey]?.type || providerTypes.none;
 
 /**
  * Gets the dashboard actions based on the selected provider
