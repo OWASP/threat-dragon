@@ -30,13 +30,6 @@
   "engines": {
     "npm": ">=11.10.0"
   },
-  "devEngines": {
-    "packageManager": {
-      "name": "npm",
-      "version": ">=11.10.0",
-      "onFail": "error"
-    }
-  },
   "homepage": "https://github.com/OWASP/www-project-threat-dragon/",
   "repository": {
     "type": "git",

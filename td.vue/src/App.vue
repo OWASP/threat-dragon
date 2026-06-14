@@ -10,34 +10,8 @@
 </template>
 
 <style lang="scss">
-@import url("https://fonts.googleapis.com/css?family=Ubuntu:400,700");
-
 #app {
-  font-size: 20px;
-  line-height: 1.42857143;
   margin-top: ($header-height + 15px);
-}
-
-.form-check {
-  align-items: flex-start;
-  display: inline-flex;
-  margin-bottom: 0.25rem;
-  gap: 0.45rem;
-}
-
-.form-check-input[type="checkbox"] {
-  accent-color: $orange;
-  width: 13px;
-  height: 13px;
-  margin-top: 0;
-  margin-right: 0.35rem;
-  vertical-align: middle;
-}
-
-.form-check-label {
-  line-height: 1.35;
-  margin-bottom: 0;
-  vertical-align: middle;
 }
 </style>
 

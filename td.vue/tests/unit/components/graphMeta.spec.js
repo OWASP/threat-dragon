@@ -35,6 +35,10 @@ describe('components/GraphMeta.vue', () => {
         it('displays the empty threat message', () => {
             expect(wrapper.findComponent(BCardText).text()).toContain('threats.emptyThreat');
         });
+
+        it('hides the header new threat action', () => {
+            expect(wrapper.find('.threats-header-action').exists()).toEqual(false);
+        });
     });
 
     describe('with data', () => {
@@ -87,6 +91,10 @@ describe('components/GraphMeta.vue', () => {
 
         it('displays the threat card', () => {
             expect(wrapper.findComponent(TdGraphThreats).exists()).toEqual(true);
+        });
+
+        it('displays the header new threat action', () => {
+            expect(wrapper.find('.threats-header-action').exists()).toEqual(true);
         });
     });
 

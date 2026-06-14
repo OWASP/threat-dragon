@@ -1,5 +1,7 @@
 <template>
-  <div id="props-card">
+  <p v-show="!cellRef" class="card-text">{{ $t('threatmodel.properties.emptyState') }}</p>
+
+  <div v-if="!!cellRef && cellRef.data" id="props-card">
     <!--
             All entities have the following properties:
                 - Name (text input)
@@ -35,16 +37,7 @@
                 - isPublicNetwork
         -->
 
-    <b-row v-show="!cellRef">
-      <b-col>
-        <p>{{ $t('threatmodel.properties.emptyState') }}</p>
-      </b-col>
-    </b-row>
-
-    <b-form
-      v-if="!!cellRef && cellRef.data"
-      :key="cellKey"
-    >
+    <b-form :key="cellKey">
       <b-form-row>
         <b-col md="6">
           <b-form-group
