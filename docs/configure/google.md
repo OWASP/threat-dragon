@@ -57,6 +57,11 @@ but here we will set it explicitly:
 
 - `GOOGLE_SCOPE=openid email profile https://www.googleapis.com/auth/drive.file`
 
+The above scopes are required to access Threat Dragon's files in Google Drive.
+For a list of available scopes, see [the official Google documentation][gdrivescopes].
+Above scope is the only one available without any issue, as access to all Google drive files
+will not be granted by Google.
+
 The URI used when redirecting from authorization can be set to a
 localhost, but in practice this may well be a different URL/URI:
 
@@ -205,3 +210,4 @@ Threat Dragon: _making threat modeling less threatening_
 [gdriveapi]: https://console.cloud.google.com/apis/api/drive.googleapis.com
 [gclients]: https://console.cloud.google.com/auth/clients
 [gscopes]: https://console.cloud.google.com/auth/scopes
+[gdrivescopes]: https://developers.google.com/workspace/drive/api/guides/api-specific-auth
