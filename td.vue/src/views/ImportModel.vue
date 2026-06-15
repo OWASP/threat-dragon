@@ -56,7 +56,7 @@
 <script>
 import { mapState } from 'vuex';
 
-import isElectron from 'is-electron';
+import { isDesktopApp } from '@/service/environment';
 import { getProviderType } from '@/service/provider/providers.js';
 import TdFormButton from '@/components/FormButton.vue';
 import TdHero from '@/components/Hero.vue';
@@ -180,7 +180,7 @@ export default {
             // save the threat model in the store
             this.$store.dispatch(tmActions.selected, jsonModel);
 
-            if (isElectron()) {
+            if (isDesktopApp()) {
                 // tell the desktop server that the model has changed
                 window.electronAPI.modelOpened(fileName);
             }

@@ -30,7 +30,7 @@ import { mapState } from 'vuex';
 import { getProviderType } from '@/service/provider/providers.js';
 import { providerTypes } from '@/service/provider/providerTypes.js';
 import demo from '@/service/demo/index.js';
-import isElectron from 'is-electron';
+import { isDesktopApp } from '@/service/environment';
 import TdHero from '@/components/Hero.vue';
 import tmActions from '@/store/actions/threatmodel.js';
 import schema from '@/service/schema/ajv';
@@ -61,7 +61,7 @@ export default {
             } else {
                 this.$store.dispatch(tmActions.selected, model.model);
             }
-            if (isElectron()) {
+            if (isDesktopApp()) {
                 // tell any electron server that the model has changed
                 window.electronAPI.modelOpened(model.name);
                 const params = Object.assign({}, this.$route.params, { threatmodel: model.name });

@@ -64,7 +64,7 @@
 
 <script>
 import {allProviders} from '@/service/provider/providers.js';
-import isElectron from 'is-electron';
+import { isDesktopApp } from '@/service/environment';
 import threatDragonLogo from '@/assets/threatdragon_logo_image.svg';
 import TdHero from '@/components/Hero.vue';
 import TdImage from '@/components/Image.vue';
@@ -75,8 +75,8 @@ import { mapState } from 'vuex';
 
 // Pure function: resolves available providers from server config.
 // Extracted for testability — no component mounting needed.
-export const resolveProviders = (serverConfig, isElectronEnv) => {
-    if (isElectronEnv) {
+export const resolveProviders = (serverConfig, isDesktopEnv) => {
+    if (isDesktopEnv) {
         return { desktop: allProviders.desktop };
     }
     if (!serverConfig) {
@@ -96,25 +96,25 @@ export default {
     data() {
         return {
             threatDragonLogo,
-            ready: false
+            ready: isDesktopApp()
         };
     },
     computed:
         mapState({
             config: state => state.config?.config ?? null,
             configError: state => state.config?.configError ?? null,
-            providers: (state) => resolveProviders(state.config?.config, isElectron()),
+            providers: (state) => resolveProviders(state.config?.config, isDesktopApp()),
         }),
     async mounted() {
-        if (isElectron()) {
+        if (isDesktopApp()) {
             await this.$store.dispatch(RESOLVE_LOCALE);
         } else {
             await this.$store.dispatch(configActions.fetch);
             if (this.configError) {
                 this.$toast.error(this.$t('home.errors.configLoadFailed'));
             }
+            this.ready = true;
         }
-        this.ready = true;
     },
     components: {
         TdHero,

@@ -31,7 +31,7 @@
 import { mapState } from 'vuex';
 import { LOCALE_SELECTED } from '@/store/actions/locale.js';
 import { isSupportedLocale } from '@/service/locale/locale-resolver';
-import isElectron from 'is-electron';
+import { isDesktopApp } from '@/service/environment';
 import TdDropdown from './Dropdown.vue';
 
 export default {
@@ -103,7 +103,7 @@ export default {
                 return;
             }
             this.$store.dispatch(LOCALE_SELECTED, locale);
-            if (isElectron()) {
+            if (isDesktopApp()) {
                 // Confirm locale is known before IPC call to prevent injection
                 if (isSupportedLocale(locale)) {
                     window.electronAPI.updateMenu(locale);
