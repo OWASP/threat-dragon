@@ -103,6 +103,16 @@ describe('service/diagram/v1/data.js', () => {
         expect(res.data.threats[0].id).toEqual(threatId);
     });
 
+    it('preserves the v1 rule ID', () => {
+        const ruleId = 'b2a6d40d-d3f8-4750-8e4d-c02cc84b13dc';
+        cell = getCell();
+        cell.type = 'tm.Process';
+        cell.threats = [{ modelType: 'STRIDE', ruleId }];
+        res = data.map({}, cell);
+
+        expect(res.data.threats[0].ruleId).toEqual(ruleId);
+    });
+
     it('copies a valid modelType from the cell to the threat', () => {
         const threatId = '1234567';
         cell = getCell();

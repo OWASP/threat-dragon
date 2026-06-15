@@ -97,6 +97,7 @@ import threatModels from '@/service/threats/models/index.js';
 import TdFormRadioGroup from '@/components/FormRadioGroup.vue';
 import TdFormSelect from '@/components/FormSelect.vue';
 import { GetContextSuggestions } from '@/service/threats/oats/context-generator.js';
+import { getRuleId as getContextRuleId } from '@/service/threats/oats/rule-ids.js';
 import { v4 as uuidv4 } from 'uuid';
 export default {
     name: 'TdThreatSuggest',
@@ -152,10 +153,21 @@ export default {
             const tmpThreat = createNewTypedThreat(this.modelType, this.cellRef.data.type, this.threatTop + 1);
             this.types = [...this.threatTypes];
             if (type == 'type') {
-                this.threatTypes.map((t, ind) => {
-                    console.log(t);
-                    this.suggestions.push({ ...tmpThreat });
-                    this.suggestions[ind].type = t;
+                const threatTypes = threatModels.getThreatTypesByElement(
+                    this.modelType,
+                    this.cellRef.data.type
+                );
+                Object.keys(threatTypes).forEach((translationKey) => {
+                    const ruleId = threatModels.getRuleId(
+                        this.modelType,
+                        threatTypes[translationKey],
+                        translationKey
+                    );
+                    this.suggestions.push({
+                        ...tmpThreat,
+                        type: this.$t(translationKey),
+                        ...(ruleId && { ruleId })
+                    });
                 });
             } else {
                 this.suggestions = GetContextSuggestions(this.cellRef.data, this.modelType).map((suggestion) => {
@@ -165,7 +177,7 @@ export default {
                         this.types.push(tmpThreat.type);
                     tmpThreat.description = suggestion.description;
                     tmpThreat.mitigation = suggestion.mitigation;
-                    console.log(tmpThreat);
+                    tmpThreat.ruleId = getContextRuleId(suggestion);
                     return { ...tmpThreat };
                 });
             }

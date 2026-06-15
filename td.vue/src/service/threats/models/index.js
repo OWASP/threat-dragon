@@ -2,6 +2,7 @@ import cia from './cia.js';
 import ciaDie from './ciadie.js';
 import linddun from './linddun.js';
 import plot4ai from './plot4ai.js';
+import { getRuleId } from './rule-ids.js';
 import stride from './stride.js';
 
 const swapKeyValuePairs = (obj) => {
@@ -185,5 +186,6 @@ export default {
     getByTranslationValue,
     getThreatTypesByElement,
     getFrequencyMapByElement,
+    getRuleId,
     allModels
 };

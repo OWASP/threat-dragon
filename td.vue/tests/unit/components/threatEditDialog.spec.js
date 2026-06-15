@@ -390,6 +390,7 @@ describe('components/ThreatEditDialog.vue', () => {
                 mockStore.state.cell.ref.data.threats = [eopThreat];
                 
                 wrapper.vm.editThreat(threatId);
+                wrapper.vm.selectedGameId = 'cornucopia';
                 wrapper.vm.card.suit = 'DATA VALIDATION & ENCODING';
                 wrapper.vm.card.number = 'VE2';
                 wrapper.vm.updateThreat();
@@ -399,12 +400,38 @@ describe('components/ThreatEditDialog.vue', () => {
                 expect(mockStore.dispatch).toHaveBeenCalled();
             });
 
+            it('adds the Cornucopia rule ID', () => {
+                expect(mockStore.state.cell.ref.data.threats[0].ruleId)
+                    .toEqual('https://cornucopia.owasp.org/edition/webapp/VE2/3.0/en');
+            });
+
             it('hides the modal', () => {
                 expect(wrapper.vm.$refs.editModal.hide).toHaveBeenCalled();
             });
 
             it('updates the style attributes', () => {
                 expect(dataChanged.updateStyleAttrs).toHaveBeenCalled();
+            });
+        });
+
+        describe('when an EOP threat has no selected card', () => {
+            beforeEach(() => {
+                const eopThreat = {
+                    ...getThreatData(),
+                    modelType: 'EOP',
+                    ruleId: 'stale-rule-id'
+                };
+                mockStore.state.cell.ref.data.threats = [eopThreat];
+
+                wrapper.vm.editThreat(threatId);
+                wrapper.vm.card.suit = null;
+                wrapper.vm.card.number = null;
+                wrapper.vm.updateThreat();
+            });
+
+            it('removes a stale card rule ID', () => {
+                expect(mockStore.state.cell.ref.data.threats[0].ruleId)
+                    .toBeUndefined();
             });
         });
     });

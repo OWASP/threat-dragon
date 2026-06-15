@@ -39,6 +39,10 @@ describe('service/threats/index.js', () => {
         it('has a defined modelType', () => {
             expect(threat.modelType).toEqual('STRIDE');
         });
+
+        it('does not assign a rule ID to a manually created threat', () => {
+            expect(threat.ruleId).toBeUndefined();
+        });
     });
 
     describe('create new LINDDUN threat', () => {

@@ -475,6 +475,12 @@ export default {
                     threatRef.cardSuit = this.card.suit;
                     threatRef.cardNumber = this.card.number;
                     threatRef.type = this.selectedGameId;
+                    const ruleId = this.activeGame?.getCardRuleId(this.card.number);
+                    if (ruleId) {
+                        threatRef.ruleId = ruleId;
+                    } else {
+                        delete threatRef.ruleId;
+                    }
                 } else {
                     threatRef.type = this.threat.type;
                 }
