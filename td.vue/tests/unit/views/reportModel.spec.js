@@ -1,11 +1,17 @@
-import BootstrapVue from 'bootstrap-vue';
-import { createLocalVue, shallowMount } from '@vue/test-utils';
+import { shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
+import { createLocalVue } from '../helpers/vueTestUtils';
+
 import ReportModel from '@/views/ReportModel.vue';
+import { isDesktopApp } from '@/service/environment';
 import TdCoversheet from '@/components/report/Coversheet.vue';
 import TdDiagramDetail from '@/components/report/DiagramDetail.vue';
 import TdExecutiveSummary from '@/components/report/ExecutiveSummary.vue';
+
+jest.mock('@/service/environment', () => ({
+    isDesktopApp: jest.fn()
+}));
 
 describe('views/ReportModel.vue', () => {
     let routerMock, storeMock, wrapper;
@@ -13,7 +19,6 @@ describe('views/ReportModel.vue', () => {
     beforeEach(() => {
         const localVue = createLocalVue();
         localVue.use(Vuex);
-        localVue.use(BootstrapVue);
 
         routerMock = { push: jest.fn(), params: {} };
         storeMock = new Vuex.Store({
@@ -118,5 +123,58 @@ describe('views/ReportModel.vue', () => {
         window.print.mockImplementation(() => {});
         wrapper.vm.print();
         expect(window.print).toHaveBeenCalledTimes(1);
+    });
+});
+
+describe('ReportModel.vue — desktop app', () => {
+    let routerMock, storeMock, wrapper;
+
+    beforeEach(() => {
+        isDesktopApp.mockReturnValue(true);
+        window.electronAPI = { modelPrint: jest.fn() };
+
+        const localVue = createLocalVue();
+        localVue.use(Vuex);
+
+        routerMock = { push: jest.fn(), params: {} };
+        storeMock = new Vuex.Store({
+            state: {
+                threatmodel: {
+                    data: {
+                        summary: { title: 'My title', owner: 'some owner', description: 'Aweomse sauce' },
+                        detail: {
+                            reviewer: 'Reviewer',
+                            contributors: ['Contribs'],
+                            diagrams: [{ cells: [{ threats: [{ foo: 'bar' }] }] }]
+                        }
+                    }
+                },
+                provider: { selected: 'local' }
+            },
+            getters: { contributors: () => [] }
+        });
+        wrapper = shallowMount(ReportModel, {
+            localVue,
+            store: storeMock,
+            mocks: {
+                $route: routerMock,
+                $router: routerMock,
+                $t: t => t
+            }
+        });
+    });
+
+    afterEach(() => {
+        isDesktopApp.mockReturnValue(false);
+        delete window.electronAPI;
+    });
+
+    it('shows the PDF export button', () => {
+        expect(wrapper.findComponent('#td-print-pdf-btn').exists()).toEqual(true);
+    });
+
+    it('calls electronAPI.modelPrint on printPdf', () => {
+        wrapper.vm.printPdf();
+        expect(window.electronAPI.modelPrint).toHaveBeenCalledWith('PDF');
     });
 });

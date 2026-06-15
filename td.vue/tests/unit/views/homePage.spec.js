@@ -1,8 +1,10 @@
-import { BootstrapVue, BContainer } from 'bootstrap-vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { shallowMount, createLocalVue } from '@vue/test-utils';
+import { shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
+import { createLocalVue } from '../helpers/vueTestUtils';
+
+import { isDesktopApp } from '@/service/environment';
 import { AUTH_SET_LOCAL } from '@/store/actions/auth.js';
 import configActions from '@/store/actions/config.js';
 import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
@@ -12,7 +14,16 @@ import TdImage from '@/components/Image.vue';
 import TdProviderLoginButton from '@/components/ProviderLoginButton.vue';
 
 jest.mock('@/assets/threatdragon_logo_image.svg', () => 'threatdragon_logo_image.svg');
-jest.mock('is-electron', () => jest.fn());
+jest.mock('@/service/environment', () => ({
+    isDesktopApp: jest.fn()
+}));
+
+// Helper: resolve the async mount promise and let Vue process the updates.
+const finishMount = async (wrapper, resolve) => {
+    resolve();
+    await wrapper.vm.$nextTick();
+    await wrapper.vm.$nextTick();
+};
 
 // Helper: wrap shallowMount with controlled async mount resolution.
 // Returns { wrapper, resolve } — call resolve() to let mounted() finish.
@@ -20,17 +31,20 @@ const createControlledMount = (store, mocks = {}) => {
     let resolveMount;
     const mountPromise = new Promise((resolve) => { resolveMount = resolve; });
 
-    // Intercept the dispatch that mounted() awaits, so we control timing
-    store.dispatch = jest.fn().mockReturnValue(mountPromise);
+    // Spy on dispatch so we can later assert which actions were called
+    jest.spyOn(store, 'dispatch').mockReturnValue(mountPromise);
 
     const localVue = createLocalVue();
     localVue.use(Vuex);
-    localVue.use(BootstrapVue);
     localVue.component('font-awesome-icon', FontAwesomeIcon);
 
     const wrapper = shallowMount(HomePage, {
         localVue,
         store,
+        stubs: {
+            'b-spinner': true,
+            'b-container': true
+        },
         mocks: {
             $t: (key) => key,
             $toast: { error: jest.fn() },
@@ -113,18 +127,15 @@ describe('HomePage.vue', () => {
     };
 
     beforeEach(() => {
-        const isElectron = require('is-electron');
-        isElectron.mockReturnValue(false);
+        isDesktopApp.mockReset();
+        isDesktopApp.mockReturnValue(false);
     });
 
     describe('layout', () => {
         beforeEach(async () => {
             const store = createStore({ githubEnabled: true });
             const { wrapper: w, resolve } = createControlledMount(store);
-            resolve();
-            // Wait for Vue to process the resolved promise + ready flip
-            await w.vm.$nextTick();
-            await w.vm.$nextTick();
+            await finishMount(w, resolve);
             wrapper = w;
         });
 
@@ -133,7 +144,7 @@ describe('HomePage.vue', () => {
         });
 
         it('has a b-container', () => {
-            expect(wrapper.findComponent(BContainer).exists()).toBe(true);
+            expect(wrapper.findComponent({ name: 'BContainer' }).exists()).toBe(true);
         });
 
         it('has a hero section', () => {
@@ -168,9 +179,7 @@ describe('HomePage.vue', () => {
             const store = createStore({ githubEnabled: true });
             const { wrapper: w, resolve } = createControlledMount(store);
 
-            resolve();
-            await w.vm.$nextTick();
-            await w.vm.$nextTick();
+            await finishMount(w, resolve);
 
             expect(w.vm.ready).toBe(true);
             expect(w.find('b-spinner-stub').exists()).toBe(false);
@@ -178,13 +187,33 @@ describe('HomePage.vue', () => {
         });
     });
 
+    describe('desktop (Electron)', () => {
+        beforeEach(() => {
+            isDesktopApp.mockReturnValue(true);
+        });
+
+        it('starts ready with no spinner', () => {
+            const store = createStore({ githubEnabled: true });
+            const { wrapper: w } = createControlledMount(store);
+            expect(w.vm.ready).toBe(true);
+            expect(w.find('b-spinner-stub').exists()).toBe(false);
+            expect(w.find('.td-description').exists()).toBe(true);
+        });
+
+        it('renders desktop provider button', () => {
+            const store = createStore({ githubEnabled: true });
+            const { wrapper: w } = createControlledMount(store);
+            const buttons = w.findAllComponents(TdProviderLoginButton);
+            expect(buttons).toHaveLength(1);
+            expect(buttons.at(0).props('provider').key).toBe('desktop');
+        });
+    });
+
     describe('providers', () => {
         it('renders a login button per enabled provider', async () => {
             const store = createStore({ githubEnabled: true, localEnabled: true });
             const { wrapper: w, resolve } = createControlledMount(store);
-            resolve();
-            await w.vm.$nextTick();
-            await w.vm.$nextTick();
+            await finishMount(w, resolve);
 
             const buttons = w.findAllComponents(TdProviderLoginButton);
             expect(buttons).toHaveLength(2);

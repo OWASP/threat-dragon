@@ -5,9 +5,9 @@ import Vuex from 'vuex';
 import TdDropdown from '@/components/Dropdown.vue';
 import LocaleSelect from '@/components/LocaleSelect.vue';
 import { LOCALE_SELECTED } from '@/store/actions/locale.js';
-import isElectron from 'is-electron';
+import { isDesktopApp } from '@/service/environment';
 
-jest.mock('is-electron');
+jest.mock('@/service/environment');
 
 const ALL_LOCALE_LABELS = {
     ar: 'العربية',
@@ -267,11 +267,11 @@ describe('components/LocaleSelect.vue', () => {
         beforeEach(() => {
             mountComponent('en', ['en', 'de']);
             dispatchSpy = jest.spyOn(mockStore, 'dispatch');
-            isElectron.mockReturnValue(true);
+            isDesktopApp.mockReturnValue(true);
         });
 
         afterEach(() => {
-            isElectron.mockReturnValue(false);
+            isDesktopApp.mockReturnValue(false);
         });
 
         it('calls electronAPI.updateMenu when in Electron and locale is supported', () => {
@@ -291,7 +291,7 @@ describe('components/LocaleSelect.vue', () => {
         });
 
         it('does not call electronAPI when not in Electron', () => {
-            isElectron.mockReturnValue(false);
+            isDesktopApp.mockReturnValue(false);
             window.electronAPI = { updateMenu: jest.fn() };
 
             wrapper.vm.updateLocale('de', jest.fn());
