@@ -8,8 +8,7 @@ const featureCountOnPage1 = cfg.branches.names.slice(0, cfg.branches.perPage)
     .filter(n => n.startsWith('feature/')).length;
 
 const loginViaGitHub = () => {
-    cy.visit('/', { onBeforeLoad: (win) => win.sessionStorage.clear() });
-    cy.get('#local-login-btn').should('be.visible');
+    cy.launchThreatDragon();
     cy.visit('/#/git/github/repository');
 };
 
@@ -60,3 +59,4 @@ describe('GitHub provider — branch pagination', () => {
         });
     });
 });
+
