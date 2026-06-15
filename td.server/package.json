@@ -23,20 +23,20 @@
   "description": "OWASP Threat Dragon - a free, open source threat modeling tool",
   "author": {
     "name": "OWASP Threat Dragon",
-    "email": "jon.gadsden@owasp.org",
+    "email": "threat-dragon-project@owasp.org",
     "url": "https://owasp.org/www-project-threat-dragon/"
   },
   "license": "Apache-2.0",
   "engines": {
     "npm": ">=11.10.0"
   },
-  "homepage": "https://github.com/OWASP/www-project-threat-dragon/",
+  "homepage": "https://owasp.org/www-project-threat-dragon/",
   "repository": {
     "type": "git",
     "url": "git://github.com/OWASP/threat-dragon.git"
   },
   "bugs": {
-    "email": "jon.gadsden@owasp.org",
+    "email": "threat-dragon-project@owasp.org",
     "url": "https://github.com/OWASP/threat-dragon/issues"
   },
   "resolutions": {},

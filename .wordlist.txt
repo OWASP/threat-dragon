@@ -32,6 +32,7 @@ Config
 cooldowns
 cooldown
 cron
+Cloudflare
 CVE
 CVEs
 CVSS
