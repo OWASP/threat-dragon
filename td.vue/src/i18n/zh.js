@@ -353,6 +353,8 @@ const messages = {
         exportHtml: '导出HTML',
         exportPdf: '导出PDF',
         exportTd: '原始 (Threat Dragon)',
+        exportTemplate: 'As Template',
+        exportTmBom: 'As TM-BOM',
         exportOtm: '开放威胁模型 (OTM)',
         import: '导入',
         ok: 'OK',
@@ -368,9 +370,7 @@ const messages = {
         saveModelAs: '模型另存为',
         search: '搜索',
         next: '下一个',
-        previous: '上一个',
-        manage : 'Manage...',
-        exportTemplate: 'Export As Template',
+        previous: '上一个'
     },
     cards: {
         details: '卡片详情',

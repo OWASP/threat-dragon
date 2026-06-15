@@ -8,22 +8,21 @@ group: Testing
 
 ## End to end testing
 
-Running e2e tests is done using [cypress](https://www.cypress.io/).
-The full test suite is in `td.vue/tests/e2e/specs`
-and this is where most of the functional e2e tests should live.
+Running the end-to-end (e2e) tests uses the [cypress](https://www.cypress.io/) test framework.
+The full test suite is in `td.vue/tests/e2e/specs` and this is where most of the functional e2e tests should live.
 
-A smaller subset of tests, called "smoke tests", live in `td.vue/tests/e2e/smokes`.
+A smaller subset of tests, the 'smoke tests', live in `td.vue/tests/e2e/smokes`.
 Smoke tests are run against a deployment as a sanity check to ensure that the deployment succeeded
 and there are no glaring issues in the deployment.
 Smoke tests should be quick and only check the bare basics.
 
-To run end-to-end tests locally `vue-cli-service` will have to available on the command line.
+The end-to-end tests rely on `vue-cli-service` to run locally on the command line.
 If there are errors such as `vue-cli-service: command not found`
 then run command `npm install -g @vue/cli` from the root directory of the Threat Dragon source tree.
 
-### Run test:e2e
+### Run e2e tests
 
-To run the e2e tests locally, navigate to the `td.vue` directory and run:
+To run the `test:e2e` tests locally, navigate to the `td.vue` directory and run:
 
 ```sh
 npm install
@@ -36,29 +35,46 @@ This suite of tests uses cypress configuration file `e2e.local.config.js`.
 
 A quick test can be done using command `npm run test:vue`,
 from either the root directory or the `td.vue` directory.
-This runs the same suite of tests but in headless mode using an electron server back-end.
+This runs the same suite of tests but in headless mode using the cypress/electron server back-end.
 
-### Run test:e2e:local
+## Run desktop e2e tests
 
-This suite of tests is identical to `test:e2e`
+The `test:e2e:desktop` desktop application end-to-end tests can be run
+using `npm run test:e2e:desktop` from `td.vue` directory.
+
+### Run e2e tests for localhost
+
+The `test:e2e:local` suite of tests is identical to `test:e2e`
 but the target is an application already running at `http://localhost:8080/`.
 To run these tests there first has to be a running web application, for example:
 
-- from directory `td.vue` invoke `npm run dev`
+- from directory `td.vue` invoke `npm run start:serve`
 - wait for the web app to be accessible on `http://localhost:8080/`
-
-From a separate terminal in directory `td.vue` invoke: `npm run test:e2e:local`
+- from `td.vue` invoke: `npm run test:e2e:local`
 
 A cypress runner application is opened as above, loading the suite of tests from `tests/e2e/specs`.
 This suite of tests uses cypress configuration file `e2e.local.config.js`.
 
-### Pipeline test:e2e-ci
+The application under test can be stopped using `npm run stop:serve`.
 
-This suite of tests is run in headless mode so that it can be used for the CI pipeline.
+### Pull request pipeline e2e tests
+
+The `test:e2e-pr` test suite is run from a local host running on `http://localhost:8080/` similar to above,
+using configuration file `e2e.local.config.js`.
+
+- from directory `td.vue` invoke `npm run start:serve`
+- wait for the web app to be accessible on `http://localhost:8080/`
+- from `td.vue` invoke: `npm run test:e2e-pr`
+- halt the test application with `npm run stop:serve`
+
+These tests are run by the pull request pipeline on creation and new commits.
+
+### CI pipeline e2e tests
+
+The `test:e2e-ci` suite of tests is run in headless mode so that it can be used for the CI pipeline.
 It uses cypress configuration file `e2e.ci.config.js` and runs the `tests/e2e/specs` suite of tests.
 
-The tests are run against an existing application on `http://localhost:3000/`,
-using port 3000 rather than 8080.
+The tests are run against an existing application on `http://localhost:3000/`, using port 3000 rather than 8080.
 
 For local testing of this script, an instance of the docker file can be used to map port 3000:
 
@@ -67,9 +83,9 @@ For local testing of this script, an instance of the docker file can be used to 
 
 These tests are run by the CI pipeline after a successful deploy.
 
-### BrowserStack test:e2e-nightly
+### BrowserStack e2e nightlies
 
-The online [BrowserStack][browserstack]  nightly tests use various browsers to run the tests
+The `test:e2e-nightly` online [BrowserStack][browserstack] nightly tests use various browsers to run the tests
 listed in configuration file `browserstack.nightly.json`.
 The BrowserStack configuration uses cypress configuration file `e2e.nightly.config.js`
 and the suite of tests from is loaded from `tests/e2e/specs`.
@@ -83,52 +99,61 @@ To check the configuration file `e2e.nightly.config.js` run this command from di
 
 - `vue-cli-service test:e2e -C e2e.nightly.config.js --browser chromium --headless --url 'https://www.threatdragon.com/'`
 
-### BrowserStack test:e2e-smokes
+### BrowserStack e2e smoke tests
 
-The e2e pipeline BrowserStack smoke tests rely on the demo server
-running at `https://www.threatdragon.com/` and the scripts use command `npm run test:e2e-smokes`.
+The `test:e2e-smokes` BrowserStack pipeline smoke tests rely on the demo server running at `https://www.threatdragon.com/`.
 Test and debug these pipelines using github rather than from the local command line.
 
 The BrowserStack configuration file is `browserstack.smokes.json`
-which uses cypress configuration file `e2e.smokes.config.js`
-and the suite of tests is loaded from `tests/e2e/specs/smokes`.
+which uses cypress configuration file `e2e.smokes.config.js`.
+These tests are run by the `deploy` github action using command `npm run test:e2e-smokes`
+with the suite of tests loaded from `tests/e2e/specs/smokes`.
 
-These tests are run by the `deploy` github action.
 To check the configuration file `e2e.smokes.config.js` run this command from directory `td.vue` :
 
 - `vue-cli-service test:e2e -C e2e.smokes.config.js --browser chromium --headless --url 'https://www.threatdragon.com/'`
 
-### Run test:e2e-smokes:local
+### Run local e2e smoke tests
 
-This suite of tests is similar to `test:e2e-smokes`
+This suite of tests is similar to the BrowserStack e2e smoke tests
 but does not use BrowserStack for various browser tests - just chrome.
 The target is an existing application running at `http://localhost:8080/`
 along with the documentation pages at `http://localhost:8080/docs/`.
 
 To run these tests there first has to be a running web application, for example:
 
-- from directory `td.vue` invoke `npm run dev`
+- from directory `td.vue` invoke `npm run start:serve`
 - wait for the web app to be accessible on `http://localhost:8080/`
-
-From a separate terminal in directory `td.vue` run command `npm run test:e2e-smokes:local` .
+- run command `npm run test:e2e-smokes:local`
+- halt the test application with `npm run stop:serve`
 
 This will open the cypress runner application.
 This suite of tests uses cypress configuration file `e2e.smokes.local.config.js`,
 with the suite of tests loaded from `tests/e2e/specs/smokes`.
 
-### Pipeline test:e2e-ci-smokes
+### Pull-request pipeline e2e smoke tests
 
-This suite of tests is similar to `test:e2e-smokes`
-but is run in headless mode so that it can be used for the CI pipeline.
-It uses cypress configuration file `e2e.smokes.ci.config.js`
-with the suite of tests loaded from `tests/e2e/specs/smokes`.
+The `test:e2e-pr-smokes` suite of tests is similar to the local e2e smoke tests
+but is run in headless mode so that it can be used for the pull request pipeline.
+It uses cypress configuration file `e2e.smokes.ci.config.js` with the test suite loaded from `tests/e2e/specs/smokes`.
 
-It is run against an existing application on `http://localhost:3000/`,
-using port 3000 rather than 8080.
+The target is an existing application running at `http://localhost:8080/`,
+to run these tests :
+
+- from directory `td.vue` invoke `npm run start:serve`
+- wait for the web app to be accessible on `http://localhost:8080/`
+- run command `npm run test:e2e-pr-smokes`
+- halt the test application with `npm run stop:serve`
+
+### CI pipeline e2e smoke tests
+
+The `test:e2e-ci-smokes` suite of tests is similar to the PR pipeline e2e smoke tests but is used for the CI pipeline.
+It uses cypress configuration file `e2e.smokes.ci.config.js` with the test suite loaded from `tests/e2e/specs/smokes`.
+
+It is run against an existing application on `http://localhost:3000/` using port 3000 rather than 8080.
 
 For local testing of this script, an instance of the docker file can be used to map ports 3000.
-Decide on the docker image to test,
-for example `owasp/threat-dragon:stable` or `threatdragon/owasp-threat-dragon:PR-943`.
+Decide on the docker image to test, for example `owasp/threat-dragon:stable` or `threatdragon/owasp-threat-dragon:PR-943`.
 
 - from top directory run `docker run -it --rm -p 3000:3000 -v $(pwd)/.env:/app/.env owasp-threat-dragon:dev`
 or if not using an environment variable file then run a docker container using:
@@ -149,8 +174,6 @@ docker run -d --rm \
 
 - check the web app is accessible on `http://localhost:3000/`
 - from directory `td.vue` invoke `npm run test:e2e-ci-smokes`
-
-These tests are used by the CI pipeline to determine if the deploy to Heroku was successful or not.
 
 ### Visual Regression Tests
 
@@ -190,10 +213,6 @@ Note that
 - `td.vue/e2e.smokes.config.js` is used by the CI pipeline on merge/deploy
 - `td.vue/e2e.nightly.config.js` is for the scheduled daily tests
 - `td.vue/e2e.local.config.js` and `td.vue/e2e.smokes.local.config.js` are useful in a local development environment
-
-## Running Desktop e2e tests
-
-The desktop application has end-to-end tests that can be run using `npm run test:e2e:desktop` from `td.vue` directory.
 
 ----
 

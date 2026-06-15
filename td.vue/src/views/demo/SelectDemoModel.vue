@@ -34,7 +34,7 @@ import isElectron from 'is-electron';
 import TdHero from '@/components/Hero.vue';
 import tmActions from '@/store/actions/threatmodel.js';
 import schema from '@/service/schema/ajv';
-import tmBom from '@/service/migration/tmBom/tmBom';
+import { importTmbom } from '@/service/migration/tmBom/tmBom';
 
 export default {
     name: 'SelectDemoModel',
@@ -57,7 +57,7 @@ export default {
     methods: {
         onModelClick(model) {
             if (schema.isTmBom(model.model)) {
-                this.$store.dispatch(tmActions.selected, tmBom.read(model.model));
+                this.$store.dispatch(tmActions.selected, importTmbom(model.model));
             } else {
                 this.$store.dispatch(tmActions.selected, model.model);
             }

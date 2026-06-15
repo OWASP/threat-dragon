@@ -20,17 +20,17 @@ const convert = (model, nodes) => {
                 if (cell.data.containedElements) {
                     // containedElements is an array of node ids that are contained in the trust zone
                     for (const element of cell.data.containedElements) {
-                        let index = nodes.actors.findIndex((x) => x.id === element);
+                        let index = nodes.actors.findIndex((x) => x.symbolic_name === element);
                         if (index >= 0) {
                             nodes.actors[index].trust_zone = cell.id;
                             continue;
                         }
-                        index = nodes.components.findIndex((x) => x.id === element);
+                        index = nodes.components.findIndex((x) => x.symbolic_name === element);
                         if (index >= 0) {
                             nodes.components[index].trust_zone = cell.id;
                             continue;
                         }
-                        index = nodes.data_stores.findIndex((x) => x.id === element);
+                        index = nodes.data_stores.findIndex((x) => x.symbolic_name === element);
                         if (index >= 0) {
                             nodes.data_stores[index].trust_zone = cell.id;
                         }

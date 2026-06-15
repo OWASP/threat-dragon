@@ -45,21 +45,21 @@ describe('service/migration/tmBom/diagrams/threats/threats.js', () => {
         });
 
         it('populates the array of controls', () => {
-		    expect(tmbomThreats.controls.find((x) => x.symbolic_name === undefined)).toBeUndefined();
-		    expect(tmbomThreats.controls.find((x) => x.title === undefined)).toBeUndefined();
-		    expect(tmbomThreats.controls.find((x) => x.description === undefined)).toBeUndefined();
-		    expect(tmbomThreats.controls.find((x) => x.threats[0] === undefined)).toBeUndefined();
-		    expect(tmbomThreats.controls.find((x) => x.status === undefined)).toBeUndefined();
-		    expect(tmbomThreats.controls.find((x) => x.priority === undefined)).toBeUndefined();
+            expect(tmbomThreats.controls.find((x) => x.symbolic_name === undefined)).toBeUndefined();
+            expect(tmbomThreats.controls.find((x) => x.title === undefined)).toBeUndefined();
+            expect(tmbomThreats.controls.find((x) => x.description === undefined)).toBeUndefined();
+            expect(tmbomThreats.controls.find((x) => x.threats[0] === undefined)).toBeUndefined();
+            expect(tmbomThreats.controls.find((x) => x.status === undefined)).toBeUndefined();
+            expect(tmbomThreats.controls.find((x) => x.priority === undefined)).toBeUndefined();
         });
 
         it('populates the array of threats', () => {
-		    expect(tmbomThreats.threats.find((x) => x.symbolic_name === undefined)).toBeUndefined();
-		    expect(tmbomThreats.threats.find((x) => x.title === undefined)).toBeUndefined();
-		    expect(tmbomThreats.threats.find((x) => x.description === undefined)).toBeUndefined();
-		    expect(tmbomThreats.threats.find((x) => x.threat_persona === undefined)).toBeUndefined();
-		    expect(tmbomThreats.threats.find((x) => x.event === undefined)).toBeUndefined();
-		    expect(tmbomThreats.threats.find((x) => x.sources[0] !== threats.defaults.source)).toBeUndefined();
+            expect(tmbomThreats.threats.find((x) => x.symbolic_name === undefined)).toBeUndefined();
+            expect(tmbomThreats.threats.find((x) => x.title === undefined)).toBeUndefined();
+            expect(tmbomThreats.threats.find((x) => x.description === undefined)).toBeUndefined();
+            expect(tmbomThreats.threats.find((x) => x.threat_persona === undefined)).toBeUndefined();
+            expect(tmbomThreats.threats.find((x) => x.event === undefined)).toBeUndefined();
+            expect(tmbomThreats.threats.find((x) => x.sources[0] !== threats.defaults.source)).toBeUndefined();
         });
     });
 

@@ -353,6 +353,8 @@ const messages = {
         exportHtml: 'HTML रिपोर्टें',
         exportPdf: 'पीडीएफ रिपोर्टें',
         exportTd: 'Original (Threat Dragon)',
+        exportTemplate: 'As Template',
+        exportTmBom: 'As TM-BOM',
         exportOtm: 'Open Threat Model (OTM)',
         import: 'आयात',
         ok: 'ठीक है',
@@ -368,9 +370,7 @@ const messages = {
         saveModelAs: 'मॉडल को इस रूप में सहेजें',
         search: 'खोज',
         next: 'अगला',
-        previous: 'पहले का',
-        manage : 'Manage...',
-        exportTemplate: 'Export As Template',
+        previous: 'पहले का'
     },
     cards: {
         details: 'कार्ड विवरण',

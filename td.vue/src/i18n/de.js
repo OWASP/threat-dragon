@@ -353,6 +353,8 @@ const messages = {
         exportHtml: 'Speichern als HTML',
         exportPdf: 'Speichern als PDF',
         exportTd: 'Original (Threat Dragon)',
+        exportTemplate: 'Export As Template',
+        exportTmBom: 'As TM-BOM',
         exportOtm: 'Open Threat Model (OTM)',
         import: 'Importieren',
         ok: 'OK',
@@ -368,9 +370,7 @@ const messages = {
         saveModelAs: 'Modell speichern als',
         search: 'Suchen',
         next: 'nächste',
-        previous: 'vorherige',
-        manage : 'Manage...',
-        exportTemplate: 'Export As Template',
+        previous: 'vorherige'
     },
     cards: {
         details: 'Kartendetails',

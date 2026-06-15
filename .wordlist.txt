@@ -107,6 +107,7 @@ ModelRef
 msa
 namespaced
 nav
+nightlies
 npm
 npx
 NSIS
