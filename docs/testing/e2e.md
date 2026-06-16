@@ -8,7 +8,7 @@ group: Testing
 
 ## End to end testing
 
-Running the end-to-end (e2e) tests uses the [cypress](https://www.cypress.io/) test framework.
+Running the end-to-end (e2e) tests uses the [cypress] test framework.
 The full test suite is in `td.vue/tests/e2e/specs` and this is where most of the functional e2e tests should live.
 
 A smaller subset of tests, the 'smoke tests', live in `td.vue/tests/e2e/smokes`.
@@ -83,7 +83,7 @@ For local testing of this script, an instance of the docker file can be used to 
 
 These tests are run by the CI pipeline after a successful deploy.
 
-### BrowserStack e2e nightlies
+### BrowserStack e2e nightly
 
 The `test:e2e-nightly` online [BrowserStack][browserstack] nightly tests use various browsers to run the tests
 listed in configuration file `browserstack.nightly.json`.
@@ -230,25 +230,6 @@ This ensures every test waits for the server configuration to load before intera
 new spec file, import the startup command (it is automatically loaded via `support/e2e.js`) and add the call in your
 `beforeEach` hook.
 
-### Global `beforeEach` refactored
-
-Previously a global `beforeEach` in `td.vue/tests/e2e/support/e2e.js` handled visiting the application. This has been
-removed in favour of the explicit `cy.launchThreatDragon()` command in each spec file. This gives each test suite
-control over when to start (e.g. if it needs to mock the config endpoint differently).
-
-### Locale section tests
-
-A dedicated locale test suite lives in `td.vue/tests/e2e/specs/locale-section.cy.js`. These tests verify:
-
-- The `LocaleSelect` component renders with the correct set of available locales
-- Locale switching works and persists
-- The locale dropdown respects server-configured `allowedLocales` restrictions when mocked
-- The i18n fallback chain works via the config API
-
-The mock server at `td.vue/tests/e2e/mock-server/threatDragonBackEndServerMock.js` serves a `/api/config` endpoint
-with `allowedLocales: []` (no restriction) and `defaultLocale: 'en'` by default. Tests can override this via
-`cy.intercept()` if they need to test specific locale restrictions.
-
 Note that
 
 - `td.vue/e2e.ci.config.js` and `td.vue/e2e.smokes.ci.config.js` are used by the CI pipeline on pull-request and merge
@@ -261,3 +242,4 @@ Note that
 Threat Dragon: _making threat modeling less threatening_
 
 [browserstack]: https://www.browserstack.com/
+[cypress]: https://www.cypress.io/

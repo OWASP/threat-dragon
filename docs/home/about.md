@@ -10,24 +10,20 @@ group: About
 
 ## About
 
-[Threat Dragon](https://owasp.org/www-project-threat-dragon/) is a free, open-source,
-cross-platform [threat modeling](https://owasp.org/www-community/Threat_Modeling) application.
+[Threat Dragon] is a free, open-source, cross-platform [threat modeling] application.
 This tool provides for the creation of threat model data-flow diagrams
 and entering of associated threats along with their remediations.
 
 Threat Dragon supports STRIDE<sup>[1](#footnote1)</sup>, LINDDUN<sup>[2](#footnote2)</sup>,
 CIA<sup>[3](#footnote3)</sup>, CIA-DIE<sup>[4](#footnote4)</sup> and PLOT4ai<sup>[5](#footnote5)</sup>
 
-The Project has [OWASP Production status][project] and follows the values and principles
-of the [threat modeling manifesto][manifesto].
+Threat Dragon is an [OWASP Lab Project]
+and follows the values and principles of the threat modeling [manifesto]
 
-An [introduction](https://www.youtube.com/watch?v=hUOAoc6QGJo) to Threat Dragon is provided by
-the [OWASP Spotlight](https://www.youtube.com/playlist?list=PLUKo5k_oSrfOTl27gUmk2o-NBKvkTGw0T) series,
-and a different take on Threat Dragon is provided by
-[Threat Modeling Gamification](https://www.youtube.com/watch?v=u2tmLrwv-nc).
+An [introduction] to Threat Dragon is provided by the [OWASP Spotlight] series, and a different take on
+Threat Dragon is provided by [Threat Modeling Gamification].
 
-There is a good overview of
-[threat modeling and risk assessment](https://owasp.org/www-community/Application_Threat_Modeling)
+There is a good overview of [threat modeling and risk assessment]
 from OWASP, and this expands on what the Threat Dragon project aims for:
 
 * to be simple and intuitive
@@ -78,8 +74,7 @@ for users whose browser language does not match any supported locale.
 
 ### Demonstration site
 
-Threat Dragon maintains a [Demo Instance](https://www.threatdragon.com/)
-that is hosted on [Cloudflare](https://cloudflare.com/).
+Threat Dragon maintains a [Demo Instance] that is hosted on [Heroku].
 We strongly recommend using a self-hosted instance or the desktop application as the most secure options.
 
 ----
@@ -106,7 +101,15 @@ We strongly recommend using a self-hosted instance or the desktop application as
 
 Threat Dragon: _making threat modeling less threatening_
 
-[docker]: https://hub.docker.com/r/owasp/threat-dragon/tags
+[Threat Dragon]: https://owasp.org/www-project-threat-dragon/
+[threat modeling]: https://owasp.org/www-community/Threat_Modeling
+[OWASP Lab Project]: https://owasp.org/projects/
 [manifesto]: https://www.threatmodelingmanifesto.org/
-[project]: https://owasp.org/www-project-threat-dragon/
+[introduction]: https://www.youtube.com/watch?v=hUOAoc6QGJo
+[OWASP Spotlight]: https://www.youtube.com/playlist?list=PLUKo5k_oSrfOTl27gUmk2o-NBKvkTGw0T
+[Threat Modeling Gamification]: https://www.youtube.com/watch?v=u2tmLrwv-nc
+[threat modeling and risk assessment]: https://owasp.org/www-community/Application_Threat_Modeling
 [releases]: https://github.com/owasp/threat-dragon/releases
+[docker]: https://hub.docker.com/r/owasp/threat-dragon/tags
+[Demo Instance]: https://www.threatdragon.com/
+[Heroku]: https://www.heroku.com/
