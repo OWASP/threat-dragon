@@ -97,7 +97,6 @@ import threatModels from '@/service/threats/models/index.js';
 import TdFormRadioGroup from '@/components/FormRadioGroup.vue';
 import TdFormSelect from '@/components/FormSelect.vue';
 import { GetContextSuggestions } from '@/service/threats/oats/context-generator.js';
-import { getRuleId as getContextRuleId } from '@/service/threats/oats/rule-ids.js';
 import { v4 as uuidv4 } from 'uuid';
 export default {
     name: 'TdThreatSuggest',
@@ -157,16 +156,11 @@ export default {
                     this.modelType,
                     this.cellRef.data.type
                 );
-                Object.keys(threatTypes).forEach((translationKey) => {
-                    const ruleId = threatModels.getRuleId(
-                        this.modelType,
-                        threatTypes[translationKey],
-                        translationKey
-                    );
+                Object.entries(threatTypes).forEach(([translationKey, threatMetadata]) => {
                     this.suggestions.push({
                         ...tmpThreat,
                         type: this.$t(translationKey),
-                        ...(ruleId && { ruleId })
+                        ...(threatMetadata.ruleId && { ruleId: threatMetadata.ruleId })
                     });
                 });
             } else {
@@ -177,7 +171,7 @@ export default {
                         this.types.push(tmpThreat.type);
                     tmpThreat.description = suggestion.description;
                     tmpThreat.mitigation = suggestion.mitigation;
-                    tmpThreat.ruleId = getContextRuleId(suggestion);
+                    tmpThreat.ruleId = suggestion.ruleId;
                     return { ...tmpThreat };
                 });
             }

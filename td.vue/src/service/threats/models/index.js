@@ -2,29 +2,22 @@ import cia from './cia.js';
 import ciaDie from './ciadie.js';
 import linddun from './linddun.js';
 import plot4ai from './plot4ai.js';
-import { getRuleId } from './rule-ids.js';
 import stride from './stride.js';
 
-const swapKeyValuePairs = (obj) => {
-    const swappedObj = {};
-    for (const key in obj) {
-        if (Object.prototype.hasOwnProperty.call(obj, key)) {
-            swappedObj[obj[key]] = key;
-        }
-    }
-    return swappedObj;
-};
+const getTranslationsWithMetadata = (obj) => Object.entries(obj).reduce((acc, [key, value]) => {
+    acc[value.translation] = { ...value, key };
+    return acc;
+}, {});
 /**
- * below, we're swapping the key-value pairs, because the current objects might have keys that are the same
- * (in fact, linddun and plot4ai share two keys / categories)
- * Because we're doing this, we will also swap the return object from getThreatTypesByElement(), to be consistent 
+ * The generic model view needs translation keys as object keys so categories from different
+ * models stay distinct even when their internal category names overlap.
  */
 const generic = Object.assign(
-    Object.assign({ 'threats.model.stride.header': 'strideHeader' }, swapKeyValuePairs(stride.all)),
-    Object.assign({ 'threats.model.cia.header': 'ciaHeader' }, swapKeyValuePairs(cia)),
-    Object.assign({ 'threats.model.ciedie.header': 'ciaDieHeader' }, swapKeyValuePairs(ciaDie)),
-    Object.assign({ 'threats.model.linddun.header': 'linddunHeader' }, swapKeyValuePairs(linddun.all)),
-    Object.assign({ 'threats.model.plot4ai.header': 'plot4aiHeader' }, swapKeyValuePairs(plot4ai.all))
+    Object.assign({ 'threats.model.stride.header': { key: 'strideHeader' } }, getTranslationsWithMetadata(stride.all)),
+    Object.assign({ 'threats.model.cia.header': { key: 'ciaHeader' } }, getTranslationsWithMetadata(cia)),
+    Object.assign({ 'threats.model.ciedie.header': { key: 'ciaDieHeader' } }, getTranslationsWithMetadata(ciaDie)),
+    Object.assign({ 'threats.model.linddun.header': { key: 'linddunHeader' } }, getTranslationsWithMetadata(linddun.all)),
+    Object.assign({ 'threats.model.plot4ai.header': { key: 'plot4aiHeader' } }, getTranslationsWithMetadata(plot4ai.all))
 );
 
 
@@ -33,23 +26,23 @@ const getByTranslationValue = (translation) => {
         return '';
     }
 
-    if (Object.values(cia).find(x => x.toLowerCase() === translation.toLowerCase())) {
+    if (Object.values(cia).find(x => x.translation.toLowerCase() === translation.toLowerCase())) {
         return 'CIA';
     }
 
-    if (Object.values(ciaDie).find(x => x.toLowerCase() === translation.toLowerCase())) {
+    if (Object.values(ciaDie).find(x => x.translation.toLowerCase() === translation.toLowerCase())) {
         return 'CIADIE';
     }
 
-    if (Object.values(linddun.all).find(x => x.toLowerCase() === translation.toLowerCase())) {
+    if (Object.values(linddun.all).find(x => x.translation.toLowerCase() === translation.toLowerCase())) {
         return 'LINDDUN';
     }
 
-    if (Object.values(plot4ai.all).find(x => x.toLowerCase() === translation.toLowerCase())) {
+    if (Object.values(plot4ai.all).find(x => x.translation.toLowerCase() === translation.toLowerCase())) {
         return 'PLOT4ai';
     }
 
-    if (Object.values(stride.all).find(x => x.toLowerCase() === translation.toLowerCase())) {
+    if (Object.values(stride.all).find(x => x.translation.toLowerCase() === translation.toLowerCase())) {
         return 'STRIDE';
     }
 
@@ -117,11 +110,7 @@ const getThreatTypesByElement = (modelType, cellType) => {
     default:
         return generic;
     }
-    /**
-     * swapping the key-value pairs of types to be consistent with how generic (returned as default)
-     * is formed
-     */
-    return swapKeyValuePairs(types);
+    return getTranslationsWithMetadata(types);
 };
 
 const getFrequencyMapByElement = (modelType, cellType) => {
@@ -186,6 +175,5 @@ export default {
     getByTranslationValue,
     getThreatTypesByElement,
     getFrequencyMapByElement,
-    getRuleId,
     allModels
 };

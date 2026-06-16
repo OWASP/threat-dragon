@@ -1,32 +1,28 @@
-import { getRuleId } from '@/service/threats/models/rule-ids.js';
+import models from '@/service/threats/models/index.js';
 
-describe('service/threats/models/rule-ids.js', () => {
+describe('service/threats model source rule IDs', () => {
     it('reuses the v1 STRIDE rule ID', () => {
-        expect(getRuleId('STRIDE', 'spoofing'))
+        expect(models.getThreatTypesByElement('STRIDE', 'tm.Process')['threats.model.stride.spoofing'].ruleId)
             .toEqual('b2a6d40d-d3f8-4750-8e4d-c02cc84b13dc');
     });
 
     it('reuses CIA rule IDs for equivalent CIADIE rules', () => {
-        expect(getRuleId('CIADIE', 'confidentiality'))
-            .toEqual(getRuleId('CIA', 'confidentiality'));
+        expect(models.getThreatTypesByElement('CIADIE', 'tm.Process')['threats.model.ciadie.confidentiality'].ruleId)
+            .toEqual(models.getThreatTypesByElement('CIA', 'tm.Process')['threats.model.cia.confidentiality'].ruleId);
     });
 
     it('provides a stable ID for a new CIADIE rule', () => {
-        expect(getRuleId('DIE', 'distributed'))
+        expect(models.getThreatTypesByElement('DIE', 'tm.Process')['threats.model.ciadie.distributed'].ruleId)
             .toEqual('f3fb94f4-7a4d-4271-80f4-01c450003128');
     });
 
     it('provides a stable ID for a PLOT4ai rule', () => {
-        expect(getRuleId('PLOT4ai', 'techniqueProcesses'))
+        expect(models.getThreatTypesByElement('PLOT4ai', 'tm.Process')['threats.model.plot4ai.techniqueProcesses'].ruleId)
             .toEqual('7f26d4ca-597f-4523-b718-fd00f6b5eab0');
     });
 
-    it('uses the translation key to identify rules in a generic model', () => {
-        expect(getRuleId('Generic', 'spoofing', 'threats.model.stride.spoofing'))
+    it('keeps the rule ID attached in the generic model view', () => {
+        expect(models.getThreatTypesByElement('Generic', 'tm.Process')['threats.model.stride.spoofing'].ruleId)
             .toEqual('b2a6d40d-d3f8-4750-8e4d-c02cc84b13dc');
-    });
-
-    it('returns undefined for an unknown rule', () => {
-        expect(getRuleId('STRIDE', 'unknown')).toBeUndefined();
     });
 });

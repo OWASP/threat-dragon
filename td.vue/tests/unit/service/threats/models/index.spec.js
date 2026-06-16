@@ -127,11 +127,4 @@ describe('service/threats/models/index.js', () => {
             expect(Object.keys(models.getThreatTypesByElement('fake', 'tm.Actor'))).toHaveLength(35);
         });
     });
-
-    describe('getRuleId', () => {
-        it('gets a rule ID for a model threat type', () => {
-            expect(models.getRuleId('STRIDE', 'tampering'))
-                .toEqual('4adaa48a-0345-4533-a189-64c98c4420dd');
-        });
-    });
 });
