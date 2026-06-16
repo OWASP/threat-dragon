@@ -15,7 +15,7 @@
         </b-row>
         <b-row v-if="entity.data.description || showProperties">
             <b-col>
-                <p class="entity-description" v-if="entity.data.description" v-html="renderedDescription"></p>
+                <p class="entity-description" v-if="entity.data.description" v-html="markdownToHTML(this.$t('threatmodel.properties.description') + ': ' + this.entity.data.description)"></p>
                 <p class="entity-description" v-if="showProperties">{{ properties }}</p>
             </b-col>
         </b-row>
@@ -28,10 +28,10 @@
                     striped
                     responsive>
                     <template #cell(description)="data">
-                        <div v-html="toMarkdown(data.value)"></div>
+                        <div v-html="markdownToHTML(data.value)"></div>
                     </template>
                     <template #cell(mitigation)="data">
-                        <div v-html="toMarkdown(data.value)"></div>
+                        <div v-html="markdownToHTML(data.value)"></div>
                     </template>
                 </b-table>
             </b-col>
@@ -40,8 +40,12 @@
 </template>
 
 <style lang="scss" scoped>
-:deep(p) {
+:deep(table p) {
     margin-bottom: 0.5rem;
+}
+
+:deep(table p:last-child) {
+    margin-bottom: 0;
 }
 
 .td-threat-data {
@@ -61,7 +65,7 @@
 </style>
 
 <script>
-import { marked } from 'marked';
+import { markdownToHTML } from '@/service/formatting-utils.js';
 import threatService from '@/service/threats/index.js';
 
 export default {
@@ -86,9 +90,6 @@ export default {
         }
     },
     computed: {
-        renderedDescription: function () {
-            return this.entity.data.description ? marked( this.$t('threatmodel.properties.description') + ': ' + this.entity.data.description) : null;
-        },
         dataType: function () {
             const entityType = this.entity.data.type.replace('tm.', '').replace('td.', '');
             return this.$t(`threatmodel.shapes.${this.toCamelCase(entityType)}`);
@@ -170,9 +171,7 @@ export default {
         }
     },
     methods: {
-        toMarkdown(str) {
-            return marked(str);
-        },
+        markdownToHTML,
         toCamelCase(str) {
             // https://stackoverflow.com/questions/2970525/converting-any-string-into-camel-case
             return str.replace(/(?:^\w|[A-Z]|\b\w)/g, (ltr, idx) => idx === 0 ? ltr.toLowerCase() : ltr.toUpperCase()).replace(/\s+/g, '');
