@@ -101,7 +101,7 @@
     "vuex": "^4.1.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.26.10",
+    "@babel/core": "^7.29.6",
     "@babel/polyfill": "^7.12.1",
     "@babel/register": "^7.29.3",
     "@cyclonedx/webpack-plugin": "^5.3.2",
