@@ -1,6 +1,6 @@
 import boundaries from '@/service/migration/tmBom/diagrams/threats/boundaries';
 import controls from '@/service/migration/tmBom/diagrams/threats/controls';
-import tmBomModel from '../../tmbom-test-model';
+import tmBomModel from '../../../tmbom-test-model';
 import { threats as mockTdThreats } from './mockTdThreats';
 
 jest.mock('@/service/migration/tmBom/diagrams/threats/boundaries');

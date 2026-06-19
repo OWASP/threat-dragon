@@ -1,5 +1,5 @@
 import risks from '@/service/migration/tmBom/diagrams/threats/risks';
-import tmBomModel from '../../tmbom-test-model';
+import tmBomModel from '../../../tmbom-test-model';
 import { threats as mockTdThreats } from './mockTdThreats';
 
 describe('service/migration/tmBom/diagrams/threats/risks.js', () => {

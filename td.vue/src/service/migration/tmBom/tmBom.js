@@ -9,30 +9,22 @@ import { buildVersion } from '@/store';
 import summary from './summary';
 import threats from './diagrams/threats/threats';
 
-const createKey = (source, target, key) => {
-    if (Object.hasOwn(source, key)) {
-        target[key] = source[key];
-    }
-};
-
-// export a Threat Dragon file to TM-BOM format, required keys for TM-BOM:
-// version, scope, trust_zones, trust_boundaries, actors, components
-// data_stores, data_sets, data_flows
+// export Plain Old Dragon (POD) format to a TM-BOM file
 export const exportAsTmbom = (model) => {
     const tmbomNodes = nodes.convert(model);
     const tmbomThreats = threats.convert(model);
     const tmbom = {
         $schema: schema.$id,
-        version: model.compatibility?.version || buildVersion,
-        scope: scope.convert(model),
+        version: model.compatibility?.version || buildVersion, // required
+        scope: scope.convert(model), // required
         diagrams: diagrams.convert(model),
-        trust_zones: boxes.convert(model, tmbomNodes),
-        trust_boundaries: [],
-        actors: tmbomNodes.actors,
-        components: tmbomNodes.components,
-        data_stores: tmbomNodes.data_stores,
-        data_sets: [],
-        data_flows: flows.convert(model),
+        trust_zones: boxes.convert(model, tmbomNodes), // required
+        trust_boundaries: [], // required
+        actors: tmbomNodes.actors, // required
+        components: tmbomNodes.components, // required
+        data_stores: tmbomNodes.data_stores, // required
+        data_sets: [], // required
+        data_flows: flows.convert(model), // required
         threat_personas: tmbomThreats.threat_personas,
         threats: tmbomThreats.threats,
         controls: tmbomThreats.controls,
@@ -42,19 +34,19 @@ export const exportAsTmbom = (model) => {
     // compatibility object exists if original file was also TM-BOM
     if (model.compatibility) {
         // optional key values
-        createKey(model.compatibility, tmbom, 'description');
-        createKey(model.compatibility, tmbom, 'frozen');
-        createKey(model.compatibility, tmbom, 'released_at');
-        createKey(model.compatibility, tmbom, 'product_release_date');
-        createKey(model.compatibility, tmbom, 'release_docs_link');
-        createKey(model.compatibility, tmbom, 'reviewed_at');
-        createKey(model.compatibility, tmbom, 'repo_link');
+        tmbom.description = model.compatibility?.description || undefined;
+        tmbom.frozen = model.compatibility?.frozen;
+        tmbom.released_at = model.compatibility?.released_at || undefined;
+        tmbom.product_release_date = model.compatibility?.product_release_date || undefined;
+        tmbom.release_docs_link = model.compatibility?.release_docs_link || undefined;
+        tmbom.reviewed_at = model.compatibility?.reviewed_at || undefined;
+        tmbom.repo_link = model.compatibility?.repo_link || undefined;
     }
 
     return tmbom;
 };
 
-// import a TM-BOM file to Threat Dragon format
+// import a TM-BOM file to POD
 export const importTmbom = (model) => {
 
     // required values not used by TD but need to be preserved
@@ -64,12 +56,12 @@ export const importTmbom = (model) => {
     };
 
     // optional values need to be preserved but only if present
-    createKey(model, compatibility, 'frozen');
-    createKey(model, compatibility, 'released_at');
-    createKey(model, compatibility, 'product_release_date');
-    createKey(model, compatibility, 'release_docs_link');
-    createKey(model, compatibility, 'reviewed_at');
-    createKey(model, compatibility, 'repo_link');
+    compatibility.frozen = model?.frozen;
+    compatibility.released_at = model?.released_at || undefined;
+    compatibility.product_release_date = model?.product_release_date || undefined;
+    compatibility.release_docs_link = model?.release_docs_link || undefined;
+    compatibility.reviewed_at = model?.reviewed_at || undefined;
+    compatibility.repo_link = model?.repo_link || undefined;
 
     return {
         summary: summary.merge(model),
@@ -79,7 +71,7 @@ export const importTmbom = (model) => {
     };
 };
 
-// read a TM-BOM file
+// read a TM-BOM file to POD
 const read = (model) => {
     // not supported yet, return an empty Threat Dragon model with TM-BOM attached
     return {
@@ -102,7 +94,7 @@ const read = (model) => {
 
 };
 
-// write a TM-BOM file
+// write a TM-BOM file from POD
 const write = (model) => {
     // not supported yet, so return a nearly empty TM-BOM
     return {

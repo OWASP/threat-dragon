@@ -1,7 +1,7 @@
 import assumptions from '@/service/migration/tmBom/diagrams/assumptions';
 import summary from '@/service/migration/tmBom/summary';
 
-import tmBomModel from './tmbom-test-model';
+import tmBomModel from '../tmbom-test-model';
 
 jest.mock('@/service/migration/tmBom/diagrams/assumptions');
 

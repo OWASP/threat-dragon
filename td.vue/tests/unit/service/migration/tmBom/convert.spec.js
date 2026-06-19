@@ -2,7 +2,7 @@ import tmBom from '@/service/migration/tmBom/tmBom';
 
 import demoModel from '@/service/demo/v2-threat-model.json';
 import newModel from '@/service/demo/v2-new-model.json';
-import tdModel from './td-test-model';
+import tdModel from '../td-test-model';
 
 describe('service/migration/tmBom/tmBom.exportAsTmbom', () => {
 
