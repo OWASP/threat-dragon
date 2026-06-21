@@ -1,4 +1,4 @@
-export const convert = function (data) {
+/*export const convert = function (data) {
     const jsonData = JSON.stringify(data, null, 2);
 
     const dragonData = JSON.parse(jsonData);
@@ -224,3 +224,4 @@ export const convert = function (data) {
 export default {
     convert
 };
+*/

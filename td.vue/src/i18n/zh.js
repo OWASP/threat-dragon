@@ -238,9 +238,9 @@ const messages = {
             export: '无法导出威胁模型。检查开发者控制台查阅更多信息',
             jsonSchema: '模型与模式不完全匹配。详情请参见开发者控制台。',
             noModelOpen: '没有打开的模型',
-            otmUnsupported: '目前尚不支持导入开放威胁模型文件格式',
+            otmImported: '目前尚不支持导入开放威胁模型文件格式',
             save: '无法保存威胁模型。请查看开发者控制台以获取更多信息。',
-            tmUnsupported: 'TM-BOM文件格式的导入功能尚处于实验阶段，可能随时变更，此类变更可能导致模型损坏。',
+            tmBomImported: 'TM-BOM文件格式的导入功能尚处于实验阶段，可能随时变更，此类变更可能导致模型损坏。',
             v1Translate: '导入的 1.x 版模型将升级到 2.0 版本'
         },
         prompts: {

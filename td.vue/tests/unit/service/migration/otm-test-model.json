@@ -8,19 +8,15 @@
     "ownerContact": "john.doe@example.com",
     "tags": [ "test tag 1", "test tag 2" ],
     "attributes": {
+      "filePath": "file.xml",
       "cmdbId": "MyApp123"
     }
   },
   "representations": [
     {
-      "name": "Architecture Diagram",
-      "id": "architecture-diagram",
-      "type": "diagram",
-      "size": {
-        "width": 1000,
-        "height": 1100
-      },
-      "attributes": null
+      "name": "Threat Diagram",
+      "id": "threat-diagram",
+      "type": "diagram"
     },
     {
       "name": "Application Code",
@@ -29,7 +25,25 @@
       "repository": {
         "url": "https://github.com/my-project"
       },
-      "attributes": null
+      "attributes": {
+        "language": "java",
+        "platform": "github",
+        "vcs": "git"
+      }
+    },
+    {
+      "name": "Architecture Diagram",
+      "id": "architecture-diagram",
+      "type": "diagram",
+      "description": "Architectural data flow diagram",
+      "size": {
+        "width": 1000,
+        "height": 1100
+      },
+      "attributes": {
+        "background-color": "blue",
+        "transparent": 40
+      }
     }
   ],
   "assets": [
@@ -72,15 +86,19 @@
       ],
       "representations": [
         {
+          "representation": "threat-diagram",
+          "id": "web-client-box"
+        },
+        {
           "representation": "architecture-diagram",
           "id": "web-client-box",
           "position": {
-            "x": 100,
-            "y": 100
+            "x": 700,
+            "y": 200
           },
           "size": {
-            "width": 50,
-            "height": 50
+            "width": 150,
+            "height": 80
           }
         }
       ],
@@ -104,12 +122,12 @@
           "representation": "architecture-diagram",
           "id": "web-service-box",
           "position": {
-            "x": 100,
-            "y": 100
+            "x": 200,
+            "y": 200
           },
           "size": {
-            "width": 50,
-            "height": 50
+            "width": 150,
+            "height": 150
           }
         }
       ],
@@ -152,12 +170,12 @@
           "representation": "architecture-diagram",
           "id": "box-for-postgress-DB",
           "position": {
-            "x": 200,
-            "y": 100
+            "x": 700,
+            "y": 400
           },
           "size": {
-            "width": 50,
-            "height": 50
+            "width": 150,
+            "height": 75
           }
         }
       ],
@@ -167,9 +185,9 @@
       "name": "Class CustomerDatabase",
       "id": "class-customerdatabase",
       "description": "Managages customer database",
-      "type": "code-class",
+      "type": "CD-V2-CODE-SNIPPET-SHARING",
       "parent": {
-        "trustZone": "2ab4effa-40b7-4cd2-ba81-8247d29a6f2d"
+        "trustZone": "private-trustzone"
       },
       "representations": [
         {
@@ -178,7 +196,7 @@
           "package": "com.open.threat.model",
           "file": "src/main/otm-file/OTMClass.java",
           "line": 324,
-          "codeSnippet": "public void createOTM(String[] args) { Scanner reader = new Scanner(System.in); System.out.print(\"Enter a number: \"); int number = reader.nextInt() System.out.println(\"You entered: \" + number); }"
+          "codeSnippet": "some test code"
         }
       ],
       "attributes": null
@@ -244,8 +262,8 @@
             "y": 100
           },
           "size": {
-            "width": 100,
-            "height": 100
+            "width": 500,
+            "height": 400
           }
         }
       ],
@@ -264,12 +282,12 @@
           "representation": "architecture-diagram",
           "id": "private-box-shape",
           "position": {
-            "x": 0,
-            "y": 0
+            "x": 50,
+            "y": 50
           },
           "size": {
-            "width": 100,
-            "height": 100
+            "width": 400,
+            "height": 400
           }
         }
       ],
@@ -280,7 +298,7 @@
     {
       "name": "Threat 1",
       "id": "22724267-be7e-44c0-8b1f-d7d33e9a34ec",
-      "description": "Description fo the threat number 1",
+      "description": "Description for threat 1",
       "categories": [
         "Spoofing",
         "Tampering"
@@ -291,9 +309,9 @@
       ],
       "risk": {
         "likelihood": 50,
-        "likelihoodComment": "It is reasonable to think this might happen but it requires for the attaketr to have a deep cyprografy knowledge",
+        "likelihoodComment": "Likelihood description for threat 1",
         "impact": 100,
-        "impactComment": "If this threat becomes a rallity company will strruggle to keep customers and the monetory loss would jeopardise the whole company"
+        "impactComment": "Impact description for threat 1"
       },
       "attributes": null,
       "tags": [

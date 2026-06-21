@@ -32,13 +32,13 @@ export const isValid = (jsonFile) => {
 
     // if it is not in either Threat Dragon formats, maybe another format
     if (isTmBom(jsonFile)) {
-	    console.debug('Schema validate success for Threat Model in TM-BOM');
-	    return true;
+        console.debug('Schema validate success for Threat Model in TM-BOM');
+        return true;
     }
 
     if (isOtm(jsonFile)) {
-	    console.debug('Schema validate success for Open Threat Model');
-	    return true;
+        console.debug('Schema validate success for Open Threat Model');
+        return true;
     }
 
     console.warn('Failed to validate', validateV2.errors);
@@ -58,17 +58,22 @@ export const isV2 = (jsonFile) => {
     return validateV2(jsonFile);
 };
 
-export const isTmBom = (jsonFile) => {
+const isTmBom = (jsonFile) => {
     return validateTmbom(jsonFile);
 };
 
-export const checkTmBom = (jsonFile) => {
+const checkTmBom = (jsonFile) => {
     validateTmbom(jsonFile);
     return validateTmbom.errors;
 };
 
-export const isOtm = (jsonFile) => {
+const isOtm = (jsonFile) => {
     return validateOtm(jsonFile);
+};
+
+const checkOtm = (jsonFile) => {
+    validateOtm(jsonFile);
+    return validateOtm.errors;
 };
 
 export const isTemplate = (jsonFile) => {
@@ -85,6 +90,7 @@ export const validateTemplateFormat = (jsonFile) => {
 };
 
 export default {
+    checkOtm,
     checkTmBom,
     checkV2,
     isV1,

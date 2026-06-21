@@ -129,6 +129,8 @@ describe('service/migration/tmBom/tmBom.js', () => {
             
             it('stores the compatibility values', () => {
                 expect(testModel.compatibility.version).toBe(tmBomModel.version);
+                expect(testModel.compatibility.released_at).toBe(tmBomModel.released_at);
+                expect(testModel.compatibility.product_release_date).toBe(tmBomModel.product_release_date);
                 expect(testModel.compatibility.frozen).toBe(tmBomModel.frozen);
                 expect(testModel.compatibility.release_docs_link).toBe(tmBomModel.release_docs_link);
                 expect(testModel.compatibility.reviewed_at).toBe(tmBomModel.reviewed_at);
@@ -140,11 +142,15 @@ describe('service/migration/tmBom/tmBom.js', () => {
             it('skips absent optional values', () => {
                 const noOptionsModel = JSON.parse(JSON.stringify(tmBomModel));
                 delete noOptionsModel.frozen;
+                delete noOptionsModel.release_docs_link;
+                delete noOptionsModel.reviewed_at;
                 delete noOptionsModel.repo_link;
                 testModel = tmBom.importTmbom(noOptionsModel);
                 expect(testModel.compatibility.frozen).toBeUndefined();
-                expect(testModel.compatibility.release_docs_link).toBe(tmBomModel.release_docs_link);
-                expect(testModel.compatibility.reviewed_at).toBe(tmBomModel.reviewed_at);
+                expect(testModel.compatibility.released_at).toBe(tmBomModel.released_at);
+                expect(testModel.compatibility.product_release_date).toBe(tmBomModel.product_release_date);
+                expect(testModel.compatibility.release_docs_link).toBeUndefined();
+                expect(testModel.compatibility.reviewed_at).toBeUndefined();
                 expect(testModel.compatibility.repo_link).toBeUndefined();
             });
         });
