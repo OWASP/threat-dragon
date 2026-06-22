@@ -2,7 +2,7 @@ import properties from '@/service/migration/otm/cells/properties';
 
 describe('service/migration/otm/cells/properties.js', () => {
 
-    describe('merge OTM', () => {
+    describe('merging OTM', () => {
         let testCell;
 
         describe('creates properties for cells', () => {
@@ -35,7 +35,7 @@ describe('service/migration/otm/cells/properties.js', () => {
                 testCell = properties.merge(component, representation);
             });
 
-            it('creates cell type', () => {
+            it('creates process cell type', () => {
                 expect(testCell.shape).toBe('process');
             });
 
@@ -70,7 +70,7 @@ describe('service/migration/otm/cells/properties.js', () => {
             });
         });
  
-        describe('creates cell properties with minimal values', () => {
+        describe('creating cell properties with minimal values', () => {
             const component = {
                 name: 'Web Client',
                 id: 'web-client',
@@ -88,7 +88,7 @@ describe('service/migration/otm/cells/properties.js', () => {
                 testCell = properties.merge(component, representation);
             });
 
-            it('creates cell type', () => {
+            it('creates actor cell type', () => {
                 expect(testCell.shape).toBe('actor');
             });
 
@@ -123,7 +123,7 @@ describe('service/migration/otm/cells/properties.js', () => {
             });
         });
 
-        describe('finds the data store cell properties', () => {
+        describe('finding the data store cell properties', () => {
             const component = {
                 name: 'Data store',
                 id: 'web-database',
@@ -137,7 +137,7 @@ describe('service/migration/otm/cells/properties.js', () => {
                 id: 'box-for-postgress-DB'
             };
 
-            it('creates cell type', () => {
+            it('creates data store cell type', () => {
                 testCell = properties.merge(component, representation);
                 expect(testCell.shape).toBe('store');
             });

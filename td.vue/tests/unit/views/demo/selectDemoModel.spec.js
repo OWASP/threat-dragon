@@ -3,8 +3,17 @@ import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
 import demoThreatModel from '@/service/demo/v2-threat-model';
+import newModel from '@/service/demo/v2-new-model';
+import otmModel from '@/service/demo/mobile-cloud.otm';
+import tmBomModel from '@/service/demo/huskyai.tmbom';
 import SelectDemoModel from '@/views/demo/SelectDemoModel.vue';
+
 import TdHero from '@/components/Hero.vue';
+import { importOtm } from '@/service/migration/otm/otm';
+import { importTmbom } from '@/service/migration/tmBom/tmBom';
+
+jest.mock('@/service/migration/otm/otm');
+jest.mock('@/service/migration/tmBom/tmBom');
 
 describe('views/demo/SelectDemoModel.vue', () => {
 
@@ -51,15 +60,6 @@ describe('views/demo/SelectDemoModel.vue', () => {
         ).toEqual(true);
     });
 
-    it('displays the HuskyAI demo model', () => {
-        expect(
-            wrapper.findAllComponents(BListGroupItem)
-                .filter(x => x.text() === 'Husky AI')
-                .at(0)
-                .exists()
-        ).toEqual(true);
-    });
-
     it('displays the Cryptocurrency Wallet demo model', () => {
         expect(
             wrapper.findAllComponents(BListGroupItem)
@@ -78,6 +78,15 @@ describe('views/demo/SelectDemoModel.vue', () => {
         ).toEqual(true);
     });
 
+    it('displays the HuskyAI demo model', () => {
+        expect(
+            wrapper.findAllComponents(BListGroupItem)
+                .filter(x => x.text() === 'Husky AI')
+                .at(0)
+                .exists()
+        ).toEqual(true);
+    });
+
     it('displays the IoT Device demo model', () => {
         expect(
             wrapper.findAllComponents(BListGroupItem)
@@ -91,6 +100,15 @@ describe('views/demo/SelectDemoModel.vue', () => {
         expect(
             wrapper.findAllComponents(BListGroupItem)
                 .filter(x => x.text() === 'Online Game')
+                .at(0)
+                .exists()
+        ).toEqual(true);
+    });
+
+    it('displays the Mobile to Public Cloud demo model', () => {
+        expect(
+            wrapper.findAllComponents(BListGroupItem)
+                .filter(x => x.text() === 'Mobile to Public Cloud')
                 .at(0)
                 .exists()
         ).toEqual(true);
@@ -140,8 +158,63 @@ describe('views/demo/SelectDemoModel.vue', () => {
         expect(mockStore.dispatch).toHaveBeenCalledWith('THREATMODEL_LOAD_DEMOS');
     });
 
-    describe('selecting a demo model with local provider', () => {
-        let demoModelItem;
+    describe('selecting a new model with desktop provider', () => {
+        let newModelItem;
+
+        beforeEach(async () => {
+            mockStore = new Vuex.Store({
+                state: {
+                    provider: { selected: 'desktop' }
+                },
+                actions: {
+                    THREATMODEL_CLEAR: () => {},
+                    THREATMODEL_LOAD_DEMOS: () => {},
+                    THREATMODEL_SELECTED: () => {},
+                    THREATMODEL_STASH: () => {}
+                }
+            });
+            mockStore.dispatch = jest.fn();
+
+            wrapper = shallowMount(SelectDemoModel, {
+                localVue,
+                store: mockStore,
+                mocks: {
+                    $t: key => key,
+                    $route: { params: {} },
+                    $router: mockRouter
+                }
+            });
+
+            window.electronAPI = {
+                modelOpened: jest.fn()
+            };
+
+            newModelItem = wrapper.findAllComponents(BListGroupItem)
+                .filter(x => x.text() === 'New Blank Model')
+                .at(0);
+            await newModelItem.trigger('click');
+        });
+
+        it('notifies the desktop server', () => {
+            expect(window.electronAPI.modelOpened).toHaveBeenCalledWith(newModel.summary.title);
+        });
+
+        it('dispatches the selected event', () => {
+            expect(mockStore.dispatch).toHaveBeenCalledWith('THREATMODEL_SELECTED', newModel);
+        });
+
+        it('navigates to the local threat model page', () => {
+            expect(mockRouter.push).toHaveBeenCalledWith(
+                { name: 'desktopThreatModel', params: { threatmodel: 'New Blank Model' }}
+            );
+        });
+
+        it('does not stash the model', () => {
+            expect(mockStore.dispatch).not.toHaveBeenCalledWith('THREATMODEL_STASH');
+        });
+    });
+
+    describe('selecting a model with local provider', () => {
 
         beforeEach(async () => {
             mockStore = new Vuex.Store({
@@ -166,29 +239,75 @@ describe('views/demo/SelectDemoModel.vue', () => {
                     $router: mockRouter
                 }
             });
-
-            demoModelItem = await wrapper.findAllComponents(BListGroupItem)
-                .filter(x => x.text() === 'Demo Threat Model')
-                .at(0);
-            await demoModelItem.trigger('click');
         });
 
-        it('dispatches the selected event', () => {
-            expect(mockStore.dispatch).toHaveBeenCalledWith('THREATMODEL_SELECTED', demoThreatModel);
+        describe('selecting the demo model', () => {
+            let demoModelItem;
+
+            beforeEach(async () => {
+                demoModelItem = wrapper.findAllComponents(BListGroupItem)
+                    .filter(x => x.text() === 'Demo Threat Model')
+                    .at(0);
+                await demoModelItem.trigger('click');
+            });
+
+            it('dispatches the selected event', () => {
+                expect(mockStore.dispatch).toHaveBeenCalledWith('THREATMODEL_SELECTED', demoThreatModel);
+            });
+    
+            it('navigates to the local threat model page', () => {
+                expect(mockRouter.push).toHaveBeenCalledWith(
+                    { name: 'localThreatModel', params: { threatmodel: 'Demo Threat Model' }}
+                );
+            });
+    
+            it('does not stash the model', () => {
+                expect(mockStore.dispatch).not.toHaveBeenCalledWith('THREATMODEL_STASH');
+            });
         });
 
-        it('navigates to the local threat model page', () => {
-            expect(mockRouter.push).toHaveBeenCalledWith(
-                { name: 'localThreatModel', params: { threatmodel: 'Demo Threat Model' }}
-            );
+        describe('selecting an OTM model', () => {
+            let otmModelItem;
+
+            beforeEach(async () => {
+                otmModelItem = wrapper.findAllComponents(BListGroupItem)
+                    .filter(x => x.text() === 'Mobile to Public Cloud')
+                    .at(0);
+                await otmModelItem.trigger('click');
+            });
+
+            it('navigates to the local threat model page', () => {
+                expect(mockRouter.push).toHaveBeenCalledWith(
+                    { name: 'localThreatModel', params: { threatmodel: 'Mobile to Public Cloud' }}
+                );
+            });
+
+            it('converts the model from OTM', () => {
+                expect(importOtm).toHaveBeenCalledWith(otmModel);
+            });
         });
 
-        it('does not stash the model', () => {
-            expect(mockStore.dispatch).not.toHaveBeenCalledWith('THREATMODEL_STASH');
+        describe('selecting a TM-BOM model', () => {
+            let tmBomModelItem;
+
+            beforeEach(async () => {
+                tmBomModelItem = wrapper.findAllComponents(BListGroupItem)
+                    .filter(x => x.text() === 'Husky AI')
+                    .at(0);
+                await tmBomModelItem.trigger('click');
+            });
+
+            it('navigates to the local threat model page', () => {
+                expect(mockRouter.push).toHaveBeenCalledWith(
+                    { name: 'localThreatModel', params: { threatmodel: 'Husky AI' }}
+                );
+            });
+
+            it('converts the model from TM-BOM', () => {
+                expect(importTmbom).toHaveBeenCalledWith(tmBomModel);
+            });
         });
     });
-
-
      
     describe('selecting a demo model with github provider', () => {
         let demoModelItem;
@@ -217,7 +336,7 @@ describe('views/demo/SelectDemoModel.vue', () => {
                 }
             });
 
-            demoModelItem = await wrapper.findAllComponents(BListGroupItem)
+            demoModelItem = wrapper.findAllComponents(BListGroupItem)
                 .filter(x => x.text() === 'Demo Threat Model')
                 .at(0);
             await demoModelItem.trigger('click');
@@ -268,7 +387,7 @@ describe('views/demo/SelectDemoModel.vue', () => {
                 }
             });
 
-            demoModelItem = await wrapper.findAllComponents(BListGroupItem)
+            demoModelItem = wrapper.findAllComponents(BListGroupItem)
                 .filter(x => x.text() === 'Demo Threat Model')
                 .at(0);
             await demoModelItem.trigger('click');

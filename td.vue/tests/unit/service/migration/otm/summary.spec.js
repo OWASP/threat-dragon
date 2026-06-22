@@ -3,7 +3,7 @@ import otmModel from '../otm-test-model';
 
 describe('service/migration/otm/summary.js', () => {
 
-    describe('merge OTM', () => {
+    describe('merging OTM', () => {
         let testSummary;
 
         describe('creates summary from OTM', () => {
@@ -41,7 +41,7 @@ describe('service/migration/otm/summary.js', () => {
             });
         });
 
-        describe('creates summary with absent project', () => {
+        describe('creating summary with absent project', () => {
             const missingModel = JSON.parse(JSON.stringify(otmModel));
             delete missingModel.project;
 
@@ -64,7 +64,7 @@ describe('service/migration/otm/summary.js', () => {
             });
         });
 
-        describe('handles optional values', () => {
+        describe('handling optional values', () => {
             let missingModel;
 	
             beforeEach(() => {

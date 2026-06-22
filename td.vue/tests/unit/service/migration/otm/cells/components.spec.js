@@ -3,7 +3,7 @@ import otmModel from '../../otm-test-model';
 
 describe('service/migration/otm/cells/components.js', () => {
 
-    describe('merge OTM', () => {
+    describe('merging OTM', () => {
         let testCells;
 
         describe('returns cells for representations', () => {

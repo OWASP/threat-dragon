@@ -56,8 +56,8 @@
 <script>
 import { mapState } from 'vuex';
 
-import isElectron from 'is-electron';
 import { getProviderType } from '@/service/provider/providers.js';
+import { providerTypes } from '@/service/provider/providerTypes';
 import TdFormButton from '@/components/FormButton.vue';
 import TdHero from '@/components/Hero.vue';
 import tmActions from '@/store/actions/threatmodel.js';
@@ -184,13 +184,13 @@ export default {
             // save the threat model in the store
             this.$store.dispatch(tmActions.selected, jsonModel);
 
-            if (isElectron()) {
+            if (this.providerType === providerTypes.desktop) {
                 // tell the desktop server that the model has changed
                 window.electronAPI.modelOpened(fileName);
             }
 
             let params;
-            // this will deliberately fail if the threat model does not have a title in the summary
+            // fails if threat model does not contain 'summary.title'
             try {
                 params = Object.assign({}, this.$route.params, {
                     threatmodel: jsonModel.summary.title

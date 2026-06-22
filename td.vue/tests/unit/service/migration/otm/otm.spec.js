@@ -13,7 +13,7 @@ describe('service/migration/otm/otm.js', () => {
         let testModel;
         const summaryReturn = 'test summary';
 
-        describe('import from OTM format', () => {
+        describe('importing from OTM format', () => {
             const diagramsReturn = {
                 diagrams: [{title: 'test foo'}, {title: 'test bar'}],
                 codeRepresentations: [{title: 'test baz'}],
@@ -64,7 +64,7 @@ describe('service/migration/otm/otm.js', () => {
             });
         });
 
-        describe('handles missing OTM values', () => {
+        describe('handling missing OTM values', () => {
             const missingModel = JSON.parse(JSON.stringify(otmModel));
             const diagramsReturn = {diagrams: []};
             delete missingModel.otmVersion;

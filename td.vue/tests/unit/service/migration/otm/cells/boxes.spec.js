@@ -4,7 +4,7 @@ describe('service/migration/otm/cells/boxes.js', () => {
     describe('merge OTM', () => {
         let testBox;
 
-        describe('creates trust boundary box', () => {
+        describe('creating a trust boundary box', () => {
             const trustZone = {
                 name: 'Test trust boundary box name',
                 id: 'test-trust-boundary-box-id',
@@ -68,7 +68,7 @@ describe('service/migration/otm/cells/boxes.js', () => {
             });
         });
  
-        describe('creates minimal trust boundary box', () => {
+        describe('creating a minimal trust boundary box', () => {
             const trustZone = {
                 name: 'Test trust boundary box name',
                 id: 'test-trust-boundary-box-id',

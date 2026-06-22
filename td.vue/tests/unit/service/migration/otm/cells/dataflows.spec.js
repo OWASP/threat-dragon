@@ -2,7 +2,7 @@ import dataflows from '@/service/migration/otm/cells/dataflows';
 
 describe('service/migration/otm/cells/dataflow.js', () => {
 
-    describe('merge OTM', () => {
+    describe('merging OTM', () => {
         let testFlow;
 
         describe('creates flow', () => {
@@ -60,7 +60,7 @@ describe('service/migration/otm/cells/dataflow.js', () => {
             });
         });
  
-        describe('creates minimal flow', () => {
+        describe('creating a minimal flow', () => {
             const dataflow = {
                 name: 'Another test data flow name',
                 id: 'another-test-data-flow-id',

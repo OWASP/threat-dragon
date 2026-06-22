@@ -8,7 +8,7 @@ const testVersion = 'foo.bar';
 
 describe('service/migration/otm/diagrams.js', () => {
 
-    describe('merge OTM', () => {
+    describe('merging OTM', () => {
         let testDiagrams;
 
         describe('creates array of diagrams', () => {
@@ -81,7 +81,7 @@ describe('service/migration/otm/diagrams.js', () => {
             });
         });
 
-        describe('handles absent representations', () => {
+        describe('handling absent representations', () => {
             let missingRepresentation;
 
             beforeEach(() => {

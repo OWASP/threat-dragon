@@ -6,7 +6,7 @@ describe('service/migration/otm/cells/cells.js', () => {
     describe('merge OTM', () => {
         let testCells;
 
-        describe('creates cells for representations', () => {
+        describe('creating cells for representations', () => {
 
             it('creates cells for Threat Diagram', () => {
                 testCells = cells.merge(otmModel, otmModel.representations[0].id);
@@ -29,7 +29,7 @@ describe('service/migration/otm/cells/cells.js', () => {
             });
         });
 
-        describe('creates cell contents for Architecture Diagram', () => {
+        describe('creating cell contents for Architecture Diagram', () => {
             const otmId = otmModel.representations[2].id;
 
             beforeEach(() => {
