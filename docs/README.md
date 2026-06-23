@@ -11,11 +11,12 @@ If you do not already have Jekyll or Ruby installed, see [Jekyll's Guide](https:
 
 MacOS users should use chruby instead of the system ruby:
 
-* From a terminal navigate to this `docs` directory
-* Install/update bundle: `npm add --location=global bundle`
-* Install jekyll, webrick etc: `bundle update`
-* Run the docs server: `bundle exec jekyll serve`
+* Install bundle globally: `npm add --location=global bundle`
+* Install jekyll, webrick etc: `cd docs && bundle update`
+* Run the docs server (version syncs automatically): `npm run docs:serve`
 * Navigate in a browser to server address: `http://127.0.0.1:4000/`
+
+To build the docs site without serving: `npm run docs:build`
 
 ### Check for updates
 

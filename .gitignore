@@ -53,6 +53,10 @@
 !docs/*.html
 !docs/_layouts/
 !docs/_layouts/*.html
+!docs/_includes/
+!docs/_includes/*.html
+!docs/_data/
+!docs/_data/*.json
 !docs/home/
 !docs/home/*.md
 !docs/testing/

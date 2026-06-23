@@ -1,0 +1,161 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-primary">
+    {%- assign search_text = site.search.text -%}
+    {%- assign search_tooltip = site.search.tooltip -%}
+    {%- assign search_label = search_tooltip | default: search_text | default: 'Search documentation' -%}
+    <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="{{ '/' | relative_url }}">
+        {{ site.brand }}
+    </a>
+    <span class="navbar-text">{{ site.data.version.version }}</span>
+    <button
+        class="nav-link theme-toggle td-mobile-theme-toggle d-md-none ms-auto"
+        type="button"
+        data-theme-toggle
+        data-theme-tooltip-dark="{{ site.theme_toggle.dark_tooltip | default: 'Switch to dark mode' }}"
+        data-theme-tooltip-light="{{ site.theme_toggle.light_tooltip | default: 'Switch to light mode' }}"
+        aria-label="Switch to dark mode"
+        title="Switch to dark mode">
+        <i class="fas fa-moon theme-toggle-icon" aria-hidden="true"></i>
+        <span class="visually-hidden" data-theme-toggle-label>Switch to dark mode</span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ms-auto d-none d-md-flex">
+            <li class="nav-item">
+                <button
+                    class="nav-link active"
+                    type="button"
+                    data-bs-toggle="modal"
+                    data-bs-target="#tdSearchModal"
+                    aria-label="{{ search_label }}"
+                    {% if search_tooltip %}title="{{ search_tooltip }}" data-bs-toggle-tooltip="tooltip" data-bs-placement="bottom"{% endif %}>
+                    <i class="fas fa-search fa-lg" aria-hidden="true"></i>
+                    {%- if search_text and search_text != '' -%} {{ search_text }}{%- else -%}<span class="visually-hidden">Search</span>{%- endif -%}
+                </button>
+            </li>
+            {%- for navlink in site.header_links -%}
+            <li class="nav-item">
+                <a href="{{ navlink.url }}"
+                    {% if navlink.target %} target="{{ navlink.target }}" rel="noopener noreferrer"{% endif %}
+                    class="nav-link active"
+                    {% if navlink.tooltip or navlink.text %}aria-label="{{ navlink.tooltip | default: navlink.text }}"{% endif %}
+                    {% if navlink.tooltip %}title="{{ navlink.tooltip }}" data-bs-toggle-tooltip="tooltip" data-bs-placement="bottom"{% endif %}>
+                    {%- if navlink.fa_class -%}
+                    <i class="{{ navlink.fa_class }} fa-lg" aria-hidden="true"></i>
+                    {%- endif -%}
+                    {%- if navlink.text and navlink.text != '' -%} {{ navlink.text }}{%- endif -%}
+                </a>
+            </li>
+            {%- endfor -%}
+            <li class="nav-item">
+                {%- assign theme_toggle_text = site.theme_toggle.text -%}
+                <button
+                    class="nav-link theme-toggle"
+                    type="button"
+                    data-theme-toggle
+                    data-theme-tooltip-dark="{{ site.theme_toggle.dark_tooltip | default: 'Switch to dark mode' }}"
+                    data-theme-tooltip-light="{{ site.theme_toggle.light_tooltip | default: 'Switch to light mode' }}"
+                    aria-label="Switch to dark mode"
+                    title="Switch to dark mode"
+                    {% if site.theme_toggle.dark_tooltip or site.theme_toggle.light_tooltip %}data-bs-toggle-tooltip="tooltip" data-bs-placement="bottom"{% endif %}>
+                    <i class="fas fa-moon theme-toggle-icon" aria-hidden="true"></i>
+                    {%- if theme_toggle_text and theme_toggle_text != '' -%}
+                    <span class="theme-toggle-text">{{ theme_toggle_text }}</span>
+                    {%- endif -%}
+                    <span class="visually-hidden" data-theme-toggle-label>Switch to dark mode</span>
+                </button>
+            </li>
+        </ul>
+        <div class="td-mobile-menu d-md-none">
+            <div class="td-mobile-menu-panel">
+                <a class="td-mobile-menu-link{% if page.url == '/' %} active{%- endif -%}" href="{{ '/' | relative_url }}">
+                    <span class="td-mobile-menu-icon"><i class="fas fa-home" aria-hidden="true"></i></span>
+                    <span class="td-mobile-menu-text">Home</span>
+                </a>
+                <button
+                    class="td-mobile-menu-link td-mobile-menu-button"
+                    type="button"
+                    data-bs-toggle="modal"
+                    data-bs-target="#tdSearchModal"
+                    aria-label="{{ search_label }}">
+                    <span class="td-mobile-menu-icon"><i class="fas fa-search" aria-hidden="true"></i></span>
+                    <span class="td-mobile-menu-text">{{ search_text | default: 'Search' }}</span>
+                </button>
+                {%- if site.header_links and site.header_links.size > 0 -%}
+                <button
+                    class="td-mobile-menu-link td-mobile-menu-button td-mobile-menu-toggle"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#mobile-project-links"
+                    aria-expanded="false"
+                    aria-controls="mobile-project-links">
+                    <span class="td-mobile-menu-icon"><i class="fas fa-link" aria-hidden="true"></i></span>
+                    <span class="td-mobile-menu-text">Project Links</span>
+                    <span class="td-mobile-menu-caret fa fa-caret-down" aria-hidden="true"></span>
+                </button>
+                <div id="mobile-project-links" class="collapse td-mobile-menu-section">
+                    {%- for navlink in site.header_links -%}
+                    <a href="{{ navlink.url }}"
+                        {% if navlink.target %} target="{{ navlink.target }}" rel="noopener noreferrer"{% endif %}
+                        class="td-mobile-menu-link td-mobile-menu-sublink"
+                        aria-label="{{ navlink.tooltip | default: navlink.text | default: navlink.url }}{% if navlink.target %} (opens in new tab){% endif %}">
+                        <span class="td-mobile-menu-icon">
+                            {%- if navlink.fa_class -%}
+                            <i class="{{ navlink.fa_class }}" aria-hidden="true"></i>
+                            {%- endif -%}
+                        </span>
+                        <span class="td-mobile-menu-text">{{ navlink.text | default: navlink.tooltip | default: navlink.url }}</span>
+                        <span class="td-mobile-menu-meta" aria-hidden="true">
+                            <i class="fas fa-external-link-alt"></i>
+                        </span>
+                    </a>
+                    {%- endfor -%}
+                </div>
+                {%- endif -%}
+                {%- for category in site.nav.categories -%}
+                {%- assign categoryActive = false -%}
+                {%- for group in category.groups -%}
+                    {%- assign categoryPages = site.pages | where_exp: "navPage", "navPage.group == group.name" -%}
+                    {%- assign categoryActiveCount = categoryPages | where_exp: "groupPage", "groupPage.url == page.url" | size -%}
+                    {%- if categoryActiveCount > 0 -%}
+                        {%- assign categoryActive = true -%}
+                    {%- endif -%}
+                {%- endfor -%}
+                {%- capture mobileCategoryId -%}mobile-category-{{ forloop.index }}{%- endcapture -%}
+                <button
+                    class="td-mobile-menu-link td-mobile-menu-button td-mobile-menu-toggle{% if categoryActive %} active{%- endif -%}"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#{{ mobileCategoryId }}"
+                    aria-expanded="false"
+                    aria-controls="{{ mobileCategoryId }}">
+                    <span class="td-mobile-menu-icon"><i class="fas fa-folder" aria-hidden="true"></i></span>
+                    <span class="td-mobile-menu-text">{{ category.name }}</span>
+                    <span class="td-mobile-menu-caret fa fa-caret-down" aria-hidden="true"></span>
+                </button>
+                <div id="{{ mobileCategoryId }}" class="collapse td-mobile-menu-section">
+                    {%- for group in category.groups -%}
+                        {%- assign pages = site.pages | where_exp: "navPage", "navPage.group == group.name" | sort: "nav_order" -%}
+                        {%- assign activeCount = pages | where_exp: "groupPage", "groupPage.url == page.url" | size -%}
+                        {%- if pages.size == 1 -%}
+                    <a class="td-mobile-menu-link td-mobile-menu-sublink{% if activeCount > 0 %} active{%- endif -%}" href="{{ pages.first.url | relative_url }}">
+                        <span class="td-mobile-menu-icon"><i class="{{ group.fa_class }}" aria-hidden="true"></i></span>
+                        <span class="td-mobile-menu-text">{{ group.name }}</span>
+                    </a>
+                        {%- elsif pages.size > 1 -%}
+                    <div class="td-mobile-menu-group-label{% if activeCount > 0 %} active{%- endif -%}">
+                        <span class="td-mobile-menu-icon"><i class="{{ group.fa_class }}" aria-hidden="true"></i></span>
+                        <span class="td-mobile-menu-text">{{ group.name }}</span>
+                    </div>
+                            {%- for navPage in pages -%}
+                    <a class="td-mobile-menu-link td-mobile-menu-sublink td-mobile-menu-childlink{% if page.url == navPage.url %} active{%- endif -%}" href="{{ navPage.url | relative_url }}">{{ navPage.title }}</a>
+                            {%- endfor -%}
+                        {%- endif -%}
+                    {%- endfor -%}
+                </div>
+                {%- endfor -%}
+            </div>
+        </div>
+    </div>
+</nav>
