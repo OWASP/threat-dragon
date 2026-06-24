@@ -30,7 +30,7 @@ const merge = (model, version) => {
         } else { // other representations such as code or threat-model (TMT)
             diagrams.codeRepresentations.push(representation);
             // along with the components associated with the representation
-            diagrams.codeComponents.push(...components.merge(model, representation.id));
+            diagrams.codeComponents.push(...components.list(model, representation.id));
         }
     });
 

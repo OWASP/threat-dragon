@@ -18,31 +18,20 @@ const validateTemplate = ajv.compile(schemaTemplate);
 
 export const isValid = (jsonFile) => {
 
-    // use the latest V2 schema, save errors for later if needed
-    if (isV2(jsonFile)) {
+    if (isV2(jsonFile)) { // try the latest V2 schema
         console.debug('Schema validate success');
-        return true;
-    }
-
-    // try the V1 schema
-    if (isV1(jsonFile)) {
+    } else if (isV1(jsonFile)) { // try the V1 schema
         console.debug('Schema validate success for V1.x model');
-        return true;
-    }
-
-    // if it is not in either Threat Dragon formats, maybe another format
-    if (isTmBom(jsonFile)) {
+    } else if (isTmBom(jsonFile)) { // try other formats
         console.debug('Schema validate success for Threat Model in TM-BOM');
-        return true;
-    }
-
-    if (isOtm(jsonFile)) {
+    } else if (isOtm(jsonFile)) {
         console.debug('Schema validate success for Open Threat Model');
-        return true;
+    } else {
+        console.warn('Failed to validate', validateV2.errors);
+        return false;
     }
 
-    console.warn('Failed to validate', validateV2.errors);
-    return false;
+    return true;
 };
 
 export const checkV2 = (jsonFile) => {

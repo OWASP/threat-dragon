@@ -43,6 +43,7 @@ describe('service/migration/tmBom/tmBom.importTmbom', () => {
     });
 
     describe('import/merge test model', () => {
+        console.warn = jest.fn();
         const testModel = tmBom.importTmbom(tmBomModel);
 
         it('provides version', () => {

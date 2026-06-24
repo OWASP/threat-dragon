@@ -6,6 +6,10 @@ describe('service/migration/tmBom/diagrams/diagrams.js', () => {
     let testDiagrams;
     const version = 'x.y.zz';
 
+    beforeEach(() => {
+        console.warn = jest.fn();
+    });
+
     describe('merge', () => {
         beforeEach(() => {
             testDiagrams = diagrams.merge(tmBomModel, version);

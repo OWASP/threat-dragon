@@ -8,9 +8,14 @@ describe('service/migration/otm/cells/cells.js', () => {
 
         describe('creating cells for representations', () => {
 
+            beforeEach(() => {
+                console.warn = jest.fn();
+            });
+
             it('creates cells for Threat Diagram', () => {
                 testCells = cells.merge(otmModel, otmModel.representations[0].id);
                 expect(testCells).toHaveLength(2);
+                expect(console.warn).toHaveBeenCalled();
             });
 
             it('creates cells for Application Code', () => {
@@ -52,21 +57,21 @@ describe('service/migration/otm/cells/cells.js', () => {
             });
 
             it('creates cell description', () => {
-			    expect(testCells[2].data.description.length).toBeGreaterThanOrEqual(5);
+                expect(testCells[2].data.description.length).toBeGreaterThanOrEqual(5);
             });
 
             it('creates cell size', () => {
-			    expect(testCells[0].size).toHaveProperty('width');
-			    expect(testCells[0].size.height).toBeDefined();
+                expect(testCells[0].size).toHaveProperty('width');
+                expect(testCells[0].size.height).toBeDefined();
             });
 
             it('creates cell position', () => {
-			    expect(testCells[1].position.x).toBeDefined();
-			    expect(testCells[1].position.y).toBeDefined();
+                expect(testCells[1].position.x).toBeDefined();
+                expect(testCells[1].position.y).toBeDefined();
             });
 
             it('creates compatibility', () => {
-			    expect(testCells[2].compatibility).toHaveProperty('otmId');
+                expect(testCells[2].compatibility).toHaveProperty('otmId');
                 expect(testCells[2].compatibility).toHaveProperty('parent');
                 expect(testCells[2].compatibility).toHaveProperty('tags');
             });
