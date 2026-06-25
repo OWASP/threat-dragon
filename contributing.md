@@ -83,8 +83,10 @@ The best chance of success for a pull request to be reviewed and accepted:
 4. provide enough description to explain how Threat Dragon worked before and works after the change
 5. extend the unit tests and functional tests to show the change working as expected
 6. the pull request must provide one change only, if there are further changes use further pull requests
-7. avoid coding using [generative AI](#use-of-ai-for-coding);
-  if you must then understand fully the changes and keep sprawl to a minimum
+7. if coding using [generative AI](#use-of-ai-for-coding);
+  you must understand fully the changes and keep sprawl to a minimum
+8. ensure the GitHub Actions are passing; a [local script][pr-script] is available
+  to help debug if you need it.
 
 We appreciate contributions always,
 but make sure you have been **assigned the issue** before you submit any pull request
@@ -149,6 +151,7 @@ Threat Dragon: _making threat modeling less threatening_
 [faqs]: https://owasp.org/www-project-threat-dragon/#div-faqs
 [issues]: https://github.com/OWASP/threat-dragon/issues
 [leaders]: https://github.com/OWASP/www-project-threat-dragon/blob/main/leaders.md
+[pr-script]: ./scripts/td-pr-check.sh
 [project]: https://owasp.org/www-project-threat-dragon/
 [raise]: https://github.com/OWASP/threat-dragon/issues/new?assignees=&labels=bug&template=bug_report.md&title=
 [request]: https://github.com/OWASP/threat-dragon/issues/new/choose

@@ -229,8 +229,8 @@ jobs:
           path: tests/e2e/videos
         if: ${{ failure() && hashFiles('tests/e2e/videos/') != '' }}
 
-  desktop_e2e_smokes:
-    name: Desktop e2e smokes
+  desktop_e2e_smokes_ubuntu:
+    name: Desktop e2e smokes (Ubuntu)
     runs-on: ubuntu-24.04
     needs: [site_unit_tests, desktop_unit_tests]
     defaults:
@@ -267,7 +267,93 @@ jobs:
       - name: Upload desktop e2e logs
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: desktop-e2e-logs
+          name: desktop-e2e-logs-ubuntu
+          path: td.vue/wdio-logs
+          if-no-files-found: ignore
+        if: ${{ failure() }}
+
+  desktop_e2e_smokes_macos:
+    name: Desktop e2e smokes (macOS)
+    runs-on: macos-latest
+    needs: [site_unit_tests, desktop_unit_tests]
+    defaults:
+      run:
+        working-directory: td.vue
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Use node LTS 24.16
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version: '24.16'
+
+      - name: Cache NPM dir
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+            ${{ runner.os }}-
+
+      - name: Install clean packages
+        run: npm clean-install
+
+      - name: Build MacOS disk image
+        run: npm run build:desktop -- --mac --publish never
+
+      - name: Run desktop e2e smokes
+        run: npm run test:e2e:desktop
+
+      - name: Upload desktop e2e logs
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: desktop-e2e-logs-macos
+          path: td.vue/wdio-logs
+          if-no-files-found: ignore
+        if: ${{ failure() }}
+
+  desktop_e2e_smokes_windows:
+    name: Desktop e2e smokes (Windows)
+    runs-on: windows-latest
+    needs: [site_unit_tests, desktop_unit_tests]
+    defaults:
+      run:
+        working-directory: td.vue
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Use node LTS 24.16
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version: '24.16'
+
+      - name: Cache NPM dir
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+            ${{ runner.os }}-
+
+      - name: Install clean packages
+        run: npm clean-install
+
+      - name: Build Windows desktop app
+        run: npm run build:desktop -- --windows --publish never
+
+      - name: Run desktop e2e smokes
+        run: npm run test:e2e:desktop
+
+      - name: Upload desktop e2e logs
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: desktop-e2e-logs-windows
           path: td.vue/wdio-logs
           if-no-files-found: ignore
         if: ${{ failure() }}

@@ -33,7 +33,8 @@ const openDemoModel = (modelName) => {
     cy.get('#local-login-btn').click();
     cy.get('a[href="#/demo/select"]').click();
     cy.get(`[data-model-name="${modelName}"]`).click();
-    cy.contains(modelName);
+    cy.url().should('contain', `/local/${encodeURIComponent(modelName)}`);
+    cy.get('#td-edit-btn').should('be.visible');
 };
 
 const openDiagramEditor = (diagramTitle) => {

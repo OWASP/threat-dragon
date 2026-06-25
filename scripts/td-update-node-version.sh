@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 
 script_name="td-update-node-version.sh"
+script_dir="$(CDPATH= cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
 minimum_release_age_days=10
 minimum_release_age_seconds=$((minimum_release_age_days * 24 * 60 * 60))
+
+# shellcheck source=scripts/td-repo-root.sh
+. "$script_dir/td-repo-root.sh"
 
 usage() {
     cat <<'EOF'
@@ -241,6 +245,7 @@ need_command date
 
 date -u -d '1970-01-01 00:00:00 UTC' +%s >/dev/null 2>&1 || die "date must support -d"
 
+td_require_repo_root "$script_name"
 repo_dir="$(resolve_repo_dir)"
 validate_repo "$repo_dir"
 validate_release_age "$node_version"

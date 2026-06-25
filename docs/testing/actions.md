@@ -58,9 +58,16 @@ and serves as Threat Dragon's continuous delivery pipeline.
 This action is performed when a tag is created with a v2.x.x format.
 It will perform all tests and then build and publish the install images and the Docker image.
 
+## Debugging
+
+Debugging CI failures can be tricky, and often leads to unnecessary commits.
+Contributors can run individual commands locally, but not all CI checks are in the node ecosystem.
+To help debugging, there is a best-effort [bash script][td-pr-check] to emulate the PR pipeline.
+
 ----
 
 Threat Dragon: _making threat modeling less threatening_
 
 [browserstack]: https://www.browserstack.com/
 [browserstack-os]: https://www.browserstack.com/open-source
+[td-pr-check]: https://github.com/OWASP/threat-dragon/blob/main/scripts/td-pr-check.sh
