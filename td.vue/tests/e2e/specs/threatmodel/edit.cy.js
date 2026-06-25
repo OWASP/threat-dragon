@@ -33,6 +33,14 @@ describe('editing threat models', () => {
             cy.get('#contributors').should('be.visible');
         });
 
+        it('has the release version field', () => {
+            cy.get('#release-version').should('be.visible');
+        });
+
+        it('has the release date field', () => {
+            cy.get('#released-at').should('be.visible');
+        });
+
         it('can add a new diagram', () => {
             cy.get('.add-diagram-link').click();
             cy.get('#diagram-group-0').should('be.visible');

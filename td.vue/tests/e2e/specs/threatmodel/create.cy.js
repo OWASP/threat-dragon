@@ -32,6 +32,26 @@ describe('create a new threat model', () => {
         cy.get('#contributors').should('be.visible');
     });
 
+    it('should have the release version field', () => {
+        cy.get('#release-version').should('be.visible');
+    });
+
+    it('should have the release date field', () => {
+        cy.get('#released-at').should('be.visible');
+    });
+
+    it('can edit the release version', () => {
+        cy.get('#release-version').should('be.visible')
+            .should('not.be', 'disabled')
+            .type('1.0.0');
+    });
+
+    it('can edit the release date', () => {
+        cy.get('#released-at').should('be.visible')
+            .should('not.be', 'disabled')
+            .type('2026-06-24');
+    });
+
     it('can add a new diagram', () => {
         cy.get('.add-diagram-link').click();
         cy.get('#diagram-group-0').should('be.visible');
