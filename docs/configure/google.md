@@ -52,9 +52,15 @@ There are three environment variables required for accessing a Google Drive:
 the `GOOGLE_CLIENT_ID`, the `GOOGLE_CLIENT_SECRET` and the `GOOGLE_REDIRECT_URI`.
 
 Another Google Drive environment variable, `GOOGLE_SCOPE` can usually be left
-with its default value of `openid email profile`, but here we will set it explicitly:
+with its default value of `openid email profile https://www.googleapis.com/auth/drive.file`,
+but here we will set it explicitly:
 
-- `GOOGLE_SCOPE=openid email profile`
+- `GOOGLE_SCOPE=openid email profile https://www.googleapis.com/auth/drive.file`
+
+The above scopes are required to access Threat Dragon's files in Google Drive.
+For a list of available scopes, see [the official Google documentation][gdrivescopes].
+Above scope is the only one available without any issue, as access to all Google drive files
+will not be granted by Google.
 
 The URI used when redirecting from authorization can be set to a
 localhost, but in practice this may well be a different URL/URI:
@@ -64,7 +70,10 @@ localhost, but in practice this may well be a different URL/URI:
 Threat Dragon will be configured to use OAuth 2.0 to access Google APIs,
 and so must have authorization credentials that identify it to Google's OAuth 2.0 server.
 
-To create these credentials open the [Google Drive Clients][gclients] dashboard:
+However, you need to enable the [Google Drive API][gdriveapi] for your project,
+and [add the scope][gscopes] `https://www.googleapis.com/auth/drive.file` to your project.
+
+To then create the required credentials open the [Google Drive Clients][gclients] dashboard:
 
 - select or create a Google Drive project
 - click on the 'Create OAuth Client' button
@@ -86,11 +95,6 @@ With a set of configuration settings now available, download the docker image fr
 
 - `docker pull owasp/threat-dragon:stable`
 
-or if you are running on a MacOS M1 and get "no matching manifest for linux/arm64/v8 in the manifest list entries"
-then try:
-
-- `docker pull --platform linux/x86_64  owasp/threat-dragon:stable`
-
 All the information is now ready to try running the server from the command line.
 Defining the environment variables on the command line is handy for development and debugging,
 but using the dotenv file configuration is easier (which will be discussed later on).
@@ -104,7 +108,7 @@ docker run -it --rm \
 -p 8080:3000 \
 -e GOOGLE_CLIENT_ID='01234567890123456789' \
 -e GOOGLE_CLIENT_SECRET='0123456789abcdef0123456789abcdef0123456' \
--e GOOGLE_SCOPE='openid email profile' \
+-e GOOGLE_SCOPE='openid email profile https://www.googleapis.com/auth/drive.file' \
 -e GOOGLE_REDIRECT_URI='http://localhost:3000/api/oauth/return' \
 -e ENCRYPTION_JWT_REFRESH_SIGNING_KEY='00112233445566778899aabbccddeeff' \
 -e ENCRYPTION_JWT_SIGNING_KEY='deadbeef112233445566778899aabbcc' \
@@ -147,7 +151,7 @@ it is useful to provide a file for (most) of the parameters. Here a test environ
 ```sh
 GOOGLE_CLIENT_ID=01234567890123456789
 GOOGLE_CLIENT_SECRET=0123456789abcdef0123456789abcdef0123456
-GOOGLE_SCOPE=openid email profile
+GOOGLE_SCOPE=openid email profile https://www.googleapis.com/auth/drive.file
 GOOGLE_REDIRECT_URI=http://localhost:3000/api/oauth/return
 ENCRYPTION_JWT_REFRESH_SIGNING_KEY=00112233445566778899aabbccddeeff
 ENCRYPTION_JWT_SIGNING_KEY=deadbeef112233445566778899aabbcc
@@ -175,7 +179,7 @@ Ensure that Threat Dragon is running on `http://localhost:8080/#/` as expected, 
 | --- | --- | --- |
 | `GOOGLE_CLIENT_ID` | Required authorization client API ID | |
 | `GOOGLE_CLIENT_SECRET` | Required authorization client API secret | |
-| `GOOGLE_SCOPE` | Optional authorization scopes | `openid email profile` |
+| `GOOGLE_SCOPE` | Optional authorization scopes | `openid email profile https://www.googleapis.com/auth/drive.file`  |
 | `GOOGLE_REDIRECT_URI` | Required URL following successful authorization | |
 
 ### Example production Google environment
@@ -188,7 +192,7 @@ ENCRYPTION_JWT_SIGNING_KEY=deadbeef112233445566778899aabbcc
 ENCRYPTION_KEYS='[{"isPrimary": true, "id": 0, "value": "0123456789abcdef0123456789abcdef"}]'
 GOOGLE_CLIENT_ID=01234567890123456789
 GOOGLE_CLIENT_SECRET=0123456789abcdef0123456789abcdef0123456
-GOOGLE_SCOPE=openid email profile
+GOOGLE_SCOPE=openid email profile https://www.googleapis.com/auth/drive.file
 GOOGLE_REDIRECT_URI=https://secure-google-instance:3000/api/oauth/return
 NODE_ENV=production
 PROTOCOL=https
@@ -203,4 +207,7 @@ Threat Dragon: _making threat modeling less threatening_
 
 [dockerhub]: https://hub.docker.com/r/owasp/threat-dragon
 [dockerinstall]: https://docs.docker.com/engine/install/
-[gclients]: https://console.developers.google.com/auth/clients
+[gdriveapi]: https://console.cloud.google.com/apis/api/drive.googleapis.com
+[gclients]: https://console.cloud.google.com/auth/clients
+[gscopes]: https://console.cloud.google.com/auth/scopes
+[gdrivescopes]: https://developers.google.com/workspace/drive/api/guides/api-specific-auth
