@@ -152,6 +152,8 @@
                     :owner="model.summary.owner"
                     :reviewer="model.detail.reviewer"
                     :contributors="contributors"
+                    :releaseVersion="model.release_version"
+                    :releaseDate="model.released_at"
                     :branding="display.branding"
                 ></td-print-coversheet>
             </div>
