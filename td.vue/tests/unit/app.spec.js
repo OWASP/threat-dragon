@@ -1,4 +1,3 @@
-import { BootstrapVue } from 'bootstrap-vue';
 import { shallowMount } from '@vue/test-utils';
 import { createStore } from 'vuex';
 
@@ -9,13 +8,16 @@ import { LOADER_FINISHED } from '@/store/actions/loader.js';
 import Navbar from '@/components/Navbar.vue';
 import TdOverlay from '@/components/Overlay.vue';
 
+jest.mock('@/service/environment', () => ({
+    isDesktopApp: () => false
+}));
+
 describe('App.vue', () => {
     let wrapper, localVue, mockStore;
 
     beforeEach(() => {
         console.log = jest.fn();
         localVue = createLocalVue();
-        localVue.use(BootstrapVue);
         mockStore = createStore({
             state: {
                 loader: {

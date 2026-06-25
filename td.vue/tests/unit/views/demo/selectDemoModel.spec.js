@@ -1,10 +1,16 @@
-import { BootstrapVue, BListGroupItem } from 'bootstrap-vue';
-import { createLocalVue, shallowMount } from '@vue/test-utils';
+import { shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
+
+import { createLocalVue } from '../../helpers/vueTestUtils';
 
 import demoThreatModel from '@/service/demo/v2-threat-model';
 import SelectDemoModel from '@/views/demo/SelectDemoModel.vue';
+import { isDesktopApp } from '@/service/environment';
 import TdHero from '@/components/Hero.vue';
+
+jest.mock('@/service/environment', () => ({
+    isDesktopApp: jest.fn()
+}));
 
 describe('views/demo/SelectDemoModel.vue', () => {
 
@@ -12,7 +18,6 @@ describe('views/demo/SelectDemoModel.vue', () => {
 
     beforeEach(() => {
         localVue = createLocalVue();
-        localVue.use(BootstrapVue);
         localVue.use(Vuex);
 
         mockStore = new Vuex.Store({
@@ -44,7 +49,7 @@ describe('views/demo/SelectDemoModel.vue', () => {
 
     it('displays the Demo Threat Model', () => {
         expect(
-            wrapper.findAllComponents(BListGroupItem)
+            wrapper.findAllComponents({ name: 'BListGroupItem' })
                 .filter(x => x.text() === 'Demo Threat Model')
                 .at(0)
                 .exists()
@@ -53,7 +58,7 @@ describe('views/demo/SelectDemoModel.vue', () => {
 
     it('displays the HuskyAI demo model', () => {
         expect(
-            wrapper.findAllComponents(BListGroupItem)
+            wrapper.findAllComponents({ name: 'BListGroupItem' })
                 .filter(x => x.text() === 'Husky AI')
                 .at(0)
                 .exists()
@@ -62,7 +67,7 @@ describe('views/demo/SelectDemoModel.vue', () => {
 
     it('displays the Cryptocurrency Wallet demo model', () => {
         expect(
-            wrapper.findAllComponents(BListGroupItem)
+            wrapper.findAllComponents({ name: 'BListGroupItem' })
                 .filter(x => x.text() === 'Cryptocurrency Wallet')
                 .at(0)
                 .exists()
@@ -71,7 +76,7 @@ describe('views/demo/SelectDemoModel.vue', () => {
 
     it('displays the Generic CMS demo model', () => {
         expect(
-            wrapper.findAllComponents(BListGroupItem)
+            wrapper.findAllComponents({ name: 'BListGroupItem' })
                 .filter(x => x.text() === 'Generic CMS')
                 .at(0)
                 .exists()
@@ -80,7 +85,7 @@ describe('views/demo/SelectDemoModel.vue', () => {
 
     it('displays the IoT Device demo model', () => {
         expect(
-            wrapper.findAllComponents(BListGroupItem)
+            wrapper.findAllComponents({ name: 'BListGroupItem' })
                 .filter(x => x.text() === 'IoT Device')
                 .at(0)
                 .exists()
@@ -89,7 +94,7 @@ describe('views/demo/SelectDemoModel.vue', () => {
 
     it('displays the Online Game demo model', () => {
         expect(
-            wrapper.findAllComponents(BListGroupItem)
+            wrapper.findAllComponents({ name: 'BListGroupItem' })
                 .filter(x => x.text() === 'Online Game')
                 .at(0)
                 .exists()
@@ -98,7 +103,7 @@ describe('views/demo/SelectDemoModel.vue', () => {
 
     it('displays the Payments Processing Platform demo model', () => {
         expect(
-            wrapper.findAllComponents(BListGroupItem)
+            wrapper.findAllComponents({ name: 'BListGroupItem' })
                 .filter(x => x.text() === 'Payments Processing Platform')
                 .at(0)
                 .exists()
@@ -107,7 +112,7 @@ describe('views/demo/SelectDemoModel.vue', () => {
 
     it('displays the Renting Car Startup demo model', () => {
         expect(
-            wrapper.findAllComponents(BListGroupItem)
+            wrapper.findAllComponents({ name: 'BListGroupItem' })
                 .filter(x => x.text() === 'Renting Car Startup')
                 .at(0)
                 .exists()
@@ -116,7 +121,7 @@ describe('views/demo/SelectDemoModel.vue', () => {
 
     it('displays the Three Tier Web Application demo model', () => {
         expect(
-            wrapper.findAllComponents(BListGroupItem)
+            wrapper.findAllComponents({ name: 'BListGroupItem' })
                 .filter(x => x.text() === 'Three Tier Web Application')
                 .at(0)
                 .exists()
@@ -125,7 +130,7 @@ describe('views/demo/SelectDemoModel.vue', () => {
 
     it('displays the New Blank Model', () => {
         expect(
-            wrapper.findAllComponents(BListGroupItem)
+            wrapper.findAllComponents({ name: 'BListGroupItem' })
                 .filter(x => x.text() === 'New Blank Model')
                 .at(0)
                 .exists()
@@ -167,7 +172,7 @@ describe('views/demo/SelectDemoModel.vue', () => {
                 }
             });
 
-            demoModelItem = await wrapper.findAllComponents(BListGroupItem)
+            demoModelItem = await wrapper.findAllComponents({ name: 'BListGroupItem' })
                 .filter(x => x.text() === 'Demo Threat Model')
                 .at(0);
             await demoModelItem.trigger('click');
@@ -217,7 +222,7 @@ describe('views/demo/SelectDemoModel.vue', () => {
                 }
             });
 
-            demoModelItem = await wrapper.findAllComponents(BListGroupItem)
+            demoModelItem = await wrapper.findAllComponents({ name: 'BListGroupItem' })
                 .filter(x => x.text() === 'Demo Threat Model')
                 .at(0);
             await demoModelItem.trigger('click');
@@ -268,7 +273,7 @@ describe('views/demo/SelectDemoModel.vue', () => {
                 }
             });
 
-            demoModelItem = await wrapper.findAllComponents(BListGroupItem)
+            demoModelItem = await wrapper.findAllComponents({ name: 'BListGroupItem' })
                 .filter(x => x.text() === 'Demo Threat Model')
                 .at(0);
             await demoModelItem.trigger('click');
@@ -288,6 +293,67 @@ describe('views/demo/SelectDemoModel.vue', () => {
                 params: { provider: 'google' },
                 query: { action: 'create' }
             });
+        });
+    });
+
+    describe('selecting a demo model in desktop app', () => {
+        let demoModelItem;
+
+        beforeEach(async () => {
+            isDesktopApp.mockReturnValue(true);
+            window.electronAPI = { modelOpened: jest.fn() };
+
+            mockStore = new Vuex.Store({
+                state: {
+                    provider: { selected: 'desktop' }
+                },
+                actions: {
+                    THREATMODEL_CLEAR: () => {},
+                    THREATMODEL_LOAD_DEMOS: () => {},
+                    THREATMODEL_SELECTED: () => {},
+                    THREATMODEL_STASH: () => {}
+                }
+            });
+            mockStore.dispatch = jest.fn();
+
+            wrapper = shallowMount(SelectDemoModel, {
+                localVue,
+                store: mockStore,
+                mocks: {
+                    $t: key => key,
+                    $route: { params: {} },
+                    $router: mockRouter
+                }
+            });
+
+            demoModelItem = await wrapper.findAllComponents({ name: 'BListGroupItem' })
+                .filter(x => x.text() === 'Demo Threat Model')
+                .at(0);
+            await demoModelItem.trigger('click');
+        });
+
+        afterEach(() => {
+            isDesktopApp.mockReturnValue(false);
+            delete window.electronAPI;
+        });
+
+        it('dispatches the selected event', () => {
+            expect(mockStore.dispatch).toHaveBeenCalledWith('THREATMODEL_SELECTED', demoThreatModel);
+        });
+
+        it('notifies the desktop server via electronAPI', () => {
+            expect(window.electronAPI.modelOpened).toHaveBeenCalledWith('Demo Threat Model');
+        });
+
+        it('navigates to the desktop threat model page', () => {
+            expect(mockRouter.push).toHaveBeenCalledWith({
+                name: 'desktopThreatModel',
+                params: { threatmodel: 'Demo Threat Model' }
+            });
+        });
+
+        it('does not stash the model', () => {
+            expect(mockStore.dispatch).not.toHaveBeenCalledWith('THREATMODEL_STASH');
         });
     });
 });

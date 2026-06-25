@@ -115,7 +115,7 @@ const createMockApp = () => {
             data: {
                 githubEnabled: true, bitbucketEnabled: false, gitlabEnabled: true,
                 googleEnabled: false, localEnabled: true,
-                allowedLocales: ['en'], defaultLocale: 'en',
+                allowedLocales: [], defaultLocale: 'en',
             }
         });
     });

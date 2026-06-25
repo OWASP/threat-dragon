@@ -126,7 +126,7 @@
                     <td-form-button
                         id="td-print-pdf-btn"
                         :onBtnClick="printPdf"
-                        v-if="isElectron"
+                        v-if="isDesktopApp"
                         icon="file-pdf"
                         :text="$t('forms.exportPdf')" />
                     <td-form-button
@@ -226,7 +226,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex';
-import isElectron from 'is-electron';
+import { isDesktopApp } from '@/service/environment';
 
 import { getProviderType } from '@/service/provider/providers.js';
 import TdCoversheet from '@/components/report/Coversheet.vue';
@@ -257,7 +257,7 @@ export default {
                 properties: false,
                 branding: false
             },
-            isElectron: isElectron()
+            isDesktopApp: isDesktopApp()
         };
     },
     computed: {
@@ -297,7 +297,7 @@ export default {
         },
         printPdf() {
             console.debug('Export the report window to PDF (desktop only)');
-            if (isElectron()) {
+            if (isDesktopApp()) {
                 // request electron server to print PDF
                 window.electronAPI.modelPrint('PDF');
             }

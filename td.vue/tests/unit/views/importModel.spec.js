@@ -1,18 +1,20 @@
-import { BootstrapVue } from 'bootstrap-vue';
 import { mount } from '@vue/test-utils';
 import { createStore } from 'vuex';
 
 import { createLocalVue, mountOptions } from '../helpers/vueTestUtils';
 import ImportModel from '@/views/ImportModel.vue';
+import { isDesktopApp } from '@/service/environment';
 import TdFormButton from '@/components/FormButton.vue';
+
+jest.mock('@/service/environment', () => ({
+    isDesktopApp: jest.fn()
+}));
 
 describe('ImportModel.vue', () => {
     let wrapper, localVue, mockRouter, mockStore, toast;
-
     beforeEach(() => {
         toast = { error: jest.fn(), warning: jest.fn() };
         localVue = createLocalVue();
-        localVue.use(BootstrapVue);
         mockStore = createStore({
             state: {
                 provider: {
@@ -67,6 +69,39 @@ describe('ImportModel.vue', () => {
         });
     });
 
+    describe('with valid JSON in desktop mode', () => {
+        beforeEach(() => {
+            isDesktopApp.mockReturnValue(true);
+            window.electronAPI = { modelOpened: jest.fn() };
+
+            const tm = { summary: { title: 'desktop-model' }};
+            wrapper.setData({
+                tmJson: JSON.stringify(tm)
+            });
+            wrapper.vm.onImportClick('desktop-model.json');
+        });
+
+        afterEach(() => {
+            isDesktopApp.mockReturnValue(false);
+            delete window.electronAPI;
+        });
+
+        it('dispatches the selected event', () => {
+            expect(mockStore.dispatch).toHaveBeenCalledWith('THREATMODEL_SELECTED', { summary: { title: 'desktop-model' }});
+        });
+
+        it('notifies the desktop server via electronAPI', () => {
+            expect(window.electronAPI.modelOpened).toHaveBeenCalledWith('desktop-model.json');
+        });
+
+        it('navigates to the threatmodel view', () => {
+            expect(mockRouter.push).toHaveBeenCalledWith({
+                name: 'localThreatModel',
+                params: { threatmodel: 'desktop-model' }
+            });
+        });
+    });
+
     describe('with invalid json', () => {
         beforeEach(() => {
             wrapper.setData({
@@ -84,3 +119,4 @@ describe('ImportModel.vue', () => {
         });
     });
 });
+

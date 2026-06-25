@@ -1,5 +1,6 @@
 describe('upgrade v2 demo', () => {
     beforeEach(() => {
+        cy.launchThreatDragon();
         cy.get('#local-login-btn').click();
         cy.get('a[href="#/demo/select"]').click();
     });

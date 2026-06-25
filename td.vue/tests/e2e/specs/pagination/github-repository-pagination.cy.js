@@ -1,8 +1,7 @@
 const cfg = require('../../mock-server/dataset-github');
 
 const loginViaGitHub = () => {
-    cy.visit('/', { onBeforeLoad: (win) => win.sessionStorage.clear() });
-    cy.get('#local-login-btn').should('be.visible');
+    cy.launchThreatDragon();
     cy.visit('/#/git/github/repository');
 };
 
@@ -72,3 +71,4 @@ describe('GitHub provider — repository pagination', () => {
         });
     });
 });
+

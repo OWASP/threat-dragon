@@ -170,6 +170,8 @@
 !td.vue/src/service/desktop/*.js
 !td.vue/src/service/entity/
 !td.vue/src/service/entity/*.js
+!td.vue/src/service/locale/
+!td.vue/src/service/locale/*.js
 !td.vue/src/service/migration/
 !td.vue/src/service/migration/*.js
 !td.vue/src/service/migration/otm/
@@ -246,6 +248,8 @@
 !td.vue/tests/e2e/specs/visual/*.cy.js
 !td.vue/tests/e2e/support/
 !td.vue/tests/e2e/support/*.js
+!td.vue/tests/e2e/support/commands/
+!td.vue/tests/e2e/support/commands/*.js
 !td.vue/tests/e2e/visual/
 !td.vue/tests/e2e/visual/*.js
 !td.vue/tests/e2e/visual/baselines/
@@ -266,6 +270,8 @@
 !td.vue/tests/unit/entity/*.spec.js
 !td.vue/tests/unit/helpers/
 !td.vue/tests/unit/helpers/*.js
+!td.vue/tests/unit/i18n/
+!td.vue/tests/unit/i18n/*.spec.js
 !td.vue/tests/unit/router/
 !td.vue/tests/unit/router/*.spec.js
 !td.vue/tests/unit/service/
@@ -282,6 +288,8 @@
 !td.vue/tests/unit/service/desktop/*.spec.js
 !td.vue/tests/unit/service/entity/
 !td.vue/tests/unit/service/entity/*.spec.js
+!td.vue/tests/unit/service/locale/
+!td.vue/tests/unit/service/locale/*.spec.js
 !td.vue/tests/unit/service/migration/
 !td.vue/tests/unit/service/migration/*.spec.js
 !td.vue/tests/unit/service/migration/otm/
@@ -317,7 +325,6 @@
 !td.vue/tests/unit/service/x6/shapes/
 !td.vue/tests/unit/service/x6/shapes/*.spec.js
 !td.vue/tests/unit/store/
-!td.vue/tests/unit/store/*.spec.js
 !td.vue/tests/unit/store/actions/
 !td.vue/tests/unit/store/actions/*.spec.js
 !td.vue/tests/unit/store/modules/

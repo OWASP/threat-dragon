@@ -10,7 +10,10 @@ const messages = {
     home: {
         title: 'OWASP Threat Dragon',
         imgAlt: 'Logo de Threat Dragon',
-        description: 'Threat Dragon es una herramienta de modelado de amenazas de código abierto de OWASP. Se puede utilizar como aplicación desktop para Windows, MacOS y Linux o como una aplicación web. La aplicación de desktop es excelente si desea probarla sin otorgar acceso a sus repositorios de GitHub. Sin embargo, si elige la versión web, podrá liberar el increíble poder de GitHub en sus modelos de amenazas (threat models). Por supuesto, para hacer esto, deberá iniciar sesión en GitHub y permitir el acceso al repositorio de interés'
+        description: 'Threat Dragon es una herramienta de modelado de amenazas de código abierto de OWASP. Se puede utilizar como aplicación desktop para Windows, MacOS y Linux o como una aplicación web. La aplicación de desktop es excelente si desea probarla sin otorgar acceso a sus repositorios de GitHub. Sin embargo, si elige la versión web, podrá liberar el increíble poder de GitHub en sus modelos de amenazas (threat models). Por supuesto, para hacer esto, deberá iniciar sesión en GitHub y permitir el acceso al repositorio de interés',
+        errors: {
+            configLoadFailed: 'Error al cargar la configuración del servidor. Solo está disponible el inicio de sesión local.'
+        }
     },
     providers: {
         desktop: {

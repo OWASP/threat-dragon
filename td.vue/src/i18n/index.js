@@ -21,6 +21,33 @@ import ptBr from './pt-br.js';
 // hide RUS & UKR for now: import ukr from './uk.js';
 import zh from './zh.js';
 
+
+export const DEFAULT_LOCALE = 'en';
+
+const FALLBACK_LOCALES = Object.freeze({
+    pt: ['pt-BR'],
+    default: DEFAULT_LOCALE
+});
+
+const messages = Object.freeze({
+    ar,
+    de,
+    el,
+    en,
+    es,
+    fi,
+    fr,
+    hi,
+    id,
+    ja,
+    ms,
+    pt,
+    'pt-BR': ptBr,
+    zh
+});
+
+export const SUPPORTED_LOCALES = Object.freeze(Object.keys(messages));
+
 let i18nInstance = null;
 
 const installLegacyCompat = (instance) => {
@@ -49,12 +76,9 @@ const get = () => {
             // Legacy mode is deprecated and will be removed in vue-i18n v12.
             // TODO: remove after refactoring i18n usage
             legacy: true,
-            locale: 'en',
-            fallbackLocale: {
-                pt: ['pt-BR'],
-                default:  'en'
-            },
-            messages: { ar, de, el, en, es, fi, fr, hi, id, ja, ms, pt, 'pt-BR': ptBr, zh }
+            locale: DEFAULT_LOCALE,
+            fallbackLocale: FALLBACK_LOCALES,
+            messages
         });
         installLegacyCompat(i18nInstance);
     }
@@ -62,8 +86,13 @@ const get = () => {
 };
 
 export const t = (...args) => get().global.t(...args);
+
+// Temporary compatibility wrapper.
+// Vue-i18n v9+ uses t() for pluralization.
+// TODO: remove after migrating all tc() usages.
 export const tc = (key, ...args) => t(key, ...args);
 
 export default {
     get
 };
+

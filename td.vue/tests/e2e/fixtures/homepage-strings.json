@@ -1,0 +1,100 @@
+{
+    "ar": {
+        "title": "OWASP Threat Dragon",
+        "description": "OWASP Threat Dragon هو تطبيق مجاني ومفتوح المصدر وقابل للتشغيل على مختلف الأنظمة لإنشاء نماذج تهديد",
+        "loginButton": "تسجيل الدخول إلى جلسة محلية",
+        "dropdownLabel": "العربية",
+        "configLoadFailed": "Failed to load server configuration. Only local login is available."
+    },
+    "de": {
+        "title": "OWASP Threat Dragon",
+        "description": "OWASP Threat Dragon ist eine kostenlose, Open-Source, plattformübergreifende Applikation",
+        "loginButton": "Anmelden an Lokale Sitzung",
+        "dropdownLabel": "Deutsch",
+        "configLoadFailed": "Failed to load server configuration. Only local login is available."
+    },
+    "el": {
+        "title": "OWASP Threat Dragon",
+        "description": "Το Threat Dragon είναι ένα δωρεάν",
+        "loginButton": "Είσοδος με Τοπική Συνεδρία",
+        "dropdownLabel": "Ελληνικά",
+        "configLoadFailed": "Failed to load server configuration. Only local login is available."
+    },
+    "en": {
+        "title": "OWASP Threat Dragon",
+        "description": "OWASP Threat Dragon is a free, open-source, cross-platform application",
+        "loginButton": "Login to Local Session",
+        "dropdownLabel": "English",
+        "configLoadFailed": "Failed to load server configuration. Only local login is available."
+    },
+    "es": {
+        "title": "OWASP Threat Dragon",
+        "description": "Threat Dragon es una herramienta de modelado de amenazas de código abierto de OWASP",
+        "loginButton": "Conectarse con Sesión Local",
+        "dropdownLabel": "Español",
+        "configLoadFailed": "Error al cargar la configuración del servidor. Solo está disponible el inicio de sesión local."
+    },
+    "fi": {
+        "title": "OWASP Threat Dragon",
+        "description": "OWASP Threat Dragon on ilmainen avoimen lähdekoodin alustariippumaton sovellus",
+        "loginButton": "Kirjaudu sisään paikallisesti",
+        "dropdownLabel": "Suomi",
+        "configLoadFailed": "Failed to load server configuration. Only local login is available."
+    },
+    "fr": {
+        "title": "OWASP Threat Dragon",
+        "description": "Threat Dragon est un outil de modélisation des menaces open-source et gratuit",
+        "loginButton": "Se connecter avec une session locale",
+        "dropdownLabel": "Français",
+        "configLoadFailed": "Erreur lors du chargement de la configuration du serveur. Seule la connexion locale est disponible."
+    },
+    "hi": {
+        "title": "OWASP थ्रेट ड्रैगन",
+        "description": "थ्रेट ड्रैगन OWASP का एक फ्री, ओपन-सोर्स थ्रेट मॉडलिंग टूल है",
+        "loginButton": "से लोगिन करें स्थानीय सत्र",
+        "dropdownLabel": "हिंदी",
+        "configLoadFailed": "Failed to load server configuration. Only local login is available."
+    },
+    "id": {
+        "title": "OWASP Threat Dragon",
+        "description": "OWASP Threat Dragon adalah aplikasi gratis, sumber terbuka, lintas-platform",
+        "loginButton": "Masuk ke Sesi Lokal",
+        "dropdownLabel": "Bahasa Indonesia",
+        "configLoadFailed": "Failed to load server configuration. Only local login is available."
+    },
+    "ja": {
+        "title": "OWASP Threat Dragon",
+        "description": "OWASP Threat Dragonは無償で、脅威モデリングのソフトです",
+        "loginButton": "ログイン ローカルセッション",
+        "dropdownLabel": "日本語",
+        "configLoadFailed": "Failed to load server configuration. Only local login is available."
+    },
+    "ms": {
+        "title": "OWASP Threat Dragon",
+        "description": "OWASP Threat Dragon adalah aplikasi percuma, sumber terbuka, lintas platform",
+        "loginButton": "Log masuk ke Sesi Tempatan",
+        "dropdownLabel": "Malay",
+        "configLoadFailed": "Failed to load server configuration. Only local login is available."
+    },
+    "pt": {
+        "title": "OWASP Threat Dragon",
+        "description": "O OWASP Threat Dragon é uma aplicação gratuita, open-source e multiplataforma",
+        "loginButton": "Iniciar sessão com Sessão Local",
+        "dropdownLabel": "Português",
+        "configLoadFailed": "Falha ao carregar a configuração do servidor. Apenas o login local está disponível."
+    },
+    "pt-BR": {
+        "title": "OWASP Threat Dragon",
+        "description": "Threat Dragon é uma ferramenta gratuita e open-souce de modelagem de ameaças da OWASP",
+        "loginButton": "Login com Sessão Local",
+        "dropdownLabel": "Português (Brasil)",
+        "configLoadFailed": "Falha ao carregar configuração do servidor. Apenas login local disponível."
+    },
+    "zh": {
+        "title": "OWASP Threat Dragon",
+        "description": "Threat Dragon 是来自 OWASP 的免费开源威胁建模工具",
+        "loginButton": "登录 本地",
+        "dropdownLabel": "中文",
+        "configLoadFailed": "Failed to load server configuration. Only local login is available."
+    }
+}

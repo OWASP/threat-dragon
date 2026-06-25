@@ -1,7 +1,12 @@
 import { PROVIDER_CLEAR, PROVIDER_FETCH, PROVIDER_SELECTED } from '@/store/actions/provider.js';
 import providerModule, { clearState } from '@/store/modules/provider.js';
 import providerService from '@/service/provider/providers.js';
+import { isDesktopApp } from '@/service/environment';
 import threatmodelApi from '@/service/api/threatmodelApi.js';
+
+jest.mock('@/service/environment', () => ({
+    isDesktopApp: jest.fn()
+}));
 
 describe('store/modules/provider.js', () => {
     const mocks = {
@@ -82,6 +87,32 @@ describe('store/modules/provider.js', () => {
                     });
             });
         });
+
+        describe('selected — desktop', () => {
+            beforeEach(() => {
+                isDesktopApp.mockReturnValue(true);
+            });
+
+            afterEach(() => {
+                isDesktopApp.mockReturnValue(false);
+            });
+
+            it('commits desktop provider when providerName is desktop', async () => {
+                await providerModule.actions[PROVIDER_SELECTED](mocks, 'desktop');
+                expect(mocks.commit).toHaveBeenCalledWith(PROVIDER_SELECTED, {
+                    providerName: 'desktop',
+                    providerUri: 'threat-dragon-desktop'
+                });
+            });
+
+            it('commits desktop provider when isDesktopApp() is true even for non-desktop provider', async () => {
+                await providerModule.actions[PROVIDER_SELECTED](mocks, 'local');
+                expect(mocks.commit).toHaveBeenCalledWith(PROVIDER_SELECTED, {
+                    providerName: 'desktop',
+                    providerUri: 'threat-dragon-desktop'
+                });
+            });
+        });
     });
 
     describe('mutations', () => {
@@ -129,3 +160,4 @@ describe('store/modules/provider.js', () => {
         expect(providerModule.getters).toBeInstanceOf(Object);
     });
 });
+

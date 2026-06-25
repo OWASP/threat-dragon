@@ -1,37 +1,233 @@
-import { BootstrapVue, BContainer } from 'bootstrap-vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { shallowMount, createLocalVue } from '@vue/test-utils';
+import { shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
+import { createLocalVue } from '../helpers/vueTestUtils';
+
+import { isDesktopApp } from '@/service/environment';
 import { AUTH_SET_LOCAL } from '@/store/actions/auth.js';
 import configActions from '@/store/actions/config.js';
-import HomePage from '@/views/HomePage.vue';
-import loginApi from '@/service/api/loginApi.js';
 import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
-import router from '@/router/index.js';
+import HomePage, { resolveProviders } from '@/views/HomePage.vue';
 import TdHero from '@/components/Hero.vue';
 import TdImage from '@/components/Image.vue';
 import TdProviderLoginButton from '@/components/ProviderLoginButton.vue';
 
 jest.mock('@/assets/threatdragon_logo_image.svg', () => 'threatdragon_logo_image.svg');
+jest.mock('@/service/environment', () => ({
+    isDesktopApp: jest.fn()
+}));
 
+// Helper: resolve the async mount promise and let Vue process the updates.
+const finishMount = async (wrapper, resolve) => {
+    resolve();
+    await wrapper.vm.$nextTick();
+    await wrapper.vm.$nextTick();
+};
+
+// Helper: wrap shallowMount with controlled async mount resolution.
+// Returns { wrapper, resolve } — call resolve() to let mounted() finish.
+const createControlledMount = (store, mocks = {}) => {
+    let resolveMount;
+    const mountPromise = new Promise((resolve) => { resolveMount = resolve; });
+
+    // Spy on dispatch so we can later assert which actions were called
+    jest.spyOn(store, 'dispatch').mockReturnValue(mountPromise);
+
+    const localVue = createLocalVue();
+    localVue.use(Vuex);
+    localVue.component('font-awesome-icon', FontAwesomeIcon);
+
+    const wrapper = shallowMount(HomePage, {
+        localVue,
+        store,
+        stubs: {
+            'b-spinner': true,
+            'b-container': true
+        },
+        mocks: {
+            $t: (key) => key,
+            $toast: { error: jest.fn() },
+            ...mocks
+        }
+    });
+
+    return { wrapper, resolve: resolveMount };
+};
+
+// ──────────────────────────────────────────
+// Pure function: resolveProviders
+// ──────────────────────────────────────────
+describe('resolveProviders()', () => {
+    it('returns desktop only in Electron environment', () => {
+        const result = resolveProviders({ localEnabled: true }, true);
+        expect(result).toEqual({ desktop: expect.any(Object) });
+    });
+
+    it('returns local provider when serverConfig is null in browser', () => {
+        const result = resolveProviders(null, false);
+        expect(result).toEqual({ local: expect.any(Object) });
+    });
+
+    it('returns empty object when no providers enabled', () => {
+        const result = resolveProviders({
+            githubEnabled: false,
+            bitbucketEnabled: false,
+            gitlabEnabled: false,
+            googleEnabled: false,
+            localEnabled: false
+        }, false);
+        expect(result).toEqual({});
+    });
+
+    it('includes each enabled provider', () => {
+        const result = resolveProviders({
+            githubEnabled: true,
+            bitbucketEnabled: true,
+            gitlabEnabled: true,
+            googleEnabled: true,
+            localEnabled: true
+        }, false);
+        expect(result).toEqual({
+            github: expect.any(Object),
+            bitbucket: expect.any(Object),
+            gitlab: expect.any(Object),
+            google: expect.any(Object),
+            local: expect.any(Object)
+        });
+    });
+});
+
+// ──────────────────────────────────────────
+// Component: HomePage.vue
+// ──────────────────────────────────────────
 describe('HomePage.vue', () => {
-    const redirectUrl = 'https://threatdragon.org';
+    let wrapper;
 
-    let wrapper, localVue, mockStore, mockIsElectron;
+    const createStore = (configOverrides = {}) => {
+        const defaults = {
+            githubEnabled: false,
+            bitbucketEnabled: false,
+            gitlabEnabled: false,
+            googleEnabled: false,
+            localEnabled: false
+        };
+        return new Vuex.Store({
+            state: {
+                config: {
+                    config: { ...defaults, ...configOverrides }
+                }
+            },
+            actions: {
+                [AUTH_SET_LOCAL]: () => {},
+                [configActions.fetch]: () => {},
+                [PROVIDER_SELECTED]: () => {}
+            }
+        });
+    };
 
-    describe('browser', () => {
+    beforeEach(() => {
+        isDesktopApp.mockReset();
+        isDesktopApp.mockReturnValue(false);
+    });
+
+    describe('layout', () => {
+        beforeEach(async () => {
+            const store = createStore({ githubEnabled: true });
+            const { wrapper: w, resolve } = createControlledMount(store);
+            await finishMount(w, resolve);
+            wrapper = w;
+        });
+
+        it('renders the home view', () => {
+            expect(wrapper.exists()).toBe(true);
+        });
+
+        it('has a b-container', () => {
+            expect(wrapper.findComponent({ name: 'BContainer' }).exists()).toBe(true);
+        });
+
+        it('has a hero section', () => {
+            expect(wrapper.findComponent(TdHero).exists()).toBe(true);
+        });
+
+        it('displays the title', () => {
+            expect(wrapper.find('h1.display-3').text()).toContain('home.title');
+        });
+
+        it('displays the threat dragon logo', () => {
+            expect(wrapper.findComponent(TdImage).props('src'))
+                .toContain('threatdragon_logo_image');
+        });
+
+        it('is ready after mount resolves', () => {
+            expect(wrapper.vm.ready).toBe(true);
+        });
+    });
+
+    describe('loading state', () => {
+        it('shows spinner and hides content before mount resolves', () => {
+            const store = createStore({ githubEnabled: true });
+            const { wrapper: w } = createControlledMount(store);
+
+            expect(w.vm.ready).toBe(false);
+            expect(w.find('b-spinner-stub').exists()).toBe(true);
+            expect(w.find('.td-description').exists()).toBe(false);
+        });
+
+        it('shows content and hides spinner after mount resolves', async () => {
+            const store = createStore({ githubEnabled: true });
+            const { wrapper: w, resolve } = createControlledMount(store);
+
+            await finishMount(w, resolve);
+
+            expect(w.vm.ready).toBe(true);
+            expect(w.find('b-spinner-stub').exists()).toBe(false);
+            expect(w.find('.td-description').exists()).toBe(true);
+        });
+    });
+
+    describe('desktop (Electron)', () => {
         beforeEach(() => {
-            localVue = createLocalVue();
-            localVue.use(Vuex);
-            localVue.use(BootstrapVue);
-            localVue.component('font-awesome-icon', FontAwesomeIcon);
-            mockStore = new Vuex.Store({
+            isDesktopApp.mockReturnValue(true);
+        });
+
+        it('starts ready with no spinner', () => {
+            const store = createStore({ githubEnabled: true });
+            const { wrapper: w } = createControlledMount(store);
+            expect(w.vm.ready).toBe(true);
+            expect(w.find('b-spinner-stub').exists()).toBe(false);
+            expect(w.find('.td-description').exists()).toBe(true);
+        });
+
+        it('renders desktop provider button', () => {
+            const store = createStore({ githubEnabled: true });
+            const { wrapper: w } = createControlledMount(store);
+            const buttons = w.findAllComponents(TdProviderLoginButton);
+            expect(buttons).toHaveLength(1);
+            expect(buttons.at(0).props('provider').key).toBe('desktop');
+        });
+    });
+
+    describe('providers', () => {
+        it('renders a login button per enabled provider', async () => {
+            const store = createStore({ githubEnabled: true, localEnabled: true });
+            const { wrapper: w, resolve } = createControlledMount(store);
+            await finishMount(w, resolve);
+
+            const buttons = w.findAllComponents(TdProviderLoginButton);
+            expect(buttons).toHaveLength(2);
+        });
+    });
+
+    describe('config error', () => {
+        it('shows a toast when configError is present after fetch', async () => {
+            const mockToastError = jest.fn();
+            const store = new Vuex.Store({
                 state: {
                     config: {
-                        config: {
-                            githubEnabled: true,
-                        },
+                        config: null,
+                        configError: 'Failed to fetch'
                     }
                 },
                 actions: {
@@ -40,56 +236,18 @@ describe('HomePage.vue', () => {
                     [PROVIDER_SELECTED]: () => {}
                 }
             });
-            mockIsElectron = false;
-            jest.spyOn(loginApi, 'loginAsync').mockResolvedValue({ data: redirectUrl });
-            jest.spyOn(mockStore, 'dispatch');
 
-            // There may be a better way of doing this
-            // Source: https://remarkablemark.org/blog/2018/11/17/mock-window-location/
-            delete window.location;
-            window.location = { replace: jest.fn() };
-            router.push = jest.fn();
-
-            wrapper = shallowMount(HomePage, {
-                localVue,
-                isElectron: mockIsElectron,
-                store: mockStore,
-                mocks: {
-                    $t: key => key
-                }
-            });
-        });
-
-        describe('layout', () => {
-
-            it('renders the home view', () => {
-                expect(wrapper.exists()).toBe(true);
+            const { wrapper: w, resolve } = createControlledMount(store, {
+                $toast: { error: mockToastError }
             });
 
-            it('has a b-container', () => {
-                expect(wrapper.findComponent(BContainer).exists()).toBe(true);
-            });
+            resolve();
 
-            it('has a hero section', () => {
-                expect(wrapper.findComponent(TdHero).exists()).toBe(true);
-            });
+            // Wait for microtask queue (async mounted) to drain
+            await new Promise(process.nextTick);
+            await w.vm.$nextTick();
 
-            it('displays the title', () => {
-                expect(wrapper.find('h1.display-3').text()).toContain('home.title');
-            });
-
-            it('displays the threat dragon logo', () => {
-                expect(wrapper.findComponent(TdImage).props('src'))
-                    .toContain('threatdragon_logo_image');
-            });
-
-            it('has the description of the project', () => {
-                expect(wrapper.find('p').exists()).toBe(true);
-            });
-
-            it('has a login button', () => {
-                expect(wrapper.findComponent(TdProviderLoginButton).exists()).toEqual(true);
-            });
+            expect(mockToastError).toHaveBeenCalledWith('home.errors.configLoadFailed');
         });
     });
 });

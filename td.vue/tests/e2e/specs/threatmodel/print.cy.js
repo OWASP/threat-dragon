@@ -1,5 +1,6 @@
 describe('print', () => {
     beforeEach(() => {
+        cy.launchThreatDragon();
         cy.get('#local-login-btn').click();
         cy.get('a[href="#/demo/select"]').click();
         cy.get('a').contains('Demo Threat Model').click();

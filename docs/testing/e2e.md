@@ -8,7 +8,7 @@ group: Testing
 
 ## End to end testing
 
-Running the end-to-end (e2e) tests uses the [cypress](https://www.cypress.io/) test framework.
+Running the end-to-end (e2e) tests uses the [cypress] test framework.
 The full test suite is in `td.vue/tests/e2e/specs` and this is where most of the functional e2e tests should live.
 
 A smaller subset of tests, the 'smoke tests', live in `td.vue/tests/e2e/smokes`.
@@ -83,7 +83,7 @@ For local testing of this script, an instance of the docker file can be used to 
 
 These tests are run by the CI pipeline after a successful deploy.
 
-### BrowserStack e2e nightlies
+### BrowserStack e2e nightly
 
 The `test:e2e-nightly` online [BrowserStack][browserstack] nightly tests use various browsers to run the tests
 listed in configuration file `browserstack.nightly.json`.
@@ -207,6 +207,29 @@ If you are new to cypress, we strongly suggest reading through the
 The introduction document is a bit lengthy,
 but does a good job of preparing you to begin writing tests using cypress.
 
+### Test setup: the `launchThreatDragon` command
+
+All spec files should call `cy.launchThreatDragon()` in their `beforeEach` (or `before`) hook. This custom command
+(replacing the previous `beforeEach` in `support/e2e.js`) does the following:
+
+1. Intercepts the `GET /api/config` request so the test can wait for it
+2. Clears `sessionStorage` to start with a clean state
+3. Visits the application root (`/`)
+4. Waits for the `/api/config` call to complete
+5. Waits for the loading spinner (`spinner-border`) to disappear
+6. Asserts that the local login button is visible
+
+```javascript
+// Example spec setup
+beforeEach(() => {
+    cy.launchThreatDragon();
+});
+```
+
+This ensures every test waits for the server configuration to load before interacting with the UI. If you are writing a
+new spec file, import the startup command (it is automatically loaded via `support/e2e.js`) and add the call in your
+`beforeEach` hook.
+
 Note that
 
 - `td.vue/e2e.ci.config.js` and `td.vue/e2e.smokes.ci.config.js` are used by the CI pipeline on pull-request and merge
@@ -219,3 +242,4 @@ Note that
 Threat Dragon: _making threat modeling less threatening_
 
 [browserstack]: https://www.browserstack.com/
+[cypress]: https://www.cypress.io/
