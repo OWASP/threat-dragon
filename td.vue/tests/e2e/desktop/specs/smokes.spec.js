@@ -39,6 +39,14 @@ describe('Desktop smoke tests', function () {
         await titleInput.clearValue();
         await titleInput.setValue('Desktop smoke model');
 
+        const releaseVersionInput = await browser.$('#release-version');
+        await releaseVersionInput.waitForDisplayed();
+        await releaseVersionInput.setValue('1.0.0');
+
+        const releaseDateInput = await browser.$('#released-at');
+        await releaseDateInput.waitForDisplayed();
+        await releaseDateInput.setValue('2026-06-24');
+
         await browser.waitUntil(async () => {
             const parentCard = await browser.$('#parent-card');
             const header = await parentCard.getText();

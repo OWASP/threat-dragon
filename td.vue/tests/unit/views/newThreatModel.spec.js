@@ -52,6 +52,20 @@ describe('NewThreatModel.vue', () => {
                 }
             });
         });
+
+        it('initialize the model with release_version as empty string', () => {
+            const callArgs = mockStore.dispatch.mock.calls.find(
+                call => call[0] === 'THREATMODEL_SELECTED'
+            );
+            expect(callArgs[1].release_version).toEqual('');
+        });
+
+        it('initialize the model with released_at as empty string', () => {
+            const callArgs = mockStore.dispatch.mock.calls.find(
+                call => call[0] === 'THREATMODEL_SELECTED'
+            );
+            expect(callArgs[1].released_at).toEqual('');
+        });
     });
 
     describe('git provider', () => {
@@ -99,6 +113,20 @@ describe('NewThreatModel.vue', () => {
                     threatmodel: 'New Threat Model'
                 }
             });
+        });
+
+        it('initialize the model with release_version as empty string', () => {
+            const callArgs = mockStore.dispatch.mock.calls.find(
+                call => call[0] === 'THREATMODEL_SELECTED'
+            );
+            expect(callArgs[1].release_version).toEqual('');
+        });
+
+        it('initialize the model with released_at as empty string', () => {
+            const callArgs = mockStore.dispatch.mock.calls.find(
+                call => call[0] === 'THREATMODEL_SELECTED'
+            );
+            expect(callArgs[1].released_at).toEqual('');
         });
     });
 });

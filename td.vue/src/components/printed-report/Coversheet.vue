@@ -8,7 +8,8 @@
                 <li class="td-owner"><strong>{{ $t('threatmodel.owner') }}</strong>: {{ owner }}</li>
                 <li class="td-reviewer"><strong>{{ $t('threatmodel.reviewer') }}</strong>: {{ reviewer }}</li>
                 <li class="td-contributors"><strong>{{ $t('threatmodel.contributors') }}</strong>: {{ (contributors || []).join(', ') }}</li>
-                <li class="td-date-generated"><strong>{{ $t('report.dateGenerated') }}</strong>: {{ new Date().toDateString() }}</li>
+                <li v-if="releaseVersion" class="td-release-version"><strong>{{ $t('report.releaseVersion') }}</strong>: {{ releaseVersion }}</li>
+                <li class="td-release-date"><strong>{{ $t('report.releasedAt') }}</strong>: {{ releaseDate ? new Date(releaseDate).toDateString() : new Date().toDateString() }}</li>
             </ul>
         </div>
         <img
@@ -80,6 +81,14 @@ export default {
         branding: {
             type: Boolean,
             default: true
+        },
+        releaseVersion: {
+            type: String,
+            required: false
+        },
+        releaseDate: {
+            type: String,
+            required: false
         }
     }
 };

@@ -184,6 +184,8 @@ const messages = {
         owner: 'Owner',
         reviewer: 'Reviewer',
         title: 'Title',
+        releaseVersion: 'Release version',
+        releasedAt: 'Release date',
         diagram: {
             diagrams: 'Diagrams',
             addNewDiagram: 'Add a new diagram...',
@@ -495,10 +497,11 @@ const messages = {
             showBranding: 'Threat Dragon logo'
         },
         title: 'Threat model report for',
-        dateGenerated: 'Date Generated',
         executiveSummary: 'Executive Summary',
         notProvided: 'Not provided',
         summary: 'Summary',
+        releaseVersion: 'Release Version',
+        releasedAt: 'Release Date',
         threatStats: {
             total: 'Total Threats',
             mitigated: 'Total Mitigated',

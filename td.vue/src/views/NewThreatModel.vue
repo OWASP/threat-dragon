@@ -28,6 +28,8 @@ export default {
             // Create blank model
             newTm = {
                 version: this.version,
+                release_version: '',
+                released_at: '',
                 summary: {
                     title: 'New Threat Model',
                     owner: '',
