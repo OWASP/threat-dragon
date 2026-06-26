@@ -353,6 +353,11 @@
                             "description": "The custom score/risk for the threat",
                             "type": "string"
                           },
+                          "ruleId": {
+                            "description": "The stable ID of the rule that generated the threat",
+                            "type": "string",
+                            "minLength": 2
+                          },
                           "severity": {
                             "description": "The threat severity as High, Medium or Low",
                             "type": "string"

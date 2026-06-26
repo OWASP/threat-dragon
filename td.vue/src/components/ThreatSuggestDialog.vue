@@ -152,10 +152,16 @@ export default {
             const tmpThreat = createNewTypedThreat(this.modelType, this.cellRef.data.type, this.threatTop + 1);
             this.types = [...this.threatTypes];
             if (type == 'type') {
-                this.threatTypes.map((t, ind) => {
-                    console.log(t);
-                    this.suggestions.push({ ...tmpThreat });
-                    this.suggestions[ind].type = t;
+                const threatTypes = threatModels.getThreatTypesByElement(
+                    this.modelType,
+                    this.cellRef.data.type
+                );
+                Object.entries(threatTypes).forEach(([translationKey, threatMetadata]) => {
+                    this.suggestions.push({
+                        ...tmpThreat,
+                        type: this.$t(translationKey),
+                        ...(threatMetadata.ruleId && { ruleId: threatMetadata.ruleId })
+                    });
                 });
             } else {
                 this.suggestions = GetContextSuggestions(this.cellRef.data, this.modelType).map((suggestion) => {
@@ -165,7 +171,7 @@ export default {
                         this.types.push(tmpThreat.type);
                     tmpThreat.description = suggestion.description;
                     tmpThreat.mitigation = suggestion.mitigation;
-                    console.log(tmpThreat);
+                    tmpThreat.ruleId = suggestion.ruleId;
                     return { ...tmpThreat };
                 });
             }

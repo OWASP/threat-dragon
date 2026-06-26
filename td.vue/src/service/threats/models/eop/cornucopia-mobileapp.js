@@ -44,5 +44,11 @@ export default {
             ? data.standards.find(
                 card => card.sectionID === cardNumber).hyperlink
             : 'https://cornucopia.owasp.org/cards';
+    },
+
+    getCardRuleId(cardNumber) {
+        const data = this.getData();
+        return data.standards.find(
+            card => card.sectionID === cardNumber)?.id;
     }
 };
