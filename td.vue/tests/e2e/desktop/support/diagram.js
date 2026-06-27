@@ -12,7 +12,8 @@ const diagramView = {
         closeButton: 'button.btn.btn-secondary',
         editThreatTitle: '#threat-edit #title',
         editThreatMitigation: '#threat-edit #mitigation',
-        statusMitigatedButton: '//div[@id="status"]//label[contains(normalize-space(), "Mitigated")]',
+        statusDropdownToggle: '//div[@id="status"]//button[contains(@class, "td-dropdown-toggle")]',
+        statusMitigatedItem: '//div[@id="status"]//button[contains(@class, "td-dropdown-item") and normalize-space()="Mitigated"]',
         applyButton: '//div[@id="threat-edit"]//button[normalize-space()="Apply"]'
     }
 };
@@ -62,15 +63,27 @@ const createMitigatedThreat = async (title, mitigation) => {
     const browser = getBrowser();
     const titleInput = await browser.$(diagramView.selectors.editThreatTitle);
     const mitigationInput = await browser.$(diagramView.selectors.editThreatMitigation);
-    const mitigatedButton = await browser.$(diagramView.selectors.statusMitigatedButton);
+    const statusToggle = await browser.$(diagramView.selectors.statusDropdownToggle);
     const applyButton = await browser.$(diagramView.selectors.applyButton);
 
     await titleInput.waitForDisplayed({ timeout: UI_WAIT_TIMEOUT_MS });
     await titleInput.clearValue();
     await titleInput.setValue(title);
     await mitigationInput.setValue(mitigation);
-    await mitigatedButton.waitForDisplayed({ timeout: UI_WAIT_TIMEOUT_MS });
-    await mitigatedButton.click();
+
+    // open the status dropdown and choose Mitigated
+    await statusToggle.waitForDisplayed({ timeout: UI_WAIT_TIMEOUT_MS });
+    await statusToggle.click();
+    const mitigatedItem = await browser.$(diagramView.selectors.statusMitigatedItem);
+    await mitigatedItem.waitForDisplayed({ timeout: UI_WAIT_TIMEOUT_MS });
+    await mitigatedItem.click();
+
+    // confirm the dropdown now reflects the chosen status before applying
+    await browser.waitUntil(
+        async () => (await statusToggle.getText()).includes('Mitigated'),
+        { timeout: UI_WAIT_TIMEOUT_MS, timeoutMsg: 'Timed out waiting for the status to update to Mitigated' }
+    );
+
     await applyButton.waitForDisplayed({ timeout: UI_WAIT_TIMEOUT_MS });
     await applyButton.click();
 

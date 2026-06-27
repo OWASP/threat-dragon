@@ -5,6 +5,7 @@ import Vuex from 'vuex';
 import dataChanged from '@/service/x6/graph/data-changed.js';
 import TdFormRadioGroup from '@/components/FormRadioGroup.vue';
 import TdFormSelect from '@/components/FormSelect.vue';
+import TdThreatStatusSelector from '@/components/ThreatStatusSelector.vue';
 import TdThreatEditDialog from '@/components/ThreatEditDialog.vue';
 
 describe('components/ThreatEditDialog.vue', () => {
@@ -88,12 +89,12 @@ describe('components/ThreatEditDialog.vue', () => {
             expect(input.exists()).toEqual(true);
         });
 
-        it('has a status input', () => {
-            const input = wrapper.findAllComponents(TdFormRadioGroup)
+        it('has a threat status selector', () => {
+            const selector = wrapper.findAllComponents(TdThreatStatusSelector)
                 .filter(x => x.attributes('id') === 'status')
                 .at(0);
 
-            expect(input.exists()).toEqual(true);
+            expect(selector.exists()).toEqual(true);
         });
 
         it('has a score input', () => {

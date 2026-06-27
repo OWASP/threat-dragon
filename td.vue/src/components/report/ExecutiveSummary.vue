@@ -56,6 +56,18 @@ export default {
             if (this.threatsNa) {
                 totalStats.push({ metric: this.$t('report.threatStats.notApplicable'), total: this.threatsNa });
             }
+            if (this.threatsAccepted) {
+                totalStats.push({ metric: this.$t('report.threatStats.accepted'), total: this.threatsAccepted });
+            }
+            if (this.threatsTransferred) {
+                totalStats.push({ metric: this.$t('report.threatStats.transferred'), total: this.threatsTransferred });
+            }
+            if (this.threatsAvoided) {
+                totalStats.push({ metric: this.$t('report.threatStats.avoided'), total: this.threatsAvoided });
+            }
+            if (this.threatsEliminated) {
+                totalStats.push({ metric: this.$t('report.threatStats.eliminated'), total: this.threatsEliminated });
+            }
             if (this.openTbd) {
                 openStats.push({ metric: this.$t('report.threatStats.openTbd'), total: this.openTbd });
             }
@@ -75,6 +87,26 @@ export default {
         threatsNa: function () {
             return this.threats
                 .filter(threat => threat.status === 'NotApplicable')
+                .length;
+        },
+        threatsAccepted: function () {
+            return this.threats
+                .filter(threat => threat.status === 'Accepted')
+                .length;
+        },
+        threatsTransferred: function () {
+            return this.threats
+                .filter(threat => threat.status === 'Transferred')
+                .length;
+        },
+        threatsAvoided: function () {
+            return this.threats
+                .filter(threat => threat.status === 'Avoided')
+                .length;
+        },
+        threatsEliminated: function () {
+            return this.threats
+                .filter(threat => threat.status === 'Eliminated')
                 .length;
         },
         threatsOpen: function () {

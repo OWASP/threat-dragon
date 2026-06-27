@@ -63,6 +63,30 @@ describe('service/migration/tmBom/diagrams/threats/threats.js', () => {
         });
     });
 
+    describe('convert/export risk-treatment statuses', () => {
+        const buildModel = (status) => ({
+            detail: { diagrams: [{ cells: [{ data: { threats: [
+                { id: 'a', title: 't', description: 'd', status, severity: 'High', score: '5' }
+            ] } }] }] }
+        });
+
+        it('maps Accepted to the assumed control status', () => {
+            expect(threats.convert(buildModel('Accepted')).controls[0].status).toEqual('assumed');
+        });
+
+        it('maps Transferred to the approved control status', () => {
+            expect(threats.convert(buildModel('Transferred')).controls[0].status).toEqual('approved');
+        });
+
+        it('maps Avoided to the retired control status', () => {
+            expect(threats.convert(buildModel('Avoided')).controls[0].status).toEqual('retired');
+        });
+
+        it('maps Eliminated to the retired control status', () => {
+            expect(threats.convert(buildModel('Eliminated')).controls[0].status).toEqual('retired');
+        });
+    });
+
     describe('merge/import TM-BOM threats', () => {
         const tdThreats = threats.merge(tmBomModel);
 

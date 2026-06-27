@@ -43,11 +43,19 @@ All threats have the following properties:
 
 * Title is free form test, usually a short descriptive title
 * Type is a category selection determined by the diagram type (STRIDE / LINDDUN / PLOT4ai / CIA / CIA-DIE / Generic)
-* Status is one of N/A / Open / Mitigated
+* Status indicates whether a threat is N/A, Open, or has a selected treatment outcome
+  * N/A means the threat does not apply
+  * Open means the threat still requires a treatment decision
+  * Treatment outcomes are selected from the Mitigated dropdown:
+    * Mitigated: Controls reduce the risk.
+    * Accepted: The remaining risk is knowingly accepted.
+    * Transferred: Another party takes responsibility for the risk.
+    * Avoided: The risky activity is not pursued.
+    * Eliminated: The source of the threat is completely removed.
 * Score contains a free text field, often used to score the threat from 0.0 to 10.0 but can be any text or CVSS score
 * Severity is one of TBD / Low / Medium / High / Critical, similar to CVSS
 * Description of the threat and possible impact
-* Mitigations for the threat, probably a remediation from TAME (Transfer / Accept / Mitigate / Evade)
+* Mitigations describe controls, remediation, or reasoning for the selected treatment outcome.
 
 Here N/A stands for Not Applicable and TBD for To Be Defined (or Determined).
 Threat severity is used instead of 'Priority' - this [has been discussed][issue#197]

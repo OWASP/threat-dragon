@@ -114,4 +114,28 @@ describe('components/printed-report/ExecutiveSummary.vue', () => {
         expect(wrapper.find('.td-summary-open-unknown').text())
             .toEqual('1');
     });
+
+    it('counts the accepted threats', () => {
+        setup({ summary: '', threats: [{ status: 'Accepted', severity: 'High' }, { status: 'Open', severity: 'Low' }] });
+        expect(wrapper.find('.td-summary-accepted').text()).toEqual('1');
+    });
+
+    it('counts the transferred threats', () => {
+        setup({ summary: '', threats: [{ status: 'Transferred', severity: 'High' }, { status: 'Transferred', severity: 'Low' }] });
+        expect(wrapper.find('.td-summary-transferred').text()).toEqual('2');
+    });
+
+    it('counts the avoided threats', () => {
+        setup({ summary: '', threats: [{ status: 'Avoided', severity: 'High' }] });
+        expect(wrapper.find('.td-summary-avoided').text()).toEqual('1');
+    });
+
+    it('counts the eliminated threats', () => {
+        setup({ summary: '', threats: [{ status: 'Eliminated', severity: 'High' }] });
+        expect(wrapper.find('.td-summary-eliminated').text()).toEqual('1');
+    });
+
+    it('omits the accepted row when there are no accepted threats', () => {
+        expect(wrapper.find('.td-summary-accepted').exists()).toEqual(false);
+    });
 });

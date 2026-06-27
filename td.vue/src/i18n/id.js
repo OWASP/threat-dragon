@@ -471,7 +471,11 @@ const messages = {
         status: {
             notApplicable: 'N/A',
             open: 'Terbuka',
-            mitigated: 'Diredam'
+            mitigated: 'Diredam',
+            accepted: 'Accepted',
+            transferred: 'Transferred',
+            avoided: 'Avoided',
+            eliminated: 'Eliminated'
         },
         severity: {
             tbd: 'TBD',
@@ -502,6 +506,10 @@ const messages = {
         threatStats: {
             total: 'Total Ancaman',
             mitigated: 'Total Diredam',
+            accepted: 'Total Accepted',
+            transferred: 'Total Transferred',
+            avoided: 'Total Avoided',
+            eliminated: 'Total Eliminated',
             notApplicable: 'Total Not Applicable',
             notMitigated: 'Belum Diredam',
             openCritical: 'Terbuka / Prioritas Kritis',

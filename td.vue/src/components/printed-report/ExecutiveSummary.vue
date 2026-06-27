@@ -27,6 +27,22 @@
                     <th>{{ $t('report.threatStats.notApplicable') }}</th>
                     <td class="td-summary-not-applicable">{{ threatsNa }}</td>
                 </tr>
+                <tr v-if="threatsAccepted" >
+                    <th>{{ $t('report.threatStats.accepted') }}</th>
+                    <td class="td-summary-accepted">{{ threatsAccepted }}</td>
+                </tr>
+                <tr v-if="threatsTransferred" >
+                    <th>{{ $t('report.threatStats.transferred') }}</th>
+                    <td class="td-summary-transferred">{{ threatsTransferred }}</td>
+                </tr>
+                <tr v-if="threatsAvoided" >
+                    <th>{{ $t('report.threatStats.avoided') }}</th>
+                    <td class="td-summary-avoided">{{ threatsAvoided }}</td>
+                </tr>
+                <tr v-if="threatsEliminated" >
+                    <th>{{ $t('report.threatStats.eliminated') }}</th>
+                    <td class="td-summary-eliminated">{{ threatsEliminated }}</td>
+                </tr>
                 <tr>
                     <th>{{ $t('report.threatStats.notMitigated') }}</th>
                     <td class="td-summary-not-mitigated">{{ threatsOpen }}</td>
@@ -94,6 +110,26 @@ export default {
         threatsNa: function () {
             return this.threats
                 .filter(threat => threat.status === 'NotApplicable')
+                .length;
+        },
+        threatsAccepted: function () {
+            return this.threats
+                .filter(threat => threat.status === 'Accepted')
+                .length;
+        },
+        threatsTransferred: function () {
+            return this.threats
+                .filter(threat => threat.status === 'Transferred')
+                .length;
+        },
+        threatsAvoided: function () {
+            return this.threats
+                .filter(threat => threat.status === 'Avoided')
+                .length;
+        },
+        threatsEliminated: function () {
+            return this.threats
+                .filter(threat => threat.status === 'Eliminated')
                 .length;
         },
         threatsOpen: function () {

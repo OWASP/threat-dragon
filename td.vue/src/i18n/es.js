@@ -471,7 +471,11 @@ const messages = {
         status: {
             notApplicable: 'N/A',
             open: 'Abierto',
-            mitigated: 'Mitigado'
+            mitigated: 'Mitigado',
+            accepted: 'Accepted',
+            transferred: 'Transferred',
+            avoided: 'Avoided',
+            eliminated: 'Eliminated'
         },
         severity: {
             tbd: 'Por confirmar',
@@ -502,6 +506,10 @@ const messages = {
         threatStats: {
             total: 'Total amenazas ',
             mitigated: 'Total amenazas mitigadas',
+            accepted: 'Total Accepted',
+            transferred: 'Total Transferred',
+            avoided: 'Total Avoided',
+            eliminated: 'Total Eliminated',
             notApplicable: 'Total Not Applicable',
             notMitigated: 'No Mitigadas',
             openCritical: 'Abierto / Crítica Prioridad',

@@ -471,7 +471,11 @@ const messages = {
         status: {
             notApplicable: 'लागू नहीं',
             open: 'खुला',
-            mitigated: 'शमन'
+            mitigated: 'शमन',
+            accepted: 'Accepted',
+            transferred: 'Transferred',
+            avoided: 'Avoided',
+            eliminated: 'Eliminated'
         },
         severity: {
             tbd: 'टीबीए',
@@ -502,6 +506,10 @@ const messages = {
         threatStats: {
             total: 'कुल खतरे',
             mitigated: 'कुल शमन',
+            accepted: 'Total Accepted',
+            transferred: 'Total Transferred',
+            avoided: 'Total Avoided',
+            eliminated: 'Total Eliminated',
             notApplicable: 'Total Not Applicable',
             notMitigated: 'कम नहीं किया गया',
             openCritical: 'ओपन / महत्वपूर्ण प्राथमिकता',

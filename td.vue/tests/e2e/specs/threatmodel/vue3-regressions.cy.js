@@ -119,8 +119,9 @@ describe('Regressions discovered during vue3 migration', () => {
         cy.contains('.threat-card a', 'Unauthorised access').click();
         withinVisibleModal(() => {
             selectAlternateThreatType();
-            cy.get('#status input[type="radio"]').check('Mitigated', { force: true });
-            cy.get('#status input[type="radio"][value="Mitigated"]').should('be.checked');
+            cy.get('#status button.td-dropdown-toggle').click();
+            cy.get('#status .td-dropdown-menu').contains('button', 'Mitigated').click();
+            cy.get('#status button.td-dropdown-toggle').should('contain', 'Mitigated');
             cy.get('#severity input[type="radio"]').check('Low', { force: true });
             cy.get('#severity input[type="radio"][value="Low"]').should('be.checked');
         });
@@ -136,8 +137,9 @@ describe('Regressions discovered during vue3 migration', () => {
         cy.contains('a.new-threat-by-type', 'New Threat by Type').click();
         withinVisibleModal(() => {
             selectAlternateThreatType();
-            cy.get('#status input[type="radio"]').check('Mitigated', { force: true });
-            cy.get('#status input[type="radio"][value="Mitigated"]').should('be.checked');
+            cy.get('#status button.td-dropdown-toggle').click();
+            cy.get('#status .td-dropdown-menu').contains('button', 'Mitigated').click();
+            cy.get('#status button.td-dropdown-toggle').should('contain', 'Mitigated');
             cy.get('#severity input[type="radio"]').check('Low', { force: true });
             cy.get('#severity input[type="radio"][value="Low"]').should('be.checked');
         });

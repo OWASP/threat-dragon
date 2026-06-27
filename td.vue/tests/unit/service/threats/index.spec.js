@@ -1,4 +1,5 @@
 import threats, { createNewTypedThreat } from '@/service/threats/index.js';
+import store from '@/store/index.js';
 
 describe('service/threats/index.js', () => {
     describe('create new default typed threat', () => {
@@ -145,6 +146,55 @@ describe('service/threats/index.js', () => {
             expect(threat.modelType).toEqual('EOP');
         });
     });
+
+    describe('create new typed threat branches', () => {
+        afterEach(() => {
+            jest.restoreAllMocks();
+        });
+
+        it('normalizes DIE to CIADIE', () => {
+            expect(createNewTypedThreat('DIE').modelType).toEqual('CIADIE');
+        });
+
+        it('normalizes generic to the default model', () => {
+            expect(createNewTypedThreat('generic').modelType).toEqual('default');
+        });
+
+        it('uses the PLOT4ai actor type', () => {
+            expect(createNewTypedThreat('PLOT4ai', 'tm.Actor').type).toEqual('Accessibility');
+        });
+
+        it('uses the STRIDE actor type', () => {
+            expect(createNewTypedThreat('STRIDE', 'tm.Actor').type).toEqual('Spoofing');
+        });
+
+        it('uses the STRIDE process type', () => {
+            expect(createNewTypedThreat('STRIDE', 'tm.Process').type).toEqual('Spoofing');
+        });
+
+        it('uses the default type for an unknown model', () => {
+            expect(createNewTypedThreat('unknown').type).toEqual('Spoofing');
+        });
+
+        it('selects the least frequent threat type', () => {
+            jest.spyOn(store, 'get').mockReturnValue({
+                state: {
+                    cell: {
+                        ref: {
+                            data: {
+                                threatFrequency: {
+                                    spoofing: 3,
+                                    tampering: 1
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            expect(createNewTypedThreat('STRIDE', 'tm.Process').type).toEqual('Tampering');
+        });
+    });
     describe('hasOpenThreats', () => {
         it('returns false if there is no data', () => {
             expect(threats.hasOpenThreats(null))
@@ -176,6 +226,19 @@ describe('service/threats/index.js', () => {
             };
             expect(threats.hasOpenThreats(data))
                 .toEqual(true);
+        });
+
+        it('returns false if the only threats are resolved treatments', () => {
+            const data = {
+                threats: [
+                    { status: 'Accepted' },
+                    { status: 'Transferred' },
+                    { status: 'Avoided' },
+                    { status: 'Eliminated' }
+                ]
+            };
+            expect(threats.hasOpenThreats(data))
+                .toEqual(false);
         });
     });
 
@@ -315,6 +378,34 @@ describe('service/threats/index.js', () => {
             };
             const res = threats.filterForDiagram(data, { showMitigated: false });
             expect(res).toHaveLength(1);
+        });
+
+        it('hides resolved treatment threats when showMitigated is false', () => {
+            const data = {
+                threats: [
+                    { status: 'Open' },
+                    { status: 'Accepted' },
+                    { status: 'Transferred' },
+                    { status: 'Avoided' },
+                    { status: 'Eliminated' },
+                    { status: 'NotApplicable' }
+                ]
+            };
+            const res = threats.filterForDiagram(data, { showMitigated: false });
+            expect(res.map(x => x.status)).toEqual(['Open', 'NotApplicable']);
+        });
+
+        it('shows resolved treatment threats when showMitigated is true', () => {
+            const data = {
+                threats: [
+                    { status: 'Accepted' },
+                    { status: 'Transferred' },
+                    { status: 'Avoided' },
+                    { status: 'Eliminated' }
+                ]
+            };
+            const res = threats.filterForDiagram(data, { showMitigated: true });
+            expect(res).toHaveLength(4);
         });
     });
 
