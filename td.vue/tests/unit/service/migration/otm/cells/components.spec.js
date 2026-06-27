@@ -53,7 +53,7 @@ describe('service/migration/otm/cells/components.js', () => {
             };
 
             beforeEach(() => {
-                testCell = components.merge(component, representation);
+                testCell = components.merge(otmModel, component, representation);
             });
 
             it('creates process cell type', () => {
@@ -106,7 +106,7 @@ describe('service/migration/otm/cells/components.js', () => {
             };
 
             beforeEach(() => {
-                testCell = components.merge(component, representation);
+                testCell = components.merge(otmModel, component, representation);
             });
 
             it('creates actor cell type', () => {
@@ -159,7 +159,7 @@ describe('service/migration/otm/cells/components.js', () => {
             };
 
             it('creates data store cell type', () => {
-                testCell = components.merge(component, representation);
+                testCell = components.merge(otmModel, component, representation);
                 expect(testCell.shape).toBe('store');
             });
 

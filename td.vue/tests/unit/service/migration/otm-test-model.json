@@ -78,8 +78,8 @@
       "id": "web-client",
       "description": "It represent a connection from the internet to our ecosystem",
       "parent": {
-        "trustZone": "f0ba7722-39b6-4c81-8290-a30a248bb8d9"
-      },
+         "component": "web-botnet"
+     },
       "type": "web-client",
       "tags": [
         "external"
@@ -93,12 +93,41 @@
           "representation": "architecture-diagram",
           "id": "web-client-box",
           "position": {
-            "x": 700,
-            "y": 200
+            "x": 100,
+            "y": 50
           },
           "size": {
             "width": 150,
             "height": 80
+          }
+        }
+      ],
+      "assets": null,
+      "threats": null,
+      "attributes": null
+    },
+    {
+      "name": "Web Botnet",
+      "id": "web-botnet",
+      "description": "A bot network of web clients",
+      "parent": {
+        "trustZone": "f0ba7722-39b6-4c81-8290-a30a248bb8d9"
+      },
+      "type": "web-client",
+      "tags": [
+        "botnet"
+      ],
+      "representations": [
+        {
+          "representation": "architecture-diagram",
+          "id": "botnet-client-box",
+          "position": {
+            "x": 100,
+            "y": 50
+          },
+          "size": {
+            "width": 300,
+            "height": 300
           }
         }
       ],
@@ -122,8 +151,8 @@
           "representation": "architecture-diagram",
           "id": "web-service-box",
           "position": {
-            "x": 200,
-            "y": 200
+            "x": 50,
+            "y": 50
           },
           "size": {
             "width": 150,
@@ -170,8 +199,8 @@
           "representation": "architecture-diagram",
           "id": "box-for-postgress-DB",
           "position": {
-            "x": 700,
-            "y": 400
+            "x": 200,
+            "y": 300
           },
           "size": {
             "width": 150,

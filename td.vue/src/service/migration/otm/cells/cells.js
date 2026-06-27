@@ -10,7 +10,7 @@ const merge = (model, otmId) => {
     model.components?.forEach((component) => {
         component.representations?.forEach((representation) => {
             if (representation.representation === otmId) {
-                const cell = components.merge(component, representation);
+                const cell = components.merge(model, component, representation);
                 cell.zIndex = zIndex++;
                 cells.push(cell);
             }
