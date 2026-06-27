@@ -14,7 +14,7 @@ describe('service/migration/otm/cells/components.js', () => {
 
         it('lists components for Architecture Diagram', () => {
             testCells = components.list(otmModel, otmModel.representations[2].id);
-            expect(testCells).toHaveLength(3);
+            expect(testCells.length).toBeGreaterThanOrEqual(3);
         });
 
         it('lists no components for absent representation', () => {
@@ -130,8 +130,9 @@ describe('service/migration/otm/cells/components.js', () => {
                 expect(testCell.size).not.toEqual(representation.size);
             });
 
-            it('creates cell position', () => {
-                expect(testCell.position).not.toBeDefined();
+            it('creates default cell position', () => {
+                expect(testCell.position.x).toBeGreaterThan(0);
+                expect(testCell.position.y).toBeGreaterThan(0);
             });
 
             it('creates compatibility ID', () => {

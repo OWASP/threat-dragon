@@ -35,8 +35,6 @@ const merge = (model, otmId) => {
             }
         }
     });
-    
-    //    checkEdges(dataflows, cells);
 
     model.trustZones?.forEach((trustZone) => {
         trustZone.representations?.forEach((representation) => {

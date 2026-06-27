@@ -52,12 +52,12 @@ describe('service/migration/otm/cells/cells.js', () => {
             });
 
             it('creates cell name', () => {
-                expect(testCells[1].data.name.length).toBeGreaterThanOrEqual(5);
-                expect(testCells[1].attrs.text.text.length).toBeGreaterThanOrEqual(5);
+                expect(testCells[2].data.name.length).toBeGreaterThanOrEqual(5);
+                expect(testCells[2].attrs.text.text.length).toBeGreaterThanOrEqual(5);
             });
 
             it('creates cell description', () => {
-                expect(testCells[2].data.description.length).toBeGreaterThanOrEqual(5);
+                expect(testCells[3].data.description.length).toBeGreaterThanOrEqual(5);
             });
 
             it('creates cell size', () => {

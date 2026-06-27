@@ -78,7 +78,7 @@
       "id": "web-client",
       "description": "It represent a connection from the internet to our ecosystem",
       "parent": {
-         "component": "web-botnet"
+         "component": "web-botnet-id"
      },
       "type": "web-client",
       "tags": [
@@ -108,10 +108,10 @@
     },
     {
       "name": "Web Botnet",
-      "id": "web-botnet",
+      "id": "web-botnet-id",
       "description": "A bot network of web clients",
       "parent": {
-        "trustZone": "f0ba7722-39b6-4c81-8290-a30a248bb8d9"
+        "trustZone": "internet-trust-zone-id"
       },
       "type": "web-client",
       "tags": [
@@ -276,7 +276,7 @@
   "trustZones": [
     {
       "name": "Internet",
-      "id": "f0ba7722-39b6-4c81-8290-a30a248bb8d9",
+      "id": "internet-trust-zone-id",
       "type": "internet",
       "description": "This is the internet trust zone",
       "risk": {
