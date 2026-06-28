@@ -1,6 +1,6 @@
 ---
 layout: home
-title: OWASP Threat Dragon Docs
+title: OWASP Threat Dragon 2.6.2 Docs
 path: /
 ---
 
