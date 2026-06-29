@@ -56,79 +56,158 @@ describe('service/migration/otm/cells/properties.js', () => {
             expect(console.warn).not.toHaveBeenCalled();
         });
 
-		 it('warns when representation ID is not found for a component parent', () => {
-		     const testParent = {component: 'web-botnet-id'};
-		     position = properties.findPosition(otmModel, 'fooBar', testParent, testPosition);
-		     expect(position).toEqual(testPosition);
-		     expect(console.warn).toHaveBeenCalled();
-		 });
+        it('warns when representation ID is not found for a component parent', () => {
+            const testParent = {component: 'web-botnet-id'};
+            position = properties.findPosition(otmModel, 'fooBar', testParent, testPosition);
+            expect(position).toEqual(testPosition);
+            expect(console.warn).toHaveBeenCalled();
+        });
     });
 
-    describe('creating base properties', () => {
-        let testNode;
+    describe('creating cell properties', () => {
+        let testCell;
 
-        describe('creating an Actor node by default', () => {
+        describe('creating an Actor cell by default', () => {
 
-            it('creates an Actor node by default', () => {
-                testNode = properties.baseProperties(null, null);
-                expect(testNode.data).toBeDefined();
-                expect(testNode.shape).toBe('actor');
+            it('creates an Actor cell by default', () => {
+                testCell = properties.cellProperties({name: 'foo'}, null);
+                expect(testCell.data).toBeDefined();
+                expect(testCell.shape).toBe('actor');
             });
 
-            it('creates an Actor node given a type', () => {
-                testNode = properties.baseProperties({type: 'Foo'}, null);
-                expect(testNode.data).toBeDefined();
-                expect(testNode.shape).toBe('actor');
+            it('creates an Actor cell name', () => {
+                testCell = properties.cellProperties({name: 'test-name'}, null);
+                expect(testCell.data.name).toBe('test-name');
+                expect(testCell.label).toBe('test-name');
             });
 
-            it('creates an Actor node given an id', () => {
-                testNode = properties.baseProperties({type: 'Foo', id: 'Bar'}, null);
-                expect(testNode.shape).toBe('actor');
+            it('creates an Actor cell given a type', () => {
+                testCell = properties.cellProperties({type: 'Foo'}, null);
+                expect(testCell.data).toBeDefined();
+                expect(testCell.shape).toBe('actor');
             });
 
-            it('creates an Actor node given a representation id', () => {
-                testNode = properties.baseProperties({type: 'Foo', id: 'Bar'}, {id: 'Baz'},);
-                expect(testNode.shape).toBe('actor');
+            it('creates an Actor cell given an id', () => {
+                testCell = properties.cellProperties({type: 'Foo', id: 'Bar'}, null);
+                expect(testCell.shape).toBe('actor');
+            });
+
+            it('creates an Actor cell given a representation id', () => {
+                testCell = properties.cellProperties({type: 'Foo', id: 'Bar'}, {id: 'Baz'},);
+                expect(testCell.shape).toBe('actor');
             });
         });
 
         describe('creating a Process node', () => {
 
-            it('creates a Process node given a type', () => {
-                testNode = properties.baseProperties({type: 'SerVice'}, null);
-                expect(testNode.data).toBeDefined();
-                expect(testNode.shape).toBe('process');
+            it('creates a Process cell given a type', () => {
+                testCell = properties.cellProperties({type: 'SerVice'}, null);
+                expect(testCell.data).toBeDefined();
+                expect(testCell.shape).toBe('process');
             });
 
-            it('creates a Process node given an id', () => {
-                testNode = properties.baseProperties({type: 'Foo', id: 'SERVICE'}, null);
-                expect(testNode.shape).toBe('process');
+            it('creates a Process cell name', () => {
+                testCell = properties.cellProperties({name: 'test-name', type: 'SerVice'}, null);
+                expect(testCell.data.name).toBe('test-name');
+                expect(testCell.attrs.text.text).toBe('test-name');
             });
 
-            it('creates a Process node given a representation id', () => {
-                testNode = properties.baseProperties({type: 'Foo', id: 'Bar'}, {id: 'service'},);
-                expect(testNode.shape).toBe('process');
+            it('creates a Process cell given an id', () => {
+                testCell = properties.cellProperties({type: 'Foo', id: 'SERVICE'}, null);
+                expect(testCell.shape).toBe('process');
+            });
+
+            it('creates a Process cell given a representation id', () => {
+                testCell = properties.cellProperties({type: 'Foo', id: 'Bar'}, {id: 'service'},);
+                expect(testCell.shape).toBe('process');
             });
         });
 
         describe('creating a Store node', () => {
     
-            it('creates a Store node given a type', () => {
-                testNode = properties.baseProperties({type: 'DataBase'}, null);
-                expect(testNode.data).toBeDefined();
-                expect(testNode.shape).toBe('store');
+            it('creates a Store cell given a type', () => {
+                testCell = properties.cellProperties({type: 'DataBase'}, null);
+                expect(testCell.data).toBeDefined();
+                expect(testCell.shape).toBe('store');
             });
     
-            it('creates a Store node given an id', () => {
-                testNode = properties.baseProperties({type: 'Foo', id: 'DATABASE'}, null);
-                expect(testNode.shape).toBe('store');
+            it('creates a Store cell name', () => {
+                testCell = properties.cellProperties({name: 'test-name', type: 'DataBase'}, null);
+                expect(testCell.data.name).toBe('test-name');
+                expect(testCell.attrs.text.text).toBe('test-name');
+            });
+
+            it('creates a Store cell given an id', () => {
+                testCell = properties.cellProperties({type: 'Foo', id: 'DATABASE'}, null);
+                expect(testCell.shape).toBe('store');
             });
     
-            it('creates a Store node given a representation id', () => {
-                testNode = properties.baseProperties({type: 'Foo', id: 'Bar'}, {id: 'database'},);
-                expect(testNode.shape).toBe('store');
+            it('creates a Store cell given a representation id', () => {
+                testCell = properties.cellProperties({type: 'Foo', id: 'Bar'}, {id: 'database'},);
+                expect(testCell.shape).toBe('store');
             });
         });
 
+        describe('creating a trust Boundary Box', () => {
+
+            it('creates a trust zone', () => {
+                testCell = properties.zoneProperties({name: 'foo'});
+                expect(testCell.data).toBeDefined();
+                expect(testCell.shape).toBe('trust-boundary-box');
+            });
+
+            it('creates the trust zone name', () => {
+                testCell = properties.zoneProperties({name: 'test-name'});
+                expect(testCell.data.name).toBe('test-name');
+                expect(testCell.attrs.label.text).toBe('test-name');
+            });
+        });
+
+        describe('creating a data flow', () => {
+
+            it('creates a data flow', () => {
+                testCell = properties.flowProperties({name: 'foo'});
+                expect(testCell.data).toBeDefined();
+                expect(testCell.shape).toBe('flow');
+            });
+
+            it('creates the data flow name', () => {
+                testCell = properties.flowProperties({name: 'test-name'});
+                expect(testCell.data.name).toBe('test-name');
+                expect(testCell.labels[0].attrs.labelText.text).toBe('test-name');
+            });
+        });
+    });
+    
+    describe('combines description', () => {
+        let description;
+
+        it('returns the description by default', () => {
+            description = properties.combineDescription(null, {description: 'test-description'});
+            expect(description).toBe('test-description');
+        });
+    });
+
+    describe('determining size', () => {
+        let size;
+
+        it('creates default size', () => {
+            size = properties.findSize(null);
+            expect(size.width).toBeGreaterThan(0);
+            expect(size.height).toBeGreaterThan(0);
+        });
+
+        it('creates default when no size given', () => {
+            size = properties.findSize({foo: 'bar'});
+            expect(size.width).toBeGreaterThan(0);
+            expect(size.height).toBeGreaterThan(0);
+        });
+
+        it('returns valid size', () => {
+            const representation = {size: {width: 'test-width', height: 'test-height'}};
+            size = properties.findSize(representation);
+            expect(size.width).toBe(representation.size.width);
+            expect(size.height).toBe(representation.size.height);
+        });
     });
 });

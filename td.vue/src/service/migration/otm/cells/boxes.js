@@ -1,17 +1,17 @@
-import defaultProperties from '@/service/entity/default-properties.js';
+import properties from './properties.js';
 
-const defaultPosition = {x: 100, y: 100};
-const defaultSize = {width: 100, height: 100};
-
-const merge = (trustZone, representation) => {
-    const box = defaultProperties.defaultEntity('tm.BoundaryBox');
-
-    box.data.name = box.attrs.label.text = trustZone.name; // OTM required value
-    box.data.description = trustZone?.description || '';
+const merge = (model, trustZone, representation) => {
+    const box = properties.zoneProperties(trustZone);
     box.id = trustZone.id; // OTM required value
+    box.data.description = properties.combineDescription(model, trustZone);
 
-    box.size = representation?.size || defaultSize;
-    box.position = representation?.position || defaultPosition;
+    box.size = properties.findSize(representation);
+    box.position = properties.findPosition(
+        model,
+        representation.representation,
+        trustZone.parent,
+        representation.position
+    ); // relative to parent's position
 
     box.compatibility = {
         attributes: trustZone.attributes || undefined,

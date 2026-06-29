@@ -23,7 +23,7 @@ const merge = (model, otmId) => {
     model.dataflows?.forEach((dataflow) => {
         for (const cell of cells) {
             if (dataflow.source === cell.id) {
-                const flow = dataflows.merge(dataflow);
+                const flow = dataflows.merge(model, dataflow);
                 flow.zIndex = zIndex++;
                 if (!nodes.includes(flow.target.cell)) {
                     console.warn('Target cell not found: ' + flow.target.cell);
@@ -39,7 +39,7 @@ const merge = (model, otmId) => {
     model.trustZones?.forEach((trustZone) => {
         trustZone.representations?.forEach((representation) => {
             if (representation.representation === otmId) {
-                const cell = boxes.merge(trustZone, representation);
+                const cell = boxes.merge(model, trustZone, representation);
                 cell.zIndex = zIndexTrust--;
                 cells.push(cell);
             }

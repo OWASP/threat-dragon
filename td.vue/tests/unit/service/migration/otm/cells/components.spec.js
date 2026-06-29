@@ -95,6 +95,7 @@ describe('service/migration/otm/cells/components.js', () => {
             const component = {
                 name: 'Web Client',
                 id: 'web-client',
+                description: 'test description',
                 parent: {
                     trustZone: 'f0ba7722-39b6-4c81-8290-a30a248bb8d9'
                 },

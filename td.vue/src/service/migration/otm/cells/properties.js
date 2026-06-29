@@ -3,6 +3,39 @@ import defaultProperties from '@/service/entity/default-properties.js';
 // all OTM components must have a parent, either another component or a trust zone
 // trust zones may have a parent, so ulitmately all components must end up in a trust zone
 const defaultPosition = {x: 100, y: 100};
+const defaultSize = {width: 100, height: 100};
+
+// OTM does not have fixed types or shape ids, just strings, so guess the component/cell type
+const cellProperties = (component, representation) => {
+    let cell;
+
+    if (
+        component?.type?.toLowerCase().includes('database') ||
+        component?.id?.toLowerCase().includes('database') ||
+        representation?.id?.toLowerCase().includes('database')
+    ) {
+        cell = defaultProperties.defaultEntity('tm.Store');
+        cell.data.name = cell.attrs.text.text = component.name; // OTM required value
+    } else if (
+        component?.type?.toLowerCase().includes('service') ||
+        component?.id?.toLowerCase().includes('service') ||
+        representation?.id?.toLowerCase().includes('service')
+    ) {
+        cell = defaultProperties.defaultEntity('tm.Process');
+        cell.data.name = cell.attrs.text.text = component.name; // OTM required value
+    } else {
+        cell = defaultProperties.defaultEntity('tm.Actor');
+        cell.data.name = cell.label = component.name; // OTM required value
+    }
+
+    return cell;
+};
+
+const combineDescription = (_model, node) => { // eslint-disable-line no-unused-vars
+    const description = node?.description || '';
+
+    return description;
+};
 
 const findPosition = (model, repId, parent, position) => {
     if (!position) {
@@ -10,7 +43,7 @@ const findPosition = (model, repId, parent, position) => {
     }
 
     if (!parent) { // probably the top parent
-	    return position;
+        return position;
     }
 
     if (parent.trustZone && model.trustZones) {
@@ -46,32 +79,30 @@ const findPosition = (model, repId, parent, position) => {
     return position;
 };
 
-// OTM does not have fixed types or shape ids, just strings, so guess the component/node type
-const baseProperties = (component, representation) => {
-    let node;
-
-    if (
-        component?.type?.toLowerCase().includes('database') ||
-        component?.id?.toLowerCase().includes('database') ||
-        representation?.id?.toLowerCase().includes('database')
-    ) {
-        node = defaultProperties.defaultEntity('tm.Store');
-        node.data.name = node.attrs.text.text = component.name; // OTM required value
-    } else if (
-        component?.type?.toLowerCase().includes('service') ||
-        component?.id?.toLowerCase().includes('service') ||
-        representation?.id?.toLowerCase().includes('service')
-    ) {
-        node = defaultProperties.defaultEntity('tm.Process');
-        node.data.name = node.attrs.text.text = component.name; // OTM required value
-    } else {
-        node = defaultProperties.defaultEntity('tm.Actor');
-        node.data.name = node.label = component?.name; // OTM required value
+const findSize = (representation) => {
+    if (representation?.size) {
+        return representation.size;
     }
-    return node;
+    return defaultSize;
+};
+
+const flowProperties = (dataflow) => {
+    const flow = defaultProperties.defaultEntity('tm.Flow');
+    flow.data.name = flow.labels[0].attrs.labelText.text = dataflow.name; // OTM required value
+    return flow;
+};
+
+const zoneProperties = (trustZone) => {
+    const box = defaultProperties.defaultEntity('tm.BoundaryBox');
+    box.data.name = box.attrs.label.text = trustZone.name; // OTM required value
+    return box;
 };
 
 export default {
-    baseProperties,
-    findPosition
+    cellProperties,
+    combineDescription,
+    findPosition,
+    findSize,
+    flowProperties,
+    zoneProperties
 };

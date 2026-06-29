@@ -1,43 +1,42 @@
 import properties from './properties.js';
 
 export const list = (model, otmId) => {
-    const nodes = [];
+    const cells = [];
 
     model.components?.forEach((component) => {
         component.representations?.forEach((representation) => {
             if (representation.representation === otmId) {
-                nodes.push(component);
+                cells.push(component);
             }
         });
     });
 
-    return nodes;
+    return cells;
 };
 
 export const merge = (model, component, representation) => {
-    const node = properties.baseProperties(component, representation);
-
-    node.data.description = component.description;
-    node.id = component.id; // OTM required value
+    const cell = properties.cellProperties(component, representation);
+    cell.id = component.id; // OTM required value
+    cell.data.description = properties.combineDescription(model, component);
 
     if (representation.size) { // otherwise size remains at default property
-        node.size = representation.size;
+        cell.size = representation.size;
     }
 
-    node.position = properties.findPosition(
+    cell.position = properties.findPosition(
         model,
         representation.representation,
         component.parent,
         representation.position
     ); // relative to parent's position
 
-    node.compatibility = {
+    cell.compatibility = {
         otmId: representation.id, // OTM required value
         parent: component.parent, // OTM required value
         tags: component.tags || undefined
     };
 
-    return node;
+    return cell;
 };
 
 export default {

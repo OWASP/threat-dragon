@@ -1,4 +1,5 @@
 import boxes from '@/service/migration/otm/cells/boxes';
+import otmModel from '../../otm-test-model';
 
 describe('service/migration/otm/cells/boxes.js', () => {
     describe('merge OTM', () => {
@@ -29,7 +30,7 @@ describe('service/migration/otm/cells/boxes.js', () => {
             };
 
             beforeEach(() => {
-                testBox = boxes.merge(trustZone, representation);
+                testBox = boxes.merge(otmModel, trustZone, representation);
             });
 
             it('creates trust boundary box type', () => {
@@ -79,9 +80,8 @@ describe('service/migration/otm/cells/boxes.js', () => {
                 id: 'test-representation-id'
             };
 
-
             beforeEach(() => {
-                testBox = boxes.merge(trustZone, representation);
+                testBox = boxes.merge(otmModel, trustZone, representation);
             });
             it('creates trust boundary box type', () => {
                 expect(testBox.shape).toBe('trust-boundary-box');

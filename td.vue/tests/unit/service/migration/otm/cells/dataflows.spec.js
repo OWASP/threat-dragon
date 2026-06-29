@@ -1,5 +1,7 @@
 import dataflows from '@/service/migration/otm/cells/dataflows';
 
+import otmModel from '../../otm-test-model';
+
 describe('service/migration/otm/cells/dataflow.js', () => {
 
     describe('merging OTM', () => {
@@ -19,7 +21,7 @@ describe('service/migration/otm/cells/dataflow.js', () => {
             };
 
             beforeEach(() => {
-                testFlow = dataflows.merge(dataflow);
+                testFlow = dataflows.merge(otmModel, dataflow);
             });
 
             it('creates flow type', () => {
@@ -69,7 +71,7 @@ describe('service/migration/otm/cells/dataflow.js', () => {
             };
 
             beforeEach(() => {
-                testFlow = dataflows.merge(dataflow);
+                testFlow = dataflows.merge(otmModel, dataflow);
             });
 
             it('creates flow type', () => {
