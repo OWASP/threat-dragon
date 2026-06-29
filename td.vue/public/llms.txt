@@ -1,0 +1,47 @@
+# OWASP Threat Dragon
+
+> OWASP Threat Dragon is a free, open-source threat modeling tool for creating data-flow diagrams and documenting threats and mitigations.
+
+Threat Dragon is an OWASP Production project. It supports web and desktop threat modeling workflows and can store models locally or through configured repository providers.
+
+## Project Links
+
+- Website: https://owasp.org/www-project-threat-dragon/
+- Application: https://www.threatdragon.com/
+- Documentation: https://www.threatdragon.com/docs/
+- Source: https://github.com/OWASP/threat-dragon
+- Issues: https://github.com/OWASP/threat-dragon/issues
+- Security policy: https://github.com/OWASP/threat-dragon/blob/main/security.md
+- Contributing: https://github.com/OWASP/threat-dragon/blob/main/contributing.md
+
+## Documentation
+
+- Installation: https://www.threatdragon.com/docs/install/installation.html
+- Configuration: https://www.threatdragon.com/docs/configure/configure.html
+- Usage: https://www.threatdragon.com/docs/usage/getting-started.html
+- Development: https://www.threatdragon.com/docs/development/development.html
+- API: https://www.threatdragon.com/docs/development/api.html
+- Testing: https://www.threatdragon.com/docs/testing/testing.html
+
+## Supported Model And Integration Formats
+
+- Threat Dragon version 2 models
+- Legacy Threat Dragon version 1 models
+- Open Threat Model files
+- Threat Model BOM files
+- Organization template files
+
+Threat Dragon can be configured to work with local files, GitHub, GitHub Enterprise, GitLab, Bitbucket, Bitbucket Enterprise, and Google Drive.
+
+## AI And Automation Notes
+
+This file is metadata only. It does not add AI features, expose an API, provide MCP access, or grant access to threat models.
+
+Related optional tooling:
+
+- Threat Dragon AI Tool documentation: https://www.threatdragon.com/docs/usage/ai-tool.html
+- Threat Dragon AI Tool source: https://github.com/InfosecOTB/threat-dragon-ai-tool
+
+## Data Handling
+
+Do not assume access to private threat models, repository contents, provider tokens, or user data from this file. Threat model data is only available through the application flows and provider integrations configured by the user.
