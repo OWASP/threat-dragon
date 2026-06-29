@@ -2,7 +2,7 @@
 
 > OWASP Threat Dragon is a free, open-source threat modeling tool for creating data-flow diagrams and documenting threats and mitigations.
 
-Threat Dragon is an OWASP Production project. It supports web and desktop threat modeling workflows and can store models locally or through configured repository providers.
+Threat Dragon is an OWASP Production project. It is available as a web application and as desktop installers for Windows, macOS, and Linux.
 
 ## Project Links
 
@@ -20,28 +20,25 @@ Threat Dragon is an OWASP Production project. It supports web and desktop threat
 - Configuration: https://www.threatdragon.com/docs/configure/configure.html
 - Usage: https://www.threatdragon.com/docs/usage/getting-started.html
 - Development: https://www.threatdragon.com/docs/development/development.html
-- API: https://www.threatdragon.com/docs/development/api.html
 - Testing: https://www.threatdragon.com/docs/testing/testing.html
 
-## Supported Model And Integration Formats
+## Application Scope
 
-- Threat Dragon version 2 models
-- Legacy Threat Dragon version 1 models
-- Open Threat Model files
-- Threat Model BOM files
-- Organization template files
+Threat Dragon is used to:
 
-Threat Dragon can be configured to work with local files, GitHub, GitHub Enterprise, GitLab, Bitbucket, Bitbucket Enterprise, and Google Drive.
+- create threat model diagrams
+- list threats for elements in those diagrams
+- record mitigations and countermeasures
+- work with STRIDE, LINDDUN, CIA, CIA-DIE, PLOT4ai, and generic diagram types
 
-## AI And Automation Notes
+## Storage
 
-This file is metadata only. It does not add AI features, expose an API, provide MCP access, or grant access to threat models.
+According to the project documentation:
 
-Related optional tooling:
-
-- Threat Dragon AI Tool documentation: https://www.threatdragon.com/docs/usage/ai-tool.html
-- Threat Dragon AI Tool source: https://github.com/InfosecOTB/threat-dragon-ai-tool
+- the web application can store threat model files on the local filesystem
+- the web application can be configured for GitHub, GitHub Enterprise, Bitbucket, Bitbucket Enterprise, and GitLab
+- the desktop application stores model files on the local filesystem only
 
 ## Data Handling
 
-Do not assume access to private threat models, repository contents, provider tokens, or user data from this file. Threat model data is only available through the application flows and provider integrations configured by the user.
+This file is metadata only. It does not add AI features, expose an API, provide MCP access, or grant access to private threat models, repository contents, provider tokens, or user data.
