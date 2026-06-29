@@ -1,0 +1,55 @@
+# OWASP Threat Dragon
+
+> OWASP Threat Dragon is an OWASP threat modeling application for creating data-flow diagrams, recording threats, and documenting mitigations.
+
+Use this file as a concise entry point for LLMs and coding agents. It points to public documentation and source files only. It is not an API endpoint, MCP server, or integration runtime, and it does not grant access to private threat models, provider tokens, repositories, Google Drive files, or user data.
+
+Threat Dragon has a web application and desktop installers. The web application can store models locally or through configured providers. The desktop application stores model files on the local filesystem.
+
+## Core documentation
+
+- [Getting started](https://www.threatdragon.com/docs/usage/getting-started.html): Create, open, save, and report on threat models in the web and desktop applications.
+- [Diagrams](https://www.threatdragon.com/docs/usage/diagrams.html): Model processes, data stores, actors, data flows, and trust boundaries.
+- [Threat categories](https://www.threatdragon.com/docs/usage/threat-categories.html): Threat Dragon supports STRIDE, LINDDUN, CIA, CIA-DIE, PLOT4ai, and Generic diagram types.
+- [Threats](https://www.threatdragon.com/docs/usage/threats.html): Add threats, severity, status, descriptions, and mitigations to diagram elements.
+- [Templates](https://www.threatdragon.com/docs/usage/templates.html): Create new models from templates and export existing models as templates.
+
+## Configuration and storage
+
+- [Configuration](https://www.threatdragon.com/docs/configure/configure.html): Environment variables and provider configuration for the web application.
+- [Local files](https://www.threatdragon.com/docs/configure/local.html): Local filesystem storage for web local sessions and desktop use.
+- [GitHub](https://www.threatdragon.com/docs/configure/github.html): GitHub and GitHub Enterprise configuration for repository-backed model storage.
+- [GitLab](https://www.threatdragon.com/docs/configure/gitlab.html): GitLab configuration for repository-backed model storage.
+- [Bitbucket](https://www.threatdragon.com/docs/configure/bitbucket.html): Bitbucket and Bitbucket Enterprise configuration for repository-backed model storage.
+- [Google Drive](https://www.threatdragon.com/docs/configure/google.html): Google Drive configuration for web application storage.
+
+## Import, export, and schemas
+
+- [Schema documentation](https://www.threatdragon.com/docs/development/schema.html): Threat Dragon v1 and v2 schemas, template format, TM-BOM notes, and Open Threat Model references.
+- [Threat Dragon v2 schema](https://github.com/OWASP/threat-dragon/blob/main/td.vue/src/assets/schema/threat-dragon-v2.schema.json): Current Threat Dragon model schema.
+- [Threat Dragon v1 schema](https://github.com/OWASP/threat-dragon/blob/main/td.vue/src/assets/schema/threat-dragon-v1.schema.json): Legacy Threat Dragon model schema; v1 imports are converted to v2 in the application.
+- [TM-BOM schema](https://github.com/OWASP/threat-dragon/blob/main/td.vue/src/assets/schema/threat-model.schema.json): Schema used by the TM-BOM validation and conversion code.
+- [Open Threat Model schema](https://github.com/OWASP/threat-dragon/blob/main/td.vue/src/assets/schema/open-threat-model.schema.json): Schema file present for Open Threat Model validation; current UI text says OTM import is not yet supported.
+- [Template schema](https://github.com/OWASP/threat-dragon/blob/main/td.vue/src/assets/schema/owasp-threat-dragon-template.schema.json): Schema used for Threat Dragon template files.
+
+## Development and API
+
+- [Development guide](https://www.threatdragon.com/docs/development/development.html): Local development setup and project structure.
+- [API documentation](https://www.threatdragon.com/docs/development/api.html): Minimal web application API for provider-backed threat models, Google Drive files, templates, authentication, configuration, and health checks.
+- [Testing](https://www.threatdragon.com/docs/testing/testing.html): Unit, end-to-end, and GitHub Actions testing guidance.
+- [Contributing](https://github.com/OWASP/threat-dragon/blob/main/contributing.md): Contribution rules, including the project's AI-use guidance.
+- [Security policy](https://github.com/OWASP/threat-dragon/blob/main/security.md): Security reporting process.
+
+## Source entry points
+
+- [Vue application](https://github.com/OWASP/threat-dragon/tree/main/td.vue): Frontend and Electron desktop application.
+- [Server application](https://github.com/OWASP/threat-dragon/tree/main/td.server): Express server for the web application.
+- [Schema validation](https://github.com/OWASP/threat-dragon/blob/main/td.vue/src/service/schema/ajv.js): Runtime model validation for Threat Dragon, TM-BOM, Open Threat Model, and templates.
+- [TM-BOM migration](https://github.com/OWASP/threat-dragon/tree/main/td.vue/src/service/migration/tmBom): TM-BOM import/export conversion code.
+- [Open Threat Model migration](https://github.com/OWASP/threat-dragon/tree/main/td.vue/src/service/migration/otm): Open Threat Model conversion code.
+- [Threat category models](https://github.com/OWASP/threat-dragon/tree/main/td.vue/src/service/threats/models): STRIDE, LINDDUN, CIA, CIA-DIE, PLOT4ai, and related threat model logic.
+
+## Optional
+
+- [Threat Dragon AI Tool](https://www.threatdragon.com/docs/usage/ai-tool.html): Optional external desktop tool that can generate STRIDE threats and mitigations for Threat Dragon JSON files. This is separate from Threat Dragon itself.
+- [llms.txt proposal](https://llmstxt.org/): Background and format guidance for this metadata file.
