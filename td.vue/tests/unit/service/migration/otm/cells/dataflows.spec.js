@@ -42,7 +42,7 @@ describe('service/migration/otm/cells/dataflow.js', () => {
             });
 
             it('creates flow description', () => {
-                expect(testFlow.data.description).toBe(dataflow.description);
+                expect(testFlow.data.description).toMatch(dataflow.description);
             });
 
             it('creates flow source', () => {

@@ -4,6 +4,153 @@ import otmModel from '../../otm-test-model';
 
 describe('service/migration/otm/cells/properties.js', () => {
 
+    describe('creating description', () => {
+        let description;
+        const testDescription = 'test description';
+
+        beforeEach(() => {
+            console.warn = jest.fn();
+        });
+
+        it('creates default description', () => {
+            description = properties.combineDescription({}, {});
+            expect(description).toBe('');
+            expect(console.warn).not.toHaveBeenCalled();
+        });
+
+        it('copies description', () => {
+            description = properties.combineDescription({}, {description: testDescription});
+            expect(description).toBe(testDescription);
+            expect(console.warn).not.toHaveBeenCalled();
+        });
+
+        describe('creating descriptions for components', () => {
+
+            describe('creating descriptions for processed assets', () => {
+                it('creates description', () => {
+                    description = properties.combineDescription(otmModel, {description: testDescription, assets: {processed: ['public-info']}});
+                    expect(description).toMatch(testDescription);
+                    expect(description).toMatch('processed');
+                    expect(console.warn).not.toHaveBeenCalled();
+                });
+    
+                it('creates description of risk', () => {
+                    description = properties.combineDescription(otmModel, {description: testDescription, assets: {processed: ['public-info']}});
+                    expect(description).toMatch('Asset');
+                    expect(description).toMatch('Confidentiality');
+                    expect(description).toMatch('Integrity');
+                    expect(description).toMatch('Availability');
+                    expect(description).toMatch('evaluation');
+                    expect(console.warn).not.toHaveBeenCalled();
+                });
+    
+                it('creates minimal description', () => {
+                    description = properties.combineDescription(otmModel, {assets: {processed: ['minimal-asset']}});
+                    expect(description).toMatch('processed');
+                    expect(description).toMatch('Asset');
+                    expect(description).toMatch('Confidentiality');
+                    expect(description).toMatch('Integrity');
+                    expect(description).toMatch('Availability');
+                    expect(description).not.toMatch('evaluation');
+                    expect(console.warn).not.toHaveBeenCalled();
+                });
+    
+                it('warns if asset not found', () => {
+                    description = properties.combineDescription(otmModel, {assets: {processed: ['foo']}});
+                    expect(description).toMatch('processed');
+                    expect(console.warn).toHaveBeenCalled();
+                });
+            });
+
+            describe('creating descriptions for stored assets', () => {
+                it('creates description', () => {
+                    description = properties.combineDescription(otmModel, {description: testDescription, assets: {stored: ['public-info']}});
+                    expect(description).toMatch(testDescription);
+                    expect(description).toMatch('stored');
+                    expect(console.warn).not.toHaveBeenCalled();
+                });
+
+                it('creates description of risk', () => {
+                    description = properties.combineDescription(otmModel, {description: testDescription, assets: {stored: ['cc-data']}});
+                    expect(description).toMatch('Asset');
+                    expect(description).toMatch('Confidentiality');
+                    expect(description).toMatch('Integrity');
+                    expect(description).toMatch('Availability');
+                    expect(description).toMatch('evaluation');
+                    expect(console.warn).not.toHaveBeenCalled();
+                });
+
+                it('creates minimal description', () => {
+                    description = properties.combineDescription(otmModel, {assets: {stored: ['minimal-asset']}});
+                    expect(description).toMatch('stored');
+                    expect(description).toMatch('Asset');
+                    expect(description).toMatch('Confidentiality');
+                    expect(description).toMatch('Integrity');
+                    expect(description).toMatch('Availability');
+                    expect(description).not.toMatch('evaluation');
+                    expect(console.warn).not.toHaveBeenCalled();
+                });
+
+                it('warns if asset not found', () => {
+                    description = properties.combineDescription(otmModel, {assets: {stored: ['foo']}});
+                    expect(description).toMatch('stored');
+                    expect(console.warn).toHaveBeenCalled();
+                });
+            });
+        });
+
+        it('creates description for multiple assets', () => {
+            description = properties.combineDescription(otmModel, {description: testDescription, assets: {processed: ['public-info'], stored: ['cc-data', 'minimal-asset']}});
+            expect(description).toMatch(testDescription);
+            expect(description).toMatch('processed');
+            expect(description).toMatch('stored');
+            expect(console.warn).not.toHaveBeenCalled();
+        });
+
+        describe('creating descriptions for dataflows', () => {
+            it('creates description', () => {
+                description = properties.combineDescription(otmModel, {description: testDescription, assets: ['cc-data']});
+                expect(description).toMatch(testDescription);
+                expect(description).toMatch('transit');
+                expect(console.warn).not.toHaveBeenCalled();
+            });
+    
+            it('creates description for multiple assets', () => {
+                description = properties.combineDescription(otmModel, {description: testDescription, assets: ['public-info', 'cc-data', 'minimal-asset']});
+                expect(description).toMatch(testDescription);
+                expect(description).toMatch('transit');
+                expect(console.warn).not.toHaveBeenCalled();
+            });
+
+            it('creates description of risk', () => {
+                description = properties.combineDescription(otmModel, {description: testDescription, assets: ['cc-data']});
+                expect(description).toMatch('Asset');
+                expect(description).toMatch('Confidentiality');
+                expect(description).toMatch('Integrity');
+                expect(description).toMatch('Availability');
+                expect(description).toMatch('evaluation');
+                expect(console.warn).not.toHaveBeenCalled();
+            });
+    
+            it('creates minimal description', () => {
+                description = properties.combineDescription(otmModel, {assets: ['minimal-asset']});
+                expect(description).toMatch('transit');
+                expect(description).toMatch('Asset');
+                expect(description).toMatch('Confidentiality');
+                expect(description).toMatch('Integrity');
+                expect(description).toMatch('Availability');
+                expect(description).not.toMatch('evaluation');
+                expect(console.warn).not.toHaveBeenCalled();
+            });
+    
+            it('warns if asset not found', () => {
+                description = properties.combineDescription(otmModel, {assets: ['foo']});
+                expect(description).toMatch('transit');
+                expect(console.warn).toHaveBeenCalled();
+            });
+        });
+    });
+
     describe('creating position', () => {
         const testRepId = 'architecture-diagram';
         const testPosition = {x: 100, y: 200};

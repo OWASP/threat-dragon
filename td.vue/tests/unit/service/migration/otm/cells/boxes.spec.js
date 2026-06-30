@@ -10,7 +10,6 @@ describe('service/migration/otm/cells/boxes.js', () => {
                 name: 'Test trust boundary box name',
                 id: 'test-trust-boundary-box-id',
                 description: 'test-trust-boundary-box-description',
-                assets: ['test-trust-boundary-box-asset'],
                 attributes: {attr1: 'value1', attr2: 'value2'},
                 parent: {trustZone: 'test-trust-boundary-box-parent'},
                 risk: {trustRating: 100},

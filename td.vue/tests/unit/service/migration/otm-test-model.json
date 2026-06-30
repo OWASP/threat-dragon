@@ -70,6 +70,15 @@
         "comment": "Public information has no confidentiality at all but it is quite important for it to be available and to not be changed by attakers"
       },
       "attributes": null
+    },
+    {
+      "name": "Minimal asset",
+      "id": "minimal-asset",
+      "risk": {
+        "confidentiality": 44,
+        "integrity": 55,
+        "availability": 66
+      }
     }
   ],
   "components": [

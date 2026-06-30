@@ -31,8 +31,50 @@ const cellProperties = (component, representation) => {
     return cell;
 };
 
-const combineDescription = (_model, node) => { // eslint-disable-line no-unused-vars
-    const description = node?.description || '';
+const assetDescription = (model, assets) => {
+    let description = '';
+    assets.forEach((nodeAsset) => {
+        let found = false;
+        for (const modelAsset of model.assets) {
+            if (nodeAsset === modelAsset.id) {
+                description += modelAsset.description ? '\nAsset: ' + modelAsset.description + '\nRisk:' : '\nAsset risk:';
+                description += '\nConfidentiality: ' + modelAsset.risk.confidentiality;
+                description += ', Integrity: ' + modelAsset.risk.integrity;
+                description += ', Availability: ' + modelAsset.risk.availability;
+                description += modelAsset.risk.comment ? '\nRisk evaluation: ' + modelAsset.risk.comment : '';
+                found = true;
+                break;
+            }
+        }
+        if (found === false) {       
+            console.warn('Could not find a match for asset ID: ' + nodeAsset);
+        }
+    });
+
+    return description;
+};
+
+const combineDescription = (model, node) => {
+    let description = '';
+
+    if (!node.assets || !model.assets) {
+        return node?.description || description;
+    }
+    
+    if (!node.assets.processed && !node.assets.stored) {
+        description = node.description ? node.description + ' with data in transit: ' : 'Data in transit: ';
+        description += assetDescription(model, node.assets);
+    } else {
+        description = node.description;
+        if (node.assets.processed) {
+            description += '\nWith processed assets: ';
+            description += assetDescription(model, node.assets.processed);
+        }
+        if (node.assets.stored) {
+            description += '\nWith stored assets: ';
+            description += assetDescription(model, node.assets.stored);
+        }
+    }
 
     return description;
 };
