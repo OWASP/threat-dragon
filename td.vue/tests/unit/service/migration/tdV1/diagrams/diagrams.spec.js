@@ -1,5 +1,5 @@
 import diagrams from '@/service/migration/tdV1/diagrams/diagrams';
-import v1Model from '../v1-threat-model';
+import v1Model from '../../v1-test-model';
 
 const testVersion = 'testVersion';
 

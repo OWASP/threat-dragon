@@ -2,8 +2,8 @@ import controls from '@/service/migration/tmBom/diagrams/threats/controls';
 import assumptions from '@/service/migration/tmBom/diagrams/assumptions';
 import risks from '@/service/migration/tmBom/diagrams/threats/risks';
 import threats from '@/service/migration/tmBom/diagrams/threats/threats';
-import tdModel from '../../td-test-model';
-import tmBomModel from '../../tmbom-test-model';
+import tdModel from '../../../td-test-model';
+import tmBomModel from '../../../tmbom-test-model';
 
 jest.mock('@/service/migration/tmBom/diagrams/assumptions');
 jest.mock('@/service/migration/tmBom/diagrams/threats/controls');

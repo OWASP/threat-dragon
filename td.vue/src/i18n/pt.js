@@ -238,9 +238,9 @@ const messages = {
             export: 'Não foi possível exportar o Modelo de Ameaça. Verifique a consola do programador para mais informações.',
             jsonSchema: 'O modelo não corresponde estritamente ao esquema. Detalhes na consola do programador.',
             noModelOpen: 'Nenhum modelo aberto',
-            otmUnsupported: 'A importação do formato de ficheiro Open Threat Model ainda não é suportada.',
+            otmImported: 'A importação do formato de ficheiro Open Threat Model ainda não é suportada.',
             save: 'Não foi possível guardar o Modelo de Ameaça. Verifique a consola do programador para mais informações.',
-            tmUnsupported: 'A importação do formato de ficheiro TM-BOM é experimental e está sujeita a alterações que podem quebrar modelos.',
+            tmBomImported: 'A importação do formato de ficheiro TM-BOM é experimental e está sujeita a alterações que podem quebrar modelos.',
             v1Translate: 'Os modelos importados da versão 1.x serão atualizados para o esquema da versão 2.0.'
         },
         prompts: {

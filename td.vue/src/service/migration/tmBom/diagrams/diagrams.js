@@ -13,7 +13,7 @@ const assignThreats = (model, components) => {
                     if (component.data.threats) {
                         component.data.threats.push(threat);
                     } else {
-                        console.warn('Ignoring threat ' + threat.id + 'for trust zone : ' + component.id);
+                        console.warn('Ignoring threat ' + threat.id + ' for trust zone : ' + component.id);
                     }
                 }
             });

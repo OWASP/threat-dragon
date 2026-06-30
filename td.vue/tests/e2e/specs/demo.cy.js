@@ -23,4 +23,13 @@ describe('print', () => {
         cy.url().should('contain', '/local/Demo%20Threat%20Model');
     });
 
+    it('opens a TM-BOM format threat model', () => {
+        cy.get('a').contains('Husky AI').click();
+        cy.url().should('contain', '/local/Husky%20AI');
+    });
+
+    it('opens an OTM format threat model', () => {
+        cy.get('a').contains('Mobile to Public Cloud').click();
+        cy.url().should('contain', '/local/Mobile%20to%20Public%20Cloud');
+    });
 });

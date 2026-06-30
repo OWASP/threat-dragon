@@ -8,8 +8,8 @@ import summary from '@/service/migration/tmBom/summary';
 import threats from '@/service/migration/tmBom/diagrams/threats/threats';
 import tmBom from '@/service/migration/tmBom/tmBom';
 
-import tdModel from './td-test-model';
-import tmBomModel from './tmbom-test-model';
+import tdModel from '../td-test-model';
+import tmBomModel from '../tmbom-test-model';
 
 jest.mock('@/service/migration/tmBom/diagrams/boxes');
 jest.mock('@/service/migration/tmBom/detail');
@@ -54,6 +54,8 @@ describe('service/migration/tmBom/tmBom.js', () => {
             it('reinstates the compatibility values', () => {
                 expect(testModel.description).toBe(tdModel.compatibility.description);
                 expect(testModel.frozen).toBe(tdModel.compatibility.frozen);
+                expect(testModel.released_at).toBe(tdModel.compatibility.released_at);
+                expect(testModel.product_release_date).toBe(tdModel.compatibility.product_release_date);
                 expect(testModel.release_docs_link).toBe(tdModel.compatibility.release_docs_link);
                 expect(testModel.reviewed_at).toBe(tdModel.compatibility.reviewed_at);
                 expect(testModel.repo_link).toBe(tdModel.compatibility.repo_link);
@@ -83,13 +85,14 @@ describe('service/migration/tmBom/tmBom.js', () => {
 
             it('defaults absent optional values', () => {
                 const noOptionsModel = JSON.parse(JSON.stringify(tdModel));
-                delete noOptionsModel.compatibility.frozen;
-                delete noOptionsModel.compatibility.repo_link;
+                noOptionsModel.compatibility = {};
                 testModel = tmBom.exportAsTmbom(noOptionsModel);
-                expect(testModel.description.length).toBeGreaterThan(1);
+                expect(testModel.description).toBeUndefined();
                 expect(testModel.frozen).toBeUndefined();
-                expect(testModel.release_docs_link).toBe(tmBomModel.release_docs_link);
-                expect(testModel.reviewed_at).toBe(tmBomModel.reviewed_at);
+                expect(testModel.released_at).toBeUndefined();
+                expect(testModel.product_release_date).toBeUndefined();
+                expect(testModel.release_docs_link).toBeUndefined();
+                expect(testModel.reviewed_at).toBeUndefined();
                 expect(testModel.repo_link).toBeUndefined();
             });
         });
@@ -126,6 +129,8 @@ describe('service/migration/tmBom/tmBom.js', () => {
             
             it('stores the compatibility values', () => {
                 expect(testModel.compatibility.version).toBe(tmBomModel.version);
+                expect(testModel.compatibility.released_at).toBe(tmBomModel.released_at);
+                expect(testModel.compatibility.product_release_date).toBe(tmBomModel.product_release_date);
                 expect(testModel.compatibility.frozen).toBe(tmBomModel.frozen);
                 expect(testModel.compatibility.release_docs_link).toBe(tmBomModel.release_docs_link);
                 expect(testModel.compatibility.reviewed_at).toBe(tmBomModel.reviewed_at);
@@ -137,11 +142,15 @@ describe('service/migration/tmBom/tmBom.js', () => {
             it('skips absent optional values', () => {
                 const noOptionsModel = JSON.parse(JSON.stringify(tmBomModel));
                 delete noOptionsModel.frozen;
+                delete noOptionsModel.release_docs_link;
+                delete noOptionsModel.reviewed_at;
                 delete noOptionsModel.repo_link;
                 testModel = tmBom.importTmbom(noOptionsModel);
                 expect(testModel.compatibility.frozen).toBeUndefined();
-                expect(testModel.compatibility.release_docs_link).toBe(tmBomModel.release_docs_link);
-                expect(testModel.compatibility.reviewed_at).toBe(tmBomModel.reviewed_at);
+                expect(testModel.compatibility.released_at).toBe(tmBomModel.released_at);
+                expect(testModel.compatibility.product_release_date).toBe(tmBomModel.product_release_date);
+                expect(testModel.compatibility.release_docs_link).toBeUndefined();
+                expect(testModel.compatibility.reviewed_at).toBeUndefined();
                 expect(testModel.compatibility.repo_link).toBeUndefined();
             });
         });

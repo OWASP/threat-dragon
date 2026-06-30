@@ -11,29 +11,40 @@ describe('service/schema/ajv.js', () => {
     const invalidTmModel = JSON.parse(JSON.stringify(tmModel));
     invalidTmModel['version'] = 0;
 
+    beforeEach(() => {
+        console.debug = jest.fn();
+        console.warn = jest.fn();
+    });
+
     describe('isValid', () => {
         it('validates V1 models', () => {
             expect(schema.isValid(v1Model)).toBe(true);
+            expect(console.warn).not.toHaveBeenCalled();
         });
 
         it('validates V2 models', () => {
             expect(schema.isValid(v2Model)).toBe(true);
+            expect(console.warn).not.toHaveBeenCalled();
         });
 
         it('validates TM models', () => {
             expect(schema.isValid(tmModel)).toBe(true);
+            expect(console.warn).not.toHaveBeenCalled();
         });
 
         it('validates OTM models', () => {
             expect(schema.isValid(otmModel)).toBe(true);
+            expect(console.warn).not.toHaveBeenCalled();
         });
 
         it('detects no schema match', () => {
             expect(schema.isValid({'invalidJson': 'made up'})).toBe(false);
+            expect(console.warn).toHaveBeenCalled();
         });
 
         it('rejects invalid JSON', () => {
             expect(schema.isValid('invalidJson')).toBe(false);
+            expect(console.warn).toHaveBeenCalled();
         });
     });
 
@@ -160,10 +171,12 @@ describe('service/schema/ajv.js', () => {
     describe('validateTemplateFormat', () => {
         it('reports valid template format', () => {
             expect(schema.validateTemplateFormat(template).valid).toBe(true);
+            expect(console.warn).not.toHaveBeenCalled();
         });
 
         it('rejects invalid template format', () => {
             expect(schema.validateTemplateFormat(v2Model).valid).toBe(false);
+            expect(console.warn).toHaveBeenCalled();
         });
     });
 

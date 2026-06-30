@@ -1,5 +1,5 @@
 import dataSets from '@/service/migration/tmBom/diagrams/sets';
-import tmBomModel from '../tmbom-test-model';
+import tmBomModel from '../../tmbom-test-model';
 import { components as nodes } from './mockTdComponents.json';
 
 describe('service/migration/tmBom/diagrams/sets.js', () => {

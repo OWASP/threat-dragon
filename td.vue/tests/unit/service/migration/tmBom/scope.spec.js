@@ -1,5 +1,5 @@
 import scope from '@/service/migration/tmBom/scope';
-import tdModel from './td-test-model';
+import tdModel from '../td-test-model';
 
 jest.mock('@/service/migration/tmBom/diagrams/assumptions');
 

@@ -40,7 +40,9 @@ const boundary = {
 
 const boundaryBox = {
     attrs: {
-        label: tc('threatmodel.shapes.trustBoundary')
+        label: {
+            text: tc('threatmodel.shapes.trustBoundary')
+        }
     },
     shape: 'trust-boundary-box',
     zIndex: 10,
@@ -73,39 +75,39 @@ const flow = {
     width: 200,
     height: 100,
     labels: [
-	  {
-	    markup: [
-	      {
-	        tagName: 'ellipse',
-	        selector: 'labelBody'
-	      },
-	      {
-	        tagName: 'text',
-	        selector: 'labelText'
-	      }
-	    ],
-	    attrs: {
-	      labelText: {
-	        text: '',
-	        textAnchor: 'middle',
-	        textVerticalAnchor: 'middle'
-	      },
-	      labelBody: {
-	        ref: 'labelText',
-	        refRx: '50%',
-	        refRy: '60%',
-	        fill: '#fff',
-	        strokeWidth: 0
-	      }
-	    },
-	    position: {
-	      distance: 0.5,
-	      args: {
-	        keepGradient: true,
-	        ensureLegibility: true
-	      }
-	    }
-	  }
+        {
+            markup: [
+                {
+                    tagName: 'ellipse',
+                    selector: 'labelBody'
+                },
+                {
+                    tagName: 'text',
+                    selector: 'labelText'
+                }
+            ],
+            attrs: {
+                labelText: {
+                    text: '',
+                    textAnchor: 'middle',
+                    textVerticalAnchor: 'middle'
+                },
+                labelBody: {
+                    ref: 'labelText',
+                    refRx: '50%',
+                    refRy: '60%',
+                    fill: '#fff',
+                    strokeWidth: 0
+                }
+            },
+            position: {
+                distance: 0.5,
+                args: {
+                    keepGradient: true,
+                    ensureLegibility: true
+                }
+            }
+        }
     ],
 
     connector: 'smooth',
