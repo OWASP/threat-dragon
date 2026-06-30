@@ -12,7 +12,7 @@
                 <b-card :header="$t('threatmodel.description')">
                     <b-row class="tm-card">
                         <b-col>
-                            <p id="tm_description">{{ model.summary.description }}</p>
+                            <p id="tm_description" v-html="markdownToHTML(model.summary.description)"></p>
                         </b-col>
                     </b-row>
                 </b-card>
@@ -84,7 +84,6 @@
 <style lang="scss" scoped>
 .tm-card {
     font-size: 14px;
-    white-space: pre-wrap;
 }
 
 .diagram-header-text a {
@@ -106,6 +105,7 @@
 <script>
 import { mapState } from 'vuex';
 
+import { markdownToHTML } from '@/service/formatting-utils.js';
 import { getProviderType } from '@/service/provider/providers.js';
 import { writeFile } from '@/service/save.js';
 import TdDropdown from '@/components/Dropdown.vue';
@@ -122,13 +122,16 @@ export default {
         TdImage,
         TdThreatModelSummaryCard
     },
-    computed: mapState({
-        enableTemplates: (state) => ['github', 'local'].includes(state.provider.selected),
-        model: (state) => state.threatmodel.data,
-        providerType: (state) => getProviderType(state.provider.selected),
-        version: (state) => state.packageBuildVersion
-    }),
+    computed: {
+        ...mapState({
+            enableTemplates: (state) => ['github', 'local'].includes(state.provider.selected),
+            model: (state) => state.threatmodel.data,
+            providerType: (state) => getProviderType(state.provider.selected),
+            version: (state) => state.packageBuildVersion
+        })
+    },
     methods: {
+        markdownToHTML,
         onEditClick(evt) {
             evt.preventDefault();
             this.$router.push({ name: `${this.providerType}ThreatModelEdit`, params: this.$route.params });

@@ -6,9 +6,8 @@
         <div class="page-subtitle td-description">
             {{ $t('threatmodel.description') }}
         </div>
-        <div class="mt-2 td-summary">
-            {{ summary || $t('report.notProvided') }}
-        </div>
+        <div class="mt-2 td-summary" v-if="summary" v-html="markdownToHTML(summary)"></div>
+        <div class="mt-2 td-summary" v-else>{{ $t('report.notProvided') }}</div>
         <div class="page-subtitle td-report-summary">
             {{ $t('report.summary') }}
         </div>
@@ -65,11 +64,13 @@
 .page {
     display: flex;
     flex-direction: column;
-    white-space: pre-wrap;
 }
 </style>
 
 <script>
+
+import { markdownToHTML } from '@/service/formatting-utils.js';
+
 export default {
     name: 'TdPrintExecutiveSummary',
     props: {
@@ -133,6 +134,7 @@ export default {
         }
     },
     methods: {
+        markdownToHTML,
         getOpenThreats() {
             return this.threats
                 .filter(threat => threat.status && threat.status === 'Open');

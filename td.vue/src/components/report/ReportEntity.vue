@@ -15,17 +15,24 @@
         </b-row>
         <b-row v-if="entity.data.description || showProperties">
             <b-col>
-                <p class="entity-description" v-if="entity.data.description">{{ $t('threatmodel.properties.description') }}: {{ entity.data.description }}</p>
+                <p class="entity-description" v-if="entity.data.description" v-html="markdownToHTML(this.$t('threatmodel.properties.description') + ': ' + this.entity.data.description)"></p>
                 <p class="entity-description" v-if="showProperties">{{ properties }}</p>
             </b-col>
         </b-row>
-        <b-row>
+        <b-row v-if="tableData.length > 0">
             <b-col md="12">
                 <b-table
                     :data-test-id="entity.data.name.replace(' ', '_')"
                     :items="tableData"
+                    :fields="fields"
                     striped
                     responsive>
+                    <template #cell(description)="data">
+                        <div v-html="markdownToHTML(data.value)"></div>
+                    </template>
+                    <template #cell(mitigation)="data">
+                        <div v-html="markdownToHTML(data.value)"></div>
+                    </template>
                 </b-table>
             </b-col>
         </b-row>
@@ -33,9 +40,16 @@
 </template>
 
 <style lang="scss" scoped>
+:deep(table p) {
+    margin-bottom: 0.5rem;
+}
+
+:deep(table p:last-child) {
+    margin-bottom: 0;
+}
+
 .td-threat-data {
     width: 99%;
-    white-space: pre-wrap;
 }
 
 .entity-title {
@@ -47,11 +61,11 @@
 
 .entity-description {
     padding: 15px;
-    white-space: pre-wrap;
 }
 </style>
 
 <script>
+import { markdownToHTML } from '@/service/formatting-utils.js';
 import threatService from '@/service/threats/index.js';
 
 export default {
@@ -86,17 +100,28 @@ export default {
                 showOutOfScope: this.showOutOfScope
             }).map((threat) => {
                 return {
-                    [this.$t('threats.properties.number')]: threat.number,
-                    [this.$t('threats.properties.title')]: threat.title,
-                    [this.$t('threats.properties.type')]: threat.type,
-                    [this.$t('threats.properties.severity')]: this.translateSeverity(threat.severity),
-                    [this.$t('threats.properties.status')]: this.translateStatus(threat.status),
-                    [this.$t('threats.properties.score')]: threat.score,
-                    [this.$t('threats.properties.description')]: threat.description,
-                    [this.$t('threats.properties.mitigation')]: threat.mitigation
-
+                    number: threat.number,
+                    title: threat.title,
+                    type: threat.type,
+                    severity: this.translateSeverity(threat.severity),
+                    status: this.translateStatus(threat.status),
+                    score: threat.score,
+                    description: threat.description,
+                    mitigation: threat.mitigation
                 };
             });
+        },
+        fields: function () {
+            return [
+                { key: 'number', label: this.$t('threats.properties.number') },
+                { key: 'title', label: this.$t('threats.properties.title') },
+                { key: 'type', label: this.$t('threats.properties.type') },
+                { key: 'severity', label: this.$t('threats.properties.severity') },
+                { key: 'status', label: this.$t('threats.properties.status') },
+                { key: 'score', label: this.$t('threats.properties.score') },
+                { key: 'description', label: this.$t('threats.properties.description') },
+                { key: 'mitigation', label: this.$t('threats.properties.mitigation') }
+            ];
         },
         properties: function () {
             let properties = '';
@@ -146,6 +171,7 @@ export default {
         }
     },
     methods: {
+        markdownToHTML,
         toCamelCase(str) {
             // https://stackoverflow.com/questions/2970525/converting-any-string-into-camel-case
             return str.replace(/(?:^\w|[A-Z]|\b\w)/g, (ltr, idx) => idx === 0 ? ltr.toLowerCase() : ltr.toUpperCase()).replace(/\s+/g, '');
