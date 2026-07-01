@@ -69,7 +69,7 @@
     "url": "https://github.com/OWASP/threat-dragon/issues"
   },
   "devDependencies": {
-    "baseline-browser-mapping": "^2.10.34",
+    "baseline-browser-mapping": "^2.10.38",
     "npm-run-all2": "^8.0.4",
     "rimraf": "^6.1.3"
   },
