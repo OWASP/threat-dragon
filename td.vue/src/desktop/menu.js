@@ -369,8 +369,6 @@ function saveHTMLReport (htmlPath) {
         } else {
             logger.log.debug(messages[language].forms.saveAs + ' : canceled');
         }
-    }).catch(err => {
-        logger.log.error(err);
     });
 }
 
@@ -401,7 +399,7 @@ function savePDFReport (pdfPath) {
                     mainWindow.webContents.send('print-model-confirmed', pdfPath);
                 });
             }).catch(error => {
-                logger.log.error(`Failed to write PDF to ${pdfPath}: `, error);
+                logger.log.error(`Write PDF failed for ${pdfPath}: `, error);
                 mainWindow.webContents.send('save-model-failed', pdfPath, messages[language].threatmodel.warnings.export);
             });
 
@@ -409,8 +407,6 @@ function savePDFReport (pdfPath) {
         } else {
             logger.log.debug(messages[language].forms.exportPdf + ' : canceled');
         }
-    }).catch(err => {
-        logger.log.error(err);
     });
 }
 
