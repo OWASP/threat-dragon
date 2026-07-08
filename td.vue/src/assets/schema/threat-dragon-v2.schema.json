@@ -432,6 +432,14 @@
         }
       },
       "required": [ "contributors", "diagrams", "diagramTop", "reviewer", "threatTop" ]
+    },
+    "release_version": {
+      "description": "The release version of the model",
+      "type": "string"
+    },
+    "released_at": {
+      "description": "The release date of the model",
+      "type": "string"
     }
   },
   "required": [ "version", "summary", "detail" ]
