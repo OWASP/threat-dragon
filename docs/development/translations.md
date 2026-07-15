@@ -110,7 +110,7 @@ configuration, which is the combination of static rules in `td.vue/src/i18n/inde
   value. This means operators can set a preferred fallback language (e.g. Japanese for an organisation based in Japan)
   without modifying the application code.
 
-> **Note:** The static fallback is **one‑way** (`pt` → `pt-BR`). `pt` does not fall back to Brazilian Portuguese by default,
+> **Note:** The static fallback is **one‑way** (`pt` → `pt-BR`). `pt-BR` does not fall back to European Portuguese (`pt`) by default,
   unless you add it to the `fallbackLocale` object.
 
 ### Adding a new language

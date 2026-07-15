@@ -1,4 +1,5 @@
 import { CONFIG_CLEAR, CONFIG_LOADED, CONFIG_ERROR } from '@/store/actions/config.js';
+import { RESOLVE_LOCALE } from '@/store/actions/locale.js';
 import configModule from '@/store/modules/config.js';
 
 jest.mock('@/service/api/api', () => ({
@@ -119,13 +120,13 @@ describe('store/modules/config.js', () => {
                 consoleError.mockRestore();
             });
 
-            it('does not dispatch locale actions (re-evaluation moved to store/index.js)', async () => {
+            it('dispatches locale resolution after loading config', async () => {
                 context.rootState.locale.locale = 'fr';
                 const configData = { defaultLocale: 'en', allowedLocales: ['de', 'en'] };
                 context.rootState.config.config = configData;
                 api.getAsync.mockResolvedValue({ data: configData });
                 await configModule.actions.CONFIG_FETCH(context);
-                expect(dispatch).not.toHaveBeenCalledWith(expect.stringContaining('LOCALE'), expect.any(String));
+                expect(dispatch).toHaveBeenCalledWith(RESOLVE_LOCALE, null, { root: true });
             });
         });
     });
