@@ -39,7 +39,7 @@ const actions = {
         dispatch(CONFIG_CLEAR);
 
         try {
-            const response = await api.getAsync('/api/config');
+            const response = await api.getAsync('/api/config', { timeout: 5000 });
             // The server wraps config in { status: 200, data: { ...config } }
             // but getAsync returns res.data, so response = { status: 200, data: { ...config } }.
             // Extract the inner config object from response.data.
@@ -95,4 +95,3 @@ export default {
     mutations,
     getters
 };
-

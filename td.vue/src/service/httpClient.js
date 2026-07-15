@@ -19,7 +19,6 @@ const get = () => {
 
 const createClient = () => {
     const client = axios.create();
-    client.defaults.timeout = 5000;
     client.defaults.headers.common.Accept = 'application/json';
     client.defaults.headers.post['Content-Type'] = 'application/json';
 
@@ -53,7 +52,7 @@ const createClient = () => {
             return Promise.reject(err);
         };
 
-        if (err.response.status !== 401) {
+        if (err.response?.status !== 401) {
             return logAndExit();
         }
 

@@ -86,6 +86,12 @@ describe('store/modules/config.js', () => {
                 expect(dispatch).toHaveBeenCalledWith(CONFIG_CLEAR);
             });
 
+            it('requests config with a five-second timeout', async () => {
+                api.getAsync.mockResolvedValue({ data: { githubEnabled: true } });
+                await configModule.actions.CONFIG_FETCH(context);
+                expect(api.getAsync).toHaveBeenCalledWith('/api/config', { timeout: 5000 });
+            });
+
             it('commits CONFIG_LOADED with config from server "data" wrapper', async () => {
                 const configData = { githubEnabled: true, defaultLocale: 'es', allowedLocales: ['es', 'en'] };
                 api.getAsync.mockResolvedValue({ data: configData });
