@@ -3369,7 +3369,9 @@
   "compatibility": {
     "version": "1.0.2",
     "description": "Test description",
-    "frozen": false,
+    "frozen": true,
+    "released_at": "2025-06-12",
+    "product_release_date": "2025-07-12",
     "release_docs_link": "https://example.com/release_docs_link",
     "reviewed_at": "2025-05-12",
     "repo_link": "https://example.com/repo_link"

@@ -1,5 +1,5 @@
 import assumptions from '@/service/migration/tmBom/diagrams/assumptions';
-import tmBomModel from '../tmbom-test-model';
+import tmBomModel from '../../tmbom-test-model';
 
 describe('service/migration/tmBom/diagrams/assumptions.js', () => {
 

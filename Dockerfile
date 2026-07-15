@@ -1,5 +1,5 @@
 # NPM: Base image with latest npm (in native host's platform)
-FROM --platform=$BUILDPLATFORM docker.io/library/node:24.16.0-alpine@sha256:2bdb65ed1dab192432bc31c95f94155ca5ad7fc1392fb7eb7526ab682fa5bf14 AS build-npm-base
+FROM --platform=$BUILDPLATFORM docker.io/library/node:24.18.0-alpine@sha256:a0b9bf06e4e6193cf7a0f58816cc935ff8c2a908f81e6f1a95432d679c54fbfd AS build-npm-base
 WORKDIR /build
 
 # Copy over NPM config and enforce usage across all tool calls
@@ -91,7 +91,7 @@ COPY docs/ .
 RUN bundle exec jekyll build -b ./docs/
 
 
-FROM docker.io/library/node:24.16.0-alpine@sha256:2bdb65ed1dab192432bc31c95f94155ca5ad7fc1392fb7eb7526ab682fa5bf14 AS final
+FROM docker.io/library/node:24.18.0-alpine@sha256:a0b9bf06e4e6193cf7a0f58816cc935ff8c2a908f81e6f1a95432d679c54fbfd AS final
 
 # Copy over NPM config and enforce usage across all tool calls
 # Contains configuration regarding supply chain

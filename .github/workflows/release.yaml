@@ -217,8 +217,8 @@ jobs:
             ${{ runner.os }}-node-
             ${{ runner.os }}-
 
-      - name: Install packages
-        run: npm install
+      - name: Install clean packages
+        run: npm clean-install
 
       - name: Prepare for MacOS notarization
         # Import Apple API key to support signing of app

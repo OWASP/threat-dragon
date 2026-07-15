@@ -29,7 +29,11 @@ const removeDirectory = (directoryPath) => {
         return;
     }
 
-    fs.rmSync(directoryPath, { recursive: true, force: true });
+    try {
+        fs.rmSync(directoryPath, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
+    } catch (error) {
+        console.warn(`Could not remove temporary directory ${directoryPath}: ${error.message}`);
+    }
 };
 
 const withTempDirectory = async (prefix, callback) => {

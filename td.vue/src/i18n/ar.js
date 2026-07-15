@@ -241,9 +241,9 @@ const messages = {
             export: 'Could not export the Threat Model. Check the developer console for more information',
             jsonSchema: 'Model does not strictly match schema. Details from the developer console',
             noModelOpen: 'No model open',
-            otmUnsupported: 'Import of Open Threat Model file format not yet supported',
+            otmImported: 'Import of Open Threat Model converts the file to Threat Dragon',
             save: 'Could not save the Threat Model. Check the developer console for more information',
-            tmUnsupported: 'Import of TM-BOM files converts the file format to Threat Dragon',
+            tmBomImported: 'Import of TM-BOM converts the file format to Threat Dragon',
             v1Translate: 'نماذج التهديد الإصدار 2.0 غير متوافقة مع الإصدارات السابقة مع نماذج Threat Dragon للإصدار x.1 من ستتم ترقية نماذج الإصدار x.1 المستوردة إلى مخطط الإصدار 2.0،'
         },
         prompts: {
@@ -474,7 +474,11 @@ const messages = {
         status: {
             notApplicable: 'غير قابل للتطبيق',
             open: 'مفتوح',
-            mitigated: 'تم التخفيف'
+            mitigated: 'تم التخفيف',
+            accepted: 'Accepted',
+            transferred: 'Transferred',
+            avoided: 'Avoided',
+            eliminated: 'Eliminated'
         },
         severity: {
             tbd: 'سيتم الإعلان عنها',
@@ -505,6 +509,10 @@ const messages = {
         threatStats: {
             total: 'إجمالي التهديدات',
             mitigated: 'الإجمالي المُخفف',
+            accepted: 'Total Accepted',
+            transferred: 'Total Transferred',
+            avoided: 'Total Avoided',
+            eliminated: 'Total Eliminated',
             notApplicable: 'Total Not Applicable',
             notMitigated: 'الإجمالي غير المُخفف',
             openCritical: 'مفتوح / الأولوية الحرجة',

@@ -166,4 +166,24 @@ describe('components/printed-report/ReportEntity.vue', () => {
     it('shows the threat mitigation for t3', () => {
         expect(tableHasCellWithText('No need to do things')).toEqual(true);
     });
+
+    it('translates the accepted status', () => {
+        expect(wrapper.vm.translateStatus('Accepted')).toEqual('threats.status.accepted');
+    });
+
+    it('translates the transferred status', () => {
+        expect(wrapper.vm.translateStatus('Transferred')).toEqual('threats.status.transferred');
+    });
+
+    it('translates the avoided status', () => {
+        expect(wrapper.vm.translateStatus('Avoided')).toEqual('threats.status.avoided');
+    });
+
+    it('translates eliminated status', () => {
+        expect(wrapper.vm.translateStatus('Eliminated')).toEqual('threats.status.eliminated');
+    });
+
+    it('falls back to Unknown for an unrecognised status', () => {
+        expect(wrapper.vm.translateStatus('Bogus')).toEqual('Unknown');
+    });
 });

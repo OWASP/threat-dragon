@@ -63,6 +63,7 @@
 import TdPrintReportEntity from '@/components/printed-report/ReportEntity.vue';
 import TdReadOnlyDiagram from '@/components/ReadOnlyDiagram.vue';
 import TdReportEntity from '@/components/report/ReportEntity.vue';
+import { isResolved } from '@/service/threats/status.js';
 
 export default {
     name: 'TdDiagramDetail',
@@ -99,7 +100,7 @@ export default {
             return this.diagram.cells
                 .filter(x => !!x.data && !!x.data.threats
                     && (this.showOutOfScope || !x.data.outOfScope)
-                    && (this.showEmpty || x.data.threats.some(y => this.showMitigated || y.status.toLowerCase() !== 'mitigated')));
+                    && (this.showEmpty || x.data.threats.some(y => this.showMitigated || !isResolved(y.status))));
         }
     },
 };

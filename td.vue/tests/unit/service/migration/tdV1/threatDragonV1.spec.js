@@ -1,5 +1,5 @@
 import threatDragonV1 from '@/service/migration/tdV1/threatDragonV1';
-import v1Model from './v1-threat-model';
+import v1Model from '../v1-test-model';
 
 const emtpyV1Model = {'summary':{'title':'New threat model'}, 'detail':{'contributors':[], 'diagrams':[]}};
 

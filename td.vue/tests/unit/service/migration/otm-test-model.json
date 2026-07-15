@@ -8,19 +8,15 @@
     "ownerContact": "john.doe@example.com",
     "tags": [ "test tag 1", "test tag 2" ],
     "attributes": {
+      "filePath": "file.xml",
       "cmdbId": "MyApp123"
     }
   },
   "representations": [
     {
-      "name": "Architecture Diagram",
-      "id": "architecture-diagram",
-      "type": "diagram",
-      "size": {
-        "width": 1000,
-        "height": 1100
-      },
-      "attributes": null
+      "name": "Threat Diagram",
+      "id": "threat-diagram",
+      "type": "diagram"
     },
     {
       "name": "Application Code",
@@ -29,7 +25,25 @@
       "repository": {
         "url": "https://github.com/my-project"
       },
-      "attributes": null
+      "attributes": {
+        "language": "java",
+        "platform": "github",
+        "vcs": "git"
+      }
+    },
+    {
+      "name": "Architecture Diagram",
+      "id": "architecture-diagram",
+      "type": "diagram",
+      "description": "Architectural data flow diagram",
+      "size": {
+        "width": 1000,
+        "height": 1100
+      },
+      "attributes": {
+        "background-color": "blue",
+        "transparent": 40
+      }
     }
   ],
   "assets": [
@@ -56,6 +70,15 @@
         "comment": "Public information has no confidentiality at all but it is quite important for it to be available and to not be changed by attakers"
       },
       "attributes": null
+    },
+    {
+      "name": "Minimal asset",
+      "id": "minimal-asset",
+      "risk": {
+        "confidentiality": 44,
+        "integrity": 55,
+        "availability": 66
+      }
     }
   ],
   "components": [
@@ -64,23 +87,56 @@
       "id": "web-client",
       "description": "It represent a connection from the internet to our ecosystem",
       "parent": {
-        "trustZone": "f0ba7722-39b6-4c81-8290-a30a248bb8d9"
-      },
+         "component": "web-botnet-id"
+     },
       "type": "web-client",
       "tags": [
         "external"
       ],
       "representations": [
         {
+          "representation": "threat-diagram",
+          "id": "web-client-box"
+        },
+        {
           "representation": "architecture-diagram",
           "id": "web-client-box",
           "position": {
             "x": 100,
-            "y": 100
+            "y": 50
           },
           "size": {
-            "width": 50,
-            "height": 50
+            "width": 150,
+            "height": 80
+          }
+        }
+      ],
+      "assets": null,
+      "threats": null,
+      "attributes": null
+    },
+    {
+      "name": "Web Botnet",
+      "id": "web-botnet-id",
+      "description": "A bot network of web clients",
+      "parent": {
+        "trustZone": "internet-trust-zone-id"
+      },
+      "type": "web-client",
+      "tags": [
+        "botnet"
+      ],
+      "representations": [
+        {
+          "representation": "architecture-diagram",
+          "id": "botnet-client-box",
+          "position": {
+            "x": 100,
+            "y": 50
+          },
+          "size": {
+            "width": 300,
+            "height": 300
           }
         }
       ],
@@ -104,12 +160,12 @@
           "representation": "architecture-diagram",
           "id": "web-service-box",
           "position": {
-            "x": 100,
-            "y": 100
+            "x": 50,
+            "y": 50
           },
           "size": {
-            "width": 50,
-            "height": 50
+            "width": 150,
+            "height": 150
           }
         }
       ],
@@ -124,12 +180,16 @@
       },
       "threats": [
         {
-          "threat": "22724267-be7e-44c0-8b1f-d7d33e9a34ec",
+          "threat": "test-threat1",
           "state": "exposed",
           "mitigations": [
             {
-              "mitigation": "fd6136f4-e2ff-11eb-ba80-0242ac130004",
+              "mitigation": "test-mitigation1",
               "state": "implemented"
+            },
+            {
+              "mitigation": "test-mitigation2",
+              "state": "open"
             }
           ]
         }
@@ -153,11 +213,11 @@
           "id": "box-for-postgress-DB",
           "position": {
             "x": 200,
-            "y": 100
+            "y": 300
           },
           "size": {
-            "width": 50,
-            "height": 50
+            "width": 150,
+            "height": 75
           }
         }
       ],
@@ -167,9 +227,9 @@
       "name": "Class CustomerDatabase",
       "id": "class-customerdatabase",
       "description": "Managages customer database",
-      "type": "code-class",
+      "type": "CD-V2-CODE-SNIPPET-SHARING",
       "parent": {
-        "trustZone": "2ab4effa-40b7-4cd2-ba81-8247d29a6f2d"
+        "trustZone": "private-trustzone"
       },
       "representations": [
         {
@@ -178,7 +238,7 @@
           "package": "com.open.threat.model",
           "file": "src/main/otm-file/OTMClass.java",
           "line": 324,
-          "codeSnippet": "public void createOTM(String[] args) { Scanner reader = new Scanner(System.in); System.out.print(\"Enter a number: \"); int number = reader.nextInt() System.out.println(\"You entered: \" + number); }"
+          "codeSnippet": "some test code"
         }
       ],
       "attributes": null
@@ -213,11 +273,11 @@
       "representations": null,
       "threats": [
         {
-          "threat": "22724267-be7e-44c0-8b1f-d7d33e9a34ec",
+          "threat": "test-threat1",
           "state": "exposed",
           "mitigations": [
             {
-              "mitigation": "fd6136f4-e2ff-11eb-ba80-0242ac130004",
+              "mitigation": "test-mitigation1",
               "state": "required"
             }
           ]
@@ -229,7 +289,7 @@
   "trustZones": [
     {
       "name": "Internet",
-      "id": "f0ba7722-39b6-4c81-8290-a30a248bb8d9",
+      "id": "internet-trust-zone-id",
       "type": "internet",
       "description": "This is the internet trust zone",
       "risk": {
@@ -244,8 +304,8 @@
             "y": 100
           },
           "size": {
-            "width": 100,
-            "height": 100
+            "width": 500,
+            "height": 400
           }
         }
       ],
@@ -264,12 +324,12 @@
           "representation": "architecture-diagram",
           "id": "private-box-shape",
           "position": {
-            "x": 0,
-            "y": 0
+            "x": 50,
+            "y": 50
           },
           "size": {
-            "width": 100,
-            "height": 100
+            "width": 400,
+            "height": 400
           }
         }
       ],
@@ -279,8 +339,8 @@
   "threats": [
     {
       "name": "Threat 1",
-      "id": "22724267-be7e-44c0-8b1f-d7d33e9a34ec",
-      "description": "Description fo the threat number 1",
+      "id": "test-threat1",
+      "description": "Description for threat 1",
       "categories": [
         "Spoofing",
         "Tampering"
@@ -291,29 +351,52 @@
       ],
       "risk": {
         "likelihood": 50,
-        "likelihoodComment": "It is reasonable to think this might happen but it requires for the attaketr to have a deep cyprografy knowledge",
+        "likelihoodComment": "Likelihood description for threat 1",
         "impact": 100,
-        "impactComment": "If this threat becomes a rallity company will strruggle to keep customers and the monetory loss would jeopardise the whole company"
+        "impactComment": "Impact description for threat 1"
       },
       "attributes": null,
       "tags": [
         "sql",
         "cwe-123"
       ]
+    },
+    {
+      "name": "Threat 2",
+      "id": "minimal-test-threat2",
+      "risk": {
+        "likelihood": 44,
+        "impact": 66
+      }
+    },
+    {
+      "name": "Threat 3",
+      "id": "high-test-threat3",
+      "risk": {
+        "likelihood": 100,
+        "impact": 70
+      }
+    },
+    {
+      "name": "Threat 4",
+      "id": "critical-test-threat4",
+      "risk": {
+        "likelihood": 90,
+        "impact": 100
+      }
     }
   ],
   "mitigations": [
     {
       "name": "This is the name of mitigation 1",
-      "id": "fd6136f4-e2ff-11eb-ba80-0242ac130004",
+      "id": "test-mitigation1",
       "description": "Description for mitigation 1",
       "riskReduction": 50,
       "attributes": null
     },
     {
       "name": "Mitigation 2",
-      "id": "3b837730-e300-11eb-ba80-0242ac130004",
-      "description": "Description for mitigation 2",
+      "id": "minimal-test-mitigation2",
       "riskReduction": 100,
       "attributes": null
     }

@@ -5,6 +5,8 @@ const { generateItems } = require('./data-generator');
 const { buildPagedResponse } = require('./response-builder');
 
 const createdGitLabBranches = [];
+const mockServerPort = process.env.SERVER_API_PORT || '3000';
+const appPort = process.env.APP_PORT || '8080';
 
 const getAllRepos = () => {
     const { names, total, orgs } = cfg.repos;
@@ -123,12 +125,12 @@ const createMockApp = () => {
     app.get('/api/login/:provider', (_req, res) => {
         res.status(200).json({
             status: 200,
-            data: 'http://localhost:3000/api/oauth/return?code=fake-code'
+            data: `http://localhost:${mockServerPort}/api/oauth/return?code=fake-code`
         });
     });
 
     app.get('/api/oauth/return', (req, res) => {
-        res.redirect(`http://localhost:8080/#/oauth-return?code=${req.query.code || 'fake-code'}`);
+        res.redirect(`http://localhost:${appPort}/#/oauth-return?code=${req.query.code || 'fake-code'}`);
     });
 
     app.get('/api/oauth/:provider', (_req, res) => {

@@ -19,7 +19,15 @@ export const defaults = {likelihood: 'certain', riskLevelBand: 'high', source: '
 
 const convertImpact = {TBD: 'negligible', Low: 'minor', Medium: 'moderate', High: 'major', Critical: 'severe'};
 const convertPriority = {TBD: 'none', Low: 'low', Medium: 'medium', High: 'high', Critical: 'critical'};
-const convertControlStatus = {NotApplicable: 'wont_do', Open: 'under_review', Mitigated: 'active'};
+const convertControlStatus = {
+    NotApplicable: 'wont_do',
+    Open: 'under_review',
+    Mitigated: 'active',
+    Accepted: 'assumed',
+    Transferred: 'approved',
+    Avoided: 'retired',
+    Eliminated: 'retired'
+};
 
 const convert = (model) => { 
     const vulns = {

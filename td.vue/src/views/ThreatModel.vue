@@ -116,6 +116,12 @@ import tmActions from '@/store/actions/threatmodel.js';
 
 export default {
     name: 'ThreatModel',
+    props: {
+        enableExport: {
+            type: Boolean,
+            default: false
+        }
+    },
     components: {
         TdDropdown,
         TdFormButton,

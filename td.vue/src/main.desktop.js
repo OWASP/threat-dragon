@@ -10,6 +10,7 @@ import router from './router/index.js';
 import desktopSave from './service/desktop/save.js';
 import { providerNames } from './service/provider/providers.js';
 import threatDragonV1 from './service/migration/tdV1/threatDragonV1';
+import { importOtm } from './service/migration/otm/otm';
 import { importTmbom } from './service/migration/tmBom/tmBom';
 
 import schema from './service/schema/ajv';
@@ -103,9 +104,10 @@ window.electronAPI.onOpenModel((_event, fileName, jsonModel) => {
             fileName = '';
             window.electronAPI.modelOpened(fileName);
         } else if (schema.isOtm(jsonModel)) {
-            console.error('Convert OTM to dragon format not yet supported');
-            appProxy.$toast.error(t('threatmodel.warnings.otmUnsupported'), { timeout: false });
-            return;
+            jsonModel = openOtm(jsonModel);
+            console.debug('force re-selection of file name for OTM');
+            fileName = '';
+            window.electronAPI.modelOpened(fileName);
         } else {
             console.warn('Model does not strictly match possible schemas: ' + JSON.stringify(schema.checkV2(jsonModel, null, 2)));
             appProxy.$toast.warning(t('threatmodel.warnings.jsonSchema'));
@@ -202,8 +204,14 @@ const localAuth = () => {
 
 const openTmBom = (jsonModel) => {
     console.info('Convert TM-BOM to internal TD format');
-    appProxy.$toast.warning(t('threatmodel.warnings.tmUnsupported'), { timeout: false });
+    appProxy.$toast.warning(t('threatmodel.warnings.tmBomImported'), { timeout: false });
     return importTmbom(jsonModel);
+};
+
+const openOtm = (jsonModel) => {
+    console.info('Convert OTM to internal TD format');
+    appProxy.$toast.warning(t('threatmodel.warnings.otmImported'), { timeout: false });
+    return importOtm(jsonModel);
 };
 
 const app = createApp(App);

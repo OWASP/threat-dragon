@@ -9,11 +9,12 @@ const { defineConfig } = require('cypress');
 const { createMockApp } = require('./tests/e2e/mock-server/threatDragonBackEndServerMock');
 
 const useMockServer = process.env.CI_MOCK_ENABLED !== 'false';
+const mockServerPort = process.env.SERVER_API_PORT || '3000';
 
 if (useMockServer) {
     const mockApp = createMockApp();
-    const mockServer = mockApp.listen(3000, () => {
-        console.log('[mock] CI mock server listening on port 3000');
+    const mockServer = mockApp.listen(mockServerPort, () => {
+        console.log(`[mock] CI mock server listening on port ${mockServerPort}`);
     });
     process.on('exit', () => mockServer.close());
 }

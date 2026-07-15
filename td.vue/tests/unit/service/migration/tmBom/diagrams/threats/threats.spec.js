@@ -2,8 +2,8 @@ import controls from '@/service/migration/tmBom/diagrams/threats/controls';
 import assumptions from '@/service/migration/tmBom/diagrams/assumptions';
 import risks from '@/service/migration/tmBom/diagrams/threats/risks';
 import threats from '@/service/migration/tmBom/diagrams/threats/threats';
-import tdModel from '../../td-test-model';
-import tmBomModel from '../../tmbom-test-model';
+import tdModel from '../../../td-test-model';
+import tmBomModel from '../../../tmbom-test-model';
 
 jest.mock('@/service/migration/tmBom/diagrams/assumptions');
 jest.mock('@/service/migration/tmBom/diagrams/threats/controls');
@@ -60,6 +60,30 @@ describe('service/migration/tmBom/diagrams/threats/threats.js', () => {
             expect(tmbomThreats.threats.find((x) => x.threat_persona === undefined)).toBeUndefined();
             expect(tmbomThreats.threats.find((x) => x.event === undefined)).toBeUndefined();
             expect(tmbomThreats.threats.find((x) => x.sources[0] !== threats.defaults.source)).toBeUndefined();
+        });
+    });
+
+    describe('convert/export risk-treatment statuses', () => {
+        const buildModel = (status) => ({
+            detail: { diagrams: [{ cells: [{ data: { threats: [
+                { id: 'a', title: 't', description: 'd', status, severity: 'High', score: '5' }
+            ] } }] }] }
+        });
+
+        it('maps Accepted to the assumed control status', () => {
+            expect(threats.convert(buildModel('Accepted')).controls[0].status).toEqual('assumed');
+        });
+
+        it('maps Transferred to the approved control status', () => {
+            expect(threats.convert(buildModel('Transferred')).controls[0].status).toEqual('approved');
+        });
+
+        it('maps Avoided to the retired control status', () => {
+            expect(threats.convert(buildModel('Avoided')).controls[0].status).toEqual('retired');
+        });
+
+        it('maps Eliminated to the retired control status', () => {
+            expect(threats.convert(buildModel('Eliminated')).controls[0].status).toEqual('retired');
         });
     });
 

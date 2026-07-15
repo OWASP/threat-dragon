@@ -22,7 +22,8 @@ class ThreatDragonEnv extends Env {
             { key: 'REPO_USE_SEARCH', required: false, defaultValue: false },
             { key: 'REPO_SEARCH_QUERY', required: false },
             { key: 'LOCALES_ALLOWED', required: false, defaultValue: '[]' },
-            { key: 'LOCALE_DEFAULT', required: false, defaultValue: 'en' }
+            { key: 'LOCALE_DEFAULT', required: false, defaultValue: 'en' },
+            { key: 'OAUTH_FRONTEND_RETURN_URL', required: false }
         ];
     }
 }

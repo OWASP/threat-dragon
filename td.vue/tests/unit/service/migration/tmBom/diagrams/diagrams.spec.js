@@ -1,10 +1,14 @@
 import diagrams from '@/service/migration/tmBom/diagrams/diagrams';
-import tmBomModel from '../tmbom-test-model';
-import tdModel from '../td-test-model';
+import tdModel from '../../td-test-model';
+import tmBomModel from '../../tmbom-test-model';
 
 describe('service/migration/tmBom/diagrams/diagrams.js', () => {
     let testDiagrams;
     const version = 'x.y.zz';
+
+    beforeEach(() => {
+        console.warn = jest.fn();
+    });
 
     describe('merge', () => {
         beforeEach(() => {

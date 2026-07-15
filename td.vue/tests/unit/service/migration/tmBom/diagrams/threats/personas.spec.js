@@ -1,5 +1,5 @@
 import personas from '@/service/migration/tmBom/diagrams/threats/personas';
-import tmBom from '../../tmbom-test-model';
+import tmBom from '../../../tmbom-test-model';
 
 describe('service/migration/tmBom/diagrams/threats/personas.js', () => {
 

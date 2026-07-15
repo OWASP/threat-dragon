@@ -1,5 +1,5 @@
 import detail from '@/service/migration/tdV1/detail';
-import v1Model from './v1-threat-model';
+import v1Model from '../v1-test-model';
 
 const emtpyV1Detail = {'detail': {'contributors': [], 'diagrams': []}};
 const testVersion = 'testVersion';

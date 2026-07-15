@@ -84,6 +84,11 @@ describe('service/entity/default-properties.js', () => {
     });
 
     describe('default entities', () => {
+        it('throws an error for an unknown type', () => {
+		    expect(() => defaultProperties.defaultEntity('fake'))
+		        .toThrowError('Unknown entity: fake');
+        });
+
         it('defines the actor entity', () => {
             expect(defaultProperties.defaultEntity('tm.Actor')).toMatchObject({
                 size: {
@@ -109,7 +114,7 @@ describe('service/entity/default-properties.js', () => {
         it('defines the trust boundary box entity', () => {
             expect(defaultProperties.defaultEntity('tm.BoundaryBox')).toMatchObject({
                 attrs: {
-                    label: 'Trust Boundary'
+                    label: {text: 'Trust Boundary'}
                 },
                 shape: 'trust-boundary-box',
                 zIndex: 10

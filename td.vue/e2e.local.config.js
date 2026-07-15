@@ -5,11 +5,12 @@
 const { defineConfig } = require('cypress');
 const { createMockApp } = require('./tests/e2e/mock-server/threatDragonBackEndServerMock');
 
-// Start the mock server on port 3000 (must match vue.config.js API proxy target).
+// Start the mock server on the API proxy target port.
 // The real backend is not running during e2e tests; this mock replaces it.
+const mockServerPort = process.env.SERVER_API_PORT || '3000';
 const mockApp = createMockApp();
-const mockServer = mockApp.listen(3000, () => {
-    console.log('[mock] threatDragonBackEndServerMock listening on port 3000');
+const mockServer = mockApp.listen(mockServerPort, () => {
+    console.log(`[mock] threatDragonBackEndServerMock listening on port ${mockServerPort}`);
 });
 
 module.exports = defineConfig({

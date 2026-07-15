@@ -1,5 +1,5 @@
 import boundaries from '@/service/migration/tmBom/diagrams/threats/boundaries';
-import tmBomModel from '../../tmbom-test-model';
+import tmBomModel from '../../../tmbom-test-model';
 
 const trust_boundary = {
     trust_zone_a: 'trust-zone0',

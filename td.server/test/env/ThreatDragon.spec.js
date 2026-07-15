@@ -16,7 +16,8 @@ describe('env/ThreatDragon.js', () => {
         { key: 'REPO_USE_SEARCH', defaultValue: false },
         { key: 'REPO_SEARCH_QUERY', defaultValue: undefined },
         { key: 'LOCALES_ALLOWED', defaultValue: '[]' },
-        { key: 'LOCALE_DEFAULT', defaultValue: 'en' }
+        { key: 'LOCALE_DEFAULT', defaultValue: 'en' },
+        { key: 'OAUTH_FRONTEND_RETURN_URL', defaultValue: undefined }
     ];
 
     beforeEach(() => {

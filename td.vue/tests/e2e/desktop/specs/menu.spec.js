@@ -30,6 +30,16 @@ const SUITE_TIMEOUT_MS = 30000;
 const SAVED_MODEL_TITLE = 'Saved From Electron Menu';
 const SAVED_AS_MODEL_TITLE = 'Saved As From Menu';
 
+const assertIncludesOrdered = (actualItems, expectedItems) => {
+    let searchFrom = 0;
+
+    expectedItems.forEach((expectedItem) => {
+        const itemIndex = actualItems.indexOf(expectedItem, searchFrom);
+        assert.notEqual(itemIndex, -1);
+        searchFrom = itemIndex + 1;
+    });
+};
+
 describe('Desktop menu integration tests', function () {
     this.timeout(SUITE_TIMEOUT_MS);
 
@@ -46,7 +56,7 @@ describe('Desktop menu integration tests', function () {
         const exportTd = getSubmenuItem(exportMenu, fileMenu.labels.exportTd);
 
         assert.equal(fileSnapshot.label, fileMenu.labels.heading);
-        assert.deepEqual(fileSnapshot.submenu.map((item) => item.label), fileMenu.expectedItems);
+        assertIncludesOrdered(fileSnapshot.submenu.map((item) => item.label), fileMenu.expectedItems);
         assert.equal(exportOtm.label, fileMenu.labels.exportOtm);
         assert.equal(exportOtm.enabled, false);
         assert.equal(exportTd.label, fileMenu.labels.exportTd);

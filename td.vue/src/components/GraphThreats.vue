@@ -44,7 +44,7 @@
                     :title="statusResolved"
                 />
                 <font-awesome-icon
-                    v-if="statusResolved === 'Mitigated'"
+                    v-if="isStatusResolved"
                     icon="check"
                     class="threat-icon green-icon"
                     :title="statusResolved"
@@ -139,6 +139,7 @@
 
 <script>
 import { getGame } from '../service/threats/models/eop';
+import { isResolved } from '@/service/threats/status.js';
 
 export default {
     name: 'TdGraphThreats',
@@ -182,6 +183,7 @@ export default {
 
         idResolved() { return this.threatData.id; },
         statusResolved() { return this.threatData.status; },
+        isStatusResolved() { return isResolved(this.statusResolved); },
         severityResolved() { return this.threatData.severity; },
         descriptionResolved() { return this.threatData.description; },
         titleResolved() { return this.threatData.title; },

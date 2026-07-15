@@ -1,7 +1,7 @@
 import diagrams from '@/service/migration/tmBom/diagrams/diagrams';
 import detail from '@/service/migration/tmBom/detail';
 
-import tmBomModel from './tmbom-test-model';
+import tmBomModel from '../tmbom-test-model';
 
 jest.mock('@/service/migration/tmBom/diagrams/diagrams');
 

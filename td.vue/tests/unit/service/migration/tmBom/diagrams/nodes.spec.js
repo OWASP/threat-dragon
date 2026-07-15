@@ -1,6 +1,6 @@
 import {convert, merge, createNodes, placeNodes, defaults} from '@/service/migration/tmBom/diagrams/nodes';
-import tdModel from '../td-test-model';
-import tmBomModel from '../tmbom-test-model';
+import tdModel from '../../td-test-model';
+import tmBomModel from '../../tmbom-test-model';
 
 describe('service/migration/tmBom/diagrams/nodes.js', () => {
 

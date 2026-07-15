@@ -103,6 +103,8 @@ Before handoff, run the relevant local checks and say exactly what was not run.
 Not all quality gates are required for every change: if only working in `td.vue`,
 only those quality gates are required to be run.
 
+When debugging CI, start with `scripts/td-pr-check.sh`
+
 ### td.vue
 
 The following quality gates are required:

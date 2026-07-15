@@ -163,7 +163,11 @@ export default {
             return ({
                 'NotApplicable': this.$t('threats.status.notApplicable'),
                 'Open': this.$t('threats.status.open'),
-                'Mitigated': this.$t('threats.status.mitigated')
+                'Mitigated': this.$t('threats.status.mitigated'),
+                'Accepted': this.$t('threats.status.accepted'),
+                'Transferred': this.$t('threats.status.transferred'),
+                'Avoided': this.$t('threats.status.avoided'),
+                'Eliminated': this.$t('threats.status.eliminated')
             })[status] ?? 'Unknown';
         }
     }
