@@ -130,7 +130,7 @@ describe('locale — server-policy-driven resolution', () => {
             onBeforeLoad: (win) => {
                 win.sessionStorage.setItem(
                     'td.vuex',
-                    JSON.stringify({ locale: { locale: 'fr' } })
+                    JSON.stringify({ locale: { locale: 'fr', userSelectedLocale: true } })
                 );
             }
         });
@@ -157,7 +157,7 @@ describe('locale — server-policy-driven resolution', () => {
             onBeforeLoad: (win) => {
                 win.sessionStorage.setItem(
                     'td.vuex',
-                    JSON.stringify({ locale: { locale: 'es' } })
+                    JSON.stringify({ locale: { locale: 'es', userSelectedLocale: true } })
                 );
             }
         });

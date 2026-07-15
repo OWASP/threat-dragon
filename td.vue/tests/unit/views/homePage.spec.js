@@ -220,34 +220,4 @@ describe('HomePage.vue', () => {
         });
     });
 
-    describe('config error', () => {
-        it('shows a toast when configError is present after fetch', async () => {
-            const mockToastError = jest.fn();
-            const store = new Vuex.Store({
-                state: {
-                    config: {
-                        config: null,
-                        configError: 'Failed to fetch'
-                    }
-                },
-                actions: {
-                    [AUTH_SET_LOCAL]: () => {},
-                    [configActions.fetch]: () => {},
-                    [PROVIDER_SELECTED]: () => {}
-                }
-            });
-
-            const { wrapper: w, resolve } = createControlledMount(store, {
-                $toast: { error: mockToastError }
-            });
-
-            resolve();
-
-            // Wait for microtask queue (async mounted) to drain
-            await new Promise(process.nextTick);
-            await w.vm.$nextTick();
-
-            expect(mockToastError).toHaveBeenCalledWith('home.errors.configLoadFailed');
-        });
-    });
 });

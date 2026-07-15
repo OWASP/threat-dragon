@@ -44,12 +44,6 @@ const verifyProviderButtons = (expected) => {
     });
 };
 
-const expectErrorToast = (text = homepageStrings.en.configLoadFailed) => {
-    cy.get('.Vue-Toastification__toast--error')
-        .should('be.visible')
-        .and('contain.text', text);
-};
-
 const verifyExternalUrl = (selector, url) => {
     cy.get(selector)
         .find('a')
@@ -243,52 +237,4 @@ describe('home', () => {
         });
     });
 
-    describe('config errors — toasts and fallback', () => {
-        afterEach(() => {
-            cy.window().then((win) => win.sessionStorage.clear());
-        });
-
-        it('shows toast on 500 error', () => {
-            cy.intercept('GET', '/api/config', {
-                statusCode: 500,
-                body: { status: 500, error: 'Server error' }
-            }).as('failConfig');
-
-            cy.visit('/');
-            cy.wait('@failConfig');
-
-            cy.get('#local-login-btn').should('be.visible');
-            expectErrorToast();
-        });
-
-        it('shows toast on network error', () => {
-            cy.intercept('GET', '/api/config', {
-                forceNetworkError: true
-            }).as('failConfig');
-
-            cy.visit('/');
-            cy.wait('@failConfig');
-
-            cy.get('#local-login-btn').should('be.visible');
-            expectErrorToast();
-        });
-
-        it('shows toast on empty config', () => {
-            cy.intercept('GET', '/api/config', {
-                statusCode: 200,
-                body: { status: 200, data: {} }
-            }).as('getConfig');
-
-            cy.visit('/');
-            cy.wait('@getConfig');
-
-            cy.get('#local-login-btn').should('be.visible');
-            expectErrorToast();
-        });
-
-        it('does not show error toast on success', () => {
-            cy.launchThreatDragon();
-            cy.get('.Vue-Toastification__toast--error').should('not.exist');
-        });
-    });
 });

@@ -102,7 +102,6 @@ export default {
     computed:
         mapState({
             config: state => state.config?.config ?? null,
-            configError: state => state.config?.configError ?? null,
             providers: (state) => resolveProviders(state.config?.config, isDesktopApp()),
         }),
     async mounted() {
@@ -110,9 +109,6 @@ export default {
             await this.$store.dispatch(RESOLVE_LOCALE);
         } else {
             await this.$store.dispatch(configActions.fetch);
-            if (this.configError) {
-                this.$toast.error(this.$t('home.errors.configLoadFailed'));
-            }
             this.ready = true;
         }
     },
@@ -122,4 +118,3 @@ export default {
         TdProviderLoginButton,
     },};
 </script>
-
