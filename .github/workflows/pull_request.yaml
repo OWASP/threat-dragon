@@ -361,7 +361,7 @@ jobs:
   visual_regression_tests:
     name: Site visual regression
     runs-on: ubuntu-24.04
-    needs: e2e_tests
+    needs: site_unit_tests
     defaults:
       run:
         working-directory: td.vue
