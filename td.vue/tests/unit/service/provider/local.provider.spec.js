@@ -1,6 +1,6 @@
-import local from '@/service/provider/local.provider.js';
+import local from '@/service/provider/local.provider';
 
-describe('service/local.provider.js', () => {
+describe('service/provider/local.provider.js', () => {
     describe('getDashboardActions', () => {
 
         describe('import', () => {

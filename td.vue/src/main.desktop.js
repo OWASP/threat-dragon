@@ -180,7 +180,8 @@ window.electronAPI.onSaveModelRequest((_event, fileName) => {
     desktopSave.requestSave({
         routeName: appProxy.$route.name,
         providerName: providerNames.desktop,
-        saveModel: () => appProxy.$store.dispatch(tmActions.saveModel)
+        saveModel: () => appProxy.$store.dispatch(tmActions.saveModel),
+        window
     });
 });
 

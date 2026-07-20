@@ -1,4 +1,4 @@
-import { providerTypes } from './providerTypes.js';
+import { providerTypes } from './providerTypes';
 
 const providerType = providerTypes.git;
 

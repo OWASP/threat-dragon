@@ -1,6 +1,6 @@
-import desktop from '@/service/provider/desktop.provider.js';
+import desktop from '@/service/provider/desktop.provider';
 
-describe('service/desktop.provider.js', () => {
+describe('service/provider/desktop.provider.js', () => {
     describe('getDashboardActions', () => {
 
         describe('import', () => {

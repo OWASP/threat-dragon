@@ -4,22 +4,22 @@ import { createI18n } from 'vue-i18n';
 // Internet Engineering Task Force (IETF) Best Current Practice (BCP) 47
 // ISO 639-1 language codes
 
-import ar from './ar.js';
-import de from './de.js';
-import el from './el.js';
-import en from './en.js';
-import es from './es.js';
-import fi from './fi.js';
-import fr from './fr.js';
-import hi from './hi.js';
-import id from './id.js';
-import ja from './ja.js';
-import ms from './ms.js';
-import pt from './pt.js';
-import ptBr from './pt-br.js';
-// hide RUS & UKR for now: import rus from './ru.js';
-// hide RUS & UKR for now: import ukr from './uk.js';
-import zh from './zh.js';
+import ar from './ar';
+import de from './de';
+import el from './el';
+import en from './en';
+import es from './es';
+import fi from './fi';
+import fr from './fr';
+import hi from './hi';
+import id from './id';
+import ja from './ja';
+import ms from './ms';
+import pt from './pt';
+import ptBr from './pt-br';
+// hide RUS & UKR for now: import rus from './ru';
+// import ukr from './uk';
+import zh from './zh';
 
 let i18nInstance = null;
 

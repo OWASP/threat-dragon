@@ -1,5 +1,5 @@
-import cells from './cells.js';
-import eng from '@/i18n/en.js';
+import cells from './cells';
+import eng from '@/i18n/en';
 
 const getPlaceholder = (diagramType) => {
     const type = diagramType.toLowerCase();

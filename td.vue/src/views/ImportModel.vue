@@ -138,9 +138,6 @@ export default {
             }
         },
         onImportClick(fileName) {
-            console.log('Current route:', this.$route);
-            console.log('Route params:', this.$route.params);
-            console.log('Provider type:', this.providerType);
             let jsonModel;
 
             // check for JSON syntax errors, schema errors come later
