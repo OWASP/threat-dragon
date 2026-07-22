@@ -33,7 +33,7 @@ jobs:
       issues: write
     steps:
       - name: Tidy stale PRs and issues
-        uses: actions/stale@eb5cf3af3ac0a1aa4c9c45633dd1ae542a27a899 # v10.3.0
+        uses: actions/stale@1e223db275d687790206a7acac4d1a11bd6fe629 # v10.4.0
         with:
           days-before-issue-stale: 183
           days-before-issue-close: -1
@@ -67,7 +67,7 @@ jobs:
           output: 'trivy-results.sarif'
 
       - name: Upload scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@54f647b7e1bb85c95cddabcd46b0c578ec92bc1a # v4.36.3
+        uses: github/codeql-action/upload-sarif@99df26d4f13ea111d4ec1a7dddef6063f76b97e9 # v4.37.0
         with:
           sarif_file: 'trivy-results.sarif'
 
