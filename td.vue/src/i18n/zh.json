@@ -469,6 +469,10 @@
       "type": "类型"
     },
     "status": {
+      "accepted": "Accepted",
+      "avoided": "Avoided",
+      "eliminated": "Eliminated",
+      "transferred": "Transferred",
       "notApplicable": "不适用",
       "open": "未解决",
       "mitigated": "缓解"
@@ -500,6 +504,10 @@
     "notProvided": "未提供",
     "summary": "摘要",
     "threatStats": {
+      "accepted": "Total Accepted",
+      "avoided": "Total Avoided",
+      "eliminated": "Total Eliminated",
+      "transferred": "Total Transferred",
       "total": "威胁总数",
       "mitigated": "已缓解总数",
       "notApplicable": "不适用总计",

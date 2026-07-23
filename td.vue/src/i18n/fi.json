@@ -469,6 +469,10 @@
       "type": "Tyyppi"
     },
     "status": {
+      "accepted": "Accepted",
+      "avoided": "Avoided",
+      "eliminated": "Eliminated",
+      "transferred": "Transferred",
       "notApplicable": "N/A",
       "open": "Avoin",
       "mitigated": "Hallittu"
@@ -500,6 +504,10 @@
     "notProvided": "Ei sisälly",
     "summary": "Yhteenveto",
     "threatStats": {
+      "accepted": "Total Accepted",
+      "avoided": "Total Avoided",
+      "eliminated": "Total Eliminated",
+      "transferred": "Total Transferred",
       "total": "Uhkia yhteensä",
       "mitigated": "Hallittuja uhkia",
       "notApplicable": "Total Not Applicable",

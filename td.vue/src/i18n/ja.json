@@ -469,6 +469,10 @@
       "type": "種別"
     },
     "status": {
+      "accepted": "Accepted",
+      "avoided": "Avoided",
+      "eliminated": "Eliminated",
+      "transferred": "Transferred",
       "notApplicable": "N/A",
       "open": "未対応",
       "mitigated": "解決済み"
@@ -500,6 +504,10 @@
     "notProvided": "未指定",
     "summary": "集計表",
     "threatStats": {
+      "accepted": "Total Accepted",
+      "avoided": "Total Avoided",
+      "eliminated": "Total Eliminated",
+      "transferred": "Total Transferred",
       "total": "脅威総数",
       "mitigated": "対策済みの脅威",
       "notApplicable": "Total Not Applicable",

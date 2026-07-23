@@ -8,7 +8,6 @@ import googleProviderThreatmodelController from '../controllers/googleProviderTh
 import healthcheck from '../controllers/healthz.js';
 import homeController from '../controllers/homecontroller.js';
 import metadataController from '../controllers/metadataController.js';
-import templateController from '../controllers/templateController.js';
 import threatmodelController from '../controllers/threatmodelcontroller.js';
 
 
@@ -43,13 +42,6 @@ const unauthRoutes = (router) => {
 const routes = (router) => {
     router.post('/api/logout', auth.logout);
     router.post('/api/token/refresh', auth.refresh);
-    // Template routes
-    router.post('/api/templates/bootstrap', templateController.bootstrapTemplateRepository);// bootstrap template repo
-    router.get('/api/templates/', templateController.listTemplates);// list all templates
-    router.post('/api/templates/import', templateController.importTemplate);// import a new template
-    router.delete('/api/templates/:id', templateController.deleteTemplate);// delete a template
-    router.put('/api/templates/:id', templateController.updateTemplate);// update template metadata
-    router.get('/api/templates/:id/content', templateController.getTemplateContent);// get template content by id
 
     router.get('/api/threatmodel/repos', threatmodelController.repos);
     router.get('/api/threatmodel/:organisation/:repo/branches', threatmodelController.branches);

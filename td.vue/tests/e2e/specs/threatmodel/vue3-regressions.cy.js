@@ -183,17 +183,4 @@ describe('Regressions discovered during vue3 migration', () => {
         assertNoObservedError(expectedRuntimeError);
         assertNoSecurityPolicyViolation();
     });
-
-    it('updates export-template tags through the manage dropdown without runtime errors', () => {
-        openDemoModel('Demo Threat Model');
-
-        cy.get('#manage-model-btn .td-dropdown-toggle')
-            .first()
-            .click({ force: true });
-        cy.get('#export-template-option').click({ force: true });
-        addSeparatedFormTags('#template-tags', 'a', 'b');
-
-        assertNoObservedError(expectedRuntimeError);
-        assertNoSecurityPolicyViolation();
-    });
 });

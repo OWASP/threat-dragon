@@ -469,6 +469,10 @@
       "type": "النوع"
     },
     "status": {
+      "accepted": "Accepted",
+      "avoided": "Avoided",
+      "eliminated": "Eliminated",
+      "transferred": "Transferred",
       "notApplicable": "غير قابل للتطبيق",
       "open": "مفتوح",
       "mitigated": "تم التخفيف"
@@ -500,6 +504,10 @@
     "notProvided": "غير متاح",
     "summary": "ملخص",
     "threatStats": {
+      "accepted": "Total Accepted",
+      "avoided": "Total Avoided",
+      "eliminated": "Total Eliminated",
+      "transferred": "Total Transferred",
       "total": "إجمالي التهديدات",
       "mitigated": "الإجمالي المُخفف",
       "notApplicable": "Total Not Applicable",

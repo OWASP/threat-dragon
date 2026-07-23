@@ -469,6 +469,10 @@
       "type": "Tipe"
     },
     "status": {
+      "accepted": "Accepted",
+      "avoided": "Avoided",
+      "eliminated": "Eliminated",
+      "transferred": "Transferred",
       "notApplicable": "N/A",
       "open": "Terbuka",
       "mitigated": "Diredam"
@@ -500,6 +504,10 @@
     "notProvided": "Tidak tersedia",
     "summary": "Ringkasan",
     "threatStats": {
+      "accepted": "Total Accepted",
+      "avoided": "Total Avoided",
+      "eliminated": "Total Eliminated",
+      "transferred": "Total Transferred",
       "total": "Total Ancaman",
       "mitigated": "Total Diredam",
       "notApplicable": "Total Not Applicable",

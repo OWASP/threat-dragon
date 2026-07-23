@@ -469,6 +469,10 @@
       "type": "Jenis"
     },
     "status": {
+      "accepted": "Accepted",
+      "avoided": "Avoided",
+      "eliminated": "Eliminated",
+      "transferred": "Transferred",
       "notApplicable": "T/A",
       "open": "Buka",
       "mitigated": "Ditangani"
@@ -500,6 +504,10 @@
     "notProvided": "Tidak disediakan",
     "summary": "Ringkasan",
     "threatStats": {
+      "accepted": "Total Accepted",
+      "avoided": "Total Avoided",
+      "eliminated": "Total Eliminated",
+      "transferred": "Total Transferred",
       "total": "Jumlah Ancaman",
       "mitigated": "Jumlah Ditangani",
       "notApplicable": "Total Not Applicable",

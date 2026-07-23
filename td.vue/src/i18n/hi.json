@@ -469,6 +469,10 @@
       "type": "प्रकार"
     },
     "status": {
+      "accepted": "Accepted",
+      "avoided": "Avoided",
+      "eliminated": "Eliminated",
+      "transferred": "Transferred",
       "notApplicable": "लागू नहीं",
       "open": "खुला",
       "mitigated": "शमन"
@@ -500,6 +504,10 @@
     "notProvided": "प्रदान नहीं किया गया",
     "summary": "सारांश",
     "threatStats": {
+      "accepted": "Total Accepted",
+      "avoided": "Total Avoided",
+      "eliminated": "Total Eliminated",
+      "transferred": "Total Transferred",
       "total": "कुल खतरे",
       "mitigated": "कुल शमन",
       "notApplicable": "Total Not Applicable",

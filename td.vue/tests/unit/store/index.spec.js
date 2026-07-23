@@ -49,10 +49,6 @@ describe('store.get()/index.js', () => {
         expect(store.state.repo).toBeInstanceOf(Object);
     });
 
-    it('defines the template module', () => {
-        expect(store.state.template).toBeInstanceOf(Object);
-    });
-
     it('defines the threatmodel module', () => {
 	    expect(store.state.threatmodel).toBeInstanceOf(Object);
     });

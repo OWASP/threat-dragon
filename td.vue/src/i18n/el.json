@@ -469,6 +469,10 @@
       "type": "Τύπος"
     },
     "status": {
+      "accepted": "Accepted",
+      "avoided": "Avoided",
+      "eliminated": "Eliminated",
+      "transferred": "Transferred",
       "notApplicable": "Δεν έχει εφαρμογή",
       "open": "Ανοιχτή",
       "mitigated": "Καλύφθηκε"
@@ -500,6 +504,10 @@
     "notProvided": "Δεν παρασχέθη",
     "summary": "Σύνοψη",
     "threatStats": {
+      "accepted": "Total Accepted",
+      "avoided": "Total Avoided",
+      "eliminated": "Total Eliminated",
+      "transferred": "Total Transferred",
       "total": "Σύνολο απειλών",
       "mitigated": "Σύνολο μετριασμένων",
       "notApplicable": "Total Not Applicable",

@@ -3,7 +3,6 @@ import tmModel from './test-threat-model';
 import otmModel from './otm_example';
 import v1Model from './test-v1-model';
 import v2Model from './test-v2-model';
-import template from './test-template';
 
 describe('service/schema/ajv.js', () => {
     const invalidV2Model = JSON.parse(JSON.stringify(v2Model));
@@ -157,27 +156,4 @@ describe('service/schema/ajv.js', () => {
             expect(schema.isOtm('invalidJson')).toBe(false);
         });
     });
-
-    describe('isTemplate', () => {
-        it('validates templates', () => {
-            expect(schema.isTemplate(template)).toBe(true);
-        });
-
-        it('rejects standard models', () => {
-            expect(schema.isTemplate(v2Model)).toBe(false);
-        });
-    });
-
-    describe('validateTemplateFormat', () => {
-        it('reports valid template format', () => {
-            expect(schema.validateTemplateFormat(template).valid).toBe(true);
-            expect(console.warn).not.toHaveBeenCalled();
-        });
-
-        it('rejects invalid template format', () => {
-            expect(schema.validateTemplateFormat(v2Model).valid).toBe(false);
-            expect(console.warn).toHaveBeenCalled();
-        });
-    });
-
 });

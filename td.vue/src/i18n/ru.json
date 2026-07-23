@@ -469,6 +469,10 @@
       "type": "Type"
     },
     "status": {
+      "accepted": "Accepted",
+      "avoided": "Avoided",
+      "eliminated": "Eliminated",
+      "transferred": "Transferred",
       "notApplicable": "N/A",
       "open": "Open",
       "mitigated": "Mitigated"
@@ -500,6 +504,10 @@
     "notProvided": "Not provided",
     "summary": "Summary",
     "threatStats": {
+      "accepted": "Total Accepted",
+      "avoided": "Total Avoided",
+      "eliminated": "Total Eliminated",
+      "transferred": "Total Transferred",
       "total": "Total Threats",
       "mitigated": "Total Mitigated",
       "notApplicable": "Total Not Applicable",
