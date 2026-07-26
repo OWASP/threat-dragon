@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import isElectron from 'is-electron';
+import { isDesktopApp } from '@/service/environment';
 
 import{
     PROVIDER_CLEAR,
@@ -31,7 +31,7 @@ const actions = {
         if (!providerName || !providers.providerNames[providerName]) {
             throw new Error(`Unknown provider: ${providerName}`);
         }
-        if (providerName === 'desktop' || isElectron()) {
+        if (providerName === 'desktop' || isDesktopApp()) {
             commit(PROVIDER_SELECTED, { 'providerName': 'desktop', 'providerUri': 'threat-dragon-desktop' });
         } else if (providerName === 'local') {
             commit(PROVIDER_SELECTED, { 'providerName': 'local', 'providerUri': 'threat-dragon-local' });

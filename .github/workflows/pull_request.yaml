@@ -392,8 +392,16 @@ jobs:
       - name: Install front-end
         run: npm clean-install
 
+      - name: Install server
+        working-directory: td.server
+        run: npm clean-install
+
       - name: Pre Dev
         run: npm run predev
+
+      - name: Start server
+        working-directory: td.server
+        run: npm run start:server
 
       - name: Run visual regression tests
         run: npm run test:visual

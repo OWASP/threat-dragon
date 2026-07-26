@@ -10,7 +10,10 @@ const messages = {
     home: {
         title: 'OWASP Threat Dragon',
         imgAlt: 'Threat Dragon Logo',
-        description: 'OWASP Threat Dragon ist eine kostenlose, Open-Source, plattformübergreifende Applikation für das Erstellen von Bedrohungsmodellen. Verwenden Sie es, um Diagramme zu Bedrohungsmodellen zu erstellen und Bedrohungen für Ihre Systeme zu identifizieren. Mit Fokus auf Flexibilität und Einfachheit ist das System leicht verständlich und für alle Benutzer zugänglich.'
+        description: 'OWASP Threat Dragon ist eine kostenlose, Open-Source, plattformübergreifende Applikation für das Erstellen von Bedrohungsmodellen. Verwenden Sie es, um Diagramme zu Bedrohungsmodellen zu erstellen und Bedrohungen für Ihre Systeme zu identifizieren. Mit Fokus auf Flexibilität und Einfachheit ist das System leicht verständlich und für alle Benutzer zugänglich.',
+        errors: {
+            configLoadFailed: 'Failed to load server configuration. Only local login is available.'
+        }
     },
     providers: {
         desktop: {

@@ -1,5 +1,6 @@
 describe('print', () => {
     beforeEach(() => {
+        cy.launchThreatDragon();
         cy.get('#local-login-btn').click();
         cy.get('a[href="#/demo/select"]').click();
     });
@@ -33,3 +34,4 @@ describe('print', () => {
         cy.url().should('contain', '/local/Mobile%20to%20Public%20Cloud');
     });
 });
+

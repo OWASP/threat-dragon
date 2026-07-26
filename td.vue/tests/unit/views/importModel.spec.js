@@ -1,4 +1,3 @@
-import { BootstrapVue } from 'bootstrap-vue';
 import { mount } from '@vue/test-utils';
 import { createStore } from 'vuex';
 
@@ -20,11 +19,9 @@ jest.mock('@/service/migration/tmBom/tmBom');
 
 describe('views/ImportModel.vue', () => {
     let wrapper, localVue, mockRouter, mockStore, toast;
-
     beforeEach(() => {
         toast = { error: jest.fn(), warning: jest.fn() };
         localVue = createLocalVue();
-        localVue.use(BootstrapVue);
         mockStore = createStore({
             state: {
                 provider: {
@@ -193,48 +190,48 @@ describe('views/ImportModel.vue', () => {
 
         it('navigates to desktop threatmodel view', () => {
             expect(mockRouter.push).toHaveBeenCalledWith({
-                name: 'desktopThreatModel', 
+                name: 'desktopThreatModel',
                 params: { threatmodel: 'foo' }
             });
         });
     });
 
     describe('importing invalid json', () => {
-	    beforeEach(() => {
-	        wrapper.setData({
-	            tmJson: 'invalidJson'
-	        });
-	        wrapper.vm.onImportClick();
-	    });
+        beforeEach(() => {
+            wrapper.setData({
+                tmJson: 'invalidJson'
+            });
+            wrapper.vm.onImportClick();
+        });
 
-	    it('does not dispatch the selected event', () => {
-	        expect(mockStore.dispatch).not.toHaveBeenCalled();
-	    });
+        it('does not dispatch the selected event', () => {
+            expect(mockStore.dispatch).not.toHaveBeenCalled();
+        });
 
-	    it('creates a toast notification', () => {
-	        expect(toast.error).toHaveBeenCalledWith('threatmodel.errors.invalidJson');
-	    });
+        it('creates a toast notification', () => {
+            expect(toast.error).toHaveBeenCalledWith('threatmodel.errors.invalidJson');
+        });
     });
 
     describe('importing model with missing title', () => {
         const tm = { project: { description: 'foo' }};
-	    beforeEach(() => {
-	        wrapper.setData({
-	            tmJson: JSON.stringify(tm)
-	        });
-	        wrapper.vm.onImportClick();
-	    });
-	
-	    it('dispatches the selected event', () => {
-	        expect(mockStore.dispatch).toHaveBeenCalled();
-	    });
-	
-	    it('creates a toast error notification', () => {
-	        expect(toast.error).toHaveBeenCalled();
-	    });
+        beforeEach(() => {
+            wrapper.setData({
+                tmJson: JSON.stringify(tm)
+            });
+            wrapper.vm.onImportClick();
+        });
+
+        it('dispatches the selected event', () => {
+            expect(mockStore.dispatch).toHaveBeenCalled();
+        });
+
+        it('creates a toast error notification', () => {
+            expect(toast.error).toHaveBeenCalled();
+        });
 
         it('does not change the threatmodel view', () => {
-		    expect(mockRouter.push).not.toHaveBeenCalled();
+            expect(mockRouter.push).not.toHaveBeenCalled();
         });
     });
 });

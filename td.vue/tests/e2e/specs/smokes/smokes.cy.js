@@ -1,6 +1,10 @@
 // quick test to see if the edit page is accessible
 
 describe('smoke tests', () => {
+    beforeEach(() => {
+        cy.launchThreatDragon();
+    });
+
     describe('login', () => {
         it('has a welcome message', () => {
             cy.contains('OWASP Threat Dragon');
@@ -8,6 +12,20 @@ describe('smoke tests', () => {
     
         it('always displays local login option', () => {
             cy.get('#local-login-btn').should('be.visible');
+        });
+    });
+
+    describe('locale', () => {
+        it('shows default locale (English)', () => {
+            cy.get('.td-locale-select .td-dropdown-toggle').should('contain.text', 'English');
+        });
+
+        it('shows locale dropdown with all available languages', () => {
+            const LOCALES_AVAILABLE_COUNT = 14;
+
+            cy.get('.td-locale-select .td-dropdown-toggle').click();
+            cy.get('.td-dropdown-scroll button').should('have.length', LOCALES_AVAILABLE_COUNT);
+            cy.get('.td-dropdown-scroll button').should('contain.text', 'English');
         });
     });
 
@@ -35,3 +53,4 @@ describe('smoke tests', () => {
         });
     });
 });
+

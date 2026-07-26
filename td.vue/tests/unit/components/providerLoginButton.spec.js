@@ -1,8 +1,8 @@
-import { BButton, BootstrapVue } from 'bootstrap-vue';
+import { shallowMount } from '@vue/test-utils';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
+import { createLocalVue } from '../helpers/vueTestUtils';
 import { AUTH_SET_LOCAL } from '@/store/actions/auth.js';
 import loginApi from '@/service/api/loginApi.js';
 import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
@@ -24,7 +24,6 @@ describe('components/ProviderLoginButton.vue', () => {
 
     const mountWithProvider = () => {
         localVue = createLocalVue();
-        localVue.use(BootstrapVue);
         localVue.component('font-awesome-icon', FontAwesomeIcon);
         localVue.use(Vuex);
         
@@ -54,7 +53,7 @@ describe('components/ProviderLoginButton.vue', () => {
                 provider = getProvider();
                 provider.key = 'local';
                 mountWithProvider();
-                await wrapper.findComponent(BButton).trigger('click');
+                await wrapper.findComponent({ name: 'BButton' }).trigger('click');
             });
 
             it('reads the provider value', () => {
@@ -62,7 +61,7 @@ describe('components/ProviderLoginButton.vue', () => {
             });
     
             it('uses a bootstrap button', () => {
-                expect(wrapper.findComponent(BButton).exists()).toEqual(true);
+                expect(wrapper.findComponent({ name: 'BButton' }).exists()).toEqual(true);
             });
     
             it('uses a font awesome icon', () => {
@@ -87,7 +86,7 @@ describe('components/ProviderLoginButton.vue', () => {
                 provider = getProvider();
                 jest.spyOn(loginApi, 'loginAsync').mockResolvedValue({ data: '' });
                 mountWithProvider();
-                await wrapper.findComponent(BButton).trigger('click');
+                await wrapper.findComponent({ name: 'BButton' }).trigger('click');
             });
 
             it('dipatches the provider selected event', () => {

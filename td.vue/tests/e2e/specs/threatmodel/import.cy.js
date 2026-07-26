@@ -1,5 +1,6 @@
 describe('import', () => {
     beforeEach(() => {
+        cy.launchThreatDragon();
         cy.get('#local-login-btn').click();
         cy.get('a[href="#/local/threatmodel/import"]').click();
         cy.url().should('contain', '/local/threatmodel/import');

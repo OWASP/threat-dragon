@@ -10,7 +10,10 @@ const messages = {
     home: {
         title: 'OWASP Threat Dragon',
         imgAlt: 'Threat Dragonロゴ',
-        description: 'OWASP Threat Dragonは無償で、脅威モデリングのソフトです。オープンソースで複数のプラットホームに対応しています。Threat Dragonで脅威モデルを作成することによって、システムに対する脅威が明確になります。重視が多様性と使い勝手に置かれているので、簡単に利用できます。'
+        description: 'OWASP Threat Dragonは無償で、脅威モデリングのソフトです。オープンソースで複数のプラットホームに対応しています。Threat Dragonで脅威モデルを作成することによって、システムに対する脅威が明確になります。重視が多様性と使い勝手に置かれているので、簡単に利用できます。',
+        errors: {
+            configLoadFailed: 'Failed to load server configuration. Only local login is available.'
+        }
     },
     providers: {
         desktop: {

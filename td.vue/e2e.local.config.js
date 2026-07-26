@@ -14,6 +14,7 @@ const mockServer = mockApp.listen(mockServerPort, () => {
 });
 
 module.exports = defineConfig({
+    allowCypressEnv: false,
     fixturesFolder: 'tests/e2e/fixtures',
     screenshotsFolder: 'tests/e2e/videos',
     e2e: {

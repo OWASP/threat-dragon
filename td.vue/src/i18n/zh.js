@@ -10,7 +10,10 @@ const messages = {
     home: {
         title: 'OWASP Threat Dragon',
         imgAlt: 'Threat Dragon Logo',
-        description: 'Threat Dragon 是来自 OWASP 的免费开源威胁建模工具。它可以用作 Windows、MacOS 和 Linux 的独立桌面应用程序，也可以用作 Web 应用程序。如果您想在不授予其 GitHub 存储库访问权限的情况下试用该应用程序，则桌面应用程序非常棒，但如果您选择在线（Web）版本，则可以在威胁模型上释放 GitHub 的强大功能！根据需求选择下方登录方式。'
+        description: 'Threat Dragon 是来自 OWASP 的免费开源威胁建模工具。它可以用作 Windows、MacOS 和 Linux 的独立桌面应用程序，也可以用作 Web 应用程序。如果您想在不授予其 GitHub 存储库访问权限的情况下试用该应用程序，则桌面应用程序非常棒，但如果您选择在线（Web）版本，则可以在威胁模型上释放 GitHub 的强大功能！根据需求选择下方登录方式。',
+        errors: {
+            configLoadFailed: 'Failed to load server configuration. Only local login is available.'
+        }
     },
     providers: {
         desktop: {

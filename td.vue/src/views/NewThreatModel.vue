@@ -5,7 +5,7 @@
 <script>
 import { mapState } from 'vuex';
 
-import isElectron from 'is-electron';
+import { isDesktopApp } from '@/service/environment';
 import { getProviderType } from '@/service/provider/providers.js';
 import tmActions from '@/store/actions/threatmodel.js';
 
@@ -50,7 +50,7 @@ export default {
         const params = Object.assign({}, this.$route.params, {
             threatmodel: newTm.summary.title
         });
-        if (isElectron()) {
+        if (isDesktopApp()) {
             // tell the desktop server that the model has changed
             window.electronAPI.modelOpened(newTm.summary.title);
         }

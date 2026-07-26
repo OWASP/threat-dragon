@@ -10,10 +10,16 @@ const waitForHomePage = async () => {
 const resetDesktopApp = async () => {
     const browser = getBrowser();
     await browser.execute(() => {
-        window.sessionStorage.clear();
-        window.localStorage.clear();
         window.location.hash = '#/';
     });
+    await browser.refresh();
+    // refresh triggers vuex-persist to re-hydrate from sessionStorage,
+    // so clear storage AFTER the refresh to fully reset state
+    await browser.execute(() => {
+        window.sessionStorage.clear();
+        window.localStorage.clear();
+    });
+    // reload once more so the app reinitializes with clean state
     await browser.refresh();
     await browser.execute(() => {
         window.electronAPI.modelClosed('');

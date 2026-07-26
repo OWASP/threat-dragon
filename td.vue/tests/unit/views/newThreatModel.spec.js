@@ -2,6 +2,11 @@ import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
 import NewThreatModel from '@/views/NewThreatModel.vue';
+import { isDesktopApp } from '@/service/environment';
+
+jest.mock('@/service/environment', () => ({
+    isDesktopApp: jest.fn()
+}));
 
 describe('NewThreatModel.vue', () => {
     let localVue, mockStore, router;
@@ -101,4 +106,65 @@ describe('NewThreatModel.vue', () => {
             });
         });
     });
+
+    describe('desktop provider', () => {
+        beforeEach(() => {
+            isDesktopApp.mockReturnValue(true);
+            window.electronAPI = { modelOpened: jest.fn() };
+
+            localVue = createLocalVue();
+            localVue.use(Vuex);
+            mockStore = new Vuex.Store({
+                state: {
+                    provider: { selected: 'desktop' },
+                    threatmodel: { data: {} },
+                    packageBuildVersion: '2.0.0'
+                },
+                actions: {
+                    'THREATMODEL_CLEAR': () => {},
+                    'THREATMODEL_SELECTED': () => {}
+                }
+            });
+            jest.spyOn(mockStore, 'dispatch');
+            router = { push: jest.fn() };
+            shallowMount(NewThreatModel, {
+                localVue,
+                store: mockStore,
+                mocks: {
+                    $router: router,
+                    $route: {
+                        params: { foo: 'bar' }
+                    }
+                }
+            });
+        });
+
+        afterEach(() => {
+            isDesktopApp.mockReturnValue(false);
+            delete window.electronAPI;
+        });
+
+        it('clears the current threat model', () => {
+            expect(mockStore.dispatch).toHaveBeenCalledWith('THREATMODEL_CLEAR');
+        });
+
+        it('selects the new threatModel', () => {
+            expect(mockStore.dispatch).toHaveBeenCalledWith('THREATMODEL_SELECTED', expect.anything());
+        });
+
+        it('notifies the desktop server via electronAPI', () => {
+            expect(window.electronAPI.modelOpened).toHaveBeenCalledWith('New Threat Model');
+        });
+
+        it('navigates to the edit page (same as local)', () => {
+            expect(router.push).toHaveBeenCalledWith({
+                name: 'desktopThreatModelEdit',
+                params: {
+                    foo: 'bar',
+                    threatmodel: 'New Threat Model'
+                }
+            });
+        });
+    });
 });
+

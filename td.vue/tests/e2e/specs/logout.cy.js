@@ -1,5 +1,6 @@
 describe('logout', () => {
     beforeEach(() => {
+        cy.launchThreatDragon();
         cy.get('#local-login-btn').click();
         cy.contains('Logged in as local-user');
         cy.get('#nav-sign-out').click();
@@ -13,3 +14,4 @@ describe('logout', () => {
         cy.url().should('contain', '/#/');
     });
 });
+

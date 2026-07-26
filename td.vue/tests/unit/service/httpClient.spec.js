@@ -52,6 +52,10 @@ describe('service/httpClient.js', () => {
             client = httpClient.createClient();
         });
     
+        it('does not set a client-wide timeout', () => {
+            expect(client.defaults.timeout).toBeUndefined();
+        });
+
         it('adds the accept header to everything', () => {
             expect(client.defaults.headers.common.Accept).toEqual('application/json');
         });
@@ -157,6 +161,23 @@ describe('service/httpClient.js', () => {
                     expect(console.error).toHaveBeenCalledTimes(1);
                 });
                 
+                it('dispatches the loader finished event', () => {
+                    expect(mockStore.dispatch).toHaveBeenCalledWith(LOADER_FINISHED);
+                });
+            });
+
+            describe('with an error that has no HTTP response', () => {
+                const error = { message: 'timeout of 5000ms exceeded' };
+
+                beforeEach(() => {
+                    clientMock.interceptors.response.use = errorIntercept(error);
+                    httpClient.createClient();
+                });
+
+                it('logs the error', () => {
+                    expect(console.error).toHaveBeenCalledWith(error);
+                });
+
                 it('dispatches the loader finished event', () => {
                     expect(mockStore.dispatch).toHaveBeenCalledWith(LOADER_FINISHED);
                 });
