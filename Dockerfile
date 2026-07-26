@@ -83,8 +83,10 @@ RUN --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
     apt-get install -y --no-install-recommends build-essential
 
 WORKDIR /build
+ENV BUNDLE_APP_CONFIG=/build/.bundle
 
 COPY docs/Gemfile docs/Gemfile.lock ./
+COPY docs/.bundle/ .bundle/
 RUN bundle install
 
 COPY docs/ .

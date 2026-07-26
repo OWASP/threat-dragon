@@ -46,6 +46,8 @@
 
 # documentation site
 !docs/
+!docs/.bundle/
+!docs/.bundle/config
 !docs/Gemfile
 !docs/Gemfile.lock
 !docs/*.md
