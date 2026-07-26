@@ -176,7 +176,16 @@
     "chokidar": ">=5.0.0",
     "extract-zip": {
       "yauzl": "3.4.0"
-    }
+    },
+    "@vue/compiler-core": ">=3.5.40",
+    "@vue/compiler-dom": ">=3.5.40",
+    "postcss": ">=8.5.19",
+    "@vue/compiler-ssr": ">=3.5.40",
+    "@vue/reactivity": ">=3.5.40",
+    "@vue/runtime-core": ">=3.5.40",
+    "@vue/runtime-dom": ">=3.5.40",
+    "@vue/server-renderer": ">=3.5.40",
+    "@vue/shared": ">=3.5.40"
   },
   "main": "background.js",
   "resolutions": {
