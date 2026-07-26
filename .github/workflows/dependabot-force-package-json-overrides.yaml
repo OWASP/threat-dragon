@@ -20,7 +20,7 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - uses: lreading/dependabot-npm-force-overrides@e7b165f3f6e20cd57385897db22a1c8f6facd451 # v1.1.1
+      - uses: lreading/dependabot-npm-force-overrides@b628c8f156b893d3afc176b01775a5964efb1ad6 # v1.1.0
         with:
           github-token: ${{ github.token }}
           sign-commit: true
