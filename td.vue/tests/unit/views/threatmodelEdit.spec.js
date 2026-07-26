@@ -4,6 +4,7 @@ import Vuex from 'vuex';
 
 import ThreatModelEdit from '@/views/ThreatModelEdit.vue';
 import TdFormTags from '@/components/FormTags.vue';
+import TdInputGroup from '@/components/InputGroup.vue';
 import { THREATMODEL_CONTRIBUTORS_UPDATED, THREATMODEL_RESTORE, THREATMODEL_NOT_MODIFIED, } from '@/store/actions/threatmodel.js';
 
 describe('views/ThreatmodelEdit.vue', () => {
@@ -101,6 +102,10 @@ describe('views/ThreatmodelEdit.vue', () => {
 
         it('displays all diagrams', () => {
             expect(wrapper.findAll('.td-diagram')).toHaveLength(diagrams.length);
+        });
+
+        it('uses input groups for diagram rows', () => {
+            expect(wrapper.findAllComponents(TdInputGroup)).toHaveLength(diagrams.length);
         });
     });
 

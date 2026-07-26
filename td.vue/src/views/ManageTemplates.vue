@@ -34,15 +34,15 @@
             <b-row>
                 <b-col md="6" offset-md="3">
                     <b-form-group>
-                        <b-input-group>
-                            <b-input-group-prepend>
+                        <td-input-group>
+                            <template #prepend>
                                 <b-button variant="primary" @click="onAddTemplateClick" id="add-template-btn" class="mr-3">
                                     <font-awesome-icon icon="plus" class="mr-2"></font-awesome-icon>
                                     {{ $t('template.addNew') }}
                                 </b-button>
-                            </b-input-group-prepend>
+                            </template>
                             <b-form-input v-model="searchQuery" :placeholder="$t('template.search')" />
-                        </b-input-group>
+                        </td-input-group>
                     </b-form-group>
                 </b-col>
             </b-row>
@@ -116,6 +116,7 @@ import { v4 } from 'uuid';
 import TdDropdown from '@/components/Dropdown.vue';
 import TdFormTags from '@/components/FormTags.vue';
 import TdHero from '@/components/Hero.vue';
+import TdInputGroup from '@/components/InputGroup.vue';
 import templateActions from '@/store/actions/template.js';
 import schema from '@/service/schema/ajv.js';
 
@@ -124,7 +125,8 @@ export default {
     components: {
         TdDropdown,
         TdFormTags,
-        TdHero
+        TdHero,
+        TdInputGroup
     },
     data() {
         return {
