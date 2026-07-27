@@ -10,7 +10,9 @@ describe('components/printed-report/Coversheet.vue', () => {
         owner: 'Bob',
         reviewer: 'Marley',
         contributors: ['Alice', 'Babs'],
-        branding: true
+        branding: true,
+        releaseVersion: '',
+        releaseDate: ''
     });
 
     const setup = (data) => {
@@ -22,7 +24,9 @@ describe('components/printed-report/Coversheet.vue', () => {
                 owner: data.owner,
                 reviewer: data.reviewer,
                 contributors: data.contributors,
-                branding: data.branding
+                branding: data.branding,
+                releaseVersion: data.releaseVersion,
+                releaseDate: data.releaseDate
             },
             mocks: {
                 $t: key => key
@@ -55,9 +59,30 @@ describe('components/printed-report/Coversheet.vue', () => {
                 .toEqual(`threatmodel.contributors: ${summary.contributors.join(', ')}`);
         });
 
-        it('displays the date generated', () => {
-            expect(wrapper.find('.td-date-generated').text())
-                .toContain(`report.dateGenerated: `);
+        it('displays release date with fallback to generated date', () => {
+            const expectedDate = new Date().toDateString();
+            expect(wrapper.find('.td-release-date').text())
+                .toEqual(`report.releasedAt: ${expectedDate}`);
+        });
+
+        it('does not display release version when not provided', () => {
+            expect(wrapper.find('.td-release-version').exists())
+                .toEqual(false);
+        });
+
+        it('displays release version when provided', () => {
+            summary.releaseVersion = '1.0.0',
+            setup(summary);
+            expect(wrapper.find('.td-release-version').text())
+                .toEqual('report.releaseVersion: 1.0.0');
+        });
+
+        it('displays user-entered release date', () => {
+            summary.releaseDate = '2026-06-24';
+            setup(summary);
+            const expectedDate = new Date('2026-06-24').toDateString();
+            expect(wrapper.find('.td-release-date').text()) 
+                .toEqual(`report.releasedAt: ${expectedDate}`);
         });
 
         it('displays the brand image', () => {

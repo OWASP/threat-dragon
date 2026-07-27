@@ -49,10 +49,8 @@ jobs:
       security-events: write
     uses: ./.github/workflows/vulnerability-scan.yaml
     with:
-      source: registry
       image-ref: threatdragon/owasp-threat-dragon:latest
       checkout-ref: main
-      upload-sarif: true
 
   link_checker:
     name: Link checker

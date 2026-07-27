@@ -176,14 +176,14 @@ node_image_digest() {
 }
 
 rewrite_workflow() {
-    minor_version="$1"
+    full_version="$1"
 
-    awk -v minor_version="$minor_version" '
+    awk -v full_version="$full_version" '
         /^[[:space:]]*node-version:/ {
-            sub(/v?[0-9]+\.[0-9]+(\.[0-9]+)?/, minor_version)
+            sub(/v?[0-9]+\.[0-9]+(\.[0-9]+)?/, full_version)
         }
         /^[[:space:]]*-[[:space:]]*name:[[:space:]]*Use node LTS/ {
-            sub(/v?[0-9]+\.[0-9]+(\.[0-9]+)?/, minor_version)
+            sub(/v?[0-9]+\.[0-9]+(\.[0-9]+)?/, full_version)
         }
         { print }
     '
@@ -193,7 +193,6 @@ update_files() {
     repo="$1"
     version="$2"
     full_version="${version#v}"
-    minor_version="${full_version%.*}"
     image_digest="$(node_image_digest "$full_version")"
     docker_reference_pattern='docker\.io/library/node:[0-9]+\.[0-9]+\.[0-9]+-alpine@sha256:[0-9a-f]{64}'
     docker_reference_count="$(grep -Ec "$docker_reference_pattern" "$repo/Dockerfile")"
@@ -212,7 +211,7 @@ update_files() {
     if ! find "$repo/.github/workflows" -type f \( -name '*.yml' -o -name '*.yaml' \) -print \
         | sort \
         | while IFS= read -r workflow_file; do
-            rewrite_file "$workflow_file" rewrite_workflow "$minor_version" || exit 2
+            rewrite_file "$workflow_file" rewrite_workflow "$full_version" || exit 2
         done; then
         die "failed to update workflow files"
     fi
@@ -227,7 +226,7 @@ update_files() {
 
     echo "Updated $docker_reference_count Dockerfile Node image references to $full_version"
     echo "Pinned Dockerfile Node images to $image_digest"
-    echo "Updated GitHub Actions node-version values to $minor_version"
+    echo "Updated GitHub Actions node-version values to $full_version"
 }
 
 repo_dir=""

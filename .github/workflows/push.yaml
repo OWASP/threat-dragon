@@ -26,14 +26,18 @@ jobs:
     with:
       generate-sbom: true
 
-  vue_quality:
-    name: Vue quality
-    uses: ./.github/workflows/vue-quality-gates.yaml
+  site_quality:
+    name: Site quality
+    uses: ./.github/workflows/site-quality-gates.yaml
+
+  desktop_quality:
+    name: Desktop quality
+    uses: ./.github/workflows/desktop-quality-gates.yaml
 
   build_docker_image:
-    name: Build latest Docker image
+    name: Build latest docker
     if: github.repository == 'OWASP/threat-dragon'
-    needs: [server_quality, vue_quality]
+    needs: [site_quality, server_quality]
     uses: ./.github/workflows/docker-build.yaml
     with:
       image-tags: threatdragon/owasp-threat-dragon:latest
@@ -50,11 +54,8 @@ jobs:
     needs: build_docker_image
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-
-      - name: Deploy
-        uses: akhileshns/heroku-deploy@1b080913896a5d6d44a18e9e208f8eb1fee9b0f7 # v3.15.15
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: akhileshns/heroku-deploy@1b080913896a5d6d44a18e9e208f8eb1fee9b0f7 # v3.15.15
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: ${{ env.HEROKU_APP }}
@@ -64,7 +65,7 @@ jobs:
           usedocker: true
 
   browserstack_smoke_test:
-    name: BrowserStack smoke test
+    name: Browserstack smoke test
     runs-on: ubuntu-24.04
     needs: heroku_deploy
     defaults:
@@ -75,38 +76,39 @@ jobs:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
-      - name: Use node LTS 24.16
+      - name: Use node LTS 24.18.0
         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
-          node-version: '24.16'
+          node-version: '24.18.0'
           cache: npm
           cache-dependency-path: td.vue/package-lock.json
+
+      - name: Use npm 11.18.0
+        run: npm install --global npm@11.18.0
 
       - name: Install clean packages
         run: npm clean-install
 
-      - name: Configure BrowserStack
+      - name: BrowserStack Env Setup
         uses: browserstack/github-actions/setup-env@93aebce225b754566349151c0676b26b005e591b # v1.0.4
         with:
-          username: ${{ secrets.BROWSERSTACK_USERNAME }}
+          username:  ${{ secrets.BROWSERSTACK_USERNAME }}
           access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
 
       - name: Run cross-browser smoke tests
         run: npm run test:e2e-smokes
 
   desktop_e2e:
-    name: Desktop e2e
-    needs: vue_quality
+    name: Desktop e2e smokes
+    needs: [site_quality, desktop_quality]
     uses: ./.github/workflows/desktop-e2e.yaml
-    with:
-      target: ubuntu
 
   web_e2e:
     name: Container web e2e
     needs: build_docker_image
     uses: ./.github/workflows/web-e2e.yaml
     with:
-      target: container
+      container: true
       image-name: threatdragon/owasp-threat-dragon:latest
     secrets:
       github-client-id: ${{ secrets.CI_GITHUB_CLIENT_ID }}
@@ -116,7 +118,7 @@ jobs:
       session-encryption-keys: ${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}
 
   zap_scan_web_app:
-    name: Container ZAP scan
+    name: Local site zap scan
     runs-on: ubuntu-24.04
     needs: build_docker_image
 
@@ -125,25 +127,25 @@ jobs:
         run: |
           docker run -d \
             -p 3000:3000 \
+            -e GITHUB_CLIENT_ID \
+            -e GITHUB_CLIENT_SECRET \
             -e ENCRYPTION_JWT_REFRESH_SIGNING_KEY \
             -e ENCRYPTION_JWT_SIGNING_KEY \
             -e ENCRYPTION_KEYS \
-            -e GITHUB_CLIENT_ID \
-            -e GITHUB_CLIENT_SECRET \
             -e NODE_ENV=development \
             -e SERVER_API_PROTOCOL=http \
             "${{ env.IMAGE_NAME }}"
         env:
+          GITHUB_CLIENT_ID: ${{ secrets.CI_GITHUB_CLIENT_ID }}
+          GITHUB_CLIENT_SECRET: ${{ secrets.CI_GITHUB_CLIENT_SECRET }}
           ENCRYPTION_JWT_REFRESH_SIGNING_KEY: ${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}
           ENCRYPTION_JWT_SIGNING_KEY: ${{ secrets.CI_JWT_SIGNING_KEY }}
           ENCRYPTION_KEYS: ${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}
-          GITHUB_CLIENT_ID: ${{ secrets.CI_GITHUB_CLIENT_ID }}
-          GITHUB_CLIENT_SECRET: ${{ secrets.CI_GITHUB_CLIENT_SECRET }}
 
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
-      - name: ZAP scan
+      - name: ZAP Scan
         uses: zaproxy/action-full-scan@3c58388149901b9a03b7718852c5ba889646c27c # v0.13.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -162,47 +164,19 @@ jobs:
       security-events: write
     uses: ./.github/workflows/vulnerability-scan.yaml
     with:
-      source: registry
       image-ref: threatdragon/owasp-threat-dragon:latest
-      upload-sarif: true
 
-  desktop_windows_test:
-    name: Windows desktop build test
-    needs: [vue_quality, desktop_e2e]
+  desktop_builds:
+    name: Desktop build tests
+    needs: [site_quality, desktop_quality, desktop_e2e]
     uses: ./.github/workflows/desktop-build.yaml
-    with:
-      target: windows
-
-  desktop_macos_test:
-    name: macOS desktop build test
-    needs: [vue_quality, desktop_e2e]
-    uses: ./.github/workflows/desktop-build.yaml
-    with:
-      target: macos
-
-  desktop_linux_test:
-    name: Linux desktop build test
-    needs: [vue_quality, desktop_e2e]
-    uses: ./.github/workflows/desktop-build.yaml
-    with:
-      target: linux
-
-  desktop_linux_snap_test:
-    name: Linux snap build test
-    needs: [vue_quality, desktop_e2e]
-    uses: ./.github/workflows/desktop-build.yaml
-    with:
-      target: snap
 
   sbom_combiner_test:
     name: SBOM combiner test
     runs-on: ubuntu-24.04
     needs:
       - server_quality
-      - desktop_macos_test
-      - desktop_linux_test
-      - desktop_linux_snap_test
-      - desktop_windows_test
+      - desktop_builds
       - build_docker_image
     steps:
       - name: Fetch prepared SBOM artifacts

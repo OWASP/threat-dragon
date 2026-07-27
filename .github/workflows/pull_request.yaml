@@ -54,7 +54,7 @@ jobs:
           key: cache-lychee-${{ github.sha }}
           restore-keys: cache-lychee-
 
-      - name: Link checker
+      - name: Link Checker
         uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
         with:
           args: >-
@@ -68,7 +68,7 @@ jobs:
             '*.md'
           fail: true
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
   spell_checker:
     name: Check spelling
@@ -86,16 +86,18 @@ jobs:
     name: Server quality
     uses: ./.github/workflows/server-quality-gates.yaml
 
-  vue_quality:
-    name: Vue quality
-    uses: ./.github/workflows/vue-quality-gates.yaml
+  site_quality:
+    name: Site quality
+    uses: ./.github/workflows/site-quality-gates.yaml
+
+  desktop_quality:
+    name: Desktop quality
+    uses: ./.github/workflows/desktop-quality-gates.yaml
 
   web_e2e:
     name: Local web e2e
-    needs: [server_quality, vue_quality]
+    needs: [server_quality, site_quality]
     uses: ./.github/workflows/web-e2e.yaml
-    with:
-      target: local
     secrets:
       github-client-id: ${{ secrets.CI_GITHUB_CLIENT_ID }}
       github-client-secret: ${{ secrets.CI_GITHUB_CLIENT_SECRET }}
@@ -103,31 +105,17 @@ jobs:
       jwt-signing-key: ${{ secrets.CI_JWT_SIGNING_KEY }}
       session-encryption-keys: ${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}
 
-  desktop_e2e_ubuntu:
-    name: Desktop e2e Ubuntu
-    needs: vue_quality
+  desktop_e2e:
+    name: Desktop e2e
+    needs: [site_quality, desktop_quality]
     uses: ./.github/workflows/desktop-e2e.yaml
     with:
-      target: ubuntu
-
-  desktop_e2e_macos:
-    name: Desktop e2e macOS
-    needs: vue_quality
-    uses: ./.github/workflows/desktop-e2e.yaml
-    with:
-      target: macos
-
-  desktop_e2e_windows:
-    name: Desktop e2e Windows
-    needs: vue_quality
-    uses: ./.github/workflows/desktop-e2e.yaml
-    with:
-      target: windows
+      include-macos-and-windows: true
 
   visual_regression_tests:
     name: Site visual regression
     runs-on: ubuntu-24.04
-    needs: vue_quality
+    needs: site_quality
     env:
       GITHUB_CLIENT_ID: ${{ secrets.CI_GITHUB_CLIENT_ID }}
       GITHUB_CLIENT_SECRET: ${{ secrets.CI_GITHUB_CLIENT_SECRET }}
@@ -144,14 +132,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
-      - name: Use node LTS 24.16
+      - name: Use node LTS 24.18.0
         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
-          node-version: '24.16'
+          node-version: '24.18.0'
           cache: npm
           cache-dependency-path: |
             td.vue/package-lock.json
             td.server/package-lock.json
+
+      - name: Use npm 11.18.0
+        run: npm install --global npm@11.18.0
 
       - name: Use Chrome 148
         uses: browser-actions/setup-chrome@2e1d749697dd1612b833dba4a722266286fbefcd # v2
@@ -165,7 +156,7 @@ jobs:
         working-directory: td.server
         run: npm clean-install
 
-      - name: Prepare development environment
+      - name: Pre Dev
         run: npm run predev
 
       - name: Start server
@@ -176,7 +167,6 @@ jobs:
         run: npm run test:visual
 
       - name: Upload visual artifacts
-        if: ${{ failure() }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: visual-regression-artifacts
@@ -184,11 +174,12 @@ jobs:
             td.vue/tests/e2e/visual/screenshots
             td.vue/tests/e2e/visual/diffs
           if-no-files-found: ignore
+        if: ${{ failure() }}
 
   zap_scan_web_app:
-    name: Local site ZAP scan
+    name: Local site zap scan
     runs-on: ubuntu-24.04
-    needs: [server_quality, vue_quality]
+    needs: web_e2e
     env:
       GITHUB_CLIENT_ID: ${{ secrets.CI_GITHUB_CLIENT_ID }}
       GITHUB_CLIENT_SECRET: ${{ secrets.CI_GITHUB_CLIENT_SECRET }}
@@ -202,26 +193,31 @@ jobs:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
-      - name: Use node LTS 24.16
+      - name: Use node LTS 24.18.0
         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
-          node-version: '24.16'
+          node-version: '24.18.0'
           cache: npm
           cache-dependency-path: |
             package-lock.json
             td.server/package-lock.json
             td.vue/package-lock.json
 
+      - name: Use npm 11.18.0
+        run: npm install --global npm@11.18.0
+
       - name: Clean install
         run: |
           npm clean-install --ignore-scripts
-          npm clean-install --prefix td.server
-          npm clean-install --prefix td.vue
+          cd td.server
+          npm clean-install
+          cd ../td.vue
+          npm clean-install
 
       - name: Build and run locally
         run: npm start
 
-      - name: ZAP scan
+      - name: ZAP Scan
         uses: zaproxy/action-full-scan@3c58388149901b9a03b7718852c5ba889646c27c # v0.13.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -233,9 +229,9 @@ jobs:
           cmd_options: '-a'
 
   build_docker_image:
-    name: Build Docker image
+    name: Build docker image
     if: github.repository == 'OWASP/threat-dragon'
-    needs: [server_quality, vue_quality]
+    needs: [server_quality, site_quality]
     uses: ./.github/workflows/docker-build.yaml
     with:
       image-tags: pr-${{ github.event.number }}
@@ -247,10 +243,9 @@ jobs:
     needs: build_docker_image
     uses: ./.github/workflows/vulnerability-scan.yaml
     with:
-      source: artifact
+      artifact: true
       image-ref: pr-${{ github.event.number }}
       image-artifact-name: pr-${{ github.event.number }}
-      fail-on-findings: true
 
   pr_required_checks:
     name: PR required checks
@@ -261,14 +256,14 @@ jobs:
       - link_checker
       - spell_checker
       - server_quality
-      - vue_quality
+      - site_quality
+      - desktop_quality
       - web_e2e
-      - desktop_e2e_ubuntu
-      - desktop_e2e_macos
-      - desktop_e2e_windows
+      - desktop_e2e
       - visual_regression_tests
       - zap_scan_web_app
       - build_docker_image
+      - scan_image_with_trivy
 
     steps:
       - name: Require every blocking PR job to pass
@@ -279,14 +274,14 @@ jobs:
             "${{ needs.link_checker.result }}"
             "${{ needs.spell_checker.result }}"
             "${{ needs.server_quality.result }}"
-            "${{ needs.vue_quality.result }}"
+            "${{ needs.site_quality.result }}"
+            "${{ needs.desktop_quality.result }}"
             "${{ needs.web_e2e.result }}"
-            "${{ needs.desktop_e2e_ubuntu.result }}"
-            "${{ needs.desktop_e2e_macos.result }}"
-            "${{ needs.desktop_e2e_windows.result }}"
+            "${{ needs.desktop_e2e.result }}"
             "${{ needs.visual_regression_tests.result }}"
             "${{ needs.zap_scan_web_app.result }}"
             "${{ needs.build_docker_image.result }}"
+            "${{ needs.scan_image_with_trivy.result }}"
           )
 
           for result in "${results[@]}"; do
