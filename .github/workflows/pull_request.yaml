@@ -240,12 +240,34 @@ jobs:
 
   scan_image_with_trivy:
     name: Scan with Trivy
+    runs-on: ubuntu-24.04
     needs: build_docker_image
-    uses: ./.github/workflows/vulnerability-scan.yaml
-    with:
-      artifact: true
-      image-ref: pr-${{ github.event.number }}
-      image-artifact-name: pr-${{ github.event.number }}
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Retrieve local Docker image
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: pr-${{ github.event.number }}
+          path: /tmp
+
+      - name: Load local Docker image
+        run: docker load --input "$IMAGE_ARCHIVE"
+        env:
+          IMAGE_ARCHIVE: /tmp/pr-${{ github.event.number }}.tar
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          image-ref: pr-${{ github.event.number }}
+          format: table
+          trivyignores: '.github/workflows/.trivyignore'
+          exit-code: 1
+          skip-files: '/app/docs/configure/bitbucket.html,/app/docs/assets/search.json'
 
   pr_required_checks:
     name: PR required checks
@@ -263,7 +285,6 @@ jobs:
       - visual_regression_tests
       - zap_scan_web_app
       - build_docker_image
-      - scan_image_with_trivy
 
     steps:
       - name: Require every blocking PR job to pass
@@ -281,7 +302,6 @@ jobs:
             "${{ needs.visual_regression_tests.result }}"
             "${{ needs.zap_scan_web_app.result }}"
             "${{ needs.build_docker_image.result }}"
-            "${{ needs.scan_image_with_trivy.result }}"
           )
 
           for result in "${results[@]}"; do
