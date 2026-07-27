@@ -55,6 +55,36 @@
                     </b-form-row>
 
                     <b-form-row>
+                        <b-col md=6>
+                            <b-form-group
+                                id="release-version-group"
+                                :label="$t('threatmodel.releaseVersion')"
+                                label-for="release-version">
+                                <b-form-input
+                                    id="release-version"
+                                    v-model="model.release_version"
+                                    @input="onModifyModel()"
+                                    type="text">
+                                </b-form-input>
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col md=6>
+                            <b-form-group
+                                id="released-at-group"
+                                :label="$t('threatmodel.releasedAt')"
+                                label-for="released-at">
+                                <b-form-input
+                                    id="released-at"
+                                    v-model="model.released_at"
+                                    @input="onModifyModel()"
+                                    type="date">
+                                </b-form-input>
+                            </b-form-group>
+                        </b-col>
+                    </b-form-row>
+
+                    <b-form-row>
                         <b-col>
                             <b-form-group
                                 id="description-group"
