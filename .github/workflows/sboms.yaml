@@ -1,7 +1,6 @@
-name: Prepare release SBOMs
+name: Backfill release SBOMs
 
 on:
-  workflow_call:
   workflow_dispatch:
     inputs:
       release_tag:
@@ -15,7 +14,6 @@ permissions:
 jobs:
   validate_release_tag:
     name: Validate release tag
-    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-24.04
     outputs:
       release_tag: ${{ steps.validate.outputs.release_tag }}
@@ -31,36 +29,112 @@ jobs:
           fi
           printf 'release_tag=%s\n' "$RELEASE_TAG" >> "$GITHUB_OUTPUT"
 
-  regenerate_server_sbom_inputs:
-    name: Regenerate server and container SBOM inputs
-    if: github.event_name == 'workflow_dispatch'
+  resolve_toolchain:
+    name: Resolve release toolchain
     needs: validate_release_tag
     runs-on: ubuntu-24.04
+    outputs:
+      node_version: ${{ steps.resolve.outputs.node_version }}
+      npm_version: ${{ steps.resolve.outputs.npm_version }}
     steps:
       - name: Check out requested release
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           ref: refs/tags/${{ needs.validate_release_tag.outputs.release_tag }}
+          persist-credentials: false
 
-      - name: Build SBOM inputs
-        env:
-          RELEASE_TAG: ${{ needs.validate_release_tag.outputs.release_tag }}
+      - name: Resolve Node.js and npm versions
+        id: resolve
+        shell: bash
         run: |
-          docker build --target build-npm-stage1 --tag "threat-dragon-sbom-inputs:$RELEASE_TAG" .
-          container_id="$(docker create "threat-dragon-sbom-inputs:$RELEASE_TAG")"
-          docker cp "$container_id:/build/target/boms/." boms/
-          docker rm "$container_id"
-          mkdir server
-          cp boms/threat-dragon-server-bom.json server/sbom.json
-          cp boms/threat-dragon-server-bom.xml server/sbom.xml
+          set -eu
+          release_workflow='.github/workflows/release.yaml'
+          node_version="$(
+            sed -n "s/^[[:space:]]*node-version: ['\"]\([^'\"]*\)['\"].*/\1/p" \
+              "$release_workflow" | head -n 1
+          )"
+          npm_version="$(
+            sed -n 's/.*npm install --global npm@\([0-9][0-9.]*\).*/\1/p' \
+              "$release_workflow" | head -n 1
+          )"
+          if [[ "$node_version" =~ ^[0-9]+\.[0-9]+$ ]]; then
+            docker_node_version="$(
+              sed -n \
+                's/^[[:space:]]*ARG[[:space:]]*NODE_VERSION=\([0-9][0-9.]*\).*/\1/p' \
+                Dockerfile | head -n 1
+            )"
+            if [[ "$docker_node_version" == "$node_version".* ]]; then
+              node_version="$docker_node_version"
+            fi
+          fi
+          if ! [[ "$node_version" =~ ^[0-9]+\.[0-9]+(\.[0-9]+)?$ ]]; then
+            echo 'Unable to resolve a valid Node.js version from the release workflow' >&2
+            exit 1
+          fi
+          if [ -n "$npm_version" ] && \
+             ! [[ "$npm_version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo 'Unable to resolve a valid npm version from the release workflow' >&2
+            exit 1
+          fi
+          printf 'node_version=%s\n' "$node_version" >> "$GITHUB_OUTPUT"
+          printf 'npm_version=%s\n' "$npm_version" >> "$GITHUB_OUTPUT"
+
+  regenerate_server_sbom:
+    name: Regenerate server SBOM
+    needs:
+      - validate_release_tag
+      - resolve_toolchain
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: td.server
+    steps:
+      - name: Check out requested release
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          ref: refs/tags/${{ needs.validate_release_tag.outputs.release_tag }}
+          persist-credentials: false
+
+      - name: Use release Node.js version
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version: ${{ needs.resolve_toolchain.outputs.node_version }}
+
+      - name: Use release npm version
+        if: needs.resolve_toolchain.outputs.npm_version != ''
+        env:
+          NPM_VERSION: ${{ needs.resolve_toolchain.outputs.npm_version }}
+        run: npm install --global "npm@$NPM_VERSION"
+
+      - name: Install clean packages
+        run: npm clean-install
+
+      - name: Create server SBOM
+        run: npm run make-sbom
 
       - name: Save server SBOM artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: sboms-server
-          path: server/*
+          path: './td.server/sbom.*'
           include-hidden-files: true
           if-no-files-found: error
+
+  regenerate_container_sbom:
+    name: Recover container SBOM
+    needs: validate_release_tag
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Recover SBOM from published container
+        env:
+          IMAGE_NAME: threatdragon/owasp-threat-dragon
+          RELEASE_TAG: ${{ needs.validate_release_tag.outputs.release_tag }}
+        run: |
+          docker pull --platform linux/amd64 "$IMAGE_NAME:$RELEASE_TAG"
+          container_id="$(docker create "$IMAGE_NAME:$RELEASE_TAG")"
+          mkdir boms
+          docker cp "$container_id:/app/boms/." boms/
+          docker rm "$container_id"
 
       - name: Save container SBOM artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -70,10 +144,11 @@ jobs:
           include-hidden-files: true
           if-no-files-found: error
 
-  regenerate_desktop_sbom_inputs:
-    name: Regenerate ${{ matrix.name }} SBOM input
-    if: github.event_name == 'workflow_dispatch'
-    needs: validate_release_tag
+  regenerate_desktop_sboms:
+    name: Regenerate ${{ matrix.name }} SBOM
+    needs:
+      - validate_release_tag
+      - resolve_toolchain
     strategy:
       fail-fast: false
       matrix:
@@ -104,14 +179,18 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           ref: refs/tags/${{ needs.validate_release_tag.outputs.release_tag }}
+          persist-credentials: false
 
-      - name: Use node LTS 24.18.0
+      - name: Use release Node.js version
         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
-          node-version: '24.18.0'
+          node-version: ${{ needs.resolve_toolchain.outputs.node_version }}
 
-      - name: Use npm 11.18.0
-        run: npm install --global npm@11.18.0
+      - name: Use release npm version
+        if: needs.resolve_toolchain.outputs.npm_version != ''
+        env:
+          NPM_VERSION: ${{ needs.resolve_toolchain.outputs.npm_version }}
+        run: npm install --global "npm@$NPM_VERSION"
 
       - name: Install clean packages
         run: npm clean-install
@@ -120,9 +199,9 @@ jobs:
         if: matrix.install_snapcraft
         run: sudo snap install snapcraft --classic
 
-      - name: Build desktop SBOM input
+      - name: Build desktop without signing or publishing
         env:
-          CSC_IDENTITY_AUTO_DISCOVERY: false
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
         run: npm run build:desktop -- ${{ matrix.build_arguments }} --publish never
 
       - name: Save desktop SBOM artifact
@@ -134,23 +213,24 @@ jobs:
           if-no-files-found: error
 
   combine_sboms:
-    name: Combine SBOMs
-    if: ${{ always() && (github.event_name != 'workflow_dispatch' || (needs.regenerate_server_sbom_inputs.result == 'success' && needs.regenerate_desktop_sbom_inputs.result == 'success')) }}
+    name: Create SBOM archive
     needs:
-      - regenerate_server_sbom_inputs
-      - regenerate_desktop_sbom_inputs
+      - validate_release_tag
+      - regenerate_server_sbom
+      - regenerate_container_sbom
+      - regenerate_desktop_sboms
     runs-on: ubuntu-24.04
     steps:
-      - name: Fetch prepared SBOM artifacts
+      - name: Fetch regenerated SBOM artifacts
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           pattern: 'sboms-*'
           merge-multiple: false
           path: 'raw/'
 
-      - name: Prepare SBOM archive
+      - name: Prepare flat SBOM archive
         run: |
-          set -eux
+          set -euxo pipefail
           mkdir -p sboms/threat-dragon-container-image/app/
           cp raw/sboms-server/sbom.json                 sboms/threat-dragon-server-bom.json
           cp raw/sboms-server/sbom.xml                  sboms/threat-dragon-server-bom.xml
@@ -163,17 +243,21 @@ jobs:
           cp raw/sboms-desktop-linux-snap-site/bom.json sboms/threat-dragon-desktop-linux-snap-site-bom.json
           cp raw/sboms-desktop-linux-snap-site/bom.xml  sboms/threat-dragon-desktop-linux-snap-site-bom.xml
           cp raw/sboms-container-image-app/*            sboms/threat-dragon-container-image/app/
-          zip -r sboms.zip sboms
+          (
+            cd sboms
+            find . -type f -printf '%P\n' | sort | zip ../sboms.zip -@
+          )
           unzip -t sboms.zip
+          if unzip -Z1 sboms.zip | grep -Eq '^(\./|sboms/)'; then
+            echo 'SBOM archive must not contain a wrapper directory' >&2
+            exit 1
+          fi
           test -f sboms/threat-dragon-desktop-windows-site-bom.json
           test -f sboms/threat-dragon-desktop-windows-site-bom.xml
 
       - name: Save SBOM archive
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: sboms
-          path: |
-            sboms/
-            sboms.zip
-          include-hidden-files: true
+          name: sboms-${{ needs.validate_release_tag.outputs.release_tag }}
+          path: sboms.zip
           if-no-files-found: error

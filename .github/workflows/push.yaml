@@ -678,7 +678,7 @@ jobs:
 
   sbom_combiner_test:
     name: SBOM combiner test
-    uses: ./.github/workflows/sboms.yaml
+    runs-on: ubuntu-24.04
     needs:
       - server_unit_tests
       - desktop_macos_test
@@ -686,3 +686,31 @@ jobs:
       - desktop_linux_snap_test
       - desktop_windows_test
       - build_docker_image
+    steps:
+      - name: Fetch prepared SBOM artifacts
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          pattern: 'sboms-*'
+          merge-multiple: false
+          path: 'raw/'
+      - name: Fetch SBOMs
+        run: |
+          set -eux
+          mkdir -p sboms/threat-dragon-container-image/app/
+          cp raw/sboms-server/sbom.json                 sboms/threat-dragon-server-bom.json
+          cp raw/sboms-server/sbom.xml                  sboms/threat-dragon-server-bom.xml
+          cp raw/sboms-desktop-windows-site/bom.json    sboms/threat-dragon-desktop-windows-site-bom.json
+          cp raw/sboms-desktop-windows-site/bom.xml     sboms/threat-dragon-desktop-windows-site-bom.xml
+          cp raw/sboms-desktop-macos-site/bom.json      sboms/threat-dragon-desktop-macos-site-bom.json
+          cp raw/sboms-desktop-macos-site/bom.xml       sboms/threat-dragon-desktop-macos-site-bom.xml
+          cp raw/sboms-desktop-linux-site/bom.json      sboms/threat-dragon-desktop-linux-site-bom.json
+          cp raw/sboms-desktop-linux-site/bom.xml       sboms/threat-dragon-desktop-linux-site-bom.xml
+          cp raw/sboms-desktop-linux-snap-site/bom.json sboms/threat-dragon-desktop-linux-snap-site-bom.json
+          cp raw/sboms-desktop-linux-snap-site/bom.xml  sboms/threat-dragon-desktop-linux-snap-site-bom.xml
+          cp raw/sboms-container-image-app/*            sboms/threat-dragon-container-image/app/
+      - name: Save SBOM artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: sboms
+          path: 'sboms/'
+          include-hidden-files: true
