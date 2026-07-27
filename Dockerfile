@@ -1,4 +1,4 @@
-# NPM: Base image with latest npm (in native host's platform)
+# NPM: Base image with the pinned npm version (in native host's platform)
 FROM --platform=$BUILDPLATFORM docker.io/library/node:24.18.0-alpine@sha256:a0b9bf06e4e6193cf7a0f58816cc935ff8c2a908f81e6f1a95432d679c54fbfd AS build-npm-base
 WORKDIR /build
 
@@ -7,11 +7,11 @@ WORKDIR /build
 COPY .npmrc /.npmrc
 ENV NPM_CONFIG_USERCONFIG=/.npmrc
 
-# Install latest npm
+# Keep npm aligned with GitHub Actions
 RUN --mount=type=cache,target=/root/.npm,sharing=locked \
     --mount=type=tmpfs,target=/tmp \
     --mount=type=tmpfs,target=/usr/share/man \
-    npm i -g npm@latest
+    npm i -g npm@11.18.0
 
 
 # NPM: Stage 1: install dev-dependencies and build dist bundle
