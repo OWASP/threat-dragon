@@ -5,7 +5,7 @@
             <em v-if="outOfScope">- {{ $t('threatmodel.properties.outOfScope') }}</em>
         </div>
         <p class="entity-description" v-if="outOfScope"><b>{{ $t('threatmodel.properties.reasonOutOfScope') }}:</b> {{ entity.data.reasonOutOfScope }}</p>
-        <p class="entity-description" v-if="entity.data.description">{{ $t('threatmodel.properties.description') }}: {{ entity.data.description }}</p>
+        <div class="entity-description" v-if="entity.data.description" v-html="markdownToHTML($t('threatmodel.properties.description') + ': ' + entity.data.description)"></div>
         <p class="entity-description" v-if="showProperties">{{ properties }}</p>
         <table class="table">
             <thead>
@@ -31,8 +31,8 @@
                     <td>{{ translateSeverity(threat.severity) }}</td>
                     <td>{{ translateStatus(threat.status) }}</td>
                     <td>{{ threat.score }}</td>
-                    <td>{{ threat.description }}</td>
-                    <td>{{ threat.mitigation }}</td>
+                    <td v-html="markdownToHTML(threat.description)"></td>
+                    <td v-html="markdownToHTML(threat.mitigation)"></td>
                 </tr>
             </tbody>
         </table>
@@ -40,10 +40,15 @@
 </template>
 
 <style lang="scss" scoped>
+table {
+    :deep(p) {
+        margin-bottom: 0;
+    }
+}
+
 .report-box {
     display: flex;
     flex-direction: column;
-    white-space: pre-wrap;
 }
 
 .entity-title {
@@ -55,11 +60,11 @@
 
 .entity-description {
     padding: 15px;
-    white-space: pre-wrap;
 }
 </style>
 
 <script>
+import { markdownToHTML } from '@/service/formatting-utils.js';
 import threatService from '@/service/threats/index.js';
 
 export default {
@@ -142,6 +147,7 @@ export default {
         }
     },
     methods: {
+        markdownToHTML,
         toCamelCase(str) {
             // https://stackoverflow.com/questions/2970525/converting-any-string-into-camel-case
             return str.replace(/(?:^\w|[A-Z]|\b\w)/g, (ltr, idx) => idx === 0 ? ltr.toLowerCase() : ltr.toUpperCase()).replace(/\s+/g, '');
