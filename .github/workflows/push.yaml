@@ -1,4 +1,5 @@
 name: CI pipeline
+
 on:
   push:
     branches:
@@ -19,191 +20,29 @@ env:
 
 # for security reasons the github actions are pinned to specific SHAs
 jobs:
-  server_unit_tests:
-    name: Server unit tests
-    runs-on: ubuntu-24.04
-    defaults:
-      run:
-        working-directory: td.server
+  server_quality:
+    name: Server quality
+    uses: ./.github/workflows/server-quality-gates.yaml
+    with:
+      generate-sbom: true
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-
-      - name: Use node LTS 24.16
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
-        with:
-          node-version: '24.16'
-
-      - name: Cache NPM dir
-        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-            ${{ runner.os }}-
-
-      - name: Install clean packages
-        run: npm clean-install
-
-      - name: lint
-        run: npm run lint
-
-      - name: Unit test
-        run: npm run test:unit
-
-      - name: Create SBOM
-        run: npm run make-sbom
-
-      - name: Save SBOM artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: sboms-server
-          path: './td.server/sbom.*'
-          include-hidden-files: true
-
-  site_unit_tests:
-    name: Site unit tests
-    runs-on: ubuntu-24.04
-    defaults:
-      run:
-        working-directory: td.vue
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-
-      - name: Use node LTS 24.16
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
-        with:
-          node-version: '24.16'
-
-      - name: Cache NPM dir
-        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-            ${{ runner.os }}-
-
-      - name: Install clean packages
-        run: npm clean-install
-
-      - name: lint
-        run: npm run lint
-
-      - name: Unit test
-        run: npm run test:unit
-
-  desktop_unit_tests:
-    name: Desktop unit tests
-    runs-on: ubuntu-24.04
-    defaults:
-      run:
-        working-directory: td.vue
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-
-      - name: Use node LTS 24.16
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
-        with:
-          node-version: '24.16'
-
-      - name: Cache NPM dir
-        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-            ${{ runner.os }}-
-
-      - name: Install clean packages
-        run: npm clean-install
-
-      - name: lint
-        run: npm run lint:desktop
-
-      - name: Unit test
-        run: npm run test:desktop
+  vue_quality:
+    name: Vue quality
+    uses: ./.github/workflows/vue-quality-gates.yaml
 
   build_docker_image:
-    name: Build latest docker
-    runs-on: ubuntu-24.04
-    needs: [site_unit_tests, server_unit_tests]
+    name: Build latest Docker image
     if: github.repository == 'OWASP/threat-dragon'
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@96fe6ef7f33517b61c61be40b68a1882f3264fb8 # v4.2.0
-
-      - name: Set up Docker Buildx
-        id: buildx
-        uses: docker/setup-buildx-action@bb05f3f5519dd87d3ba754cc423b652a5edd6d2c # v4.2.0
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@af1e73f918a031802d376d3c8bbc3fe56130a9b0 # v4.4.0
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Build for supported architectures and push latest
-        id: docker_build
-        uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7.3.0
-        with:
-          context: ./
-          file: ./Dockerfile
-          builder: ${{ steps.buildx.outputs.name }}
-          push: true
-          tags:  ${{ env.IMAGE_NAME }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          # If you add more platforms, make sure to include them in ./pull_request.yaml and ./release.yaml too!
-          platforms: linux/amd64,linux/arm64
-          # Do not load the image here, as multiplatform images can't be loaded that way
-          # The following docker run will instead pull from the registry we just pushed to
-          load: false
-          sbom: true
-          provenance: mode=max,version=v1
-
-      # Required because multiplatform images can't be loaded directly
-      - name: Build for amd64 only to extract SBOM
-        id: docker_build_amd64
-        uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7.3.0
-        with:
-          context: ./
-          file: ./Dockerfile
-          builder: ${{ steps.buildx.outputs.name }}
-          # Do not push, just for the docker run in the next line
-          push: false
-          tags:  ${{ env.IMAGE_NAME }}
-          # Should pull from the step before, so this one should be all cached
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          platforms: linux/amd64
-          load: true
-          # Note: no sbom or provenance, we need to produce the simplest image form
-          # so that the load will actually succeed
-
-      - name: fetch app SBOMs
-        run: docker run --rm --entrypoint tar "$IMAGE_ID" -c boms | tar -xv
-        env:
-          IMAGE_ID: ${{ steps.docker_build_amd64.outputs.imageid }}
-
-      - name: Save SBOM artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: sboms-container-image-app
-          path: './boms/*'
-          include-hidden-files: true
-          if-no-files-found: error
+    needs: [server_quality, vue_quality]
+    uses: ./.github/workflows/docker-build.yaml
+    with:
+      image-tags: threatdragon/owasp-threat-dragon:latest
+      push-image: true
+      generate-sbom: true
+      use-qemu: true
+    secrets:
+      dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
+      dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
 
   heroku_deploy:
     name: Upload to Heroku
@@ -211,8 +50,11 @@ jobs:
     needs: build_docker_image
 
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - uses: akhileshns/heroku-deploy@1b080913896a5d6d44a18e9e208f8eb1fee9b0f7 # v3.15.15
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Deploy
+        uses: akhileshns/heroku-deploy@1b080913896a5d6d44a18e9e208f8eb1fee9b0f7 # v3.15.15
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: ${{ env.HEROKU_APP }}
@@ -222,7 +64,7 @@ jobs:
           usedocker: true
 
   browserstack_smoke_test:
-    name: Browserstack smoke test
+    name: BrowserStack smoke test
     runs-on: ubuntu-24.04
     needs: heroku_deploy
     defaults:
@@ -237,179 +79,44 @@ jobs:
         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
           node-version: '24.16'
-
-      - name: Cache NPM dir
-        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-            ${{ runner.os }}-
+          cache: npm
+          cache-dependency-path: td.vue/package-lock.json
 
       - name: Install clean packages
         run: npm clean-install
 
-      - name: BrowserStack Env Setup
+      - name: Configure BrowserStack
         uses: browserstack/github-actions/setup-env@93aebce225b754566349151c0676b26b005e591b # v1.0.4
         with:
-          username:  ${{ secrets.BROWSERSTACK_USERNAME }}
+          username: ${{ secrets.BROWSERSTACK_USERNAME }}
           access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
 
       - name: Run cross-browser smoke tests
         run: npm run test:e2e-smokes
 
-  desktop_e2e_smokes:
-    name: Desktop e2e smokes
-    runs-on: ubuntu-24.04
-    needs: [site_unit_tests, desktop_unit_tests]
-    defaults:
-      run:
-        working-directory: td.vue
+  desktop_e2e:
+    name: Desktop e2e
+    needs: vue_quality
+    uses: ./.github/workflows/desktop-e2e.yaml
+    with:
+      target: ubuntu
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-
-      - name: Use node LTS 24.16
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
-        with:
-          node-version: '24.16'
-
-      - name: Cache NPM dir
-        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-            ${{ runner.os }}-
-
-      - name: Install clean packages
-        run: npm clean-install
-
-      - name: Build Linux desktop app
-        run: npm run build:desktop -- --linux AppImage --x64 --publish never
-
-      - name: Run desktop e2e smokes
-        run: xvfb-run -a npm run test:e2e:desktop
-
-      - name: Upload desktop e2e logs
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: desktop-e2e-logs
-          path: td.vue/wdio-logs
-          if-no-files-found: ignore
-        if: ${{ failure() }}
-
-  e2e_smokes:
-    name: Site e2e smokes
-    runs-on: ubuntu-24.04
+  web_e2e:
+    name: Container web e2e
     needs: build_docker_image
-    defaults:
-      run:
-        working-directory: td.vue
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-
-      - name: Run Threat Dragon
-        run: |
-          docker run -d \
-            -p 3000:3000 \
-            -e ENCRYPTION_JWT_REFRESH_SIGNING_KEY='${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}' \
-            -e ENCRYPTION_JWT_SIGNING_KEY='${{ secrets.CI_JWT_SIGNING_KEY }}' \
-            -e ENCRYPTION_KEYS='${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}' \
-            -e GITHUB_CLIENT_ID='${{ secrets.CI_GITHUB_CLIENT_ID }}' \
-            -e GITHUB_CLIENT_SECRET='${{ secrets.CI_GITHUB_CLIENT_SECRET }}' \
-            -e NODE_ENV='development' \
-            -e SERVER_API_PROTOCOL='http' \
-            ${{ env.IMAGE_NAME }}
-
-      - name: Use node LTS 24.16
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
-        with:
-          node-version: '24.16'
-
-      - name: Cache NPM dir
-        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-            ${{ runner.os }}-
-
-      - name: Install clean packages
-        run: npm clean-install
-
-      - name: Run e2e tests
-        run: npm run test:e2e-ci-smokes
-
-      - name: Upload e2e videos
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: e2e_vids.zip
-          path: td.vue/tests/e2e/videos
-        if: ${{ failure() && hashFiles('td.vue/tests/e2e/videos/') != '' }}
-
-  e2e_tests:
-    name: Site e2e tests
-    runs-on: ubuntu-24.04
-    needs: e2e_smokes
-    env:
-      CI_MOCK_ENABLED: 'false'
-    defaults:
-      run:
-        working-directory: td.vue
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-
-      - name: Run Threat Dragon
-        run: |
-          docker run -d \
-            -p 3000:3000 \
-            -e GITHUB_CLIENT_ID='${{ secrets.CI_GITHUB_CLIENT_ID }}' \
-            -e GITHUB_CLIENT_SECRET='${{ secrets.CI_GITHUB_CLIENT_SECRET }}' \
-            -e ENCRYPTION_JWT_REFRESH_SIGNING_KEY='${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}' \
-            -e ENCRYPTION_JWT_SIGNING_KEY='${{ secrets.CI_JWT_SIGNING_KEY }}' \
-            -e ENCRYPTION_KEYS='${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}' \
-            -e NODE_ENV='development' \
-            -e SERVER_API_PROTOCOL='http' \
-            ${{ env.IMAGE_NAME }}
-
-      - name: Use node LTS 24.16
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
-        with:
-          node-version: '24.16'
-
-      - name: Cache NPM dir
-        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-            ${{ runner.os }}-
-
-      - name: Install clean packages
-        run: npm clean-install
-
-      - name: Run e2e tests
-        run: npm run test:e2e-ci
-
-      - name: Upload e2e videos
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: e2e_vids.zip
-          path: td.vue/tests/e2e/videos
-        if: ${{ failure() && hashFiles('td.vue/tests/e2e/videos/') != '' }}
+    uses: ./.github/workflows/web-e2e.yaml
+    with:
+      target: container
+      image-name: threatdragon/owasp-threat-dragon:latest
+    secrets:
+      github-client-id: ${{ secrets.CI_GITHUB_CLIENT_ID }}
+      github-client-secret: ${{ secrets.CI_GITHUB_CLIENT_SECRET }}
+      jwt-refresh-signing-key: ${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}
+      jwt-signing-key: ${{ secrets.CI_JWT_SIGNING_KEY }}
+      session-encryption-keys: ${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}
 
   zap_scan_web_app:
-    name: Local site zap scan
+    name: Container ZAP scan
     runs-on: ubuntu-24.04
     needs: build_docker_image
 
@@ -418,19 +125,25 @@ jobs:
         run: |
           docker run -d \
             -p 3000:3000 \
-            -e GITHUB_CLIENT_ID='${{ secrets.CI_GITHUB_CLIENT_ID }}' \
-            -e GITHUB_CLIENT_SECRET='${{ secrets.CI_GITHUB_CLIENT_SECRET }}' \
-            -e ENCRYPTION_JWT_REFRESH_SIGNING_KEY='${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}' \
-            -e ENCRYPTION_JWT_SIGNING_KEY='${{ secrets.CI_JWT_SIGNING_KEY }}' \
-            -e ENCRYPTION_KEYS='${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}' \
-            -e NODE_ENV='development' \
-            -e SERVER_API_PROTOCOL='http' \
-            ${{ env.IMAGE_NAME }}
+            -e ENCRYPTION_JWT_REFRESH_SIGNING_KEY \
+            -e ENCRYPTION_JWT_SIGNING_KEY \
+            -e ENCRYPTION_KEYS \
+            -e GITHUB_CLIENT_ID \
+            -e GITHUB_CLIENT_SECRET \
+            -e NODE_ENV=development \
+            -e SERVER_API_PROTOCOL=http \
+            "${{ env.IMAGE_NAME }}"
+        env:
+          ENCRYPTION_JWT_REFRESH_SIGNING_KEY: ${{ secrets.CI_JWT_REFRESH_SIGNING_KEY }}
+          ENCRYPTION_JWT_SIGNING_KEY: ${{ secrets.CI_JWT_SIGNING_KEY }}
+          ENCRYPTION_KEYS: ${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}
+          GITHUB_CLIENT_ID: ${{ secrets.CI_GITHUB_CLIENT_ID }}
+          GITHUB_CLIENT_SECRET: ${{ secrets.CI_GITHUB_CLIENT_SECRET }}
 
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
-      - name: ZAP Scan
+      - name: ZAP scan
         uses: zaproxy/action-full-scan@3c58388149901b9a03b7718852c5ba889646c27c # v0.13.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -443,211 +156,49 @@ jobs:
 
   scan_image_with_trivy:
     name: Scan image with Trivy
-    runs-on: ubuntu-24.04
     needs: build_docker_image
     permissions:
       contents: read
       security-events: write
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
-        with:
-          image-ref: '${{ env.IMAGE_NAME }}'
-          format: 'template'
-          template: '@/contrib/sarif.tpl'
-          trivyignores: '.github/workflows/.trivyignore'
-          output: 'trivy-results.sarif'
-
-      - name: Upload scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@99df26d4f13ea111d4ec1a7dddef6063f76b97e9 # v4.37.0
-        with:
-          sarif_file: 'trivy-results.sarif'
+    uses: ./.github/workflows/vulnerability-scan.yaml
+    with:
+      source: registry
+      image-ref: threatdragon/owasp-threat-dragon:latest
+      upload-sarif: true
 
   desktop_windows_test:
     name: Windows desktop build test
-    runs-on: windows-latest
-    needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_smokes]
-    defaults:
-      run:
-        working-directory: td.vue
-
-    steps:
-      - name: Check out
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-
-      - name: Use node LTS 24.16
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
-        with:
-          node-version: '24.16'
-
-      - name: Cache NPM dir
-        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-            ${{ runner.os }}-
-
-      - name: Install clean packages
-        run: npm clean-install
-
-      - name: Build Windows executable
-        run: npm run build:desktop -- --windows --publish never
-
-      - name: Save SBOM artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: sboms-desktop-windows-site
-          path: './td.vue/dist-desktop/bundled/.sbom/*'
-          include-hidden-files: true
-          if-no-files-found: error
+    needs: [vue_quality, desktop_e2e]
+    uses: ./.github/workflows/desktop-build.yaml
+    with:
+      target: windows
 
   desktop_macos_test:
-    name: MacOS desktop build test
-    runs-on: macos-latest
-    needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_smokes]
-    defaults:
-      run:
-        working-directory: td.vue
-
-    steps:
-      - name: Check out
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-
-      - name: Use node LTS 24.16
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
-        with:
-          node-version: '24.16'
-
-      - name: Cache NPM dir
-        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-            ${{ runner.os }}-
-
-      - name: Install clean packages
-        run: npm clean-install
-
-      - name: Build MacOS disk image
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npm run build:desktop -- --mac --publish never
-
-      - name: Save SBOM artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: sboms-desktop-macos-site
-          path: './td.vue/dist-desktop/bundled/.sbom/*'
-          include-hidden-files: true
-          if-no-files-found: error
+    name: macOS desktop build test
+    needs: [vue_quality, desktop_e2e]
+    uses: ./.github/workflows/desktop-build.yaml
+    with:
+      target: macos
 
   desktop_linux_test:
     name: Linux desktop build test
-    runs-on: ubuntu-24.04
-    needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_smokes]
-    defaults:
-      run:
-        working-directory: td.vue
-
-    steps:
-      - name: Check out
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-
-      - name: Use node LTS 24.16
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
-        with:
-          node-version: '24.16'
-
-      - name: Cache NPM dir
-        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-            ${{ runner.os }}-
-
-      - name: Install clean packages
-        run: npm clean-install
-
-      - name: Build Linux app images
-        shell: bash
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npm run build:desktop -- --linux AppImage deb rpm --publish never
-
-      - name: Print logs on error
-        if: ${{ failure() }}
-        run: find . -name "*.log" -exec cat '{}' \; -print
-
-      - name: Save SBOM artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: sboms-desktop-linux-site
-          path: './td.vue/dist-desktop/bundled/.sbom/*'
-          include-hidden-files: true
-          if-no-files-found: error
+    needs: [vue_quality, desktop_e2e]
+    uses: ./.github/workflows/desktop-build.yaml
+    with:
+      target: linux
 
   desktop_linux_snap_test:
     name: Linux snap build test
-    runs-on: ubuntu-24.04
-    needs: [desktop_unit_tests, site_unit_tests, desktop_e2e_smokes]
-    defaults:
-      run:
-        working-directory: td.vue
-
-    steps:
-      - name: Check out
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-
-      - name: Use node LTS 24.16
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
-        with:
-          node-version: '24.16'
-
-      - name: Cache NPM dir
-        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-            ${{ runner.os }}-
-
-      - name: Install clean packages
-        run: npm clean-install
-
-      - name: Build Linux snap
-        shell: bash
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npm run build:desktop -- --linux snap
-
-      - name: Print logs on error
-        if: ${{ failure() }}
-        run: find . -name "*.log" -exec cat '{}' \; -print
-
-      - name: Save SBOM artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: sboms-desktop-linux-snap-site
-          path: './td.vue/dist-desktop/bundled/.sbom/*'
-          include-hidden-files: true
-          if-no-files-found: error
+    needs: [vue_quality, desktop_e2e]
+    uses: ./.github/workflows/desktop-build.yaml
+    with:
+      target: snap
 
   sbom_combiner_test:
     name: SBOM combiner test
     runs-on: ubuntu-24.04
     needs:
-      - server_unit_tests
+      - server_quality
       - desktop_macos_test
       - desktop_linux_test
       - desktop_linux_snap_test
@@ -660,6 +211,7 @@ jobs:
           pattern: 'sboms-*'
           merge-multiple: false
           path: 'raw/'
+
       - name: Fetch SBOMs
         run: |
           set -eux
@@ -675,6 +227,7 @@ jobs:
           cp raw/sboms-desktop-linux-snap-site/bom.json sboms/threat-dragon-desktop-linux-snap-site-bom.json
           cp raw/sboms-desktop-linux-snap-site/bom.xml  sboms/threat-dragon-desktop-linux-snap-site-bom.xml
           cp raw/sboms-container-image-app/*            sboms/threat-dragon-container-image/app/
+
       - name: Save SBOM artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:

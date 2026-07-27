@@ -1,0 +1,84 @@
+name: Reusable desktop end-to-end tests
+
+on:
+  workflow_call:
+    inputs:
+      target:
+        description: Desktop platform to build and test
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Desktop e2e (${{ inputs.target }})
+    runs-on: ${{ fromJSON('{"ubuntu":"ubuntu-24.04","macos":"macos-latest","windows":"windows-latest"}')[inputs.target] }}
+    env:
+      electron_config_cache: ${{ github.workspace }}/.cache/electron
+      ELECTRON_BUILDER_CACHE: ${{ github.workspace }}/.cache/electron-builder
+    defaults:
+      run:
+        working-directory: td.vue
+
+    steps:
+      - name: Validate target
+        shell: bash
+        run: |
+          case "${{ inputs.target }}" in
+            ubuntu|macos|windows) ;;
+            *)
+              echo "target must be ubuntu, macos, or windows" >&2
+              exit 2
+              ;;
+          esac
+
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Use node LTS 24.16
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version: '24.16'
+          cache: npm
+          cache-dependency-path: td.vue/package-lock.json
+
+      - name: Cache Electron binaries
+        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
+        with:
+          path: |
+            ${{ env.electron_config_cache }}
+            ${{ env.ELECTRON_BUILDER_CACHE }}
+          key: ${{ runner.os }}-electron-${{ hashFiles('td.vue/package-lock.json') }}
+
+      - name: Install clean packages
+        run: npm clean-install
+
+      - name: Build Linux desktop app
+        if: inputs.target == 'ubuntu'
+        run: npm run build:desktop -- --linux AppImage --x64 --publish never
+
+      - name: Build macOS desktop app
+        if: inputs.target == 'macos'
+        run: npm run build:desktop -- --mac --publish never
+
+      - name: Build Windows desktop app
+        if: inputs.target == 'windows'
+        run: npm run build:desktop -- --windows --publish never
+
+      - name: Run Linux desktop e2e tests
+        if: inputs.target == 'ubuntu'
+        run: xvfb-run -a npm run test:e2e:desktop
+
+      - name: Run desktop e2e tests
+        if: inputs.target != 'ubuntu'
+        run: npm run test:e2e:desktop
+
+      - name: Upload desktop e2e logs
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: desktop-e2e-logs-${{ inputs.target }}
+          path: td.vue/wdio-logs
+          if-no-files-found: ignore

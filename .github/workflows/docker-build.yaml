@@ -1,0 +1,148 @@
+name: Reusable Docker build
+
+on:
+  workflow_call:
+    inputs:
+      image-tags:
+        description: Comma-separated Docker image tags
+        required: true
+        type: string
+      push-image:
+        description: Push the multi-platform image
+        required: false
+        type: boolean
+        default: false
+      export-image-artifact:
+        description: Export an amd64 image tar as an artifact
+        required: false
+        type: boolean
+        default: false
+      image-artifact-name:
+        description: Artifact name for the exported image
+        required: false
+        type: string
+        default: docker-image
+      generate-sbom:
+        description: Extract and upload application SBOMs from the amd64 image
+        required: false
+        type: boolean
+        default: false
+      use-qemu:
+        description: Install QEMU before the multi-platform build
+        required: false
+        type: boolean
+        default: false
+    secrets:
+      dockerhub-username:
+        required: false
+      dockerhub-token:
+        required: false
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Docker build
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Set up QEMU
+        if: inputs.use-qemu
+        uses: docker/setup-qemu-action@96fe6ef7f33517b61c61be40b68a1882f3264fb8 # v4.2.0
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@bb05f3f5519dd87d3ba754cc423b652a5edd6d2c # v4.2.0
+
+      - name: Login to Docker Hub
+        if: inputs.push-image
+        uses: docker/login-action@af1e73f918a031802d376d3c8bbc3fe56130a9b0 # v4.4.0
+        with:
+          username: ${{ secrets.dockerhub-username }}
+          password: ${{ secrets.dockerhub-token }}
+
+      - name: Build supported architectures
+        uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7.3.0
+        with:
+          context: ./
+          file: ./Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          push: ${{ inputs.push-image }}
+          tags: ${{ inputs.image-tags }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          # If you add more platforms, make sure to include them in ./release.yaml too!
+          platforms: linux/amd64,linux/arm64
+          # Do not load the image here, as multiplatform images can't be loaded that way
+          load: false
+          sbom: true
+          provenance: mode=max,version=v1
+
+      # Required because multiplatform images can't be loaded directly
+      - name: Build amd64 image for artifact
+        if: inputs.export-image-artifact
+        uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7.3.0
+        with:
+          context: ./
+          file: ./Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          tags: ${{ inputs.image-tags }}
+          outputs: type=docker,dest=/tmp/${{ inputs.image-artifact-name }}.tar
+          # Should pull from the step before, so this one should be all cached
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          platforms: linux/amd64
+          # Note: no sbom or provenance, we need to produce the simplest image form
+          # so that "docker load" will like it afterwards
+
+      - name: Verify amd64 image artifact
+        if: inputs.export-image-artifact
+        run: docker load --input "$IMAGE_ARCHIVE"
+        env:
+          IMAGE_ARCHIVE: /tmp/${{ inputs.image-artifact-name }}.tar
+
+      - name: Save amd64 image artifact
+        if: inputs.export-image-artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: ${{ inputs.image-artifact-name }}
+          path: /tmp/${{ inputs.image-artifact-name }}.tar
+          if-no-files-found: error
+
+      - name: Build amd64 image for SBOM extraction
+        if: inputs.generate-sbom
+        id: docker_build_amd64
+        uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7.3.0
+        with:
+          context: ./
+          file: ./Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          # Do not push, just for the docker run below
+          push: false
+          tags: ${{ inputs.image-tags }}
+          # Should pull from the step before, so this one should be all cached
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          platforms: linux/amd64
+          # Note: no sbom or provenance, we need to produce the simplest image form
+          # so that the load will actually succeed
+          load: true
+
+      - name: Fetch application SBOMs
+        if: inputs.generate-sbom
+        run: docker run --rm --entrypoint tar "$IMAGE_ID" -c boms | tar -xv
+        env:
+          IMAGE_ID: ${{ steps.docker_build_amd64.outputs.imageid }}
+
+      - name: Save application SBOMs
+        if: inputs.generate-sbom
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: sboms-container-image-app
+          path: './boms/*'
+          include-hidden-files: true
+          if-no-files-found: error

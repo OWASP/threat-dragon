@@ -1,0 +1,137 @@
+name: Reusable web end-to-end tests
+
+on:
+  workflow_call:
+    inputs:
+      target:
+        description: Test a local development server or a container image
+        required: true
+        type: string
+      image-name:
+        description: Container image reference
+        required: false
+        type: string
+        default: ''
+      image-artifact-name:
+        description: Optional artifact containing an image tar
+        required: false
+        type: string
+        default: ''
+    secrets:
+      github-client-id:
+        required: false
+      github-client-secret:
+        required: false
+      jwt-refresh-signing-key:
+        required: false
+      jwt-signing-key:
+        required: false
+      session-encryption-keys:
+        required: false
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Web e2e
+    runs-on: ubuntu-24.04
+    env:
+      CYPRESS_CACHE_FOLDER: ${{ github.workspace }}/.cache/cypress
+    defaults:
+      run:
+        working-directory: td.vue
+
+    steps:
+      - name: Validate inputs
+        shell: bash
+        run: |
+          if [ "${{ inputs.target }}" != "local" ] && [ "${{ inputs.target }}" != "container" ]; then
+            echo "target must be local or container" >&2
+            exit 2
+          fi
+          if [ "${{ inputs.target }}" = "container" ] && [ -z "${{ inputs.image-name }}" ]; then
+            echo "image-name is required for a container target" >&2
+            exit 2
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Use node LTS 24.16
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version: '24.16'
+          cache: npm
+          cache-dependency-path: td.vue/package-lock.json
+
+      - name: Cache Cypress binary
+        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
+        with:
+          path: ${{ env.CYPRESS_CACHE_FOLDER }}
+          key: ${{ runner.os }}-cypress-${{ hashFiles('td.vue/package-lock.json') }}
+
+      - name: Install clean packages
+        run: npm clean-install
+
+      - name: Retrieve container image
+        if: inputs.target == 'container' && inputs.image-artifact-name != ''
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: ${{ inputs.image-artifact-name }}
+          path: /tmp
+
+      - name: Load container image
+        if: inputs.target == 'container' && inputs.image-artifact-name != ''
+        working-directory: .
+        run: docker load --input "/tmp/${{ inputs.image-artifact-name }}.tar"
+
+      - name: Run container
+        if: inputs.target == 'container'
+        working-directory: .
+        run: |
+          docker run -d \
+            -p 3000:3000 \
+            -e ENCRYPTION_JWT_REFRESH_SIGNING_KEY \
+            -e ENCRYPTION_JWT_SIGNING_KEY \
+            -e ENCRYPTION_KEYS \
+            -e GITHUB_CLIENT_ID \
+            -e GITHUB_CLIENT_SECRET \
+            -e NODE_ENV=development \
+            -e SERVER_API_PROTOCOL=http \
+            "${{ inputs.image-name }}"
+        env:
+          ENCRYPTION_JWT_REFRESH_SIGNING_KEY: ${{ secrets.jwt-refresh-signing-key }}
+          ENCRYPTION_JWT_SIGNING_KEY: ${{ secrets.jwt-signing-key }}
+          ENCRYPTION_KEYS: ${{ secrets.session-encryption-keys }}
+          GITHUB_CLIENT_ID: ${{ secrets.github-client-id }}
+          GITHUB_CLIENT_SECRET: ${{ secrets.github-client-secret }}
+
+      - name: Run local development server
+        if: inputs.target == 'local'
+        run: npm run start:serve
+
+      - name: Run smoke tests
+        if: inputs.target == 'local'
+        run: npm run test:e2e-pr-smokes
+
+      - name: Run full test suite
+        if: inputs.target == 'local'
+        run: npm run test:e2e-pr
+
+      - name: Run container smoke tests
+        if: inputs.target == 'container'
+        run: npm run test:e2e-ci-smokes
+
+      - name: Run full container test suite
+        if: inputs.target == 'container'
+        env:
+          CI_MOCK_ENABLED: 'false'
+        run: npm run test:e2e-ci
+
+      - name: Upload e2e videos
+        if: ${{ failure() && hashFiles('td.vue/tests/e2e/videos/') != '' }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: e2e-vids
+          path: td.vue/tests/e2e/videos

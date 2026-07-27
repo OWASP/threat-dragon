@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 script_name="td-update-node-version.sh"
-script_dir="$(CDPATH= cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
+script_dir="$(CDPATH='' cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
 minimum_release_age_days=10
 minimum_release_age_seconds=$((minimum_release_age_days * 24 * 60 * 60))
 
@@ -12,8 +12,9 @@ usage() {
     cat <<'EOF'
 Usage: td-update-node-version.sh [options] v24.16.0
 
-Update Threat Dragon's Dockerfile NODE_VERSION and GitHub Actions setup-node
-versions after checking that the Node.js release exists and is old enough.
+Update Threat Dragon's digest-pinned Docker Node images and GitHub Actions
+setup-node versions after checking that the Node.js release exists and is old
+enough.
 
 Options:
   --repo-dir PATH   Threat Dragon checkout. Defaults to TD_REPO_DIR,
@@ -150,13 +151,28 @@ rewrite_file() {
 
 rewrite_dockerfile() {
     full_version="$1"
+    image_digest="$2"
 
-    awk -v full_version="$full_version" '
-        /^[[:space:]]*ARG[[:space:]]+NODE_VERSION=/ {
-            sub(/NODE_VERSION=[0-9]+\.[0-9]+\.[0-9]+/, "NODE_VERSION=" full_version)
+    awk -v full_version="$full_version" -v image_digest="$image_digest" '
+        {
+            gsub(/docker\.io\/library\/node:[0-9]+\.[0-9]+\.[0-9]+-alpine@sha256:[0-9a-f]+/, "docker.io/library/node:" full_version "-alpine@" image_digest)
         }
         { print }
     '
+}
+
+node_image_digest() {
+    full_version="$1"
+    image_ref="docker.io/library/node:${full_version}-alpine"
+    image_digest="$(
+        docker buildx imagetools inspect "$image_ref" \
+            | awk '$1 == "Digest:" { print $2; exit }'
+    )" || die "unable to inspect Node image: $image_ref"
+
+    echo "$image_digest" | grep -Eq '^sha256:[0-9a-f]{64}$' \
+        || die "unable to resolve a manifest-list digest for $image_ref"
+
+    printf '%s\n' "$image_digest"
 }
 
 rewrite_workflow() {
@@ -178,16 +194,26 @@ update_files() {
     version="$2"
     full_version="${version#v}"
     minor_version="${full_version%.*}"
+    image_digest="$(node_image_digest "$full_version")"
+    docker_reference_pattern='docker\.io/library/node:[0-9]+\.[0-9]+\.[0-9]+-alpine@sha256:[0-9a-f]{64}'
+    docker_reference_count="$(grep -Ec "$docker_reference_pattern" "$repo/Dockerfile")"
 
-    rewrite_file "$repo/Dockerfile" rewrite_dockerfile "$full_version" || die "failed to update Dockerfile"
+    [ "$docker_reference_count" -gt 0 ] || die "no digest-pinned Node images found in Dockerfile"
 
-    find "$repo/.github/workflows" -type f \( -name '*.yml' -o -name '*.yaml' \) -print \
+    rewrite_file "$repo/Dockerfile" rewrite_dockerfile "$full_version" "$image_digest" \
+        || die "failed to update Dockerfile"
+
+    updated_reference_count="$(
+        grep -Ec "docker\\.io/library/node:${full_version}-alpine@${image_digest}" "$repo/Dockerfile"
+    )"
+    [ "$updated_reference_count" -eq "$docker_reference_count" ] \
+        || die "failed to update every digest-pinned Node image in Dockerfile"
+
+    if ! find "$repo/.github/workflows" -type f \( -name '*.yml' -o -name '*.yaml' \) -print \
         | sort \
         | while IFS= read -r workflow_file; do
-        rewrite_file "$workflow_file" rewrite_workflow "$minor_version" || exit 2
-    done
-
-    if [ "$?" -ne 0 ]; then
+            rewrite_file "$workflow_file" rewrite_workflow "$minor_version" || exit 2
+        done; then
         die "failed to update workflow files"
     fi
 
@@ -199,7 +225,8 @@ update_files() {
         printf '%s\n' "$version" > "$repo/.node-version" || die "failed to update .node-version"
     fi
 
-    echo "Updated Dockerfile NODE_VERSION to $full_version"
+    echo "Updated $docker_reference_count Dockerfile Node image references to $full_version"
+    echo "Pinned Dockerfile Node images to $image_digest"
     echo "Updated GitHub Actions node-version values to $minor_version"
 }
 
@@ -242,8 +269,10 @@ need_command sed
 need_command find
 need_command sort
 need_command date
+need_command docker
 
 date -u -d '1970-01-01 00:00:00 UTC' +%s >/dev/null 2>&1 || die "date must support -d"
+docker buildx version >/dev/null 2>&1 || die "Docker Buildx is required"
 
 td_require_repo_root "$script_name"
 repo_dir="$(resolve_repo_dir)"
