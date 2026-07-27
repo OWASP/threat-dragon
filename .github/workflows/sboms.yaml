@@ -1,0 +1,179 @@
+name: Prepare release SBOMs
+
+on:
+  workflow_call:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: 'Existing release tag to regenerate SBOMs for, for example v2.6.2'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  validate_release_tag:
+    name: Validate release tag
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-24.04
+    outputs:
+      release_tag: ${{ steps.validate.outputs.release_tag }}
+    steps:
+      - name: Validate requested release tag
+        id: validate
+        env:
+          RELEASE_TAG: ${{ inputs.release_tag }}
+        run: |
+          if ! [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z]+)*$ ]]; then
+            echo 'release_tag must be a version tag such as v2.6.2' >&2
+            exit 1
+          fi
+          printf 'release_tag=%s\n' "$RELEASE_TAG" >> "$GITHUB_OUTPUT"
+
+  regenerate_server_sbom_inputs:
+    name: Regenerate server and container SBOM inputs
+    if: github.event_name == 'workflow_dispatch'
+    needs: validate_release_tag
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out requested release
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          ref: refs/tags/${{ needs.validate_release_tag.outputs.release_tag }}
+
+      - name: Build SBOM inputs
+        env:
+          RELEASE_TAG: ${{ needs.validate_release_tag.outputs.release_tag }}
+        run: |
+          docker build --target build-npm-stage1 --tag "threat-dragon-sbom-inputs:$RELEASE_TAG" .
+          container_id="$(docker create "threat-dragon-sbom-inputs:$RELEASE_TAG")"
+          docker cp "$container_id:/build/target/boms/." boms/
+          docker rm "$container_id"
+          mkdir server
+          cp boms/threat-dragon-server-bom.json server/sbom.json
+          cp boms/threat-dragon-server-bom.xml server/sbom.xml
+
+      - name: Save server SBOM artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: sboms-server
+          path: server/*
+          include-hidden-files: true
+          if-no-files-found: error
+
+      - name: Save container SBOM artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: sboms-container-image-app
+          path: boms/*
+          include-hidden-files: true
+          if-no-files-found: error
+
+  regenerate_desktop_sbom_inputs:
+    name: Regenerate ${{ matrix.name }} SBOM input
+    if: github.event_name == 'workflow_dispatch'
+    needs: validate_release_tag
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Windows
+            runner: windows-latest
+            artifact: sboms-desktop-windows-site
+            build_arguments: --windows
+          - name: macOS
+            runner: macos-latest
+            artifact: sboms-desktop-macos-site
+            build_arguments: --mac
+          - name: Linux
+            runner: ubuntu-24.04
+            artifact: sboms-desktop-linux-site
+            build_arguments: --linux AppImage deb rpm
+          - name: Linux Snap
+            runner: ubuntu-24.04
+            artifact: sboms-desktop-linux-snap-site
+            build_arguments: --linux snap
+            install_snapcraft: true
+    runs-on: ${{ matrix.runner }}
+    defaults:
+      run:
+        working-directory: td.vue
+    steps:
+      - name: Check out requested release
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          ref: refs/tags/${{ needs.validate_release_tag.outputs.release_tag }}
+
+      - name: Use node LTS 24.18.0
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version: '24.18.0'
+
+      - name: Use npm 11.18.0
+        run: npm install --global npm@11.18.0
+
+      - name: Install clean packages
+        run: npm clean-install
+
+      - name: Install Snapcraft
+        if: matrix.install_snapcraft
+        run: sudo snap install snapcraft --classic
+
+      - name: Build desktop SBOM input
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: false
+        run: npm run build:desktop -- ${{ matrix.build_arguments }} --publish never
+
+      - name: Save desktop SBOM artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: ${{ matrix.artifact }}
+          path: './td.vue/dist-desktop/bundled/.sbom/*'
+          include-hidden-files: true
+          if-no-files-found: error
+
+  combine_sboms:
+    name: Combine SBOMs
+    if: ${{ always() && (github.event_name != 'workflow_dispatch' || (needs.regenerate_server_sbom_inputs.result == 'success' && needs.regenerate_desktop_sbom_inputs.result == 'success')) }}
+    needs:
+      - regenerate_server_sbom_inputs
+      - regenerate_desktop_sbom_inputs
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Fetch prepared SBOM artifacts
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          pattern: 'sboms-*'
+          merge-multiple: false
+          path: 'raw/'
+
+      - name: Prepare SBOM archive
+        run: |
+          set -eux
+          mkdir -p sboms/threat-dragon-container-image/app/
+          cp raw/sboms-server/sbom.json                 sboms/threat-dragon-server-bom.json
+          cp raw/sboms-server/sbom.xml                  sboms/threat-dragon-server-bom.xml
+          cp raw/sboms-desktop-windows-site/bom.json    sboms/threat-dragon-desktop-windows-site-bom.json
+          cp raw/sboms-desktop-windows-site/bom.xml     sboms/threat-dragon-desktop-windows-site-bom.xml
+          cp raw/sboms-desktop-macos-site/bom.json      sboms/threat-dragon-desktop-macos-site-bom.json
+          cp raw/sboms-desktop-macos-site/bom.xml       sboms/threat-dragon-desktop-macos-site-bom.xml
+          cp raw/sboms-desktop-linux-site/bom.json      sboms/threat-dragon-desktop-linux-site-bom.json
+          cp raw/sboms-desktop-linux-site/bom.xml       sboms/threat-dragon-desktop-linux-site-bom.xml
+          cp raw/sboms-desktop-linux-snap-site/bom.json sboms/threat-dragon-desktop-linux-snap-site-bom.json
+          cp raw/sboms-desktop-linux-snap-site/bom.xml  sboms/threat-dragon-desktop-linux-snap-site-bom.xml
+          cp raw/sboms-container-image-app/*            sboms/threat-dragon-container-image/app/
+          zip -r sboms.zip sboms
+          unzip -t sboms.zip
+          test -f sboms/threat-dragon-desktop-windows-site-bom.json
+          test -f sboms/threat-dragon-desktop-windows-site-bom.xml
+
+      - name: Save SBOM archive
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: sboms
+          path: |
+            sboms/
+            sboms.zip
+          include-hidden-files: true
+          if-no-files-found: error
