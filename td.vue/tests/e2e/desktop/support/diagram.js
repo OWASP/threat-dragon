@@ -3,8 +3,8 @@ const { getBrowser } = require('./session');
 const { openModel, saveModel, saveModelAs, closeModel, waitForToast } = require('./menu');
 const { waitFor } = require('./utils');
 
-const UI_WAIT_TIMEOUT_MS = 10000;
-const THREAT_MODEL_SAVED_TOAST = 'Threat model successfully saved';
+const uiWaitTimeoutMs = 10000;
+const threatModelSavedToast = 'Threat model successfully saved';
 
 const diagramView = {
     selectors: {
@@ -28,18 +28,18 @@ const openFirstDiagram = async (modelPath) => {
 
     await browser.waitUntil(
         async () => (await browser.getPageSource()).includes('Threats'),
-        { timeout: UI_WAIT_TIMEOUT_MS, timeoutMsg: 'Timed out waiting for the diagram editor' }
+        { timeout: uiWaitTimeoutMs, timeoutMsg: 'Timed out waiting for the diagram editor' }
     );
 };
 
 const selectElementByText = async (text) => {
     const browser = getBrowser();
     const element = await browser.$(`//*[name()="text" and contains(., "${text}")]`);
-    await element.waitForExist({ timeout: UI_WAIT_TIMEOUT_MS });
+    await element.waitForExist({ timeout: uiWaitTimeoutMs });
     await element.click();
     await browser.waitUntil(
         async () => (await browser.getPageSource()).includes('New Threat'),
-        { timeout: UI_WAIT_TIMEOUT_MS, timeoutMsg: `Timed out waiting for element ${text} to be selected` }
+        { timeout: uiWaitTimeoutMs, timeoutMsg: `Timed out waiting for element ${text} to be selected` }
     );
 };
 
@@ -55,7 +55,7 @@ const openNewThreatDialog = async () => {
 
     await browser.waitUntil(
         async () => (await browser.getPageSource()).includes('Edit Threat'),
-        { timeout: UI_WAIT_TIMEOUT_MS, timeoutMsg: 'Timed out waiting for the threat dialog' }
+        { timeout: uiWaitTimeoutMs, timeoutMsg: 'Timed out waiting for the threat dialog' }
     );
 };
 
@@ -66,30 +66,30 @@ const createMitigatedThreat = async (title, mitigation) => {
     const statusToggle = await browser.$(diagramView.selectors.statusDropdownToggle);
     const applyButton = await browser.$(diagramView.selectors.applyButton);
 
-    await titleInput.waitForDisplayed({ timeout: UI_WAIT_TIMEOUT_MS });
+    await titleInput.waitForDisplayed({ timeout: uiWaitTimeoutMs });
     await titleInput.clearValue();
     await titleInput.setValue(title);
     await mitigationInput.setValue(mitigation);
 
     // open the status dropdown and choose Mitigated
-    await statusToggle.waitForDisplayed({ timeout: UI_WAIT_TIMEOUT_MS });
+    await statusToggle.waitForDisplayed({ timeout: uiWaitTimeoutMs });
     await statusToggle.click();
     const mitigatedItem = await browser.$(diagramView.selectors.statusMitigatedItem);
-    await mitigatedItem.waitForDisplayed({ timeout: UI_WAIT_TIMEOUT_MS });
+    await mitigatedItem.waitForDisplayed({ timeout: uiWaitTimeoutMs });
     await mitigatedItem.click();
 
     // confirm the dropdown now reflects the chosen status before applying
     await browser.waitUntil(
         async () => (await statusToggle.getText()).includes('Mitigated'),
-        { timeout: UI_WAIT_TIMEOUT_MS, timeoutMsg: 'Timed out waiting for the status to update to Mitigated' }
+        { timeout: uiWaitTimeoutMs, timeoutMsg: 'Timed out waiting for the status to update to Mitigated' }
     );
 
-    await applyButton.waitForDisplayed({ timeout: UI_WAIT_TIMEOUT_MS });
+    await applyButton.waitForDisplayed({ timeout: uiWaitTimeoutMs });
     await applyButton.click();
 
     await browser.waitUntil(
         async () => !(await browser.getPageSource()).includes('Edit Threat'),
-        { timeout: UI_WAIT_TIMEOUT_MS, timeoutMsg: 'Timed out waiting for the threat dialog to close' }
+        { timeout: uiWaitTimeoutMs, timeoutMsg: 'Timed out waiting for the threat dialog to close' }
     );
 };
 
@@ -107,10 +107,10 @@ const saveDiagramWithButton = async () => {
 const saveDiagramWithCtrlS = async () => {
     const browser = getBrowser();
     const graphCanvas = await browser.$('#graph-container');
-    await graphCanvas.waitForDisplayed({ timeout: UI_WAIT_TIMEOUT_MS });
+    await graphCanvas.waitForDisplayed({ timeout: uiWaitTimeoutMs });
     await graphCanvas.click();
     await browser.keys(['Control', 's']);
-    await waitForToast(THREAT_MODEL_SAVED_TOAST);
+    await waitForToast(threatModelSavedToast);
 };
 
 const closeDiagram = async () => {
@@ -125,7 +125,7 @@ const closeDiagram = async () => {
 
     await browser.waitUntil(
         async () => (await browser.getPageSource()).includes('Report'),
-        { timeout: UI_WAIT_TIMEOUT_MS, timeoutMsg: 'Timed out waiting to leave the diagram editor' }
+        { timeout: uiWaitTimeoutMs, timeoutMsg: 'Timed out waiting to leave the diagram editor' }
     );
 };
 
@@ -153,7 +153,7 @@ const waitForThreatTitles = async (filePath, expectedTitles) => {
             const titles = (actor.data.threats || []).map((threat) => threat.title);
             return expectedTitles.every((title) => titles.includes(title)) ? actor.data.threats : false;
         },
-        UI_WAIT_TIMEOUT_MS,
+        uiWaitTimeoutMs,
         `Timed out waiting for threat titles in ${filePath}`
     );
 };

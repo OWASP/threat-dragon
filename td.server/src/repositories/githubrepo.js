@@ -82,7 +82,7 @@ const deleteAsync = async (modelInfo, accessToken) => {
             modelInfo.branch
         );
 };
-const METADATA_PATH = 'templates/template_info.json';
+const metadataPath = 'templates/template_info.json';
 
 const repoExistsAsync = (accessToken) => {
     const client = getClient(accessToken);
@@ -91,7 +91,7 @@ const repoExistsAsync = (accessToken) => {
 
 const listTemplatesAsync = (accessToken) => getClient(accessToken).
     repo(env.get().config.GITHUB_CONTENT_REPO).
-    contentsAsync(METADATA_PATH);
+    contentsAsync(metadataPath);
 
 
 const createContentFileAsync = (accessToken, fileName, content) => {
@@ -111,7 +111,7 @@ const createMetadataAsync = (accessToken) => {
     const fileContent = JSON.stringify({ templates: [] }, null, 2);
 
     return repo.createContentsAsync(
-        METADATA_PATH,
+        metadataPath,
         'feat: initialize template repository',
         fileContent,
         'main'
@@ -123,7 +123,7 @@ const updateMetadataAsync = (accessToken, newTemplateMetadata, sha) => {
     const fileContent = JSON.stringify({ templates: newTemplateMetadata }, null, 2);
 
     return repo.updateContentsAsync(
-        METADATA_PATH,
+        metadataPath,
         'feat: update template index',
         fileContent,
         sha,

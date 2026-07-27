@@ -152,7 +152,7 @@ import { mapGetters } from 'vuex';
 
 import threatDragonLogo from '@/assets/threatdragon_logo_image.svg';
 import owaspLogo from '@/assets/owasp.svg';
-import { LOGOUT } from '@/store/actions/auth.js';
+import { logout } from '@/store/actions/auth.js';
 import TdDropdown from './Dropdown.vue';
 import TdLocaleSelect from './LocaleSelect.vue';
 
@@ -186,7 +186,7 @@ export default {
                     throw error;
                 }
             });
-            await this.$store.dispatch(LOGOUT);
+            await this.$store.dispatch(logout);
         },
         onManageTemplates() {
             this.$router.push('/admin/templates').catch(error => {

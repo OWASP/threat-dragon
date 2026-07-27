@@ -29,7 +29,7 @@
   
 <script>
 import { mapState } from 'vuex';
-import { LOCALE_SELECTED } from '@/store/actions/locale.js';
+import { localeSelected } from '@/store/actions/locale.js';
 import { isSupportedLocale } from '@/service/locale/locale-resolver';
 import { isDesktopApp } from '@/service/environment';
 import TdDropdown from './Dropdown.vue';
@@ -102,7 +102,7 @@ export default {
             if (!this.availableLocales.includes(locale)) {
                 return;
             }
-            this.$store.dispatch(LOCALE_SELECTED, locale);
+            this.$store.dispatch(localeSelected, locale);
             if (isDesktopApp()) {
                 // Confirm locale is known before IPC call to prevent injection
                 if (isSupportedLocale(locale)) {

@@ -22,11 +22,11 @@ import ptBr from './pt-br.js';
 import zh from './zh.js';
 
 
-export const DEFAULT_LOCALE = 'en';
+export const defaultLocale = 'en';
 
-const FALLBACK_LOCALES = Object.freeze({
+const fallbackLocales = Object.freeze({
     pt: ['pt-BR'],
-    default: DEFAULT_LOCALE
+    default: defaultLocale
 });
 
 const messages = Object.freeze({
@@ -46,7 +46,7 @@ const messages = Object.freeze({
     zh
 });
 
-export const SUPPORTED_LOCALES = Object.freeze(Object.keys(messages));
+export const supportedLocales = Object.freeze(Object.keys(messages));
 
 let i18nInstance = null;
 
@@ -76,8 +76,8 @@ const get = () => {
             // Legacy mode is deprecated and will be removed in vue-i18n v12.
             // TODO: remove after refactoring i18n usage
             legacy: true,
-            locale: DEFAULT_LOCALE,
-            fallbackLocale: FALLBACK_LOCALES,
+            locale: defaultLocale,
+            fallbackLocale: fallbackLocales,
             messages
         });
         installLegacyCompat(i18nInstance);

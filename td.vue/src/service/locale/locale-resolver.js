@@ -1,14 +1,14 @@
-import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from '@/i18n/index';
+import { defaultLocale, supportedLocales } from '@/i18n/index';
 
 // Guards against pathological input. 100 chars covers any valid BCP47 tag
 // with room to spare; Intl.getCanonicalLocales will reject junk but we
 // short-circuit before calling it.
-const MAX_LOCALE_LENGTH = 100;
+const maxLocaleLength = 100;
 
 // Prevents processing unbounded arrays from untrusted input.
-const MAX_ARRAY_SIZE = 100;
+const maxArraySize = 100;
 
-const LOCALE_METHOD = Object.freeze({
+const localeMethod = Object.freeze({
     SERVER: 'server',
     BROWSER: 'browser',
     FALLBACK: 'fallback',
@@ -17,16 +17,16 @@ const LOCALE_METHOD = Object.freeze({
 
 const sanitizeArray = (v) => {
     if (!Array.isArray(v)) return [];
-    const limited = v.length > MAX_ARRAY_SIZE ? v.slice(0, MAX_ARRAY_SIZE) : v;
+    const limited = v.length > maxArraySize ? v.slice(0, maxArraySize) : v;
     return limited
-        .filter((i) => typeof i === 'string' && i.length <= MAX_LOCALE_LENGTH * 2)
+        .filter((i) => typeof i === 'string' && i.length <= maxLocaleLength * 2)
         .map((i) => i.normalize('NFC').trim())
         .filter((str) => str !== '');
 };
 
 const canonicalizeLocale = (locale) => {
     if (typeof locale !== 'string' || locale.length === 0) return null;
-    if (locale.length > MAX_LOCALE_LENGTH) return null;
+    if (locale.length > maxLocaleLength) return null;
     try {
         return Intl.getCanonicalLocales(locale)[0] ?? null;
     } catch {
@@ -34,26 +34,26 @@ const canonicalizeLocale = (locale) => {
     }
 };
 
-const CANONICAL_SUPPORTED_LOCALES = Object.freeze(
-    SUPPORTED_LOCALES
+const canonicalSupportedLocales = Object.freeze(
+    supportedLocales
         .map((l) => canonicalizeLocale(l))
         .filter((locale) => locale !== null)
 );
 
 const normalizeList = (list) => {
-    if (list === CANONICAL_SUPPORTED_LOCALES) return list;
+    if (list === canonicalSupportedLocales) return list;
     return sanitizeArray(list)
         .map((l) => canonicalizeLocale(l))
         .filter((locale) => locale !== null);
 };
 
-const normalizeLocale = (locale, supportedLocales = CANONICAL_SUPPORTED_LOCALES) => {
+const normalizeLocale = (locale, supportedLocales = canonicalSupportedLocales) => {
     const canonical = canonicalizeLocale(locale);
     if (!canonical) return undefined;
     return supportedLocales.includes(canonical) ? canonical : undefined;
 };
 
-export const isSupportedLocale = (locale, supportedLocales = CANONICAL_SUPPORTED_LOCALES) => {
+export const isSupportedLocale = (locale, supportedLocales = canonicalSupportedLocales) => {
     return normalizeLocale(locale, supportedLocales) !== undefined;
 };
 
@@ -85,7 +85,7 @@ const findBrowserMatch = (browsers, allowed, supported) => {
     return undefined;
 };
 
-const selectDefaultLocale = (supported, preferred = DEFAULT_LOCALE) => {
+const selectDefaultLocale = (supported, preferred = defaultLocale) => {
     if (supported.includes(preferred)) return preferred;
     if (supported.length === 0) return preferred;
     return supported[0];
@@ -96,7 +96,7 @@ export const resolveLocale = ({
     browserLanguages,
     serverDefault,
     allowedLocales,
-    supportedLocales = CANONICAL_SUPPORTED_LOCALES,
+    supportedLocales = canonicalSupportedLocales,
 }) => {
     const allowed = normalizeList(allowedLocales);
     const browsers = normalizeList(browserLanguages);
@@ -104,28 +104,28 @@ export const resolveLocale = ({
 
     const browserMatch = findBrowserMatch(browsers, allowed, supported);
     if (browserMatch) {
-        return { locale: browserMatch, method: LOCALE_METHOD.BROWSER };
+        return { locale: browserMatch, method: localeMethod.BROWSER };
     }
     const serverMatch = findMatch(serverDefault, allowed, supported);
     if (serverMatch) {
-        return { locale: serverMatch, method: LOCALE_METHOD.SERVER };
+        return { locale: serverMatch, method: localeMethod.SERVER };
     }
 
     const fallbackLocale = selectDefaultLocale(supported);
-    const fallbackMethod = fallbackLocale === DEFAULT_LOCALE
-        ? LOCALE_METHOD.DEFAULT
-        : LOCALE_METHOD.FALLBACK;
+    const fallbackMethod = fallbackLocale === defaultLocale
+        ? localeMethod.DEFAULT
+        : localeMethod.FALLBACK;
     return { locale: fallbackLocale, method: fallbackMethod };
 };
 
 export const getBrowserLanguages = (navigatorLike) => {
     if (!navigatorLike) {
-        return [DEFAULT_LOCALE];
+        return [defaultLocale];
     }
 
     if (Array.isArray(navigatorLike.languages) && navigatorLike.languages.length > 0) {
-        const limited = navigatorLike.languages.length > MAX_ARRAY_SIZE
-            ? navigatorLike.languages.slice(0, MAX_ARRAY_SIZE)
+        const limited = navigatorLike.languages.length > maxArraySize
+            ? navigatorLike.languages.slice(0, maxArraySize)
             : navigatorLike.languages;
         const valid = limited
             .map((raw) => canonicalizeLocale(raw))
@@ -138,5 +138,5 @@ export const getBrowserLanguages = (navigatorLike) => {
         if (normalized) return [normalized];
     }
 
-    return [DEFAULT_LOCALE];
+    return [defaultLocale];
 };

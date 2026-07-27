@@ -1,23 +1,23 @@
-export const TEMPLATE_FETCH_ALL = 'TEMPLATE_FETCH_ALL';
-export const TEMPLATE_CLEAR = 'TEMPLATE_CLEAR';
-export const TEMPLATE_CREATE = 'TEMPLATE_CREATE';
-export const TEMPLATE_UPDATE = 'TEMPLATE_UPDATE';
-export const TEMPLATE_DELETE = 'TEMPLATE_DELETE';
-export const TEMPLATE_FETCH_MODEL_BY_ID = 'TEMPLATE_FETCH_MODEL_BY_ID';
-export const TEMPLATE_SET_TEMPLATES = 'TEMPLATE_SET_TEMPLATES';// mutation ot set templates fetched from backend
-export const TEMPLATE_BOOTSTRAP = 'TEMPLATE_BOOTSTRAP';
-export const TEMPLATE_SET_CONTENT_REPO_STATUS = 'TEMPLATE_SET_CONTENT_REPO_STATUS';// mutation to set content repo status
-export const TEMPLATE_DOWNLOAD = 'THREATMODEL_TEMPLATE_DOWNLOAD';
-export const TEMPLATE_LOAD = 'TEMPLATE_LOAD';
+export const templateFetchAll = 'TEMPLATE_FETCH_ALL';
+export const templateClear = 'TEMPLATE_CLEAR';
+export const templateCreate = 'TEMPLATE_CREATE';
+export const templateUpdate = 'TEMPLATE_UPDATE';
+export const templateDelete = 'TEMPLATE_DELETE';
+export const templateFetchModelById = 'TEMPLATE_FETCH_MODEL_BY_ID';
+export const templateSetTemplates = 'TEMPLATE_SET_TEMPLATES';// mutation ot set templates fetched from backend
+export const templateBootstrap = 'TEMPLATE_BOOTSTRAP';
+export const templateSetContentRepoStatus = 'TEMPLATE_SET_CONTENT_REPO_STATUS';// mutation to set content repo status
+export const templateDownload = 'THREATMODEL_TEMPLATE_DOWNLOAD';
+export const templateLoad = 'TEMPLATE_LOAD';
 
 export default {
-    fetchAll: TEMPLATE_FETCH_ALL,
-    clear: TEMPLATE_CLEAR,
-    create: TEMPLATE_CREATE,
-    update: TEMPLATE_UPDATE,
-    delete: TEMPLATE_DELETE,
-    fetchModelById: TEMPLATE_FETCH_MODEL_BY_ID,
-    bootstrap: TEMPLATE_BOOTSTRAP,
-    templateDownload: TEMPLATE_DOWNLOAD,
-    templateLoad: TEMPLATE_LOAD
+    fetchAll: templateFetchAll,
+    clear: templateClear,
+    create: templateCreate,
+    update: templateUpdate,
+    delete: templateDelete,
+    fetchModelById: templateFetchModelById,
+    bootstrap: templateBootstrap,
+    templateDownload: templateDownload,
+    templateLoad: templateLoad
 };

@@ -31,6 +31,13 @@ module.exports = {
             'smart-tabs'
         ],
         'no-multi-spaces': 'error',
+        'no-restricted-syntax': [
+            'error',
+            {
+                selector: "VariableDeclaration[kind='const'] > VariableDeclarator[id.name=/^[A-Z][A-Z0-9_]*$/]",
+                message: 'Constants should use lower camelCase to match the Threat Dragon code style.'
+            }
+        ],
         'no-var': 'error',
         'no-whitespace-before-property': 'error',
         'prefer-const': 'error',

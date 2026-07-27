@@ -2,11 +2,11 @@ const fs = require('fs');
 const { WebSocket } = require('ws');
 const { getMainProcessClient } = require('./session');
 
-const SOCKET_CLOSE_TIMEOUT_MS = 1000;
-const DEFAULT_NODE_INSPECTOR_TIMEOUT_MS = 15000;
-const DIALOG_OK_BUTTON_INDEX = 0;
-const HTML_EXPORT_STUB_CONTENT = '<html><body>Threat Dragon export</body></html>';
-const PDF_EXPORT_STUB_CONTENT = '%PDF-1.4\n%ThreatDragonE2E\n';
+const socketCloseTimeoutMs = 1000;
+const defaultNodeInspectorTimeoutMs = 15000;
+const dialogOkButtonIndex = 0;
+const htmlExportStubContent = '<html><body>Threat Dragon export</body></html>';
+const pdfExportStubContent = '%PDF-1.4\n%ThreatDragonE2E\n';
 
 class MainProcessClient {
     constructor(wsUrl) {
@@ -82,7 +82,7 @@ class MainProcessClient {
                     // ignore teardown errors on an already-closed socket
                 }
                 resolve();
-            }, SOCKET_CLOSE_TIMEOUT_MS);
+            }, socketCloseTimeoutMs);
 
             this.socket.once('close', cleanup);
             this.socket.once('error', cleanup);
@@ -96,7 +96,7 @@ class MainProcessClient {
     }
 }
 
-const waitForNodeInspectorUrl = async (logPath, waitFor, timeoutMs = DEFAULT_NODE_INSPECTOR_TIMEOUT_MS) => {
+const waitForNodeInspectorUrl = async (logPath, waitFor, timeoutMs = defaultNodeInspectorTimeoutMs) => {
     return waitFor(
         () => {
             if (!fs.existsSync(logPath)) {
@@ -145,7 +145,7 @@ const installMenuTestHooks = async () => {
 
                 electron.dialog.showMessageBoxSync = (options) => {
                     state.messageBoxes.push(options);
-                    return ${DIALOG_OK_BUTTON_INDEX};
+                    return ${dialogOkButtonIndex};
                 };
 
                 electron.shell.openExternal = async (url) => {
@@ -159,13 +159,13 @@ const installMenuTestHooks = async () => {
             const [window] = electron.BrowserWindow.getAllWindows();
             if (window) {
                 window.webContents.savePage = async (filePath) => {
-                    fs.writeFileSync(filePath, ${JSON.stringify(HTML_EXPORT_STUB_CONTENT)});
+                    fs.writeFileSync(filePath, ${JSON.stringify(htmlExportStubContent)});
                     state.htmlExports.push(filePath);
                 };
 
                 window.webContents.printToPDF = async () => {
                     state.pdfExports.push('generated');
-                    return Buffer.from(${JSON.stringify(PDF_EXPORT_STUB_CONTENT)});
+                    return Buffer.from(${JSON.stringify(pdfExportStubContent)});
                 };
             }
 

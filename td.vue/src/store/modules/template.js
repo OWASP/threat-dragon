@@ -1,16 +1,16 @@
-import { THREATMODEL_SELECTED } from '@/store/actions/threatmodel';
+import { threatmodelSelected } from '@/store/actions/threatmodel';
 import {
-    TEMPLATE_FETCH_ALL,
-    TEMPLATE_CLEAR,
-    TEMPLATE_CREATE,
-    TEMPLATE_UPDATE,
-    TEMPLATE_DELETE,
-    TEMPLATE_FETCH_MODEL_BY_ID,
-    TEMPLATE_SET_TEMPLATES,
-    TEMPLATE_SET_CONTENT_REPO_STATUS,
-    TEMPLATE_BOOTSTRAP,
-    TEMPLATE_DOWNLOAD,
-    TEMPLATE_LOAD,
+    templateFetchAll,
+    templateClear,
+    templateCreate,
+    templateUpdate,
+    templateDelete,
+    templateFetchModelById,
+    templateSetTemplates,
+    templateSetContentRepoStatus,
+    templateBootstrap,
+    templateDownload,
+    templateLoad,
 } from '@/store/actions/template';
 import templateApi from '@/service/api/templateApi.js';
 import save from '@/service/save';
@@ -28,10 +28,10 @@ const state = {
 const actions = {
 
     //bootstrap the template content repository with required folder structure
-    [TEMPLATE_BOOTSTRAP]: async ({ dispatch }) => {
+    [templateBootstrap]: async ({ dispatch }) => {
         await templateApi.bootstrapAsync();
         // After successful bootstrap, refresh template list
-        await dispatch(TEMPLATE_FETCH_ALL);
+        await dispatch(templateFetchAll);
     },
 
     /**
@@ -40,9 +40,9 @@ const actions = {
      * @param {Object} template - The full template object(including metadata and content) from local file
      * @returns {Promise}
      */
-    [TEMPLATE_CREATE]: async ({ dispatch }, { template }) => {
+    [templateCreate]: async ({ dispatch }, { template }) => {
         await templateApi.importTemplateAsync(template);
-        await dispatch(TEMPLATE_FETCH_ALL);
+        await dispatch(templateFetchAll);
     },
 
     /**
@@ -51,14 +51,14 @@ const actions = {
      * @param {Object} templateMetadata - name,description,tags,id of template to update
      * @returns {Promise}
      */
-    [TEMPLATE_UPDATE]: async ({ dispatch }, templateMetadata) => {
+    [templateUpdate]: async ({ dispatch }, templateMetadata) => {
         await templateApi.updateTemplateAsync(templateMetadata);
-        await dispatch(TEMPLATE_FETCH_ALL);
+        await dispatch(templateFetchAll);
     },
 
-    [TEMPLATE_DELETE]: async ({ dispatch }, id) => {
+    [templateDelete]: async ({ dispatch }, id) => {
         await templateApi.deleteTemplateAsync(id);
-        await dispatch(TEMPLATE_FETCH_ALL);
+        await dispatch(templateFetchAll);
     },
 
 
@@ -76,26 +76,26 @@ const actions = {
      * @param {Function} context.commit - Vuex commit function
      * @returns {Promise<void>}
      */
-    [TEMPLATE_FETCH_ALL]: async ({ commit }) => {
+    [templateFetchAll]: async ({ commit }) => {
         try {
             const response = await templateApi.fetchAllAsync();
 
             // Handle special statuses (NOT_CONFIGURED, NOT_INITIALIZED)
             if (response.data.repoStatus) {
-                commit(TEMPLATE_SET_CONTENT_REPO_STATUS, {
+                commit(templateSetContentRepoStatus, {
                     status: response.data.repoStatus,
                     canInitialize: response.data.canInitialize,
                     repoName: null
                 });
-                commit(TEMPLATE_SET_TEMPLATES, []);
+                commit(templateSetTemplates, []);
             } else {
                 // Normal operation
-                commit(TEMPLATE_SET_CONTENT_REPO_STATUS, {
+                commit(templateSetContentRepoStatus, {
                     status: null,
                     canInitialize: false,
                     repoName: null
                 });
-                commit(TEMPLATE_SET_TEMPLATES, response.data.templates);
+                commit(templateSetTemplates, response.data.templates);
             }
         } catch (error) {
             // Handle 404 (REPO_NOT_FOUND) - it's a STATE, not an error
@@ -103,27 +103,27 @@ const actions = {
                 const errorDetails = error.response.data?.details || '';
                 const repoMatch = errorDetails.match(/Template repository '([^']+)'/);
 
-                commit(TEMPLATE_SET_CONTENT_REPO_STATUS, {
+                commit(templateSetContentRepoStatus, {
                     status: 'REPO_NOT_FOUND',
                     canInitialize: false,
                     repoName: repoMatch ? repoMatch[1] : null
                 });
                 console.log('Template repository not found:', repoMatch ? repoMatch[1] : 'unknown');
-                commit(TEMPLATE_SET_TEMPLATES, []);
+                commit(templateSetTemplates, []);
             }
         }
     },
 
-    [TEMPLATE_FETCH_MODEL_BY_ID]: async (_, templateId) => {
+    [templateFetchModelById]: async (_, templateId) => {
         const response = await templateApi.fetchModelByIdAsync(templateId);
         return response.data;
     },
 
-    [TEMPLATE_CLEAR]: ({ commit }) => {
-        commit(TEMPLATE_CLEAR);
+    [templateClear]: ({ commit }) => {
+        commit(templateClear);
     },
 
-    [TEMPLATE_DOWNLOAD]: async (modelData, templateMetadata) => {
+    [templateDownload]: async (modelData, templateMetadata) => {
 	    const model = JSON.parse(JSON.stringify(modelData));
 	    // fix up template values
 	    model.summary.id = '';
@@ -167,7 +167,7 @@ const actions = {
 	 * @param {Object} templateData - Template model data (threat model JSON structure)
 	 * @returns {Promise<void>}
 	 */
-    [TEMPLATE_LOAD]: async ({ commit }, { templateData }) => {
+    [templateLoad]: async ({ commit }, { templateData }) => {
 	    const model = JSON.parse(JSON.stringify(templateData));
 	    const idMap = {};
 	
@@ -206,12 +206,12 @@ const actions = {
 	            });
 	        }
 	    });
-	    commit(THREATMODEL_SELECTED, model);
+	    commit(threatmodelSelected, model);
     }
 };
 
 const mutations = {
-    [TEMPLATE_SET_CONTENT_REPO_STATUS]: (state, { status, canInitialize, repoName }) => {
+    [templateSetContentRepoStatus]: (state, { status, canInitialize, repoName }) => {
         state.contentRepo = {
             status: status || null,
             canInitialize: canInitialize || false,
@@ -219,10 +219,10 @@ const mutations = {
         };
     },
 
-    [TEMPLATE_SET_TEMPLATES]: (state, templates) => {
+    [templateSetTemplates]: (state, templates) => {
         state.templates = templates || [];
     },
-    [TEMPLATE_CLEAR]: (state) => {
+    [templateClear]: (state) => {
         state.templates = [];
         state.contentRepo = {
             status: null,

@@ -1,10 +1,10 @@
-import { AUTH_CLEAR, AUTH_SET_JWT, AUTH_SET_LOCAL, LOGOUT } from '../actions/auth.js';
-import { BRANCH_CLEAR } from '../actions/branch.js';
+import { authClear, authSetJwt, authSetLocal, logout } from '../actions/auth.js';
+import { branchClear } from '../actions/branch.js';
 import loginApi from '../../service/api/loginApi.js';
-import { PROVIDER_CLEAR } from '../actions/provider.js';
+import { providerClear } from '../actions/provider.js';
 import providers from '../../service/provider/providers.js';
-import { REPOSITORY_CLEAR } from '../actions/repository.js';
-import { THREATMODEL_CLEAR } from '../actions/threatmodel.js';
+import { repositoryClear } from '../actions/repository.js';
+import { threatmodelClear } from '../actions/threatmodel.js';
 
 export const clearState = (state) => {
     state.jwt = '';
@@ -21,10 +21,10 @@ const state = {
 };
 
 const actions = {
-    [AUTH_CLEAR]: ({ commit }) => commit(AUTH_CLEAR),
-    [AUTH_SET_JWT]: ({ commit }, tokens) => commit(AUTH_SET_JWT, tokens),
-    [AUTH_SET_LOCAL]: ({ commit }) => commit(AUTH_SET_LOCAL),
-    [LOGOUT]: async ({ dispatch, state, rootState }) => {
+    [authClear]: ({ commit }) => commit(authClear),
+    [authSetJwt]: ({ commit }, tokens) => commit(authSetJwt, tokens),
+    [authSetLocal]: ({ commit }) => commit(authSetLocal),
+    [logout]: async ({ dispatch, state, rootState }) => {
         try {
             if (rootState.provider.selected !== providers.allProviders.local.key && rootState.provider.selected !== providers.allProviders.desktop.key) {
                 await loginApi.logoutAsync(state.refreshToken);
@@ -32,17 +32,17 @@ const actions = {
         } catch (e) {
             console.error('Error calling logout api', e);
         }
-        dispatch(AUTH_CLEAR);
-        dispatch(BRANCH_CLEAR);
-        dispatch(PROVIDER_CLEAR);
-        dispatch(REPOSITORY_CLEAR);
-        dispatch(THREATMODEL_CLEAR);
+        dispatch(authClear);
+        dispatch(branchClear);
+        dispatch(providerClear);
+        dispatch(repositoryClear);
+        dispatch(threatmodelClear);
     }
 };
 
 const mutations = {
-    [AUTH_CLEAR]: (state) => clearState(state),
-    [AUTH_SET_JWT]: (state, tokens) => {
+    [authClear]: (state) => clearState(state),
+    [authSetJwt]: (state, tokens) => {
         try {
             const { accessToken, refreshToken } = tokens;
             const tokenBody = accessToken.split('.')[1];
@@ -57,7 +57,7 @@ const mutations = {
             throw e;
         }
     },
-    [AUTH_SET_LOCAL]: (state) => {
+    [authSetLocal]: (state) => {
         state.user = {
             username: 'local-user'
         };
