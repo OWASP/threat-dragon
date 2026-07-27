@@ -180,7 +180,12 @@
     "@vue/runtime-core": ">=3.5.40",
     "@vue/runtime-dom": ">=3.5.40",
     "@vue/server-renderer": ">=3.5.40",
-    "@vue/shared": ">=3.5.40"
+    "@vue/shared": ">=3.5.40",
+    "@nodable/entities": ">=3.0.0",
+    "fast-xml-parser": ">=5.10.1",
+    "xml-naming": ">=0.3.0",
+    "is-unsafe": ">=2.0.0",
+    "path-expression-matcher": ">=1.6.2"
   },
   "main": "background.js"
 }
