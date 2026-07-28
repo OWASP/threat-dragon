@@ -171,15 +171,15 @@ import tmActions from '@/store/actions/threatmodel.js';
 import dataChanged from '@/service/x6/graph/data-changed.js';
 import threatModels from '@/service/threats/models/index.js';
 import TdFormRadioGroup from '@/components/FormRadioGroup.vue';
-//import TdFormSelect from '@/components/FormSelect.vue';
+import TdFormSelect from '@/components/FormSelect.vue';
 import { GetContextSuggestions } from '@/service/threats/oats/context-generator.js';
 import { v4 as uuidv4 } from 'uuid';
 
 export default {
     name: 'TdThreatSuggest',
     components: {
-        TdFormRadioGroup/*,
-        TdFormSelect*/
+        TdFormRadioGroup,
+        TdFormSelect
     },
     computed: {
         ...mapState({
