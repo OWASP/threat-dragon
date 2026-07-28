@@ -308,6 +308,10 @@
 !td.vue/tests/unit/service/threats/*.spec.js
 !td.vue/tests/unit/service/threats/models/
 !td.vue/tests/unit/service/threats/models/*.spec.js
+!td.vue/tests/unit/service/threats/models/eop/
+!td.vue/tests/unit/service/threats/models/eop/*.spec.js
+!td.vue/tests/unit/service/threats/oats/
+!td.vue/tests/unit/service/threats/oats/*.spec.js
 !td.vue/tests/unit/service/x6/
 !td.vue/tests/unit/service/x6/*.spec.js
 !td.vue/tests/unit/service/x6/graph/

@@ -1,4 +1,4 @@
-﻿import cornucopiaCompanion from '@/service/threats/models/eop/cornucopia-companion.js';
+﻿import cornucopiaCompanion from '@/service/threats/models/eop/cornucopia-companion';
 
 describe('service/threats/models/eop/cornucopia-companion.js', () => {
 
@@ -24,6 +24,10 @@ describe('service/threats/models/eop/cornucopia-companion.js', () => {
 
     it('gets the category for LLM2', () => {
         expect(cornucopiaCompanion.getCardCategory('LLM2')).toEqual('Large Language Models');
+    });
+
+    it('returns null when no category given', () => {
+        expect(cornucopiaCompanion.getCardCategory(null)).toEqual(null);
     });
 
     it('gets the url for LLM2', () => {

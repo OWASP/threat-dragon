@@ -1,8 +1,45 @@
-import cia from './cia.js';
-import ciaDie from './ciadie.js';
-import linddun from './linddun.js';
-import plot4ai from './plot4ai.js';
-import stride from './stride.js';
+import cia from './cia';
+/* CIADIE Model
+
+confidentiality: information is not disclosed to unauthorized individuals, entities, or processes
+integrity: information is not modified by unauthorized individuals, entities, or processes
+availability: information is available to authorized individuals, entities, and processes
+
+distributed: Are systems distributed to allow for scalability while preventing dependence on a single zone?
+immutable: Can the infrastructure be disposed of and replaced in the event of an issue, aka infrastructure as code?
+ephemeral: What’s the period for system reprovisioning, and are assets disposable in the event of a breach?
+
+          C | I | A | D | I | E |
+ACTOR   | X | X | X | X | X | X |
+STORE   | X | X | X | X | X | X |
+FLOW    | X | X | X | X | X | X |
+PROCESS | X | X | X | X | X | X |
+*/
+import ciaDie from './ciadie';
+/* LINDDUN per element
+          L | I | N | D | D | U | N
+ACTOR   | X | X |   |   |   | X |
+STORE   | X | X | X | X | X |   | X
+FLOW    | X | X | X | X | X |   | X
+PROCESS | X | X | X | X | X |   | X
+*/
+import linddun from './linddun';
+/* PLOT4ai per element
+          T | A | I | S | S | U | E | N
+ACTOR   |   | X | X | X | X | X | X |
+STORE   | X | X | X | X |   |   |   | X
+FLOW    | X |   | X | X |   |   |   | X
+PROCESS | X | X | X | X |   |   |   | X
+*/
+import plot4ai from './plot4ai';
+/* STRIDE per element
+          S | T | R | I | D | E
+ACTOR   | X |   | X |   |   |
+STORE   |   | X | X | X | X |
+PROCESS | X | X | X | X | X | X
+FLOW    |   | X |   | X | X |
+*/
+import stride from './stride';
 
 const swapKeyValuePairs = (obj) => {
     const swappedObj = {};

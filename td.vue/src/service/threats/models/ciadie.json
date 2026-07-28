@@ -1,0 +1,8 @@
+{
+    "confidentiality": "threats.model.ciadie.confidentiality",
+    "integrity": "threats.model.ciadie.integrity",
+    "availability": "threats.model.ciadie.availability",
+    "distributed": "threats.model.ciadie.distributed",
+    "immutable": "threats.model.ciadie.immutable",
+    "ephemeral": "threats.model.ciadie.ephemeral"
+}
