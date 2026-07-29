@@ -35,7 +35,7 @@ jobs:
     uses: ./.github/workflows/desktop-quality-gates.yaml
 
   build_docker_image:
-    name: Build latest docker
+    name: Latest Docker image
     if: github.repository == 'OWASP/threat-dragon'
     needs: [site_quality, server_quality]
     uses: ./.github/workflows/docker-build.yaml
@@ -118,7 +118,7 @@ jobs:
       session-encryption-keys: ${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}
 
   zap_scan_web_app:
-    name: Local site zap scan
+    name: Container ZAP scan
     runs-on: ubuntu-24.04
     needs: build_docker_image
 
@@ -157,7 +157,7 @@ jobs:
           cmd_options: '-a'
 
   scan_image_with_trivy:
-    name: Scan image with Trivy
+    name: Trivy scan
     needs: build_docker_image
     permissions:
       contents: read
@@ -167,7 +167,7 @@ jobs:
       image-ref: threatdragon/owasp-threat-dragon:latest
 
   desktop_builds:
-    name: Desktop build tests
+    name: Desktop builds
     needs: [site_quality, desktop_quality, desktop_e2e]
     uses: ./.github/workflows/desktop-build.yaml
 

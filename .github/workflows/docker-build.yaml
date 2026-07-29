@@ -43,7 +43,7 @@ permissions:
 
 jobs:
   build:
-    name: Docker build
+    name: Build
     runs-on: ubuntu-24.04
 
     steps:

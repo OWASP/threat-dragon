@@ -8,7 +8,7 @@ permissions:
 
 jobs:
   windows:
-    name: Windows desktop build test
+    name: Windows
     runs-on: windows-latest
     defaults:
       run:
@@ -54,7 +54,7 @@ jobs:
           if-no-files-found: error
 
   macos:
-    name: MacOS desktop build test
+    name: macOS
     runs-on: macos-latest
     defaults:
       run:
@@ -102,7 +102,7 @@ jobs:
           if-no-files-found: error
 
   linux:
-    name: Linux desktop build test
+    name: Linux
     runs-on: ubuntu-24.04
     defaults:
       run:
@@ -154,7 +154,7 @@ jobs:
           if-no-files-found: error
 
   snap:
-    name: Linux snap build test
+    name: Snap
     runs-on: ubuntu-24.04
     defaults:
       run:

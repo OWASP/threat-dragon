@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   ubuntu:
-    name: Desktop e2e smokes (Ubuntu)
+    name: Ubuntu
     runs-on: ubuntu-24.04
     env:
       electron_config_cache: ${{ github.workspace }}/.cache/electron
@@ -63,7 +63,7 @@ jobs:
         if: ${{ failure() }}
 
   macos:
-    name: Desktop e2e smokes (macOS)
+    name: macOS
     if: inputs.include-macos-and-windows
     runs-on: macos-latest
     env:
@@ -113,7 +113,7 @@ jobs:
         if: ${{ failure() }}
 
   windows:
-    name: Desktop e2e smokes (Windows)
+    name: Windows
     if: inputs.include-macos-and-windows
     runs-on: windows-latest
     env:

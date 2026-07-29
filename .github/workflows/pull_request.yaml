@@ -106,7 +106,7 @@ jobs:
       session-encryption-keys: ${{ secrets.CI_SESSION_ENCRYPTION_KEYS }}
 
   desktop_e2e:
-    name: Desktop e2e
+    name: Desktop e2e smokes
     needs: [site_quality, desktop_quality]
     uses: ./.github/workflows/desktop-e2e.yaml
     with:
@@ -177,9 +177,9 @@ jobs:
         if: ${{ failure() }}
 
   zap_scan_web_app:
-    name: Local site zap scan
+    name: Local ZAP scan
     runs-on: ubuntu-24.04
-    needs: web_e2e
+    needs: [server_quality, site_quality]
     env:
       GITHUB_CLIENT_ID: ${{ secrets.CI_GITHUB_CLIENT_ID }}
       GITHUB_CLIENT_SECRET: ${{ secrets.CI_GITHUB_CLIENT_SECRET }}
@@ -229,7 +229,7 @@ jobs:
           cmd_options: '-a'
 
   build_docker_image:
-    name: Build docker image
+    name: Docker image
     if: github.repository == 'OWASP/threat-dragon'
     needs: [server_quality, site_quality]
     uses: ./.github/workflows/docker-build.yaml
@@ -239,7 +239,7 @@ jobs:
       image-artifact-name: pr-${{ github.event.number }}
 
   scan_image_with_trivy:
-    name: Scan with Trivy
+    name: Trivy scan
     runs-on: ubuntu-24.04
     needs: build_docker_image
     permissions:

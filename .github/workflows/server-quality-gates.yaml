@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   quality:
-    name: Server quality
+    name: Lint and unit tests
     runs-on: ubuntu-24.04
     defaults:
       run:
