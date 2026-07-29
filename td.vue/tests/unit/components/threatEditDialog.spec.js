@@ -28,7 +28,7 @@ describe('components/ThreatEditDialog.vue', () => {
 
     const getStore = () => new Vuex.Store({
         state: { cell: { ref: { getData: jest.fn(), data: { threatFrequency:{availability: 0, confidentiality: 0, integrity: 0}, threats: [ getThreatData() ]}}}},
-        actions: { CELL_DATA_UPDATED: () => {} }
+        actions: { cellDataUpdated: () => {} }
     });
 
     beforeEach(() => {
@@ -199,7 +199,7 @@ describe('components/ThreatEditDialog.vue', () => {
 
     describe('cornucopia link', () => {
         it('renders link for EOP with suit and number', async () => {
-            const store=new Vuex.Store({state:{cell:{ref:{getData:jest.fn(), data:{threatFrequency:{availability:0, confidentiality:0, integrity:0}, threats:[{...getThreatData(), modelType:'EOP'}]}}}}, actions:{CELL_DATA_UPDATED:() => {}}});
+            const store=new Vuex.Store({state:{cell:{ref:{getData:jest.fn(), data:{threatFrequency:{availability:0, confidentiality:0, integrity:0}, threats:[{...getThreatData(), modelType:'EOP'}]}}}}, actions:{cellDataUpdated:() => {}}});
             wrapper=shallowMount(TdThreatEditDialog, {localVue, mocks:{$t:k => k}, store});
             wrapper.vm.$refs.editModal={show:jest.fn(), hide:jest.fn()};
             wrapper.vm.editThreat(threatId);
@@ -214,7 +214,7 @@ describe('components/ThreatEditDialog.vue', () => {
         });
 
         it('renders link for EOP companion with suit and number', async () => {
-            const store=new Vuex.Store({state:{cell:{ref:{getData:jest.fn(), data:{threatFrequency:{availability:0, confidentiality:0, integrity:0}, threats:[{...getThreatData(), modelType:'EOP'}]}}}}, actions:{CELL_DATA_UPDATED:() => {}}});
+            const store=new Vuex.Store({state:{cell:{ref:{getData:jest.fn(), data:{threatFrequency:{availability:0, confidentiality:0, integrity:0}, threats:[{...getThreatData(), modelType:'EOP'}]}}}}, actions:{cellDataUpdated:() => {}}});
             wrapper=shallowMount(TdThreatEditDialog, {localVue, mocks:{$t:k => k}, store});
             wrapper.vm.$refs.editModal={show:jest.fn(), hide:jest.fn()};
             wrapper.vm.editThreat(threatId);
@@ -234,7 +234,7 @@ describe('components/ThreatEditDialog.vue', () => {
                     threatFrequency:{availability:0, confidentiality:0, integrity:0},
                     threats:[ getThreatData() ]
                 }}}},
-                actions:{CELL_DATA_UPDATED:() => {}}
+                actions:{cellDataUpdated:() => {}}
             });
             wrapper = shallowMount(TdThreatEditDialog, {localVue, mocks:{$t:key => key}, store});
             wrapper.vm.$refs.editModal={show:jest.fn(), hide:jest.fn()};

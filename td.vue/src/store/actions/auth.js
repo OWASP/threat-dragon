@@ -1,9 +1,9 @@
-export const AUTH_CLEAR = 'AUTH_CLEAR';
-export const AUTH_SET_JWT = 'AUTH_SET_JWT';
-export const AUTH_SET_LOCAL = 'AUTH_SET_LOCAL';
-export const LOGOUT = 'LOGOUT';
+export const authClear = 'AUTH_CLEAR';
+export const authSetJwt = 'AUTH_SET_JWT';
+export const authSetLocal = 'AUTH_SET_LOCAL';
+export const logout = 'LOGOUT';
 
 export default {
-    setJwt: AUTH_SET_JWT,
-    setLocal: AUTH_SET_LOCAL
+    setJwt: authSetJwt,
+    setLocal: authSetLocal
 };

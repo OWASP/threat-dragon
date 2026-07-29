@@ -2,7 +2,7 @@ const { getBrowser } = require('./session');
 const { openModel } = require('./menu');
 const { waitFor } = require('./utils');
 
-const REPORT_VIEW_TIMEOUT_MS = 10000;
+const reportViewTimeoutMs = 10000;
 
 const reportView = {
     routePattern: /#\/desktop\/.*\/report$/,
@@ -56,9 +56,9 @@ const waitForReport = async () => {
 
     await browser.waitUntil(
         async () => reportView.routePattern.test(await browser.getUrl()),
-        { timeout: REPORT_VIEW_TIMEOUT_MS, timeoutMsg: 'Timed out waiting for the report route' }
+        { timeout: reportViewTimeoutMs, timeoutMsg: 'Timed out waiting for the report route' }
     );
-    await reportContainer.waitForDisplayed({ timeout: REPORT_VIEW_TIMEOUT_MS });
+    await reportContainer.waitForDisplayed({ timeout: reportViewTimeoutMs });
 };
 
 const openReportForModel = async (modelPath) => {
@@ -67,7 +67,7 @@ const openReportForModel = async (modelPath) => {
     await openModel(modelPath);
 
     const reportButton = await browser.$(reportView.selectors.reportButton);
-    await reportButton.waitForDisplayed({ timeout: REPORT_VIEW_TIMEOUT_MS });
+    await reportButton.waitForDisplayed({ timeout: reportViewTimeoutMs });
     await reportButton.click();
     await waitForReport();
 };
@@ -84,7 +84,7 @@ const toggleReportOption = async (selector) => {
 const waitForVisibleTextState = async (selector, text, expectedVisibility) => {
     return waitFor(
         async () => (await hasVisibleText(selector, text)) === expectedVisibility,
-        REPORT_VIEW_TIMEOUT_MS,
+        reportViewTimeoutMs,
         `Timed out waiting for text "${text}" visibility to become ${expectedVisibility}`
     );
 };
@@ -92,7 +92,7 @@ const waitForVisibleTextState = async (selector, text, expectedVisibility) => {
 const waitForSelectorVisibility = async (selector, expectedVisibility) => {
     return waitFor(
         async () => (await isSelectorVisible(selector)) === expectedVisibility,
-        REPORT_VIEW_TIMEOUT_MS,
+        reportViewTimeoutMs,
         `Timed out waiting for selector "${selector}" visibility to become ${expectedVisibility}`
     );
 };
@@ -101,11 +101,11 @@ const closeReport = async () => {
     const browser = getBrowser();
     const returnButton = await browser.$(reportView.selectors.returnButton);
 
-    await returnButton.waitForDisplayed({ timeout: REPORT_VIEW_TIMEOUT_MS });
+    await returnButton.waitForDisplayed({ timeout: reportViewTimeoutMs });
     await returnButton.click();
     await browser.waitUntil(
         async () => !reportView.routePattern.test(await browser.getUrl()),
-        { timeout: REPORT_VIEW_TIMEOUT_MS, timeoutMsg: 'Timed out waiting to leave the report route' }
+        { timeout: reportViewTimeoutMs, timeoutMsg: 'Timed out waiting to leave the report route' }
     );
 };
 

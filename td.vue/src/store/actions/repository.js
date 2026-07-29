@@ -1,9 +1,9 @@
-export const REPOSITORY_CLEAR = 'REPOSITORY_CLEAR';
-export const REPOSITORY_FETCH = 'REPOSITORY_FETCH';
-export const REPOSITORY_SELECTED = 'REPOSITORY_SELECTED';
+export const repositoryClear = 'REPOSITORY_CLEAR';
+export const repositoryFetch = 'REPOSITORY_FETCH';
+export const repositorySelected = 'REPOSITORY_SELECTED';
 
 export default {
-    clear: REPOSITORY_CLEAR,
-    fetch: REPOSITORY_FETCH,
-    selected: REPOSITORY_SELECTED
+    clear: repositoryClear,
+    fetch: repositoryFetch,
+    selected: repositorySelected
 };

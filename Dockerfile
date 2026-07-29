@@ -95,16 +95,8 @@ RUN bundle exec jekyll build -b ./docs/
 
 FROM docker.io/library/node:24.18.0-alpine@sha256:a0b9bf06e4e6193cf7a0f58816cc935ff8c2a908f81e6f1a95432d679c54fbfd AS final
 
-# Copy over NPM config and enforce usage across all tool calls
-# Contains configuration regarding supply chain
-COPY .npmrc /.npmrc
-ENV NPM_CONFIG_USERCONFIG=/.npmrc
-
-# Keep npm aligned with GitHub Actions
-RUN --mount=type=cache,target=/root/.npm,sharing=locked \
-    --mount=type=tmpfs,target=/tmp \
-    --mount=type=tmpfs,target=/usr/share/man \
-    npm i -g npm@11.18.0
+# npm is needed only in the build stages. The runtime executes Node directly.
+RUN rm -rf /usr/local/lib/node_modules/npm /usr/local/bin/npm /usr/local/bin/npx
 
 WORKDIR /app
 

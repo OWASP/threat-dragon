@@ -1,4 +1,4 @@
-import { LOADER_FINISHED, LOADER_STARTED } from '@/store/actions/loader.js';
+import { loaderFinished, loaderStarted } from '@/store/actions/loader.js';
 import loaderModule from '@/store/modules/loader.js';
 
 describe('store/modules/loader.js', () => {
@@ -22,13 +22,13 @@ describe('store/modules/loader.js', () => {
 
     describe('actions', () => {
         it('commits the finished action', () => {
-            loaderModule.actions[LOADER_FINISHED](mocks);
-            expect(mocks.commit).toHaveBeenCalledWith(LOADER_FINISHED);
+            loaderModule.actions[loaderFinished](mocks);
+            expect(mocks.commit).toHaveBeenCalledWith(loaderFinished);
         });
 
         it('commits the started action', () => {
-            loaderModule.actions[LOADER_STARTED](mocks);
-            expect(mocks.commit).toHaveBeenCalledWith(LOADER_STARTED);
+            loaderModule.actions[loaderStarted](mocks);
+            expect(mocks.commit).toHaveBeenCalledWith(loaderStarted);
         });
     });
 
@@ -36,14 +36,14 @@ describe('store/modules/loader.js', () => {
 
         describe('finished', () => {
             it('sets the loading property to false', () => {
-                loaderModule.mutations[LOADER_FINISHED](loaderModule.state);
+                loaderModule.mutations[loaderFinished](loaderModule.state);
                 expect(loaderModule.state.loading).toEqual(false);
             });
         });
         
         describe('started', () => {
             it('sets the loading property to true', () => {
-                loaderModule.mutations[LOADER_STARTED](loaderModule.state);
+                loaderModule.mutations[loaderStarted](loaderModule.state);
                 expect(loaderModule.state.loading).toEqual(true);
             });
         });

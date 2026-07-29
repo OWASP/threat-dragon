@@ -1,9 +1,9 @@
 import Vue from 'vue';
 
 import {
-    REPOSITORY_CLEAR,
-    REPOSITORY_FETCH,
-    REPOSITORY_SELECTED
+    repositoryClear,
+    repositoryFetch,
+    repositorySelected
 } from '../actions/repository.js';
 import threatmodelApi from '../../service/api/threatmodelApi.js';
 
@@ -25,30 +25,30 @@ const state = {
 };
 
 const actions = {
-    [REPOSITORY_CLEAR]: ({ commit }) => commit(REPOSITORY_CLEAR),
-    [REPOSITORY_FETCH]: async ({ commit, dispatch }, {page, searchQuery}) => {
-        dispatch(REPOSITORY_CLEAR);
+    [repositoryClear]: ({ commit }) => commit(repositoryClear),
+    [repositoryFetch]: async ({ commit, dispatch }, {page, searchQuery}) => {
+        dispatch(repositoryClear);
         const resp = await threatmodelApi.reposAsync(page, searchQuery);
-        commit(REPOSITORY_FETCH, {
+        commit(repositoryFetch, {
             'repos': resp.data.repos,
             'page': resp.data.pagination.page,
             'pageNext': resp.data.pagination.next,
             'pagePrev': resp.data.pagination.prev
         });
     },
-    [REPOSITORY_SELECTED]: ({ commit }, repo) => commit(REPOSITORY_SELECTED, repo)
+    [repositorySelected]: ({ commit }, repo) => commit(repositorySelected, repo)
 };
 
 const mutations = {
-    [REPOSITORY_CLEAR]: (state) => clearState(state),
-    [REPOSITORY_FETCH]: (state, { repos, page, pageNext, pagePrev }) => {
+    [repositoryClear]: (state) => clearState(state),
+    [repositoryFetch]: (state, { repos, page, pageNext, pagePrev }) => {
         state.all.length = 0;
         repos.forEach((repo, idx) => Vue.set(state.all, idx, repo));
         state.page = page;
         state.pageNext = pageNext;
         state.pagePrev = pagePrev;
     },
-    [REPOSITORY_SELECTED]: (state, repo) => {
+    [repositorySelected]: (state, repo) => {
         state.selected = repo;
     }
 };

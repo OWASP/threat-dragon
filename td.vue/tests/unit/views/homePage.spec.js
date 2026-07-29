@@ -5,9 +5,9 @@ import Vuex from 'vuex';
 import { createLocalVue } from '../helpers/vueTestUtils';
 
 import { isDesktopApp } from '@/service/environment';
-import { AUTH_SET_LOCAL } from '@/store/actions/auth.js';
+import { authSetLocal } from '@/store/actions/auth.js';
 import configActions from '@/store/actions/config.js';
-import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
+import { providerSelected } from '@/store/actions/provider.js';
 import HomePage, { resolveProviders } from '@/views/HomePage.vue';
 import TdHero from '@/components/Hero.vue';
 import TdImage from '@/components/Image.vue';
@@ -119,9 +119,9 @@ describe('HomePage.vue', () => {
                 }
             },
             actions: {
-                [AUTH_SET_LOCAL]: () => {},
+                [authSetLocal]: () => {},
                 [configActions.fetch]: () => {},
-                [PROVIDER_SELECTED]: () => {}
+                [providerSelected]: () => {}
             }
         });
     };

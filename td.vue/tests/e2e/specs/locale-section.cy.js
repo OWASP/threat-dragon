@@ -1,11 +1,11 @@
 import homepageStrings from '../fixtures/homepage-strings.json';
 
-const ALL_SUPPORTED = [
+const allSupported = [
     'ar', 'de', 'el', 'en', 'es', 'fi', 'fr',
     'hi', 'id', 'ja', 'ms', 'pt', 'pt-BR', 'zh'
 ];
 
-const DEFAULT_CONFIG = {
+const defaultConfig = {
     githubEnabled: true,
     bitbucketEnabled: false,
     gitlabEnabled: false,
@@ -20,7 +20,7 @@ const loadWithConfig = (overrides = {}, alias = 'getConfig') => {
         statusCode: 200,
         body: {
             status: 200,
-            data: { ...DEFAULT_CONFIG, ...overrides }
+            data: { ...defaultConfig, ...overrides }
         }
     }).as(alias);
 
@@ -54,7 +54,7 @@ describe('locale — dropdown filtering by server config', () => {
     it('shows all locales when allowedLocales is empty', () => {
         loadWithConfig();
         openLocaleDropdown();
-        expectLocales(ALL_SUPPORTED.length);
+        expectLocales(allSupported.length);
     });
 
     it('shows single locale when only one allowed', () => {
@@ -196,7 +196,7 @@ describe('locale — server-policy-driven resolution', () => {
         cy.wait('@getConfigFail');
 
         cy.get('.td-locale-select .td-dropdown-toggle').click();
-        expectLocales(ALL_SUPPORTED.length);
+        expectLocales(allSupported.length);
     });
 });
 

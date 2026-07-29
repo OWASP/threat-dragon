@@ -70,7 +70,7 @@ import TdHero from '@/components/Hero.vue';
 import TdImage from '@/components/Image.vue';
 import TdProviderLoginButton from '@/components/ProviderLoginButton.vue';
 import configActions from '@/store/actions/config.js';
-import { RESOLVE_LOCALE } from '@/store/actions/locale';
+import { resolveLocale } from '@/store/actions/locale';
 import { mapState } from 'vuex';
 
 // Pure function: resolves available providers from server config.
@@ -106,7 +106,7 @@ export default {
         }),
     async mounted() {
         if (isDesktopApp()) {
-            await this.$store.dispatch(RESOLVE_LOCALE);
+            await this.$store.dispatch(resolveLocale);
         } else {
             await this.$store.dispatch(configActions.fetch);
             this.ready = true;

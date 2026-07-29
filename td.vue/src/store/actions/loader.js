@@ -1,2 +1,2 @@
-export const LOADER_FINISHED = 'LOADER_FINISHED';
-export const LOADER_STARTED = 'LOADER_STARTED';
+export const loaderFinished = 'LOADER_FINISHED';
+export const loaderStarted = 'LOADER_STARTED';
