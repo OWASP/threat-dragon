@@ -21,10 +21,10 @@ describe('smoke tests', () => {
         });
 
         it('shows locale dropdown with all available languages', () => {
-            const LOCALES_AVAILABLE_COUNT = 14;
+            const localesAvailableCount = 14;
 
             cy.get('.td-locale-select .td-dropdown-toggle').click();
-            cy.get('.td-dropdown-scroll button').should('have.length', LOCALES_AVAILABLE_COUNT);
+            cy.get('.td-dropdown-scroll button').should('have.length', localesAvailableCount);
             cy.get('.td-dropdown-scroll button').should('contain.text', 'English');
         });
     });

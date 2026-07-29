@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
-import { LOGOUT } from '@/store/actions/auth.js';
+import { logout } from '@/store/actions/auth.js';
 import Navbar from '@/components/Navbar.vue';
 
 jest.mock('@/assets/threatdragon_logo_image.svg', () => 'threatdragon_logo_image.svg');
@@ -120,7 +120,7 @@ describe('components/Navbar.vue', () => {
 
             it('dispatches the logout event', async () => {
                 await signOut.find('a').trigger('click');
-                expect(mockStore.dispatch).toHaveBeenCalledWith(LOGOUT);
+                expect(mockStore.dispatch).toHaveBeenCalledWith(logout);
             });
 
             it('navigates to the home page', async () => {

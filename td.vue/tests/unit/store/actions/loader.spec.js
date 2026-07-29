@@ -1,11 +1,11 @@
-import { LOADER_FINISHED, LOADER_STARTED } from '@/store/actions/loader.js';
+import { loaderFinished, loaderStarted } from '@/store/actions/loader.js';
 
 describe('store/actions/loader.js', () => {
     it('defines the finished action', () => {
-        expect(LOADER_FINISHED).not.toBeUndefined();
+        expect(loaderFinished).not.toBeUndefined();
     });
 
     it('defines the started action', () => {
-        expect(LOADER_STARTED).not.toBeUndefined();
+        expect(loaderStarted).not.toBeUndefined();
     });
 });

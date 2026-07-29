@@ -1,11 +1,11 @@
 import homepageStrings from '../fixtures/homepage-strings.json';
 
-const ALL_SUPPORTED = [
+const allSupported = [
     'ar', 'de', 'el', 'en', 'es', 'fi', 'fr',
     'hi', 'id', 'ja', 'ms', 'pt', 'pt-BR', 'zh'
 ];
 
-const PROVIDERS = [
+const providers = [
     'github-login-btn',
     'bitbucket-login-btn',
     'gitlab-login-btn',
@@ -13,7 +13,7 @@ const PROVIDERS = [
     'local-login-btn'
 ];
 
-const DEFAULT_CONFIG = {
+const defaultConfig = {
     githubEnabled: false,
     bitbucketEnabled: false,
     gitlabEnabled: false,
@@ -28,7 +28,7 @@ const loadWithConfig = (overrides = {}, alias = 'getConfig') => {
         statusCode: 200,
         body: {
             status: 200,
-            data: { ...DEFAULT_CONFIG, ...overrides }
+            data: { ...defaultConfig, ...overrides }
         }
     }).as(alias);
 
@@ -38,7 +38,7 @@ const loadWithConfig = (overrides = {}, alias = 'getConfig') => {
 };
 
 const verifyProviderButtons = (expected) => {
-    PROVIDERS.forEach((id) => {
+    providers.forEach((id) => {
         const shouldExist = expected.includes(id);
         cy.get(`#${id}`).should(shouldExist ? 'be.visible' : 'not.exist');
     });
@@ -92,7 +92,7 @@ describe('home', () => {
             cy.window().then((win) => win.sessionStorage.clear());
         });
 
-        ALL_SUPPORTED.forEach((locale) => {
+        allSupported.forEach((locale) => {
             it(`displays correct content for ${locale}`, () => {
                 const isDefault = locale === 'en';
 
@@ -130,7 +130,7 @@ describe('home', () => {
                 localEnabled: true
             });
 
-            verifyProviderButtons(PROVIDERS);
+            verifyProviderButtons(providers);
         });
 
         it('shows only github + local', () => {

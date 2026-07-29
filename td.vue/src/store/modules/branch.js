@@ -1,10 +1,10 @@
 import Vue from 'vue';
 
 import {
-    BRANCH_CLEAR,
-    BRANCH_CREATE,
-    BRANCH_FETCH,
-    BRANCH_SELECTED
+    branchClear,
+    branchCreate,
+    branchFetch,
+    branchSelected
 } from '../actions/branch.js';
 import threatmodelApi from '../../service/api/threatmodelApi.js';
 
@@ -25,33 +25,33 @@ const state = {
 };
 
 const actions = {
-    [BRANCH_CLEAR]: ({ commit }) => commit(BRANCH_CLEAR),
-    [BRANCH_FETCH]: async ({ commit, dispatch, rootState }, { page = 1 } = {}) => {
-        dispatch(BRANCH_CLEAR);
+    [branchClear]: ({ commit }) => commit(branchClear),
+    [branchFetch]: async ({ commit, dispatch, rootState }, { page = 1 } = {}) => {
+        dispatch(branchClear);
         const resp = await threatmodelApi.branchesAsync(rootState.repo.selected, page);
-        commit(BRANCH_FETCH, {
+        commit(branchFetch, {
             'branches': resp.data.branches,
             'page': resp.data.pagination.page,
             'pageNext': resp.data.pagination.next,
             'pagePrev': resp.data.pagination.prev
         });
     },
-    [BRANCH_SELECTED]: ({ commit }, branch) => commit(BRANCH_SELECTED, branch),
-    [BRANCH_CREATE]: async ({ dispatch, rootState }, {branchName, refBranch}) => {
+    [branchSelected]: ({ commit }, branch) => commit(branchSelected, branch),
+    [branchCreate]: async ({ dispatch, rootState }, {branchName, refBranch}) => {
         await threatmodelApi.createBranchAsync(rootState.repo.selected, branchName, refBranch);
-        await dispatch(BRANCH_FETCH);
+        await dispatch(branchFetch);
     }
 };
 
 const mutations = {
-    [BRANCH_CLEAR]: (state) => clearState(state),
-    [BRANCH_FETCH]: (state, {branches, page, pageNext, pagePrev }) => {
+    [branchClear]: (state) => clearState(state),
+    [branchFetch]: (state, {branches, page, pageNext, pagePrev }) => {
         branches.forEach((branch, idx) => Vue.set(state.all, idx, branch));
         state.page = page;
         state.pageNext = pageNext;
         state.pagePrev = pagePrev;
     },
-    [BRANCH_SELECTED]: (state, repo) => {
+    [branchSelected]: (state, repo) => {
         state.selected = repo;
     }
 };

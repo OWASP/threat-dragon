@@ -7,8 +7,8 @@ import configController, {
     createConfigController,
     getConfig
 } from '../../src/controllers/configcontroller.js';
-import { ERROR_CODES } from '../../src/constants/errorCodes.js';
-import { ERROR_MESSAGES } from '../../src/constants/errorMessages.js';
+import { errorCodes } from '../../src/constants/errorCodes.js';
+import { errorMessages } from '../../src/constants/errorMessages.js';
 import responseWrapper from '../../src/controllers/responseWrapper';
 import loggerHelper from '../../src/helpers/logger.helper.js';
 
@@ -17,7 +17,7 @@ describe('controllers/configcontroller.js', () => {
     let sendResponseStub;
     let loggerMock;
 
-    const EMPTY_CONFIG = { config: {} };
+    const emptyConfig = { config: {} };
 
     beforeEach(() => {
         mockRequest = getMockRequest();
@@ -38,7 +38,7 @@ describe('controllers/configcontroller.js', () => {
         });
 
         it('should call env.get()', () => {
-            const envMock = { get: sinon.stub().returns(EMPTY_CONFIG) };
+            const envMock = { get: sinon.stub().returns(emptyConfig) };
             const buildConfigMock = sinon.stub().returns({ value: {}, errors: [] });
 
             getConfig({ envDep: envMock, buildConfigDep: buildConfigMock, loggerDep: loggerMock });
@@ -47,12 +47,12 @@ describe('controllers/configcontroller.js', () => {
         });
 
         it('should pass config to buildConfig', () => {
-            const envMock = { get: sinon.stub().returns(EMPTY_CONFIG) };
+            const envMock = { get: sinon.stub().returns(emptyConfig) };
             const buildConfigMock = sinon.stub().returns({ value: {}, errors: [] });
 
             getConfig({ envDep: envMock, buildConfigDep: buildConfigMock, loggerDep: loggerMock });
 
-            expect(buildConfigMock.calledOnceWithExactly(EMPTY_CONFIG.config)).to.be.true;
+            expect(buildConfigMock.calledOnceWithExactly(emptyConfig.config)).to.be.true;
         });
 
         it('should return the value from buildConfig', () => {
@@ -60,7 +60,7 @@ describe('controllers/configcontroller.js', () => {
             const buildConfigMock = sinon.stub().returns({ value: fakeValue, errors: [] });
 
             const result = getConfig({
-                envDep: { get: () => EMPTY_CONFIG },
+                envDep: { get: () => emptyConfig },
                 buildConfigDep: buildConfigMock,
                 loggerDep: loggerMock
             });
@@ -78,7 +78,7 @@ describe('controllers/configcontroller.js', () => {
             });
 
             getConfig({
-                envDep: { get: () => EMPTY_CONFIG },
+                envDep: { get: () => emptyConfig },
                 buildConfigDep: buildConfigMock,
                 loggerDep: loggerMock
             });
@@ -89,20 +89,20 @@ describe('controllers/configcontroller.js', () => {
         });
 
         it('should resolve known error codes using ERROR_MESSAGES', () => {
-            const knownCode = ERROR_CODES.CONFIG_LOCALE_MISSING;
+            const knownCode = errorCodes.CONFIG_LOCALE_MISSING;
             const buildConfigMock = sinon.stub().returns({
                 value: {},
                 errors: [{ code: knownCode, meta: {} }]
             });
 
             getConfig({
-                envDep: { get: () => EMPTY_CONFIG },
+                envDep: { get: () => emptyConfig },
                 buildConfigDep: buildConfigMock,
                 loggerDep: loggerMock
             });
 
             expect(loggerMock.warn.calledOnce).to.be.true;
-            expect(loggerMock.warn.firstCall.args[0]).to.equal(ERROR_MESSAGES[knownCode]);
+            expect(loggerMock.warn.firstCall.args[0]).to.equal(errorMessages[knownCode]);
         });
 
         it('should fall back to CONFIG_INVALID_ENTRY for malformed errors', () => {
@@ -115,18 +115,18 @@ describe('controllers/configcontroller.js', () => {
             });
 
             getConfig({
-                envDep: { get: () => EMPTY_CONFIG },
+                envDep: { get: () => emptyConfig },
                 buildConfigDep: buildConfigMock,
                 loggerDep: loggerMock
             });
 
             expect(loggerMock.warn.calledTwice).to.be.true;
             expect(loggerMock.warn.firstCall.args).to.deep.equal([
-                ERROR_CODES.CONFIG_INVALID_ENTRY,
+                errorCodes.CONFIG_INVALID_ENTRY,
                 { error: { meta: { some: 'data' } } }
             ]);
             expect(loggerMock.warn.secondCall.args).to.deep.equal([
-                ERROR_CODES.CONFIG_INVALID_ENTRY,
+                errorCodes.CONFIG_INVALID_ENTRY,
                 { error: null }
             ]);
         });
@@ -135,7 +135,7 @@ describe('controllers/configcontroller.js', () => {
             const buildConfigMock = sinon.stub().returns({ value: {}, errors: [] });
 
             getConfig({
-                envDep: { get: () => EMPTY_CONFIG },
+                envDep: { get: () => emptyConfig },
                 buildConfigDep: buildConfigMock,
                 loggerDep: loggerMock
             });
@@ -147,7 +147,7 @@ describe('controllers/configcontroller.js', () => {
             const buildConfigMock = sinon.stub().returns({ value: {} });
 
             getConfig({
-                envDep: { get: () => EMPTY_CONFIG },
+                envDep: { get: () => emptyConfig },
                 buildConfigDep: buildConfigMock,
                 loggerDep: loggerMock
             });
@@ -158,7 +158,7 @@ describe('controllers/configcontroller.js', () => {
         it('should not cache — each call invokes buildConfig', () => {
             const buildConfigMock = sinon.stub().returns({ value: {}, errors: [] });
             const deps = {
-                envDep: { get: () => EMPTY_CONFIG },
+                envDep: { get: () => emptyConfig },
                 buildConfigDep: buildConfigMock,
                 loggerDep: loggerMock
             };

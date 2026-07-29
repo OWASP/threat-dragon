@@ -26,9 +26,9 @@ describe('views/demo/SelectDemoModel.vue', () => {
 
         mockStore = new Vuex.Store({
             actions: {
-                THREATMODEL_CLEAR: () => {},
-                THREATMODEL_LOAD_DEMOS: () => {},
-                THREATMODEL_SELECTED: () => {}
+                threatmodelClear: () => {},
+                threatmodelLoadDemos: () => {},
+                threatmodelSelected: () => {}
             }
         });
         mockStore.dispatch = jest.fn();
@@ -167,10 +167,10 @@ describe('views/demo/SelectDemoModel.vue', () => {
                     provider: { selected: 'desktop' }
                 },
                 actions: {
-                    THREATMODEL_CLEAR: () => {},
-                    THREATMODEL_LOAD_DEMOS: () => {},
-                    THREATMODEL_SELECTED: () => {},
-                    THREATMODEL_STASH: () => {}
+                    threatmodelClear: () => {},
+                    threatmodelLoadDemos: () => {},
+                    threatmodelSelected: () => {},
+                    threatmodelStash: () => {}
                 }
             });
             mockStore.dispatch = jest.fn();
@@ -222,10 +222,10 @@ describe('views/demo/SelectDemoModel.vue', () => {
                     provider: { selected: 'local' }
                 },
                 actions: {
-                    THREATMODEL_CLEAR: () => {},
-                    THREATMODEL_LOAD_DEMOS: () => {},
-                    THREATMODEL_SELECTED: () => {},
-                    THREATMODEL_STASH: () => {}
+                    threatmodelClear: () => {},
+                    threatmodelLoadDemos: () => {},
+                    threatmodelSelected: () => {},
+                    threatmodelStash: () => {}
                 }
             });
             mockStore.dispatch = jest.fn();
@@ -318,10 +318,10 @@ describe('views/demo/SelectDemoModel.vue', () => {
                     provider: { selected: 'github' }
                 },
                 actions: {
-                    THREATMODEL_CLEAR: () => {},
-                    THREATMODEL_LOAD_DEMOS: () => {},
-                    THREATMODEL_SELECTED: () => {},
-                    THREATMODEL_STASH: () => {}
+                    threatmodelClear: () => {},
+                    threatmodelLoadDemos: () => {},
+                    threatmodelSelected: () => {},
+                    threatmodelStash: () => {}
                 }
             });
             mockStore.dispatch = jest.fn();
@@ -369,10 +369,10 @@ describe('views/demo/SelectDemoModel.vue', () => {
                     provider: { selected: 'google' }
                 },
                 actions: {
-                    THREATMODEL_CLEAR: () => {},
-                    THREATMODEL_LOAD_DEMOS: () => {},
-                    THREATMODEL_SELECTED: () => {},
-                    THREATMODEL_STASH: () => {}
+                    threatmodelClear: () => {},
+                    threatmodelLoadDemos: () => {},
+                    threatmodelSelected: () => {},
+                    threatmodelStash: () => {}
                 }
             });
             mockStore.dispatch = jest.fn();

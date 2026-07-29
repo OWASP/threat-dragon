@@ -1,4 +1,4 @@
-import desktopSave, { DESKTOP_DIAGRAM_SAVE_REQUEST_EVENT } from '@/service/desktop/save.js';
+import desktopSave, { desktopDiagramSaveRequestEvent } from '@/service/desktop/save.js';
 
 describe('service/desktop/save.js', () => {
     let saveModel;
@@ -29,7 +29,7 @@ describe('service/desktop/save.js', () => {
 
         expect(result).toEqual('diagram');
         expect(saveModel).not.toHaveBeenCalled();
-        expect(windowRef.dispatchedEvents.map((event) => event.type)).toEqual([DESKTOP_DIAGRAM_SAVE_REQUEST_EVENT]);
+        expect(windowRef.dispatchedEvents.map((event) => event.type)).toEqual([desktopDiagramSaveRequestEvent]);
     });
 
     it('calls saveModel directly for non-diagram routes', () => {

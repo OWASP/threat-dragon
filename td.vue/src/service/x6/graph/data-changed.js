@@ -4,8 +4,8 @@
  */
 
 import store from '@/store/index.js';
-import { CELL_DATA_UPDATED } from '@/store/actions/cell.js';
-import { THREATMODEL_MODIFIED } from '@/store/actions/threatmodel.js';
+import { cellDataUpdated } from '@/store/actions/cell.js';
+import { threatmodelModified } from '@/store/actions/threatmodel.js';
 import threats from '@/service/threats/index.js';
 import defaultProperties from '@/service/entity/default-properties.js';
 
@@ -41,8 +41,8 @@ const updateStyleAttrs = (cell) => {
 
     if (cell.data) {
         cell.data.hasOpenThreats = threats.hasOpenThreats(cell.data);
-        store.get().dispatch(CELL_DATA_UPDATED, cell.data);
-        store.get().dispatch(THREATMODEL_MODIFIED);
+        store.get().dispatch(cellDataUpdated, cell.data);
+        store.get().dispatch(threatmodelModified);
     }
 
     let { color, strokeDasharray, strokeWidth, sourceMarker } = styles.default;
@@ -90,8 +90,8 @@ const updateProperties = (cell) => {
             cell.setData(defaultProperties.defaultData(cell.type));
             console.debug('Default properties for ' + cell.shape + ' cell: ' + cell.getData().name);
         }
-        store.get().dispatch(CELL_DATA_UPDATED, cell.data);
-        store.get().dispatch(THREATMODEL_MODIFIED);
+        store.get().dispatch(cellDataUpdated, cell.data);
+        store.get().dispatch(threatmodelModified);
     } else {
         console.warn('No cell found to update properties');
     }

@@ -1,4 +1,4 @@
-import { BRANCH_CLEAR, BRANCH_FETCH, BRANCH_SELECTED } from '@/store/actions/branch.js';
+import { branchClear, branchFetch, branchSelected } from '@/store/actions/branch.js';
 import branchModule, { clearState } from '@/store/modules/branch.js';
 import threatmodelApi from '@/service/api/threatmodelApi.js';
 import { createStoreMocks } from '../../helpers/store';
@@ -36,13 +36,13 @@ describe('store/modules/branch.js', () => {
 
     describe('actions', () => {
         it('commits the clear action', () => {
-            branchModule.actions[BRANCH_CLEAR](mocks);
-            expect(mocks.commit).toHaveBeenCalledWith(BRANCH_CLEAR);
+            branchModule.actions[branchClear](mocks);
+            expect(mocks.commit).toHaveBeenCalledWith(branchClear);
         });
 
         it('commits the selected branch', () => {
-            branchModule.actions[BRANCH_SELECTED](mocks, 'my-branch');
-            expect(mocks.commit).toHaveBeenCalledWith(BRANCH_SELECTED, 'my-branch');
+            branchModule.actions[branchSelected](mocks, 'my-branch');
+            expect(mocks.commit).toHaveBeenCalledWith(branchSelected, 'my-branch');
         });
 
         describe('fetch', () => {
@@ -51,15 +51,15 @@ describe('store/modules/branch.js', () => {
 
             beforeEach(async () => {
                 apiSpy.mockResolvedValue({ data: { branches, pagination } });
-                await branchModule.actions[BRANCH_FETCH](mocks);
+                await branchModule.actions[branchFetch](mocks);
             });
 
             it('dispatches clear before fetching', () => {
-                expect(mocks.dispatch).toHaveBeenCalledWith(BRANCH_CLEAR);
+                expect(mocks.dispatch).toHaveBeenCalledWith(branchClear);
             });
 
             it('commits the fetch result with pagination', () => {
-                expect(mocks.commit).toHaveBeenCalledWith(BRANCH_FETCH, {
+                expect(mocks.commit).toHaveBeenCalledWith(branchFetch, {
                     branches,
                     page: pagination.page,
                     pageNext: pagination.next,
@@ -77,19 +77,19 @@ describe('store/modules/branch.js', () => {
 
             it('passes the requested page to branchesAsync', async () => {
                 apiSpy.mockResolvedValue({ data: { branches: ['page2branch'], pagination } });
-                await branchModule.actions[BRANCH_FETCH](mocks, { page: 2 });
+                await branchModule.actions[branchFetch](mocks, { page: 2 });
                 expect(apiSpy).toHaveBeenCalledWith(mocks.rootState.repo.selected, 2);
             });
 
             it('defaults to page 1 when dispatched with empty payload', async () => {
                 apiSpy.mockResolvedValue({ data: { branches: [], pagination } });
-                await branchModule.actions[BRANCH_FETCH](mocks, {});
+                await branchModule.actions[branchFetch](mocks, {});
                 expect(apiSpy).toHaveBeenCalledWith(mocks.rootState.repo.selected, 1);
             });
 
             it('defaults to page 1 when dispatched without arguments', async () => {
                 apiSpy.mockResolvedValue({ data: { branches: [], pagination } });
-                await branchModule.actions[BRANCH_FETCH](mocks);
+                await branchModule.actions[branchFetch](mocks);
                 expect(apiSpy).toHaveBeenCalledWith(mocks.rootState.repo.selected, 1);
             });
         });
@@ -103,7 +103,7 @@ describe('store/modules/branch.js', () => {
                 branchModule.state.page = 5;
                 branchModule.state.pageNext = true;
                 branchModule.state.pagePrev = true;
-                branchModule.mutations[BRANCH_CLEAR](branchModule.state);
+                branchModule.mutations[branchClear](branchModule.state);
             });
 
             it('resets all state properties', () => {
@@ -117,7 +117,7 @@ describe('store/modules/branch.js', () => {
 
         describe('selected', () => {
             it('sets the branch prop', () => {
-                branchModule.mutations[BRANCH_SELECTED](branchModule.state, 'my-branch');
+                branchModule.mutations[branchSelected](branchModule.state, 'my-branch');
                 expect(branchModule.state.selected).toBe('my-branch');
             });
         });
