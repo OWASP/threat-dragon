@@ -1,4 +1,4 @@
-import i18n from '../../../../i18n';
+import i18n from '@/i18n';
 import cornucopiaEN from '@/service/schema/api_json/cornucopia-webapp-en.json';
 import cornucopiaES from '@/service/schema/api_json/cornucopia-webapp-es.json';
 import cornucopiaFR from '@/service/schema/api_json/cornucopia-webapp-fr.json';

@@ -1,7 +1,8 @@
-import providers, { getDisplayName } from '@/service/provider/providers.js';
-import localProvider from '@/service/provider/local.provider.js';
+import providers, { displayName } from '@/service/provider/providers';
+import localProvider from '@/service/provider/local.provider';
 
-describe('service/providers.js', () => {
+describe('service/provider/providers.js', () => {
+
     describe('providerNames', () => {
         it('is an object', () => {
             expect(providers.providerNames).toBeInstanceOf(Object);
@@ -77,8 +78,24 @@ describe('service/providers.js', () => {
     });
 
     describe('getDisplayName', () => {
-        it('gets the display name of a provider', () => {
-            expect(getDisplayName('github')).toEqual('GitHub');
+
+        it('gets the default display name', () => {
+            expect(providers.getDisplayName('foo')).toEqual(displayName);
         });
+
+        it('gets the display name of a provider', () => {
+            expect(providers.getDisplayName('github')).toEqual('GitHub');
+        });
+    });
+
+    describe('getProviderType', () => {
+
+	    it('gets the default provider type', () => {
+	        expect(providers.getProviderType('foo')).toEqual('none');
+	    });
+
+	    it('gets the type of a provider', () => {
+	        expect(providers.getProviderType('gitlab')).toEqual('git');
+	    });
     });
 });

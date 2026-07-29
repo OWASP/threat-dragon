@@ -61,8 +61,8 @@ export const providerNames = (() => {
     return Object.freeze(_providers);
 })();
 
-export const getDisplayName = (providerKey) => providers[providerKey]?.displayName || 'Logged out';
-
+export const displayName = 'Logged out';
+export const getDisplayName = (providerKey) => providers[providerKey]?.displayName || displayName;
 export const getProviderType = (providerKey) => providers[providerKey]?.type || providerTypes.none;
 
 /**
@@ -86,6 +86,8 @@ export const getDashboardActions = (providerKey) => {
 
 export default {
     allProviders,
-    providerNames,
-    getDashboardActions
+    getDashboardActions,
+    getDisplayName,
+    getProviderType,
+    providerNames
 };

@@ -1,6 +1,6 @@
-import saveDiagram from '@/service/diagram/save.js';
-import tmActions from '@/store/actions/threatmodel.js';
-import * as boundaryUtils from '@/service/boundary-utils.js';
+import saveDiagram from '@/service/diagram/save';
+import tmActions from '@/store/actions/threatmodel';
+import * as boundaryUtils from '@/service/boundary-utils';
 
 jest.mock('@/service/boundary-utils.js', () => ({
     __esModule: true,
@@ -11,6 +11,7 @@ jest.mock('@/service/boundary-utils.js', () => ({
 
 describe('service/diagram/save.js', () => {
     let diagram, graph, store;
+    const testCells = [{ id: 'actor-1', shape: 'actor', data: { threats: [{ title: 'Saved threat' }] } }];
 
     beforeEach(() => {
         diagram = {
@@ -20,9 +21,7 @@ describe('service/diagram/save.js', () => {
             cells: []
         };
         graph = {
-            toJSON: jest.fn().mockReturnValue({
-                cells: [{ id: 'actor-1', shape: 'actor', data: { threats: [{ title: 'Saved threat' }] } }]
-            }),
+            toJSON: jest.fn().mockReturnValue({cells: testCells}),
             getCells: jest.fn().mockReturnValue([])
         };
         store = {
@@ -38,7 +37,7 @@ describe('service/diagram/save.js', () => {
             const serialized = saveDiagram.serialize(graph, diagram);
 
             expect(serialized).not.toBe(diagram);
-            expect(serialized.cells).toEqual([{ id: 'actor-1', shape: 'actor', data: { threats: [{ title: 'Saved threat' }] } }]);
+            expect(serialized.cells).toEqual(testCells);
             expect(serialized.title).toEqual(diagram.title);
         });
 
@@ -55,7 +54,7 @@ describe('service/diagram/save.js', () => {
 
             const serialized = saveDiagram.serialize(graph, diagram);
 
-            expect(serialized.cells).toEqual([{ id: 'actor-1', shape: 'actor', data: { threats: [{ title: 'Saved threat' }] } }]);
+            expect(serialized.cells).toEqual(testCells);
             expect(warnSpy).toHaveBeenCalledWith('Failed computing boundary data for a cell', expect.any(Error));
             warnSpy.mockRestore();
         });
@@ -68,9 +67,20 @@ describe('service/diagram/save.js', () => {
 
             const serialized = saveDiagram.serialize(graph, diagram);
 
-            expect(serialized.cells).toEqual([{ id: 'actor-1', shape: 'actor', data: { threats: [{ title: 'Saved threat' }] } }]);
+            expect(serialized.cells).toEqual(testCells);
             expect(errorSpy).toHaveBeenCalledWith('Error while attaching boundary/flow data before save', expect.any(Error));
             errorSpy.mockRestore();
+        });
+
+        it('handles absent graph', () => {
+            const serialized = saveDiagram.serialize(null, diagram);
+            expect(serialized).toStrictEqual(diagram);
+        });
+
+        it('handles absent graph getCells', () => {
+            const absentGetCells = {toJSON: jest.fn().mockReturnValue({cells: testCells})};
+		    const serialized = saveDiagram.serialize(absentGetCells, diagram);
+		    expect(serialized.cells).toStrictEqual(testCells);
         });
     });
 
@@ -83,7 +93,7 @@ describe('service/diagram/save.js', () => {
                 expect.objectContaining({
                     id: diagram.id,
                     title: diagram.title,
-                    cells: [{ id: 'actor-1', shape: 'actor', data: { threats: [{ title: 'Saved threat' }] } }]
+                    cells: testCells
                 })
             );
         });

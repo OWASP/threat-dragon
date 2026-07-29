@@ -160,28 +160,50 @@ describe('desktop/menu.js', () => {
         });
     });
 
-    describe('Help menu external links', () => {
-
+    describe('clicking on Help menu', () => {
         const electron = require('electron');
+        let helpItems;
 
         beforeEach(() => {
             electron.shell.openExternal.mockClear();
+            electron.shell.openExternal.mockResolvedValue();
+            helpItems = menu.getMenuTemplate().find((item) => item.label === 'Help');
         });
 
-        it('Documentation click opens docs URL', async () => {
-            electron.shell.openExternal.mockResolvedValue();
-            const helpItems = menu.getMenuTemplate().find((item) => item.label === 'Help');
+        it('opens documentation external link', async () => {
             const docsItem = helpItems.submenu.find((item) => item.label === 'Documentation');
             await docsItem.click();
             expect(electron.shell.openExternal).toHaveBeenCalledWith('https://www.threatdragon.com/docs/');
         });
 
-        it('Visit OWASP click opens OWASP URL', async () => {
-            electron.shell.openExternal.mockResolvedValue();
-            const helpItems = menu.getMenuTemplate().find((item) => item.label === 'Help');
+        it('opens OWASP project external link', async () => {
             const visitItem = helpItems.submenu.find((item) => item.label === 'Visit us at OWASP');
             await visitItem.click();
             expect(electron.shell.openExternal).toHaveBeenCalledWith('https://owasp.org/www-project-threat-dragon/');
+        });
+
+        it('opens OWASP Cheet Sheet external link', async () => {
+            const cheatItem = helpItems.submenu.find((item) => item.label === 'OWASP Cheat Sheets');
+            await cheatItem.click();
+            expect(electron.shell.openExternal).toHaveBeenCalledWith('https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html');
+        });
+
+        it('opens GitHub repository external link', async () => {
+            const githubItem = helpItems.submenu.find((item) => item.label === 'Visit us on GitHub');
+            await githubItem.click();
+            expect(electron.shell.openExternal).toHaveBeenCalledWith('https://github.com/owasp/threat-dragon/');
+        });
+
+        it('opens repository issues external link', async () => {
+            const issueItem = helpItems.submenu.find((item) => item.label === 'Submit an Issue');
+            await issueItem.click();
+            expect(electron.shell.openExternal).toHaveBeenCalledWith('https://github.com/owasp/threat-dragon/issues/new/choose/');
+        });
+
+        it('opens repository releases external link', async () => {
+            const releaseItem = helpItems.submenu.find((item) => item.label === 'Check for updates ...');
+            await releaseItem.click();
+            expect(electron.shell.openExternal).toHaveBeenCalledWith('https://github.com/OWASP/threat-dragon/releases/latest/');
         });
     });
 
@@ -304,6 +326,11 @@ describe('desktop/menu.js', () => {
             return exportItem.submenu.find((item) => item.label === 'HTML Report').click;
         }
 
+        function getExportPdfClick () {
+            const exportItem = getFileMenu().submenu.find((item) => item.label === 'Export Model As');
+            return exportItem.submenu.find((item) => item.label === 'PDF Report').click;
+        }
+
         function getCloseModelClick () {
             return getFileMenu().submenu.find((item) => item.label === 'Close Model').click;
         }
@@ -359,16 +386,22 @@ describe('desktop/menu.js', () => {
                 expect(mockWindow.webContents.send).toHaveBeenCalledWith('new-model-request', 'new-model.json');
             });
 
-            it('printModel() should send save-model-failed when no model open', () => {
+            it('responds with save-model-failed when no model open', () => {
                 model.isOpen = false;
                 getExportHtmlClick()();
                 expect(mockWindow.webContents.send).toHaveBeenCalledWith('save-model-failed', '', expect.any(String));
             });
 
-            it('printModel() should send print-model-request when model open', () => {
+            it('sends an HTML print-model-request when model open', () => {
                 model.isOpen = true;
                 getExportHtmlClick()();
                 expect(mockWindow.webContents.send).toHaveBeenCalledWith('print-model-request', 'HTML');
+            });
+
+            it('sends a PDF print-model-request', () => {
+                model.isOpen = true;
+                getExportPdfClick()();
+                expect(mockWindow.webContents.send).toHaveBeenCalledWith('print-model-request', 'PDF');
             });
 
             it('closeModel() should send close-model-request to renderer with name from file path', () => {
@@ -563,6 +596,18 @@ describe('desktop/menu.js', () => {
                 electron.dialog.showSaveDialog.mockResolvedValue({ canceled: true });
                 menu.modelPrint('HTML');
                 expect(electron.dialog.showSaveDialog).toHaveBeenCalled();
+            });
+
+            it('savePDFReport handles writeFile errors', async () => {
+                const mockLogger = require('./helpers/mockLogger');
+                mockLogger.log.error.mockClear();
+                mockWindow.webContents.printToPDF.mockResolvedValue(Buffer.from('pdf'));
+                fs.writeFile.mockImplementation((path, data, cb) => cb(new Error('write failed')));
+                electron.dialog.showSaveDialog.mockResolvedValue({ canceled: false, filePath: '/out/report.pdf' });
+                menu.modelPrint('PDF');
+                await new Promise((r) => setTimeout(r, 0));
+                expect(mockWindow.webContents.send).toHaveBeenCalledWith('save-model-failed', '/out/report.pdf', expect.any(String));
+                expect(mockLogger.log.error).toHaveBeenCalledWith(expect.stringContaining('PDF failed'), expect.any(Object));
             });
         });
 
