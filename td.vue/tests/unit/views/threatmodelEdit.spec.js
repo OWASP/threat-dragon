@@ -107,6 +107,14 @@ describe('views/ThreatmodelEdit.vue', () => {
         it('uses input groups for diagram rows', () => {
             expect(wrapper.findAllComponents(TdInputGroup)).toHaveLength(diagrams.length);
         });
+
+        it('has a release version input', () => {
+            expect(wrapper.find('#release-version').exists()).toEqual(true);
+        });
+
+        it('has a release date input', () => {
+            expect(wrapper.find('#released-at').exists()).toEqual(true);
+        });
     });
 
     describe('form actions', () => {
