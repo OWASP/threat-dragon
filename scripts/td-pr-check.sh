@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 
 script_name="td-pr-check.sh"
-script_dir="$(CDPATH= cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
+script_dir="$(CDPATH='' cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
 image_name="${TD_PR_IMAGE:-threat-dragon:pr-local}"
 lychee_image="${LYCHEE_IMAGE:-lycheeverse/lychee:0.23.0}"
 spellcheck_image="${SPELLCHECK_IMAGE:-jonasbn/github-action-spellcheck:0.60.0}"
 zap_image="${ZAP_IMAGE:-ghcr.io/zaproxy/zaproxy:stable}"
 e2e_config="${TD_E2E_CONFIG:-e2e.ci.config.js}"
+e2e_smoke_config="${TD_E2E_SMOKE_CONFIG:-e2e.smokes.ci.config.js}"
 e2e_browser="${TD_E2E_BROWSER:-}"
 e2e_headless="${TD_E2E_HEADLESS:-true}"
 e2e_app_port="${TD_E2E_APP_PORT:-${PORT:-8080}}"
@@ -67,8 +68,12 @@ Environment overrides:
       Default: $zap_image
 
   TD_E2E_CONFIG
-      Cypress config used by local e2e tests.
+      Cypress config used by the local full e2e suite.
       Default: $e2e_config
+
+  TD_E2E_SMOKE_CONFIG
+      Cypress config used by local e2e smoke tests.
+      Default: $e2e_smoke_config
 
   TD_E2E_BROWSER
       Optional Cypress browser, such as chrome or chromium. If unset, the
@@ -527,7 +532,7 @@ e2e_tests() {
         if [ -z "${TD_E2E_BASE_URL:-}" ]; then
             e2e_base_url="http://localhost:$e2e_app_port/"
         fi
-        cypress_args=(run -C "$e2e_config" --config "baseUrl=$e2e_base_url")
+        cypress_args=(--config "baseUrl=$e2e_base_url")
         cypress_args+=(--browser "$detected_e2e_browser")
         case "$e2e_headless" in
             true)
@@ -544,7 +549,8 @@ e2e_tests() {
                 ;;
         esac
         SERVER_API_PORT="$server_api_port" APP_PORT="$e2e_app_port" npm run start:serve &&
-            SERVER_API_PORT="$server_api_port" APP_PORT="$e2e_app_port" ./node_modules/.bin/cypress "${cypress_args[@]}"
+            SERVER_API_PORT="$server_api_port" APP_PORT="$e2e_app_port" ./node_modules/.bin/cypress run -C "$e2e_smoke_config" "${cypress_args[@]}" &&
+            SERVER_API_PORT="$server_api_port" APP_PORT="$e2e_app_port" ./node_modules/.bin/cypress run -C "$e2e_config" "${cypress_args[@]}"
     )
     status="$?"
 

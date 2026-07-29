@@ -5,9 +5,6 @@ on:
     - cron: '45 6 * * *'
   workflow_dispatch:
 
-env:
-  IMAGE_NAME: threatdragon/owasp-threat-dragon:latest
-
 # for security reasons the github actions are pinned to specific SHAs
 jobs:
   chores:
@@ -46,30 +43,14 @@ jobs:
           close-pr-message: 'This PR was closed because it has been stalled for 4 weeks with no activity'
 
   trivy:
-    name: Scan with Trivy
-    runs-on: ubuntu-24.04
+    name: Trivy scan
     permissions:
       contents: read
       security-events: write
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          ref: main
-
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
-        with:
-          image-ref: '${{ env.IMAGE_NAME }}'
-          format: 'template'
-          template: '@/contrib/sarif.tpl'
-          trivyignores: '.github/workflows/.trivyignore'
-          output: 'trivy-results.sarif'
-
-      - name: Upload scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@99df26d4f13ea111d4ec1a7dddef6063f76b97e9 # v4.37.0
-        with:
-          sarif_file: 'trivy-results.sarif'
+    uses: ./.github/workflows/vulnerability-scan.yaml
+    with:
+      image-ref: threatdragon/owasp-threat-dragon:latest
+      checkout-ref: main
 
   link_checker:
     name: Link checker
