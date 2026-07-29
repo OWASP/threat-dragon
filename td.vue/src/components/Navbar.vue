@@ -33,22 +33,6 @@
               :title="$t('nav.logOut')"></font-awesome-icon>
           </a>
         </li>
-        <!-- This is the dropdown from admin actions(manage templates) -->
-        <li v-if="isAdmin" class="nav-item td-admin-nav-dropdown">
-          <td-dropdown id="my-nav-dropdown" class="nav-link-custom" variant="link" right no-caret>
-            <template #button-content>
-              <font-awesome-icon icon="cog" class="td-fa-nav text-white" v-b-tooltip.hover
-                :title="$t('nav.contentManagement')" />
-            </template>
-
-            <template #default="{ close }">
-              <button type="button" class="td-dropdown-item" @click="onManageTemplates(); close()">
-                Manage Templates
-              </button>
-            </template>
-          </td-dropdown>
-        </li>
-
         <li class="nav-item" id="nav-docs">
           <a class="nav-link" href="https://www.threatdragon.com/docs/" target="_blank" rel="noopener noreferrer">
             <font-awesome-icon icon="question-circle" class="td-fa-nav" v-b-tooltip.hover
@@ -153,13 +137,11 @@ import { mapGetters } from 'vuex';
 import threatDragonLogo from '@/assets/threatdragon_logo_image.svg';
 import owaspLogo from '@/assets/owasp.svg';
 import { logout } from '@/store/actions/auth.js';
-import TdDropdown from './Dropdown.vue';
 import TdLocaleSelect from './LocaleSelect.vue';
 
 export default {
     name: 'TdNavbar',
     components: {
-        TdDropdown,
         TdLocaleSelect
     },
     data() {
@@ -187,13 +169,6 @@ export default {
                 }
             });
             await this.$store.dispatch(logout);
-        },
-        onManageTemplates() {
-            this.$router.push('/admin/templates').catch(error => {
-                if (error.name != 'NavigationDuplicated') {
-                    throw error;
-                }
-            });
         }
     }
 };

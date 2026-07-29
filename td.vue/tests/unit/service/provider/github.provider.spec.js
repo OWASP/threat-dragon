@@ -1,6 +1,6 @@
-import github from '@/service/provider/github.provider.js';
+import github from '@/service/provider/github.provider';
 
-describe('service/github.provider.js', () => {
+describe('service/provider/github.provider.js', () => {
     describe('getDashboardActions', () => {
 
         describe('open existing', () => {
