@@ -51,17 +51,8 @@
                         :text="$t('forms.edit')" />
                     <td-form-button id="td-report-btn" :onBtnClick="onReportClick" icon="file-alt"
                         :text="$t('forms.report')" />
-                    <td-dropdown right variant="secondary" :text="$t('forms.export')" id="manage-model-btn" v-if="enableExport || enableTemplates">
+                    <td-dropdown right variant="secondary" :text="$t('forms.export')" id="manage-model-btn" v-if="enableExport">
                         <template #default="{ close }">
-                            <button v-if="enableTemplates"
-                                type="button"
-                                class="td-dropdown-item"
-                                @click="(evt) => { onExportTemplateClick(evt); close(); }"
-                                id="export-template-option"
-                            >
-                                <font-awesome-icon icon="file-import" ></font-awesome-icon>
-                                {{ $t('forms.exportTemplate') }}
-                            </button>
                             <button v-if="enableExport"
                                 type="button"
                                 class="td-dropdown-item"
@@ -129,7 +120,6 @@ export default {
         TdThreatModelSummaryCard
     },
     computed: mapState({
-        enableTemplates: (state) => ['github', 'local'].includes(state.provider.selected),
         model: (state) => state.threatmodel.data,
         providerType: (state) => getProviderType(state.provider.selected),
         version: (state) => state.packageBuildVersion
@@ -147,15 +137,6 @@ export default {
             evt.preventDefault();
             this.$store.dispatch(tmActions.clear);
             this.$router.push('/dashboard');
-        },
-        onExportTemplateClick(evt) {
-            evt.preventDefault();
-            // Demo models live on the local route; use the matching export route to avoid missing params
-            const isLocalRoute = this.$route.name && this.$route.name.startsWith('local');
-            const routeName = isLocalRoute
-                ? 'localThreatModelExportTemplate'
-                : `${this.providerType}ThreatModelExportTemplate`;
-            this.$router.push({ name: routeName, params: this.$route.params });
         },
         async onExportTmBomClick(evt) {
             evt.preventDefault();

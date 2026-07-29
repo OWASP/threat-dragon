@@ -31,18 +31,6 @@ APIs protected by authorisation, including threat model Create, Read, Update (bu
 | `/api/threatmodel/:organisation/:repo/:branch/:model/update` | PUT | Update a model in the branch and repository |
 | `/api/threatmodel/:organisation/:repo/:branch/createBranch` | POST | Create a new branch in the repository |
 
-APIs for managing organization-wide templates. Write operations require administrator privileges
-(push/admin permissions on `GITHUB_CONTENT_REPO`)(all routes require git auth in the current implementation).
-
-| Path | Action | Description |
-| ---- | ---- | ---- |
-| `/api/templates` | GET | List all available templates |
-| `/api/templates/import` | POST | Import a new template (Admin only) |
-| `/api/templates/:id` | PUT | Update template metadata: name, description, tags (Admin only) |
-| `/api/templates/:id` | DELETE | Delete a template (Admin only) |
-| `/api/templates/:id/content` | GET | Get full template content(threat model) by ID |
-| `/api/templates/bootstrap` | POST | Initialize the template repository (Admin only) |
-
 APIs with no authorisation:
 
 | Path | Action | Description |
