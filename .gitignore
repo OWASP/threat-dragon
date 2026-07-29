@@ -153,6 +153,7 @@
 !td.vue/src/desktop/*.js
 !td.vue/src/i18n/
 !td.vue/src/i18n/*.js
+!td.vue/src/i18n/*.json
 !td.vue/src/icons/
 !td.vue/src/icons/*
 !td.vue/src/plugins/
@@ -198,6 +199,7 @@
 !td.vue/src/service/threats/*.js
 !td.vue/src/service/threats/models/
 !td.vue/src/service/threats/models/*.js
+!td.vue/src/service/threats/models/*.json
 !td.vue/src/service/threats/models/eop/
 !td.vue/src/service/threats/models/eop/*.js
 !td.vue/src/service/threats/oats/
@@ -318,6 +320,10 @@
 !td.vue/tests/unit/service/threats/*.spec.js
 !td.vue/tests/unit/service/threats/models/
 !td.vue/tests/unit/service/threats/models/*.spec.js
+!td.vue/tests/unit/service/threats/models/eop/
+!td.vue/tests/unit/service/threats/models/eop/*.spec.js
+!td.vue/tests/unit/service/threats/oats/
+!td.vue/tests/unit/service/threats/oats/*.spec.js
 !td.vue/tests/unit/service/x6/
 !td.vue/tests/unit/service/x6/*.spec.js
 !td.vue/tests/unit/service/x6/graph/
@@ -325,6 +331,7 @@
 !td.vue/tests/unit/service/x6/shapes/
 !td.vue/tests/unit/service/x6/shapes/*.spec.js
 !td.vue/tests/unit/store/
+!td.vue/tests/unit/store/*.spec.js
 !td.vue/tests/unit/store/actions/
 !td.vue/tests/unit/store/actions/*.spec.js
 !td.vue/tests/unit/store/modules/

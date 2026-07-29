@@ -2,8 +2,8 @@
 
 import { app, dialog } from 'electron';
 import path from 'path';
-import logger from './logger.js';
-import { isMacOS } from './utils.js';
+import logger from './logger';
+import { isMacOS } from './utils';
 
 const { shell } = require('electron');
 const fs = require('fs');
@@ -13,20 +13,20 @@ const buildVersion = require('../../package.json').version;
 let mainWindow;
 
 // access the i18n message strings
-import ar from '@/i18n/ar.js';
-import de from '@/i18n/de.js';
-import el from '@/i18n/el.js';
-import en from '@/i18n/en.js';
-import es from '@/i18n/es.js';
-import fi from '@/i18n/fi.js';
-import fr from '@/i18n/fr.js';
-import hi from '@/i18n/hi.js';
-import id from '@/i18n/id.js';
-import ja from '@/i18n/ja.js';
-import ms from '@/i18n/ms.js';
-import pt from '@/i18n/pt.js';
-import ptBr from '@/i18n/pt-br.js';
-import zh from '@/i18n/zh.js';
+import ar from '@/i18n/ar';
+import de from '@/i18n/de';
+import el from '@/i18n/el';
+import en from '@/i18n/en';
+import es from '@/i18n/es';
+import fi from '@/i18n/fi';
+import fr from '@/i18n/fr';
+import hi from '@/i18n/hi';
+import id from '@/i18n/id';
+import ja from '@/i18n/ja';
+import ms from '@/i18n/ms';
+import pt from '@/i18n/pt';
+import ptBr from '@/i18n/pt-br';
+import zh from '@/i18n/zh';
 
 const messages = { ar, de, el, en, es, fi, fr, hi, id, ja, ms, pt, 'pt-BR': ptBr, zh };
 const defaultLanguage = 'en';

@@ -30,24 +30,24 @@ object keys and for the exported `SUPPORTED_LOCALES` array.
 All translation files are located in `td.vue/src/i18n/`. Each file exports a single JavaScript object with the same nested
 structure as `en.js`.
 
-| Language                      | BCP 47  | Filename    | Status                                                      |
-|-------------------------------|---------|-------------|-------------------------------------------------------------|
-| العربية (Arabic)              | `ar`    | `ar.js`     | All keys present, some values are in English (untranslated) |
-| Deutsch (German)              | `de`    | `de.js`     | All keys present, some values are in English (untranslated) |
-| Ελληνικά (Greek)              | `el`    | `el.js`     | All keys present, some values are in English (untranslated) |
-| English                       | `en`    | `en.js`     |                                                             |
-| Español (Spanish)             | `es`    | `es.js`     | All keys present, some values are in English (untranslated) |
-| Suomi (Finnish)               | `fi`    | `fi.js`     | All keys present, some values are in English (untranslated) |
-| Français (French)             | `fr`    | `fr.js`     | All keys present, some values are in English (untranslated) |
-| मानक हिन्दी (Hindi)           | `hi`    | `hi.js`     | All keys present, some values are in English (untranslated) |
-| Bahasa Indonesia (Indonesian) | `id`    | `id.js`     | All keys present, some values are in English (untranslated) |
-| 日本語 (Japanese)              | `ja`    | `ja.js`     | All keys present, some values are in English (untranslated) |
-| Bahasa Malaysia (Malay)       | `ms`    | `ms.js`     | All keys present, some values are in English (untranslated) |
-| Português (European)          | `pt`    | `pt.js`     | All keys present, very few English values (untranslated)    |
-| Português do Brasil (Brazil)  | `pt-BR` | `pt-br.js`  | All keys present, some values are in English (untranslated) |
-| Русский (Russian)             | `ru`    | `ru.js`     | All keys present, some values are in English (untranslated) |
-| Українська (Ukrainian)        | `uk`    | `uk.js`     | All keys present, some values are in English (untranslated) |
-| 中文 (Chinese)                 | `zh`    | `zh.js`     | All keys present, some values are in English (untranslated) |
+| Language                      | BCP 47  | Filename | Status                                                      |
+|-------------------------------|---------|----------|-------------------------------------------------------------|
+| العربية (Arabic)              | `ar`    | `ar.json` | Some values are in English (untranslated) |
+| Deutsch (German)              | `de`    | `de.json` | Some values are in English (untranslated) |
+| Ελληνικά (Greek)              | `el`    | `el.json` | Some values are in English (untranslated) |
+| English                       | `en`    | `en.json` |                                                             |
+| Español (Spanish)             | `es`    | `es.json` | Some values are in English (untranslated) |
+| Suomi (Finnish)               | `fi`    | `fi.json` | Some values are in English (untranslated) |
+| Français (French)             | `fr`    | `fr.json` | Some values are in English (untranslated) |
+| मानक हिन्दी (Hindi)           | `hi`    | `hi.json` | Some values are in English (untranslated) |
+| Bahasa Indonesia (Indonesian) | `id`    | `id.json` | Some values are in English (untranslated) |
+| 日本語 (Japanese)              | `ja`    | `ja.json` | Some values are in English (untranslated) |
+| Bahasa Malaysia (Malay)       | `ms`    | `ms.json` | Some values are in English (untranslated) |
+| Português (European)          | `pt`    | `pt.json` | All keys present, very few English values (untranslated)    |
+| Português do Brasil (Brazil)  | `pt-br` | `pt-br.json`  | Some values are in English (untranslated) |
+| Русский (Russian)             | `ru`    | `ru.json` | Some values are in English (untranslated) |
+| Українська (Ukrainian)        | `uk`    | `uk.json` | Some values are in English (untranslated) |
+| 中文 (Chinese)                 | `zh`    | `zh.json` | Some values are in English (untranslated) |
 
 > **Note:** Russian (`ru`) and Ukrainian (`uk`) translation files are present in the `i18n/` directory but are
 **currently commented out** in `td.vue/src/i18n/index.js` — they are not included in the exported `SUPPORTED_LOCALES`

@@ -1,8 +1,8 @@
-import cia from './cia.js';
-import ciaDie from './ciadie.js';
-import linddun from './linddun.js';
-import plot4ai from './plot4ai.js';
-import stride from './stride.js';
+import cia from './cia';
+import ciaDie from './ciadie';
+import linddun from './linddun';
+import plot4ai from './plot4ai';
+import stride from './stride';
 
 const swapKeyValuePairs = (obj) => {
     const swappedObj = {};
