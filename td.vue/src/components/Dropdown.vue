@@ -87,14 +87,13 @@ export default {
 }
 
 .td-dropdown-toggle {
-    align-items: center;
     border-radius: 4px;
     cursor: pointer;
-    display: flex;
+    display: block;
     flex: 1 1 auto;
-    font: inherit;
-    font-size: 0.75rem;
-    justify-content: center;
+    font-family: Ubuntu, Tahoma, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
     line-height: 1.5;
     padding: 6px 12px;
     position: relative;
@@ -150,6 +149,7 @@ export default {
     content: "";
     display: inline-block;
     margin-left: 0.255em;
+    vertical-align: 0.255em;
 }
 
 .td-dropdown-toggle-no-caret::after {
@@ -176,6 +176,9 @@ export default {
     border: 1px solid rgba(51, 51, 51, 0.15);
     border-radius: 4px;
     color: $black;
+    font-family: Ubuntu, Tahoma, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
     left: 0;
     line-height: 1.428571;
     margin-top: 2px;
