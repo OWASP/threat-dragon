@@ -32,6 +32,13 @@ const getEditGraph = (container, ctor = Graph) => {
             max: 3.2 // default value is 16
         },
         preventDefaultContextMenu: false,
+        interacting: {
+            // This will be handled manually to ensure only a double click can add vertices.
+            // This allows a single click to select a curve.
+            vertexAddable: false,
+            // Also handled manually to not interfere with the custom vertexAddable code
+            vertexDeletable: false,
+        },
         connecting: {
             allowBlank: true,
             allowLoop: true, // loops do not make sense in a threat model diagram, but allow anyway
