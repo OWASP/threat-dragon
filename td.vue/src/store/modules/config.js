@@ -1,6 +1,6 @@
-import { CONFIG_CLEAR, CONFIG_LOADED, CONFIG_ERROR, CONFIG_FETCH } from '@/store/actions/config';
-import { RESOLVE_LOCALE } from '@/store/actions/locale';
-import { SUPPORTED_LOCALES } from '@/i18n/index';
+import { configClear, configLoaded, configError, configFetch } from '@/store/actions/config';
+import { resolveLocale } from '@/store/actions/locale';
+import { supportedLocales } from '@/i18n/index';
 import api from '@/service/api/api';
 
 const sanitizeConfig = (raw) => {
@@ -10,11 +10,11 @@ const sanitizeConfig = (raw) => {
 
     if (Array.isArray(raw.allowedLocales) &&
         raw.allowedLocales.every(l => typeof l === 'string' && l.length > 0)) {
-        const filtered = raw.allowedLocales.filter(l => SUPPORTED_LOCALES.includes(l));
+        const filtered = raw.allowedLocales.filter(l => supportedLocales.includes(l));
         if (filtered.length > 0) out.allowedLocales = filtered;
     }
 
-    if (typeof raw.defaultLocale === 'string' && SUPPORTED_LOCALES.includes(raw.defaultLocale)) {
+    if (typeof raw.defaultLocale === 'string' && supportedLocales.includes(raw.defaultLocale)) {
         out.defaultLocale = raw.defaultLocale;
     }
 
@@ -33,10 +33,10 @@ const state = {
 };
 
 const actions = {
-    [CONFIG_CLEAR]: ({ commit }) => commit(CONFIG_CLEAR),
+    [configClear]: ({ commit }) => commit(configClear),
 
-    [CONFIG_FETCH]: async ({ commit, dispatch }) => {
-        dispatch(CONFIG_CLEAR);
+    [configFetch]: async ({ commit, dispatch }) => {
+        dispatch(configClear);
 
         try {
             const response = await api.getAsync('/api/config', { timeout: 5000 });
@@ -45,23 +45,23 @@ const actions = {
             // Extract the inner config object from response.data.
             const configData = response?.data;
 
-            commit(CONFIG_LOADED, { config: configData });
+            commit(configLoaded, { config: configData });
         } catch (error) {
             console.error('Error fetching config:', error);
-            commit(CONFIG_ERROR, { error: error.message || 'Unknown error fetching config' });
+            commit(configError, { error: error.message || 'Unknown error fetching config' });
         }
 
-        await dispatch(RESOLVE_LOCALE, null, { root: true });
+        await dispatch(resolveLocale, null, { root: true });
     }
 };
 
 const mutations = {
-    [CONFIG_CLEAR]: (state) => {
+    [configClear]: (state) => {
         state.config = null;
         state.configError = null;
     },
 
-    [CONFIG_LOADED]: (state, { config }) => {
+    [configLoaded]: (state, { config }) => {
         const sanitized = sanitizeConfig(config);
         if (sanitized) {
             state.config = sanitized;
@@ -72,7 +72,7 @@ const mutations = {
         }
     },
 
-    [CONFIG_ERROR]: (state, { error }) => {
+    [configError]: (state, { error }) => {
         state.configError = error;
     }
 };

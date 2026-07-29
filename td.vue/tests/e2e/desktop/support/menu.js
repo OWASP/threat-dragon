@@ -13,13 +13,13 @@ const {
     setNextSaveDialogResult
 } = require('./main-process');
 
-const UI_WAIT_TIMEOUT_MS = 10000;
-const MENU_SEPARATOR = null;
-const MODEL_FIXTURE_NAME = 'v2-model.json';
-const TITLE_INPUT_SELECTOR = '#title';
-const EDIT_BUTTON_SELECTOR = '#td-edit-btn';
-const THREAT_MODEL_SAVED_TOAST = 'Threat model successfully saved';
-const THREAT_MODEL_EXPORTED_TOAST = 'Threat model exported';
+const uiWaitTimeoutMs = 10000;
+const menuSeparator = null;
+const modelFixtureName = 'v2-model.json';
+const titleInputSelector = '#title';
+const editButtonSelector = '#td-edit-btn';
+const threatModelSavedToast = 'Threat model successfully saved';
+const threatModelExportedToast = 'Threat model exported';
 
 const appContent = {
     dashboardUrl: 'app://./index.html#/dashboard',
@@ -63,7 +63,7 @@ fileMenu.expectedItems = [
     fileMenu.labels.newModel,
     fileMenu.labels.exportAs,
     fileMenu.labels.closeModel,
-    MENU_SEPARATOR,
+    menuSeparator,
     fileMenu.labels.closeWindow
 ];
 
@@ -84,11 +84,11 @@ helpMenu.expectedItems = [
     helpMenu.labels.docs,
     helpMenu.labels.visit,
     helpMenu.labels.sheets,
-    MENU_SEPARATOR,
+    menuSeparator,
     helpMenu.labels.github,
     helpMenu.labels.submit,
     helpMenu.labels.check,
-    MENU_SEPARATOR,
+    menuSeparator,
     helpMenu.labels.about
 ];
 
@@ -108,14 +108,14 @@ const waitForToast = async (text) => {
     const browser = getBrowser();
     await browser.waitUntil(
         async () => browser.execute((toastText) => document.body.innerText.includes(toastText), text),
-        { timeout: UI_WAIT_TIMEOUT_MS, timeoutMsg: `Timed out waiting for toast: ${text}` }
+        { timeout: uiWaitTimeoutMs, timeoutMsg: `Timed out waiting for toast: ${text}` }
     );
 };
 
 const waitForModelEditor = async () => {
     const browser = getBrowser();
-    const titleInput = await browser.$(TITLE_INPUT_SELECTOR);
-    await titleInput.waitForDisplayed({ timeout: UI_WAIT_TIMEOUT_MS });
+    const titleInput = await browser.$(titleInputSelector);
+    await titleInput.waitForDisplayed({ timeout: uiWaitTimeoutMs });
     return titleInput;
 };
 
@@ -123,10 +123,10 @@ const waitForThreatModelView = async () => {
     const browser = getBrowser();
     await browser.waitUntil(
         async () => {
-            const editButton = await browser.$(EDIT_BUTTON_SELECTOR);
+            const editButton = await browser.$(editButtonSelector);
             return editButton.isDisplayed();
         },
-        { timeout: UI_WAIT_TIMEOUT_MS, timeoutMsg: 'Timed out waiting for the opened threat model view' }
+        { timeout: uiWaitTimeoutMs, timeoutMsg: 'Timed out waiting for the opened threat model view' }
     );
 };
 
@@ -137,7 +137,7 @@ const waitForDashboard = async () => {
             const url = await browser.getUrl();
             return url === appContent.dashboardUrl;
         },
-        { timeout: UI_WAIT_TIMEOUT_MS, timeoutMsg: 'Timed out waiting for the dashboard' }
+        { timeout: uiWaitTimeoutMs, timeoutMsg: 'Timed out waiting for the dashboard' }
     );
 };
 
@@ -153,7 +153,7 @@ const withMenuWorkspace = async (callback) => {
         const workspace = {
             tempDir,
             createPath: (fileName) => join(tempDir, fileName),
-            copyModelFixture: (targetName, fixtureName = MODEL_FIXTURE_NAME) => {
+            copyModelFixture: (targetName, fixtureName = modelFixtureName) => {
                 return copyModelFixture(tempDir, fixtureName, targetName);
             }
         };
@@ -208,14 +208,14 @@ const createNewModel = async () => {
 
 const openModelEditor = async () => {
     const browser = getBrowser();
-    const titleInput = await browser.$(TITLE_INPUT_SELECTOR);
+    const titleInput = await browser.$(titleInputSelector);
 
     if (await titleInput.isDisplayed().catch(() => false)) {
         return titleInput;
     }
 
-    const editButton = await browser.$(EDIT_BUTTON_SELECTOR);
-    await editButton.waitForDisplayed({ timeout: UI_WAIT_TIMEOUT_MS });
+    const editButton = await browser.$(editButtonSelector);
+    await editButton.waitForDisplayed({ timeout: uiWaitTimeoutMs });
     await editButton.click();
     return waitForModelEditor();
 };
@@ -236,34 +236,34 @@ const waitForThreatModelTitle = async (filePath, expectedTitle) => {
             const model = JSON.parse(fs.readFileSync(filePath, 'utf8'));
             return model.summary.title === expectedTitle ? model : false;
         },
-        UI_WAIT_TIMEOUT_MS,
+        uiWaitTimeoutMs,
         `Timed out waiting for threat model title in ${filePath}`
     );
 };
 
 const saveModel = async () => {
     await clickFileMenuItem(fileMenu.labels.save);
-    await waitForToast(THREAT_MODEL_SAVED_TOAST);
+    await waitForToast(threatModelSavedToast);
 };
 
 const saveModelAs = async (filePath) => {
     await setNextSaveDialogResult({ canceled: false, filePath });
     await clickFileMenuItem(fileMenu.labels.saveAs);
-    await waitForToast(THREAT_MODEL_SAVED_TOAST);
+    await waitForToast(threatModelSavedToast);
 };
 
 const exportModelAsHtml = async (filePath) => {
     await setNextSaveDialogResult({ canceled: false, filePath });
     await clickFileMenuItem(fileMenu.labels.exportAs, fileMenu.labels.exportHtml);
-    await waitFor(() => fs.existsSync(filePath), UI_WAIT_TIMEOUT_MS, 'Timed out waiting for HTML export');
-    await waitForToast(THREAT_MODEL_EXPORTED_TOAST);
+    await waitFor(() => fs.existsSync(filePath), uiWaitTimeoutMs, 'Timed out waiting for HTML export');
+    await waitForToast(threatModelExportedToast);
 };
 
 const exportModelAsPdf = async (filePath) => {
     await setNextSaveDialogResult({ canceled: false, filePath });
     await clickFileMenuItem(fileMenu.labels.exportAs, fileMenu.labels.exportPdf);
-    await waitFor(() => fs.existsSync(filePath), UI_WAIT_TIMEOUT_MS, 'Timed out waiting for PDF export');
-    await waitForToast(THREAT_MODEL_EXPORTED_TOAST);
+    await waitFor(() => fs.existsSync(filePath), uiWaitTimeoutMs, 'Timed out waiting for PDF export');
+    await waitForToast(threatModelExportedToast);
 };
 
 const closeModel = async () => {
@@ -276,10 +276,10 @@ const closeDirtyModel = async () => {
     await clickFileMenuItem(fileMenu.labels.closeModel);
     await browser.waitUntil(
         async () => browser.execute((message) => document.body.innerText.includes(message), appContent.discardMessage),
-        { timeout: UI_WAIT_TIMEOUT_MS, timeoutMsg: 'Timed out waiting for discard confirmation' }
+        { timeout: uiWaitTimeoutMs, timeoutMsg: 'Timed out waiting for discard confirmation' }
     );
     const okButton = await browser.$('//button[normalize-space()="OK"]');
-    await okButton.waitForClickable({ timeout: UI_WAIT_TIMEOUT_MS });
+    await okButton.waitForClickable({ timeout: uiWaitTimeoutMs });
     await okButton.click();
     await waitForDashboard();
 };

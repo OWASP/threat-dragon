@@ -4,12 +4,12 @@ import Vuex from 'vuex';
 
 import TdDropdown from '@/components/Dropdown.vue';
 import LocaleSelect from '@/components/LocaleSelect.vue';
-import { LOCALE_SELECTED } from '@/store/actions/locale.js';
+import { localeSelected } from '@/store/actions/locale.js';
 import { isDesktopApp } from '@/service/environment';
 
 jest.mock('@/service/environment');
 
-const ALL_LOCALE_LABELS = {
+const allLocaleLabels = {
     ar: 'العربية',
     de: 'Deutsch',
     el: 'Ελληνικά',
@@ -26,15 +26,15 @@ const ALL_LOCALE_LABELS = {
     zh: '中文'
 };
 
-const ALL_LOCALES = Object.keys(ALL_LOCALE_LABELS);
+const allLocales = Object.keys(allLocaleLabels);
 
 describe('components/LocaleSelect.vue', () => {
     let i18n, mockStore, wrapper, dispatchSpy;
-    const MESSAGES = {
+    const messages = {
         en: { hello: 'Hello World' },
         de: { hello: 'Hallo Welt' }
     };
-    const LOCALE_LABELS = {
+    const localeLabels = {
         en: 'English',
         de: 'Deutsch'
     };
@@ -42,7 +42,7 @@ describe('components/LocaleSelect.vue', () => {
         const localVue = createLocalVue();
         i18n = createI18n({
             locale: 'en',
-            messages: MESSAGES
+            messages: messages
         });
 
         localVue.use(Vuex);
@@ -51,7 +51,7 @@ describe('components/LocaleSelect.vue', () => {
         mockStore = new Vuex.Store({
             state: { locale: { locale: storeLocale }, config: { config: null } },
             getters: { availableLocales: () => availableLocales },
-            actions: { [LOCALE_SELECTED]: () => {} },
+            actions: { [localeSelected]: () => {} },
             dispatch: jest.fn()
         });
 
@@ -91,12 +91,12 @@ describe('components/LocaleSelect.vue', () => {
         });
 
         it('displays the current locale', () => {
-            expect(findToggle().text()).toEqual(LOCALE_LABELS.en);
+            expect(findToggle().text()).toEqual(localeLabels.en);
         });
 
         it.each([
-            ['en', LOCALE_LABELS.en],
-            ['de', LOCALE_LABELS.de]
+            ['en', localeLabels.en],
+            ['de', localeLabels.de]
         ])('has an option for %s', async (_localeCode, localeLabel) => {
             await openDropdown();
             expect(findLocaleItem(localeLabel).exists()).toEqual(true);
@@ -115,13 +115,13 @@ describe('components/LocaleSelect.vue', () => {
             });
 
             it.each([
-                ['de', LOCALE_LABELS.de],
-                ['en', LOCALE_LABELS.en]
+                ['de', localeLabels.de],
+                ['en', localeLabels.en]
             ])('updates the locale to %s', async (localeCode, localeLabel) => {
                 await openDropdown();
                 await findLocaleItem(localeLabel).trigger('click');
                 expect(dispatchSpy).toHaveBeenCalledTimes(1);
-                expect(dispatchSpy).toHaveBeenCalledWith(LOCALE_SELECTED, localeCode);
+                expect(dispatchSpy).toHaveBeenCalledWith(localeSelected, localeCode);
             });
         });
     });
@@ -150,11 +150,11 @@ describe('components/LocaleSelect.vue', () => {
 
     describe('getLanguageName — all supported locales', () => {
         beforeEach(() => {
-            mountComponent('en', ALL_LOCALES);
+            mountComponent('en', allLocales);
         });
 
         it.each(
-            ALL_LOCALES.map(code => [code, ALL_LOCALE_LABELS[code]])
+            allLocales.map(code => [code, allLocaleLabels[code]])
         )('returns correct display name for %s', (_code, label) => {
             expect(wrapper.vm.getLanguageName(_code)).toBe(label);
         });
@@ -166,7 +166,7 @@ describe('components/LocaleSelect.vue', () => {
 
     describe('getSearchableText', () => {
         beforeEach(() => {
-            mountComponent('en', ALL_LOCALES);
+            mountComponent('en', allLocales);
         });
 
         it('maps non-latin script names to latin search terms', () => {
@@ -187,13 +187,13 @@ describe('components/LocaleSelect.vue', () => {
 
     describe('filterLocales', () => {
         beforeEach(() => {
-            mountComponent('en', ALL_LOCALES);
+            mountComponent('en', allLocales);
         });
 
         it('shows all locales when search query is empty', () => {
             wrapper.vm.searchQuery = '';
             wrapper.vm.filterLocales();
-            expect(wrapper.vm.filteredLocales).toEqual(ALL_LOCALES);
+            expect(wrapper.vm.filteredLocales).toEqual(allLocales);
         });
 
         it('filters by locale code', () => {
@@ -236,11 +236,11 @@ describe('components/LocaleSelect.vue', () => {
         it('resets to all when query is cleared', () => {
             wrapper.vm.searchQuery = 'english';
             wrapper.vm.filterLocales();
-            expect(wrapper.vm.filteredLocales).not.toEqual(ALL_LOCALES);
+            expect(wrapper.vm.filteredLocales).not.toEqual(allLocales);
 
             wrapper.vm.searchQuery = '';
             wrapper.vm.filterLocales();
-            expect(wrapper.vm.filteredLocales).toEqual(ALL_LOCALES);
+            expect(wrapper.vm.filteredLocales).toEqual(allLocales);
         });
     });
 

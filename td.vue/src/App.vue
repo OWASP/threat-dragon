@@ -18,7 +18,7 @@
 <script>
 import { mapState } from 'vuex';
 
-import { LOADER_FINISHED } from '@/store/actions/loader.js';
+import { loaderFinished } from '@/store/actions/loader.js';
 import TdNavbar from '@/components/Navbar.vue';
 import TdOverlay from '@/components/Overlay.vue';
 
@@ -32,7 +32,7 @@ export default {
         isLoading: (state) => state.loader.loading
     }),
     mounted() {
-        this.$store.dispatch(LOADER_FINISHED);
+        this.$store.dispatch(loaderFinished);
     }
 };
 </script>

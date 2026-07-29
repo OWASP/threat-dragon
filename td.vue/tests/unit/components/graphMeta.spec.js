@@ -194,7 +194,7 @@ describe('components/GraphMeta.vue', () => {
                         }
                     }
                 },
-                actions:{ THREATMODEL_UPDATE: () => {}},
+                actions:{ threatmodelUpdate: () => {}},
             });
             wrapper = shallowMount(TdGraphMeta, {
                 localVue,

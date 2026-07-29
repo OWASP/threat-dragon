@@ -1,4 +1,4 @@
-export const ERROR_CODES = Object.freeze({
+export const errorCodes = Object.freeze({
     CONFIG_INVALID_ENTRY: 'CONFIG_INVALID_ENTRY',
     CONFIG_LOCALE_MISSING: 'CONFIG_LOCALE_MISSING',
     CONFIG_LOCALE_PARSE: 'CONFIG_LOCALE_PARSE',

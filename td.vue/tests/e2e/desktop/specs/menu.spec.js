@@ -26,9 +26,9 @@ const {
     openAboutDialog
 } = require('../support/menu');
 
-const SUITE_TIMEOUT_MS = 30000;
-const SAVED_MODEL_TITLE = 'Saved From Electron Menu';
-const SAVED_AS_MODEL_TITLE = 'Saved As From Menu';
+const suiteTimeoutMs = 30000;
+const savedModelTitle = 'Saved From Electron Menu';
+const savedAsModelTitle = 'Saved As From Menu';
 
 const assertIncludesOrdered = (actualItems, expectedItems) => {
     let searchFrom = 0;
@@ -41,7 +41,7 @@ const assertIncludesOrdered = (actualItems, expectedItems) => {
 };
 
 describe('Desktop menu integration tests', function () {
-    this.timeout(SUITE_TIMEOUT_MS);
+    this.timeout(suiteTimeoutMs);
 
     beforeEach(async () => {
         await resetMenuTest();
@@ -89,11 +89,11 @@ describe('Desktop menu integration tests', function () {
             const modelPath = copyModelFixture('save-model.json');
 
             await openModel(modelPath);
-            await setThreatModelTitle(SAVED_MODEL_TITLE);
+            await setThreatModelTitle(savedModelTitle);
             await saveModel();
 
-            const savedModel = await waitForThreatModelTitle(modelPath, SAVED_MODEL_TITLE);
-            assert.equal(savedModel.summary.title, SAVED_MODEL_TITLE);
+            const savedModel = await waitForThreatModelTitle(modelPath, savedModelTitle);
+            assert.equal(savedModel.summary.title, savedModelTitle);
         });
     });
 
@@ -102,11 +102,11 @@ describe('Desktop menu integration tests', function () {
             const savePath = createPath('saved-as-model.json');
 
             await createNewModel();
-            await setThreatModelTitle(SAVED_AS_MODEL_TITLE);
+            await setThreatModelTitle(savedAsModelTitle);
             await saveModelAs(savePath);
 
-            const savedModel = await waitForThreatModelTitle(savePath, SAVED_AS_MODEL_TITLE);
-            assert.equal(savedModel.summary.title, SAVED_AS_MODEL_TITLE);
+            const savedModel = await waitForThreatModelTitle(savePath, savedAsModelTitle);
+            assert.equal(savedModel.summary.title, savedAsModelTitle);
 
             const state = await getMenuState();
             const [saveDialogCall] = state.saveDialogCalls;

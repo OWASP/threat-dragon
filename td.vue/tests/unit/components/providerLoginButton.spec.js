@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import Vuex from 'vuex';
 
 import { createLocalVue } from '../helpers/vueTestUtils';
-import { AUTH_SET_LOCAL } from '@/store/actions/auth.js';
+import { authSetLocal } from '@/store/actions/auth.js';
 import loginApi from '@/service/api/loginApi.js';
-import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
+import { providerSelected } from '@/store/actions/provider.js';
 import TdProviderLoginButton from '@/components/ProviderLoginButton.vue';
 
 describe('components/ProviderLoginButton.vue', () => {
@@ -17,8 +17,8 @@ describe('components/ProviderLoginButton.vue', () => {
     });
     const getMockStore = () => ({
         actions: {
-            [AUTH_SET_LOCAL]: () => {},
-            [PROVIDER_SELECTED]: () => {}
+            [authSetLocal]: () => {},
+            [providerSelected]: () => {}
         }
     });
 
@@ -69,11 +69,11 @@ describe('components/ProviderLoginButton.vue', () => {
             });
 
             it('dipatches the provider selected event', () => {
-                expect(mockStore.dispatch).toHaveBeenCalledWith(PROVIDER_SELECTED, provider.key);
+                expect(mockStore.dispatch).toHaveBeenCalledWith(providerSelected, provider.key);
             });
 
             it('dispatches the set local event', () => {
-                expect(mockStore.dispatch).toHaveBeenCalledWith(AUTH_SET_LOCAL);
+                expect(mockStore.dispatch).toHaveBeenCalledWith(authSetLocal);
             });
 
             it('navigates to the dashboard', () => {
@@ -90,7 +90,7 @@ describe('components/ProviderLoginButton.vue', () => {
             });
 
             it('dipatches the provider selected event', () => {
-                expect(mockStore.dispatch).toHaveBeenCalledWith(PROVIDER_SELECTED, provider.key);
+                expect(mockStore.dispatch).toHaveBeenCalledWith(providerSelected, provider.key);
             });
 
             it('calls the login api', () => {
