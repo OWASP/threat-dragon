@@ -86,6 +86,11 @@ export default {
     display: inline-flex;
 }
 
+.td-treatment-dropdown :deep(.td-dropdown-toggle) {
+    font-family: inherit;
+    font-size: 0.75rem;
+}
+
 .td-treatment-dropdown.active :deep(.td-dropdown-toggle) {
     background-color: darken($gray, 10%);
     border-color: darken($gray, 12.5%);
