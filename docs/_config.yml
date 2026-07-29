@@ -11,7 +11,7 @@ url: "" # the base hostname & protocol for your site, e.g. http://example.com
 
 brand: OWASP Threat Dragon Documentation
 faviconUrl: assets/icons/threatdragon.ico
-logo_src: assets/images/threatdragon_logo_image.svg
+logo_src: assets/images/cupcake-128x128.png
 
 search:
   tooltip: Search Threat Dragon documentation
