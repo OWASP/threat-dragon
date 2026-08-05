@@ -120,7 +120,7 @@ describe('service/locale/locale-resolver.js', () => {
 
 
     describe('default supported locales', () => {
-        it('uses CANONICAL_SUPPORTED_LOCALES when supportedLocales is not provided', () => {
+        it('uses canonicalSupportedLocales when supportedLocales is not provided', () => {
             expect(
                 resolveLocale({
                     browserLanguages: ['en'],
@@ -615,7 +615,7 @@ describe('service/locale/locale-resolver.js', () => {
             ).toBe(false);
         });
 
-        it('uses CANONICAL_SUPPORTED_LOCALES when supportedLocales not provided', () => {
+        it('uses canonicalSupportedLocales when supportedLocales not provided', () => {
             expect(
                 isSupportedLocale('en')
             ).toBe(true);

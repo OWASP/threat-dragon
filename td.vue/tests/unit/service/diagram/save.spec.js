@@ -1,8 +1,8 @@
 import saveDiagram from '@/service/diagram/save';
 import tmActions from '@/store/actions/threatmodel';
-import * as boundaryUtils from '@/service/boundary-utils';
+import * as boundaryUtils from '@/service/diagram/boundary-utils';
 
-jest.mock('@/service/boundary-utils.js', () => ({
+jest.mock('@/service/diagram/boundary-utils.js', () => ({
     __esModule: true,
     getElementsInsideBoundary: jest.fn(),
     getBoundariesCrossedByFlow: jest.fn(),

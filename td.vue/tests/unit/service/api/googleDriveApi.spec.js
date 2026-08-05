@@ -9,17 +9,32 @@ describe('service/googleDriveApi.js', () => {
     });
 
     describe('folderAsync', () => {
-        const folderId = 'root';
+        const folderId = 'test';
+        const page = 99;
 
         beforeEach(async () => {
-            await googleDriveApi.folderAsync(folderId);
+            await googleDriveApi.folderAsync(folderId, page);
         });
 
         it('calls the folder endpoint', () => {
             expect(api.getAsync).toHaveBeenCalledWith(
                 '/api/googleproviderthreatmodel/folders', 
-                { params: { page: 1, folderId: 'root' } }
+                { params: { page: page, folderId: folderId } }
             );
+        });
+    });
+
+    describe('folderAsync defaults', () => {
+
+	    beforeEach(async () => {
+	        await googleDriveApi.folderAsync();
+	    });
+
+        it('calls the default folder endpoint', () => {
+		    expect(api.getAsync).toHaveBeenCalledWith(
+		        '/api/googleproviderthreatmodel/folders', 
+		        { params: { page: 1, folderId: 'root' } }
+		    );
         });
     });
 

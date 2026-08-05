@@ -1,6 +1,6 @@
-import { repositoryClear, repositoryFetch, repositorySelected } from '@/store/actions/repository.js';
-import repoModule, { clearState } from '@/store/modules/repository.js';
-import threatmodelApi from '@/service/api/threatmodelApi.js';
+import { repositoryClear, repositoryFetch, repositorySelected } from '@/store/actions/repository';
+import repoModule, { clearState } from '@/store/modules/repository';
+import threatmodelApi from '@/service/api/threatmodelApi';
 import { createStoreMocks } from '../../helpers/store';
 
 describe('store/modules/repository.js', () => {
@@ -90,6 +90,7 @@ describe('store/modules/repository.js', () => {
     });
 
     describe('mutations', () => {
+
         describe('clear', () => {
             beforeEach(() => {
                 repoModule.state.all.push('test1', 'test2');
@@ -109,8 +110,31 @@ describe('store/modules/repository.js', () => {
             });
         });
 
+        describe('fetch', () => {
+            const testRepos = {repos: ['test1', 'test2'], page: 99, pageNext: false, pagePrev: false};
+
+            beforeEach(() => {
+                repoModule.state.all.push('foo', 'bar', 'baz');
+                repoModule.state.page = 5;
+                repoModule.state.pageNext = true;
+                repoModule.state.pagePrev = true;
+                repoModule.mutations[repositoryFetch](repoModule.state, testRepos);
+            });
+
+            it('copies the repo properties', () => {
+                expect(repoModule.state.all).toHaveLength(2);
+                expect(repoModule.state.all[1]).toBe('test2');
+            });
+
+            it('copies the page properties', () => {
+			    expect(repoModule.state.page).toBe(99);
+			    expect(repoModule.state.pageNext).toBe(false);
+			    expect(repoModule.state.pagePrev).toBe(false);
+            });
+        });
+
         describe('selected', () => {
-            it('sets the repo prop', () => {
+            it('sets the repo properties', () => {
                 repoModule.mutations[repositorySelected](repoModule.state, 'my-repo');
                 expect(repoModule.state.selected).toBe('my-repo');
             });

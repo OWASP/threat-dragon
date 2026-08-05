@@ -1,6 +1,9 @@
 //functions to determine which diagram elements (processes, stores, actors, flows) are inside a trust boundary based on geometry
 export function isElementInsideBoundary(elementBBox, boundaryBBox) {
     //returns TRUE if element's bounding box lies fully inside boundary box
+    if (!elementBBox || !boundaryBBox) {
+        return false;
+    }
     return (
         elementBBox.x >= boundaryBBox.x &&
         elementBBox.y >= boundaryBBox.y &&
@@ -11,13 +14,14 @@ export function isElementInsideBoundary(elementBBox, boundaryBBox) {
 
 export function getElementsInsideBoundary(cells, boundaryCell) {
     const inside = [];
-    //x6 built-in
-    const boundaryBBox = boundaryCell.getBBox();
+    const boundaryBBox = boundaryCell.getBBox(); //x6 built-in
 
     cells.forEach(cell => {
         //ignore edges and this trust boundary itself
-        if (!(cell.id === boundaryCell.id) && !(cell.shape === 'flow')){
-            if (!cell.isNode?.()) return; 
+        if ((cell.id !== boundaryCell.id) && (cell.shape !== 'flow')){
+            if (!cell.isNode?.()) {
+                return;
+            } 
 
             const elBBox = cell.getBBox();
 
@@ -59,3 +63,10 @@ export function getFlowsCrossedByBoundary(boundaryCell, cells){
     return crossedFlows;
 }
 
+export default {
+    doesFlowCrossBoundary,
+    getBoundariesCrossedByFlow,
+    getElementsInsideBoundary,
+    getFlowsCrossedByBoundary,
+    isElementInsideBoundary
+};

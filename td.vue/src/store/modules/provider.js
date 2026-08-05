@@ -1,4 +1,3 @@
-import Vue from 'vue';
 import { isDesktopApp } from '@/service/environment';
 
 import{
@@ -6,8 +5,8 @@ import{
     providerFetch,
     providerSelected
 } from '../actions/provider.js';
-import providers from '../../service/provider/providers.js';
-import threatmodelApi from '../../service/api/threatmodelApi.js';
+import providers from '@/service/provider/providers';
+import threatmodelApi from '@/service/api/threatmodelApi';
 
 export const clearState = (state) => {
     state.all.length = 0;
@@ -47,7 +46,7 @@ const mutations = {
     [providerClear]: (state) => clearState(state),
     [providerFetch]: (state, providers) => {
         state.all.length = 0;
-        providers.forEach((provider, idx) => Vue.set(state.all, idx, provider));
+        providers.forEach((provider, idx) => state.all[idx] = provider);
     },
     [providerSelected]: (state, { providerName, providerUri }) => {
         state.selected = providerName;
