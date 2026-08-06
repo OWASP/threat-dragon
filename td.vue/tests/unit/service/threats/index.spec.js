@@ -1,5 +1,5 @@
-import threats, { createNewTypedThreat } from '@/service/threats/index.js';
-import store from '@/store/index.js';
+import threats, { createNewTypedThreat } from '@/service/threats';
+import store from '@/store';
 
 describe('service/threats/index.js', () => {
     describe('create new default typed threat', () => {

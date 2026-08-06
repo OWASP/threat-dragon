@@ -139,6 +139,14 @@ describe('service/x6/graph/graph.js', () => {
             }));
         });
 
+        it('provides createEdge function', () => {
+            expect(graphRes.connecting.createEdge()).toEqual(expect.objectContaining({zIndex: 0}));
+        });
+
+        it('provides validateConnection function', () => {
+            expect(graphRes.connecting.validateConnection({ targetMagnet: true })).toBe(true);
+        });
+
         it('enables the scroller', () => {
             expect(graphRes.use).toHaveBeenCalledWith(
                 expect.objectContaining({

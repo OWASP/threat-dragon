@@ -21,11 +21,10 @@ export function getElementsInsideBoundary(cells, boundaryCell) {
         if ((cell.id !== boundaryCell.id) && (cell.shape !== 'flow')){
             if (!cell.isNode?.()) {
                 return;
-            } 
+            }
 
-            const elBBox = cell.getBBox();
-
-            if (isElementInsideBoundary(elBBox, boundaryBBox)) {
+            const elementBBox = cell.getBBox(); //x6 built-in
+            if (isElementInsideBoundary(elementBBox, boundaryBBox)) {
                 inside.push(cell);
             }
         }

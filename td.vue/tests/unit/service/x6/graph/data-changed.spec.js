@@ -5,6 +5,7 @@ describe('service/x6/graph/data-changed.js', () => {
     const getCell = () => ({
         data: {},
         getData: jest.fn(),
+        setData: jest.fn(),
         setAttrByPath: jest.fn(),
         isEdge: jest.fn()
     });
@@ -34,19 +35,144 @@ describe('service/x6/graph/data-changed.js', () => {
                 getData: jest.fn(() => cellData),
                 setName: jest.fn()
             };
+            console.warn = jest.fn();
         });
 
         it('uses the existing cell data name by default', () => {
             dataChanged.updateName(cell);
-
             expect(cell.setName).toHaveBeenCalledWith('Original name');
+            expect(console.warn).not.toHaveBeenCalled();
         });
 
         it('updates the cell data before setting the diagram label', () => {
             dataChanged.updateName(cell, 'Updated name');
-
             expect(cellData.name).toEqual('Updated name');
             expect(cell.setName).toHaveBeenCalledWith('Updated name');
+        });
+
+        it('does not update a missing cell', () => {
+            dataChanged.updateName(null, 'foobar');
+            expect(cell.setName).not.toHaveBeenCalled();
+            expect(console.warn).toHaveBeenCalled();
+        });
+
+        it('does not update cell that is missing setName', () => {
+            dataChanged.updateName({getData: jest.fn()}, 'foobar');
+            expect(cell.setName).not.toHaveBeenCalled();
+            expect(console.warn).toHaveBeenCalled();
+        });
+
+        it('does not update cell that is missing getData', () => {
+            dataChanged.updateName({setName: jest.fn()}, 'foobar');
+            expect(cell.setName).not.toHaveBeenCalled();
+            expect(console.warn).toHaveBeenCalled();
+        });
+    });
+
+    describe('updateProperties', () => {
+        beforeEach(() => {
+            cell.getData = jest.fn(() => {return { name: 'foobar' };});
+            console.debug = jest.fn();
+            console.warn = jest.fn();
+        });
+
+        it('preserves existing cell data', () => {
+            dataChanged.updateProperties(cell);
+            expect(cell.setData).not.toHaveBeenCalled();
+            expect(console.warn).not.toHaveBeenCalled();
+        });
+
+        it('provides missing cell data', () => {
+            delete cell.data;
+            cell.type = 'tm.Actor';
+            dataChanged.updateProperties(cell);
+            expect(cell.setData).toHaveBeenCalled();
+            expect(console.warn).not.toHaveBeenCalled();
+        });
+
+        it('ensures edges are cell type Flow', () => {
+            delete cell.data;
+            cell.type = 'foo';
+            cell.isEdge = jest.fn(() => true);
+            dataChanged.updateProperties(cell);
+            expect(cell.type).toBe('tm.Flow');
+            expect(cell.setData).toHaveBeenCalled();
+            expect(console.warn).not.toHaveBeenCalled();
+        });
+
+        it('warns if cell is missing', () => {
+            dataChanged.updateProperties(null);
+            expect(cell.setData).not.toHaveBeenCalled();
+            expect(console.warn).toHaveBeenCalled();
+        });
+    });
+
+    describe('setType', () => {
+        beforeEach(() => {
+            console.warn = jest.fn();
+        });
+
+        it('sets data type for Actor', () => {
+            cell.shape = 'actor';
+            dataChanged.setType(cell);
+            expect(cell.data.type).toBe('tm.Actor');
+            expect(console.warn).not.toHaveBeenCalled();
+        });
+
+        it('sets data type for Store', () => {
+            cell.shape = 'store';
+            dataChanged.setType(cell);
+            expect(cell.data.type).toBe('tm.Store');
+            expect(console.warn).not.toHaveBeenCalled();
+        });
+
+        it('sets data type for Process', () => {
+            cell.shape = 'process';
+            dataChanged.setType(cell);
+            expect(cell.data.type).toBe('tm.Process');
+            expect(console.warn).not.toHaveBeenCalled();
+        });
+
+        it('sets data type for Flow', () => {
+            cell.shape = 'flow';
+            dataChanged.setType(cell);
+            expect(cell.data.type).toBe('tm.Flow');
+            expect(console.warn).not.toHaveBeenCalled();
+        });
+
+        it('sets data type for Trust Boundary Box', () => {
+            cell.shape = 'trust-boundary-box';
+            dataChanged.setType(cell);
+            expect(cell.data.type).toBe('tm.BoundaryBox');
+            expect(console.warn).not.toHaveBeenCalled();
+        });
+
+        it('sets data type for Trust Boundary Curve', () => {
+            cell.shape = 'trust-boundary-curve';
+            dataChanged.setType(cell);
+            expect(cell.data.type).toBe('tm.Boundary');
+            expect(console.warn).not.toHaveBeenCalled();
+        });
+
+        it('sets data type for mispelling of Trust Boundary Curve', () => {
+            cell.shape = 'trust-broundary-curve';
+            dataChanged.setType(cell);
+            expect(cell.data.type).toBe('tm.Boundary');
+            expect(console.warn).not.toHaveBeenCalled();
+        });
+
+        it('sets data type for Text Block', () => {
+            cell.shape = 'td-text-block';
+            dataChanged.setType(cell);
+            expect(cell.data.type).toBe('tm.Text');
+            expect(console.warn).not.toHaveBeenCalled();
+        });
+
+        it('preserves data type for unrecognized shape', () => {
+            cell.shape = 'foo';
+            dataChanged.setType(cell);
+            expect(cell.data.type).toBeUndefined();
+            expect(console.warn).toHaveBeenCalled();
         });
     });
 
@@ -160,6 +286,7 @@ describe('service/x6/graph/data-changed.js', () => {
             cell.constructor = { name: 'FakeThingy' };
             cell.isEdge.mockReturnValue(false);
             cell.getData.mockImplementation(() => ({}));
+            delete cell.data;
             dataChanged.updateStyleAttrs(cell);
         });
 
