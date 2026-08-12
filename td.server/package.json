@@ -89,6 +89,11 @@
     "diff": ">=7.0.0",
     "minimatch": ">=9.0.9",
     "workerpool": ">=9.3.4",
-    "@pm2/js-api": ">=0.8.1"
+    "@pm2/js-api": ">=0.8.1",
+    "body-parser": ">=2.3.0",
+    "content-type": ">=2.0.0",
+    "fast-uri": ">=3.1.5",
+    "shell-quote": ">=1.10.0",
+    "tar": ">=7.5.22"
   }
 }
