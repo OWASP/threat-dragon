@@ -18,7 +18,6 @@ RUN --mount=type=cache,target=/root/.npm,sharing=locked \
 FROM build-npm-base AS build-npm-stage1
 
 COPY package-lock.json package.json ./
-COPY package.json ./_data/package.json
 
 COPY ./td.server/.npmrc ./td.server/package-lock.json ./td.server/package.json ./td.server/
 
@@ -91,6 +90,7 @@ COPY docs/.bundle/ .bundle/
 RUN bundle install
 
 COPY docs/ .
+COPY package.json ./_data/package.json
 RUN bundle exec jekyll build -b ./docs/
 
 
