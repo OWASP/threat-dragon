@@ -90,6 +90,7 @@ COPY docs/.bundle/ .bundle/
 RUN bundle install
 
 COPY docs/ .
+COPY package.json ./_data/package.json
 RUN bundle exec jekyll build -b ./docs/
 
 
