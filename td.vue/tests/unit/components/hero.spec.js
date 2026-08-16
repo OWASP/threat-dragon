@@ -3,6 +3,10 @@ import { shallowMount } from '@vue/test-utils';
 import TdHero from '@/components/Hero.vue';
 
 describe('components/Hero.vue', () => {
+    beforeEach(() => {
+        console.warn = jest.fn();
+    });
+
     it('renders the default slot', () => {
         const wrapper = shallowMount(TdHero, {
             slots: {

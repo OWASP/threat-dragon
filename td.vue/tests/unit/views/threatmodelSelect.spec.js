@@ -15,6 +15,7 @@ describe('views/ThreatModelSelect.vue', () => {
     let wrapper, localVue, mockStore, mockRouter;
 
     beforeEach(() => {
+        console.warn = jest.fn();
         localVue = createLocalVue();
         localVue.use(Vuex);
         mockStore = getMockStore();

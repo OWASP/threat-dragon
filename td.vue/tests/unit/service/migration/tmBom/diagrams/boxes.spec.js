@@ -4,6 +4,10 @@ import tmBomModel from '../../tmbom-test-model';
 
 describe('service/migration/tmBom/diagrams/boxes.js', () => {
 
+    beforeEach(() => {
+        console.warn = jest.fn();
+    });
+
     describe('convert/export TM-BOM trust zones', () => {
         let trustZones;
         let nodes;

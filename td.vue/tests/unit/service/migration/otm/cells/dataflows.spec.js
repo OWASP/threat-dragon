@@ -4,6 +4,10 @@ import otmModel from '../../otm-test-model';
 
 describe('service/migration/otm/cells/dataflow.js', () => {
 
+    beforeEach(() => {
+        console.warn = jest.fn();
+    });
+
     describe('merging OTM', () => {
         let testFlow;
 

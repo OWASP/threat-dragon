@@ -37,6 +37,7 @@ describe('service/httpClient.js', () => {
     let client;
 
     beforeEach(() => {
+        console.warn = jest.fn();
         axios.create = jest.fn().mockReturnValue(clientMock);
         jest.spyOn(clientMock.interceptors.request, 'use');
         jest.spyOn(clientMock.interceptors.response, 'use');

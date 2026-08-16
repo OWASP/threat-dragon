@@ -19,6 +19,7 @@ describe('service/locale/locale-resolver.js', () => {
         });
 
     beforeEach(() => {
+        console.warn = jest.fn();
         jest.spyOn(Intl, 'getCanonicalLocales').mockImplementation(mockIntl);
     });
 

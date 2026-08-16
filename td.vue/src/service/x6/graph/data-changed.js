@@ -87,8 +87,11 @@ const updateProperties = (cell) => {
                 cell.type = 'tm.Flow';
                 console.debug('Edge cell given type: ' + cell.type);
             }
-            cell.setData(defaultProperties.defaultData(cell.type));
-            console.debug('Default properties for ' + cell.shape + ' cell: ' + cell.getData().name);
+            try {
+                cell.setData(defaultProperties.defaultData(cell.type));
+            } catch (err) {
+                console.warn(`Unknown cell type: ` + cell.type);
+            }
         }
         store.get().dispatch(cellDataUpdated, cell.data);
         store.get().dispatch(threatmodelModified);

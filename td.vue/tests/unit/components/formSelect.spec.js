@@ -3,6 +3,10 @@ import { mount } from '@vue/test-utils';
 import TdFormSelect from '@/components/FormSelect.vue';
 
 describe('components/FormSelect.vue', () => {
+    beforeEach(() => {
+        console.warn = jest.fn();
+    });
+
     it('selects the option matching the bound value', () => {
         const wrapper = mount(TdFormSelect, {
             propsData: {

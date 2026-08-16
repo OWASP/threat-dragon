@@ -14,6 +14,7 @@ describe('service/diagram/save.js', () => {
     const testCells = [{ id: 'actor-1', shape: 'actor', data: { threats: [{ title: 'Saved threat' }] } }];
 
     beforeEach(() => {
+        console.warn = jest.fn();
         diagram = {
             id: 1,
             title: 'Diagram',

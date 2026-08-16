@@ -32,6 +32,7 @@ describe('components/ThreatEditDialog.vue', () => {
     });
 
     beforeEach(() => {
+        console.warn = jest.fn();
         localVue = createLocalVue();
         localVue.use(Vuex);
         localVue.use(BootstrapVue);

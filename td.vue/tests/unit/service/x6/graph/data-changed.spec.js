@@ -13,6 +13,7 @@ describe('service/x6/graph/data-changed.js', () => {
 
     beforeEach(() => {
         threats.hasOpenThreats = jest.fn();
+        console.warn = jest.fn();
         cell = getCell();
     });
 
@@ -35,7 +36,6 @@ describe('service/x6/graph/data-changed.js', () => {
                 getData: jest.fn(() => cellData),
                 setName: jest.fn()
             };
-            console.warn = jest.fn();
         });
 
         it('uses the existing cell data name by default', () => {
@@ -73,7 +73,6 @@ describe('service/x6/graph/data-changed.js', () => {
         beforeEach(() => {
             cell.getData = jest.fn(() => {return { name: 'foobar' };});
             console.debug = jest.fn();
-            console.warn = jest.fn();
         });
 
         it('preserves existing cell data', () => {
@@ -108,10 +107,6 @@ describe('service/x6/graph/data-changed.js', () => {
     });
 
     describe('setType', () => {
-        beforeEach(() => {
-            console.warn = jest.fn();
-        });
-
         it('sets data type for Actor', () => {
             cell.shape = 'actor';
             dataChanged.setType(cell);

@@ -2,6 +2,11 @@ import threats, { createNewTypedThreat } from '@/service/threats';
 import store from '@/store';
 
 describe('service/threats/index.js', () => {
+
+    beforeEach(() => {
+        console.warn = jest.fn();
+    });
+
     describe('create new default typed threat', () => {
         let threat;
 
