@@ -4,13 +4,13 @@ import otmModel from '../../otm-test-model';
 
 describe('service/migration/otm/cells/properties.js', () => {
 
+    beforeEach(() => {
+        console.warn = jest.fn();
+    });
+
     describe('creating description', () => {
         let description;
         const testDescription = 'test description';
-
-        beforeEach(() => {
-            console.warn = jest.fn();
-        });
 
         it('creates default description', () => {
             description = properties.combineDescription({}, {});
@@ -155,10 +155,6 @@ describe('service/migration/otm/cells/properties.js', () => {
         const testRepId = 'architecture-diagram';
         const testPosition = {x: 100, y: 200};
         let position;
-
-        beforeEach(() => {
-            console.warn = jest.fn();
-        });
 
         it('creates default position', () => {
             position = properties.findPosition(otmModel, null, null, null);

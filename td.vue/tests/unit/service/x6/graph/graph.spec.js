@@ -5,7 +5,8 @@ import graph, { beforeAddCommand } from '@/service/x6/graph/graph.js';
 import keys from '@/service/x6/graph/keys.js';
 
 describe('service/x6/graph/graph.js', () => {
-    let container;
+    let container, graphRes;
+
 
     class GraphMock {
         constructor(args) {
@@ -15,19 +16,31 @@ describe('service/x6/graph/graph.js', () => {
     }
 
     describe('getReadonlyGraph', () => {
+
         beforeEach(() => {
             container = { foo: 'bar' };
             events.listen = jest.fn();
-            graph.getReadonlyGraph(container, GraphMock);
+            keys.bind = jest.fn();
+            graphRes = graph.getReadonlyGraph(container, GraphMock);
         });
 
         it('does not add the event listeners', () => {
             expect(events.listen).not.toHaveBeenCalled();
         });
+
+        it('disables history', () => {
+            expect(graphRes.use).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    name: 'history',
+                    options: expect.objectContaining({
+                        enabled: false
+                    })
+                })
+            );
+        });
     });
 
     describe('getEditGraph', () => {
-        let graphRes;
 
         beforeEach(() => {
             container = { foo: 'bar' };
@@ -137,6 +150,14 @@ describe('service/x6/graph/graph.js', () => {
                 allowNode: true,
                 allowBlank: true
             }));
+        });
+
+        it('provides createEdge function', () => {
+            expect(graphRes.connecting.createEdge()).toEqual(expect.objectContaining({zIndex: 0}));
+        });
+
+        it('provides validateConnection function', () => {
+            expect(graphRes.connecting.validateConnection({ targetMagnet: true })).toBe(true);
         });
 
         it('enables the scroller', () => {

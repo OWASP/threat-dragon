@@ -152,6 +152,7 @@ module.exports = {
                 options.img = 'src';
                 options.image = 'xlink:href';
                 options.compilerOptions = {
+                    sourceMap: true,
                     ...options.compilerOptions,
                     // Sets the compatability mode to 2, meaning "vue 2"
                     // TODO: Once TODOs and additional warnings are sorted, we should

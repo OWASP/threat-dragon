@@ -1,12 +1,10 @@
-import Vue from 'vue';
-
 import {
     branchClear,
     branchCreate,
     branchFetch,
     branchSelected
-} from '../actions/branch.js';
-import threatmodelApi from '../../service/api/threatmodelApi.js';
+} from '../actions/branch';
+import threatmodelApi from '@/service/api/threatmodelApi';
 
 export const clearState = (state) => {
     state.all.length = 0;
@@ -46,7 +44,12 @@ const actions = {
 const mutations = {
     [branchClear]: (state) => clearState(state),
     [branchFetch]: (state, {branches, page, pageNext, pagePrev }) => {
-        branches.forEach((branch, idx) => Vue.set(state.all, idx, branch));
+        // Note that any previous branches at higher indices will persist
+        // for example existing state ['foo', 'bar', 'baz']
+        // with new branches ['test1', 'test2']
+        // results in ["test1", "test2", "baz"]
+        // ** this may not be intended **
+        branches.forEach((branch, idx) => state.all[idx] = branch);
         state.page = page;
         state.pageNext = pageNext;
         state.pagePrev = pagePrev;

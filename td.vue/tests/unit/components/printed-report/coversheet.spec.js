@@ -3,6 +3,10 @@ import { shallowMount, createLocalVue } from '@vue/test-utils';
 import TdCoverSheet from '@/components/printed-report/Coversheet.vue';
 
 describe('components/printed-report/Coversheet.vue', () => {
+    beforeEach(() => {
+        console.warn = jest.fn();
+    });
+
     let summary, wrapper;
 
     const getSummary = () => ({

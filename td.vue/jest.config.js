@@ -19,6 +19,7 @@ module.exports = async () => {
         collectCoverageFrom: [
             'src/**/*.{js,vue}',
             '!src/service/demo/**',
+            '!src/desktop/**', // tested separately by desktop unit tests
             '!**/node_modules/**',
             '!**/coverage/**',
             '!src/main*.js', // Bootstrap code for web app and desktop app

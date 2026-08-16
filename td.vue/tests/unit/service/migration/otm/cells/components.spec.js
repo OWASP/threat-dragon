@@ -3,6 +3,10 @@ import components from '@/service/migration/otm/cells/components';
 import otmModel from '../../otm-test-model';
 
 describe('service/migration/otm/cells/components.js', () => {
+    beforeEach(() => {
+        console.warn = jest.fn();
+    });
+
 
     describe('listing OTM components', () => {
         let testCells;

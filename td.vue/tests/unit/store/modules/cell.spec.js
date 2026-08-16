@@ -23,15 +23,15 @@ describe('store/modules/cell.js', () => {
     });
 
     describe('actions', () => {
-        it('commits the unselected action', () => {
-            cellModule.actions[cellUnselected](mocks);
-            expect(mocks.commit).toHaveBeenCalledWith(cellUnselected);
-        });
-
         it('commits the selected cell', () => {
             const cell = { bar: 'bar', baz: 'baz' };
             cellModule.actions[cellSelected](mocks, cell);
             expect(mocks.commit).toHaveBeenCalledWith(cellSelected, cell);
+        });
+
+        it('commits the unselected action', () => {
+            cellModule.actions[cellUnselected](mocks);
+            expect(mocks.commit).toHaveBeenCalledWith(cellUnselected);
         });
 
         it('commits the cell data updated action', () => {
@@ -42,15 +42,23 @@ describe('store/modules/cell.js', () => {
     });
 
     describe('mutations', () => {
-        const cell = { data: { bar: 'bar', baz: 'baz' }, id: 'foo' };
+        const cell = { data: { threats: ['foo', 'bar', 'baz']}, id: 'foobar' };
 
         describe('selected', () => {
-            beforeEach(() => {
+            it('sets the cell properties', () => {
                 cellModule.mutations[cellSelected](cellModule.state, cell);
+                expect(cellModule.state.ref).toEqual(cell);
             });
 
-            it('sets the ref', () => {
-                expect(cellModule.state.ref).toEqual(cell);
+            it('copies the threats', () => {
+                cellModule.mutations[cellSelected](cellModule.state, cell);
+                expect(cellModule.state.threats).toHaveLength(cell.data.threats.length);
+                expect(cellModule.state.threats[2]).toEqual(cell.data.threats[2]);
+            });
+
+            it('sets the cell properties with no cell data', () => {
+                cellModule.mutations[cellSelected](cellModule.state, null);
+                expect(cellModule.state.ref).toBeNull();
             });
         });
 
@@ -62,6 +70,25 @@ describe('store/modules/cell.js', () => {
 
             it('clears the state', () => {
                 expect(cellModule.state.ref).toEqual(null);
+            });
+        });
+
+        describe('data updated', () => {
+            const data = { threats: ['foo', 'bar', 'baz']};
+
+            beforeEach(() => {
+                cellModule.state = { ref: cell, threats: [] };
+                cellModule.state.ref.setData = jest.fn();
+                cellModule.mutations[cellDataUpdated](cellModule.state, data);
+            });
+
+            it('updates the data object', () => {
+                expect(cellModule.state.ref.setData).toHaveBeenCalledWith(data);
+            });
+
+            it('updates the threats', () => {
+                expect(cellModule.state.threats).toHaveLength(data.threats.length);
+                expect(cellModule.state.threats[2]).toEqual(data.threats[2]);
             });
         });
 

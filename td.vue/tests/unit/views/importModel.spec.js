@@ -19,7 +19,9 @@ jest.mock('@/service/migration/tmBom/tmBom');
 
 describe('views/ImportModel.vue', () => {
     let wrapper, localVue, mockRouter, mockStore, toast;
+
     beforeEach(() => {
+        console.warn = jest.fn();
         toast = { error: jest.fn(), warning: jest.fn() };
         localVue = createLocalVue();
         mockStore = createStore({

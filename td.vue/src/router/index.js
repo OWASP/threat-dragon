@@ -5,7 +5,6 @@ import HomePage from '../views/HomePage.vue';
 import { localRoutes } from './local.js';
 import { desktopRoutes } from './desktop.js';
 import { googleRoutes } from './google.js';
-import store from '@/store';
 
 const routes = [
     {
@@ -41,22 +40,6 @@ const get = () => {
         routerInstance = createRouter({
             history: createWebHashHistory(),
             routes
-        });
-
-        // Navigation guard for admin routes
-        routerInstance.beforeEach((to, _from, next) => {
-            if (to.meta.requiresAdmin) {
-                const isAdmin = store.get().getters.isAdmin;
-
-                if (!isAdmin) {
-                    console.warn('Access denied: Admin route requires admin permissions');
-                    next('/dashboard');
-                } else {
-                    next();
-                }
-            } else {
-                next();
-            }
         });
     }
 

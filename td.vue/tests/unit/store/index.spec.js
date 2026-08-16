@@ -6,6 +6,7 @@ describe('store.get()/index.js', () => {
     let store;
 
     beforeEach(() => {
+        console.warn = jest.fn();
         store = storeFactory.get();
     });
 

@@ -1,21 +1,23 @@
-import { branchClear, branchFetch, branchSelected } from '@/store/actions/branch.js';
+import { branchClear, branchCreate, branchFetch, branchSelected } from '@/store/actions/branch.js';
 import branchModule, { clearState } from '@/store/modules/branch.js';
 import threatmodelApi from '@/service/api/threatmodelApi.js';
 import { createStoreMocks } from '../../helpers/store';
 
 describe('store/modules/branch.js', () => {
-    let apiSpy;
+    let apiSpy, apiSpyCreate;
     const mocks = createStoreMocks();
 
     beforeEach(() => {
         jest.spyOn(mocks, 'commit');
         jest.spyOn(mocks, 'dispatch');
         apiSpy = jest.spyOn(threatmodelApi, 'branchesAsync');
+        apiSpyCreate = jest.spyOn(threatmodelApi, 'createBranchAsync');
     });
 
     afterEach(() => {
         clearState(branchModule.state);
         apiSpy.mockRestore();
+        apiSpyCreate.mockRestore();
     });
 
     describe('state', () => {
@@ -35,17 +37,12 @@ describe('store/modules/branch.js', () => {
     });
 
     describe('actions', () => {
-        it('commits the clear action', () => {
+        it('clear commit', () => {
             branchModule.actions[branchClear](mocks);
             expect(mocks.commit).toHaveBeenCalledWith(branchClear);
         });
 
-        it('commits the selected branch', () => {
-            branchModule.actions[branchSelected](mocks, 'my-branch');
-            expect(mocks.commit).toHaveBeenCalledWith(branchSelected, 'my-branch');
-        });
-
-        describe('fetch', () => {
+        describe('fetch commit', () => {
             const branches = ['foo', 'bar'];
             const pagination = { page: 1, next: true, prev: false };
 
@@ -93,6 +90,26 @@ describe('store/modules/branch.js', () => {
                 expect(apiSpy).toHaveBeenCalledWith(mocks.rootState.repo.selected, 1);
             });
         });
+
+        it('selected branch commit', () => {
+            branchModule.actions[branchSelected](mocks, 'my-branch');
+            expect(mocks.commit).toHaveBeenCalledWith(branchSelected, 'my-branch');
+        });
+
+        describe('create', () => {
+            beforeEach(async () => {
+                apiSpyCreate.mockResolvedValue({});
+                await branchModule.actions[branchCreate](mocks, { branchName: 'foo', refBranch: 'bar' });
+            });
+
+            it('creates the new branch', () => {
+                expect(apiSpyCreate).toHaveBeenCalledWith(mocks.rootState.repo.selected, 'foo', 'bar');
+            });
+
+            it('fetches the branch', () => {
+                expect(mocks.dispatch).toHaveBeenCalledWith(branchFetch);
+            });
+        });
     });
 
     describe('mutations', () => {
@@ -110,6 +127,32 @@ describe('store/modules/branch.js', () => {
                 expect(branchModule.state.all).toHaveLength(0);
                 expect(branchModule.state.selected).toBe('');
                 expect(branchModule.state.page).toBe(1);
+                expect(branchModule.state.pageNext).toBe(false);
+                expect(branchModule.state.pagePrev).toBe(false);
+            });
+        });
+
+        describe('fetch', () => {
+            const testBranches = {branches: ['test1', 'test2'], page: 99, pageNext: false, pagePrev: false};
+
+            beforeEach(() => {
+                branchModule.state.all.push('foo', 'bar', 'baz');
+                branchModule.state.selected = 'foobar';
+                branchModule.state.page = 5;
+                branchModule.state.pageNext = true;
+                branchModule.state.pagePrev = true;
+                branchModule.mutations[branchFetch](branchModule.state, testBranches);
+            });
+
+            it('copies the branch properties', () => {
+                expect(branchModule.state.all).toHaveLength(3);
+                expect(branchModule.state.all[1]).toBe(testBranches.branches[1]);
+                expect(branchModule.state.all[2]).toBe('baz');
+                expect(branchModule.state.selected).toBe('foobar');
+            });
+
+            it('copies the page properties', () => {
+                expect(branchModule.state.page).toBe(99);
                 expect(branchModule.state.pageNext).toBe(false);
                 expect(branchModule.state.pagePrev).toBe(false);
             });

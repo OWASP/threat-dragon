@@ -1,10 +1,10 @@
-import { authClear, authSetJwt, authSetLocal, logout } from '../actions/auth.js';
-import { branchClear } from '../actions/branch.js';
-import loginApi from '../../service/api/loginApi.js';
-import { providerClear } from '../actions/provider.js';
-import providers from '../../service/provider/providers.js';
-import { repositoryClear } from '../actions/repository.js';
-import { threatmodelClear } from '../actions/threatmodel.js';
+import { authClear, authSetJwt, authSetLocal, logout } from '../actions/auth';
+import { branchClear } from '../actions/branch';
+import loginApi from '@/service/api/loginApi';
+import { providerClear } from '../actions/provider';
+import providers from '@/service/provider/providers';
+import { repositoryClear } from '../actions/repository';
+import { threatmodelClear } from '../actions/threatmodel';
 
 export const clearState = (state) => {
     state.jwt = '';
@@ -65,8 +65,7 @@ const mutations = {
 };
 
 const getters = {
-    username: (state) => state.user.username || '',
-    isAdmin: (state) => state.user.isAdmin || false
+    username: (state) => state.user.username || ''
 };
 
 export default {

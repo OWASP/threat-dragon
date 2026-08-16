@@ -33,4 +33,22 @@ describe('service/x6/shapes/flow.js', () => {
             expect(victim.setLabels).toHaveBeenCalledWith([ name ]);
         });
     });
+
+    describe('fromEdge', () => {
+        const edge = {
+            getSource: jest.fn(() => 'testSource'),
+            getTarget: jest.fn(() => {return 'testTarget';}),
+            getData: jest.fn(() => {return {description: 'testData'};}),
+            getVertices: jest.fn(() => {return ['testVertices'];})
+        };
+        let flow;
+
+        beforeEach(() => {
+            flow = Flow.fromEdge(edge);
+        });
+
+        it('creates the flow', () => {
+            expect(flow).not.toBeNull();
+        });
+    });
 });

@@ -4,25 +4,38 @@ import { supportedLocales } from '@/i18n/index';
 import api from '@/service/api/api';
 
 const sanitizeConfig = (raw) => {
-    if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return null;
+    if (!raw || typeof raw !== 'object' || Array.isArray(raw)) {
+        return null;
+    }
 
     const out = {};
 
     if (Array.isArray(raw.allowedLocales) &&
-        raw.allowedLocales.every(l => typeof l === 'string' && l.length > 0)) {
-        const filtered = raw.allowedLocales.filter(l => supportedLocales.includes(l));
-        if (filtered.length > 0) out.allowedLocales = filtered;
+        raw.allowedLocales.every(locale => typeof locale === 'string' && locale.length > 0)) {
+        const filtered = raw.allowedLocales.filter(locale => supportedLocales.includes(locale));
+        if (filtered.length > 0) {
+            out.allowedLocales = filtered;
+        }
     }
 
     if (typeof raw.defaultLocale === 'string' && supportedLocales.includes(raw.defaultLocale)) {
         out.defaultLocale = raw.defaultLocale;
     }
-
-    if (typeof raw.localEnabled === 'boolean') out.localEnabled = raw.localEnabled;
-    if (typeof raw.githubEnabled === 'boolean') out.githubEnabled = raw.githubEnabled;
-    if (typeof raw.bitbucketEnabled === 'boolean') out.bitbucketEnabled = raw.bitbucketEnabled;
-    if (typeof raw.gitlabEnabled === 'boolean') out.gitlabEnabled = raw.gitlabEnabled;
-    if (typeof raw.googleEnabled === 'boolean') out.googleEnabled = raw.googleEnabled;
+    if (typeof raw.localEnabled === 'boolean') {
+        out.localEnabled = raw.localEnabled;
+    }
+    if (typeof raw.githubEnabled === 'boolean') {
+        out.githubEnabled = raw.githubEnabled;
+    }
+    if (typeof raw.bitbucketEnabled === 'boolean') {
+        out.bitbucketEnabled = raw.bitbucketEnabled;
+    }
+    if (typeof raw.gitlabEnabled === 'boolean') {
+        out.gitlabEnabled = raw.gitlabEnabled;
+    }
+    if (typeof raw.googleEnabled === 'boolean') {
+        out.googleEnabled = raw.googleEnabled;
+    }
 
     return Object.keys(out).length > 0 ? out : null;
 };

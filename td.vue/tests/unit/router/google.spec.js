@@ -52,6 +52,23 @@ describe('routes/google.js', () => {
         });
     });
 
+    describe('Threat model create from local/desktop', () => {
+        let route;
+
+        beforeEach(() => {
+            route = googleRoutes.find(x => x.name === 'googleThreatModelCreate');
+        });
+
+        it('uses the expected path', () => {
+            expect(route.path).toEqual('/google/:provider/:folder/:threatmodel/create');
+        });
+
+        it('uses the ThreatModelEdit view as a lazily loaded component', async () => {
+            const cmp = await route.component();
+            expect(cmp.default.name).toEqual('ThreatModelEdit');
+        });
+    });
+
     describe('Threat model edit', () => {
         let route;
 

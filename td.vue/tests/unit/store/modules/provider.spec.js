@@ -86,6 +86,15 @@ describe('store/modules/provider.js', () => {
                         'providerUri': 'https://github.com' 
                     });
             });
+
+            it('commits the local provider', async () => {
+                await providerModule.actions[providerSelected](mocks, providerService.providerNames.local);
+                expect(mocks.commit).toHaveBeenCalledWith(providerSelected,
+                    { 
+                        'providerName': providerService.providerNames.local, 
+                        'providerUri': 'threat-dragon-local' 
+                    });
+            });
         });
 
         describe('selected — desktop', () => {
@@ -118,8 +127,7 @@ describe('store/modules/provider.js', () => {
     describe('mutations', () => {
         describe('clear', () => {
             beforeEach(() => {
-                providerModule.state.all.push('test1');
-                providerModule.state.all.push('test2');
+                providerModule.state.all.push('test1', 'test2');
                 providerModule.state.selected = 'github';
                 providerModule.state.providerUri = 'https://github.com';
                 providerModule.mutations[providerClear](providerModule.state);
@@ -138,6 +146,19 @@ describe('store/modules/provider.js', () => {
             });
         });
 
+        describe('fetch', () => {
+            const providers = ['foo', 'bar'];
+
+            beforeEach(() => {
+                providerModule.mutations[providerFetch](providerModule.state, providers);
+            });
+
+            it('sets the providers property', () => {
+                expect(providerModule.state.all).toHaveLength(2);
+                expect(providerModule.state.all[1]).toBe('bar');
+            });
+        });
+
         describe('selected', () => {
             const provider = 'test';
             const providerUri = 'https://github.com';
@@ -146,11 +167,11 @@ describe('store/modules/provider.js', () => {
                 providerModule.mutations[providerSelected](providerModule.state, {'providerName': provider, 'providerUri': providerUri});
             });
 
-            it('sets the provider prop', () => {
+            it('selects the provider', () => {
                 expect(providerModule.state.selected).toEqual(provider);
             });
 
-            it('sets the providerUri prop', () => {
+            it('sets the providerUri property', () => {
                 expect(providerModule.state.providerUri).toEqual(providerUri);
             });
         });

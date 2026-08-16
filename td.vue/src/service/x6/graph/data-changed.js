@@ -87,8 +87,11 @@ const updateProperties = (cell) => {
                 cell.type = 'tm.Flow';
                 console.debug('Edge cell given type: ' + cell.type);
             }
-            cell.setData(defaultProperties.defaultData(cell.type));
-            console.debug('Default properties for ' + cell.shape + ' cell: ' + cell.getData().name);
+            try {
+                cell.setData(defaultProperties.defaultData(cell.type));
+            } catch (err) {
+                console.warn(`Unknown cell type: ` + cell.type);
+            }
         }
         store.get().dispatch(cellDataUpdated, cell.data);
         store.get().dispatch(threatmodelModified);
@@ -100,30 +103,30 @@ const updateProperties = (cell) => {
 const setType = (cell) => {
     // fundamentally the shape is the only constant identifier
     switch (cell.shape) {
-	    case 'actor':
+    case 'actor':
         cell.data.type = 'tm.Actor';
         break;
-	    case 'store':
+    case 'store':
         cell.data.type = 'tm.Store';
         break;
-	    case 'process':
+    case 'process':
         cell.data.type = 'tm.Process';
         break;
-	    case 'flow':
+    case 'flow':
         cell.data.type = 'tm.Flow';
         break;
-	    case 'trust-boundary-box':
+    case 'trust-boundary-box':
         cell.data.type = 'tm.BoundaryBox';
         break;
-	    case 'trust-boundary-curve':
-	    case 'trust-broundary-curve':
+    case 'trust-boundary-curve':
+    case 'trust-broundary-curve':
         cell.data.type = 'tm.Boundary';
         break;
-	    case 'td-text-block':
+    case 'td-text-block':
         cell.data.type = 'tm.Text';
         break;
     default:
-        console.debug('Unrecognized shape');
+        console.warn('Unrecognized shape');
     }
 };
 
