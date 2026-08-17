@@ -27,6 +27,11 @@ const routes = [
         name: 'DemoSelect',
         component: () => import(/* webpackChunkName: "demo-select" */ '../views/demo/SelectDemoModel.vue')
     },
+    {
+        path: '/analytics',
+        name: 'AnalyticsPage',
+        component: () => import(/* webpackChunkName: "analytics" */ '../views/AnalyticsPage.vue')
+    },
     ...desktopRoutes,
     ...gitRoutes,
     ...localRoutes,

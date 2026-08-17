@@ -1,6 +1,7 @@
 import { configClear, configLoaded, configError, configFetch } from '@/store/actions/config';
 import { resolveLocale } from '@/store/actions/locale';
 import { supportedLocales } from '@/i18n/index';
+import { initPlausible } from '@/service/plausible';
 import api from '@/service/api/api';
 
 const sanitizeConfig = (raw) => {
@@ -37,6 +38,22 @@ const sanitizeConfig = (raw) => {
         out.googleEnabled = raw.googleEnabled;
     }
 
+    if (raw.plausible && typeof raw.plausible === 'object' && !Array.isArray(raw.plausible)) {
+        const p = {};
+        if (typeof raw.plausible.enabled === 'boolean') {
+            p.enabled = raw.plausible.enabled;
+        }
+        if (typeof raw.plausible.url === 'string') {
+            p.url = raw.plausible.url;
+        }
+        if (typeof raw.plausible.domain === 'string') {
+            p.domain = raw.plausible.domain;
+        }
+        if (Object.keys(p).length > 0) {
+            out.plausible = p;
+        }
+    }
+
     return Object.keys(out).length > 0 ? out : null;
 };
 
@@ -48,7 +65,7 @@ const state = {
 const actions = {
     [configClear]: ({ commit }) => commit(configClear),
 
-    [configFetch]: async ({ commit, dispatch }) => {
+    [configFetch]: async ({ commit, dispatch, state }) => {
         dispatch(configClear);
 
         try {
@@ -62,6 +79,16 @@ const actions = {
         } catch (error) {
             console.error('Error fetching config:', error);
             commit(configError, { error: error.message || 'Unknown error fetching config' });
+        }
+
+        // Initialize Plausible analytics if enabled
+        try {
+            const plausibleConfig = state?.config?.plausible;
+            if (plausibleConfig) {
+                initPlausible(plausibleConfig);
+            }
+        } catch (e) {
+            console.warn('Failed to initialize Plausible analytics:', e);
         }
 
         await dispatch(resolveLocale, null, { root: true });
@@ -99,6 +126,9 @@ const getters = {
     },
     defaultLocale: (state) => {
         return state.config?.defaultLocale ?? undefined;
+    },
+    plausibleConfig: (state) => {
+        return state.config?.plausible ?? { enabled: false };
     }
 };
 

@@ -23,6 +23,12 @@
             <td-locale-select />
           </a>
         </li>
+        <li v-if="isPlausibleEnabled" class="nav-item" id="nav-analytics">
+          <router-link class="nav-link" to="/analytics">
+            <font-awesome-icon icon="chart-bar" class="td-fa-nav" v-b-tooltip.hover
+              :title="$t('analytics.navLink')" />
+          </router-link>
+        </li>
       </ul>
 
       <ul class="navbar-nav ml-auto">
@@ -132,7 +138,7 @@ $icon-height: 1.2rem;
 </style>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 
 import threatDragonLogo from '@/assets/threatdragon_logo_image.svg';
 import owaspLogo from '@/assets/owasp.svg';
@@ -154,8 +160,15 @@ export default {
     computed: {
         ...mapGetters([
             'username',
-            'isAdmin'
-        ])
+            'isAdmin',
+            'plausibleConfig'
+        ]),
+        ...mapState({
+            config: state => state.config?.config ?? null
+        }),
+        isPlausibleEnabled () {
+            return this.plausibleConfig && this.plausibleConfig.enabled === true;
+        }
     },
     methods: {
         toggleNav() {

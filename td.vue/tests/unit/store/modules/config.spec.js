@@ -6,7 +6,12 @@ jest.mock('@/service/api/api', () => ({
     getAsync: jest.fn()
 }));
 
+jest.mock('@/service/plausible', () => ({
+    initPlausible: jest.fn()
+}));
+
 import api from '@/service/api/api';
+import { initPlausible } from '@/service/plausible';
 
 describe('store/modules/config.js', () => {
 
@@ -59,6 +64,23 @@ describe('store/modules/config.js', () => {
                 configModule.mutations[configLoaded](state, {config: config});
                 expect(state.config).toEqual(config);
                 expect(state.config.localEnabled).toEqual(true);
+                expect(state.configError).toBeNull();
+            });
+
+            it('sets sanitized config with plausible enabled', () => {
+                const config = {
+                    localEnabled: true,
+                    plausible: {
+                        enabled: true,
+                        url: 'https://plausible.io',
+                        domain: 'example.com'
+                    }
+                };
+                configModule.mutations[configLoaded](state, {config: config});
+                expect(state.config).toEqual(config);
+                expect(state.config.plausible.enabled).toEqual(true);
+                expect(state.config.plausible.url).toEqual('https://plausible.io');
+                expect(state.config.plausible.domain).toEqual('example.com');
                 expect(state.configError).toBeNull();
             });
 
@@ -178,6 +200,17 @@ describe('store/modules/config.js', () => {
                 await configModule.actions[configFetch](context);
                 expect(dispatch).toHaveBeenCalledWith(resolveLocale, null, { root: true });
             });
+
+            it('initializes plausible analytics if enabled', async () => {
+                const configData = {
+                    localEnabled: true,
+                    plausible: { enabled: true, domain: 'example.com' }
+                };
+                context.state = { config: configData };
+                api.getAsync.mockResolvedValue({ data: configData });
+                await configModule.actions[configFetch](context);
+                expect(initPlausible).toHaveBeenCalledWith(configData.plausible);
+            });
         });
     });
 
@@ -219,6 +252,18 @@ describe('store/modules/config.js', () => {
             it('returns defaultLocale when present', () => {
                 const state = { config: { defaultLocale: 'de' } };
                 expect(configModule.getters.defaultLocale(state)).toBe('de');
+            });
+        });
+
+        describe('plausibleConfig', () => {
+            it('returns default object with enabled false when config is null', () => {
+                const state = { config: null };
+                expect(configModule.getters.plausibleConfig(state)).toEqual({ enabled: false });
+            });
+
+            it('returns plausible config when present', () => {
+                const state = { config: { plausible: { enabled: true, domain: 'example.com' } } };
+                expect(configModule.getters.plausibleConfig(state)).toEqual({ enabled: true, domain: 'example.com' });
             });
         });
     });

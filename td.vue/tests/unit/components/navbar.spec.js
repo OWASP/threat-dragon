@@ -31,7 +31,8 @@ describe('components/Navbar.vue', () => {
         mockStore = new Vuex.Store({
             getters: {
                 isAdmin: () => false,
-                username: () => 'foobar'
+                username: () => 'foobar',
+                plausibleConfig: () => ({ enabled: false })
             },
             dispatch: () => {}
         });
@@ -165,6 +166,37 @@ describe('components/Navbar.vue', () => {
             it('uses the OWASP image', () => {
                 expect(tdOwasp.find('img').attributes('src'))
                     .toContain('owasp');
+            });
+        });
+
+        describe('analytics', () => {
+            it('does not render the analytics link when plausible is disabled', () => {
+                expect(wrapper.find('#nav-analytics').exists()).toBe(false);
+            });
+
+            it('renders the analytics link when plausible is enabled', async () => {
+                mockStore = new Vuex.Store({
+                    getters: {
+                        isAdmin: () => false,
+                        username: () => 'foobar',
+                        plausibleConfig: () => ({ enabled: true, url: 'https://plausible.io', domain: 'example.com' })
+                    },
+                    dispatch: () => {}
+                });
+                const wrapperEnabled = shallowMount(Navbar, {
+                    localVue,
+                    store: mockStore,
+                    mocks: {
+                        $router: routerMock,
+                        $t: key => key
+                    },
+                    stubs: {
+                        RouterLink: RouterLinkStub
+                    }
+                });
+                const navAnalytics = wrapperEnabled.find('#nav-analytics');
+                expect(navAnalytics.exists()).toBe(true);
+                expect(navAnalytics.findComponent(FontAwesomeIcon).attributes('icon')).toEqual('chart-bar');
             });
         });
     });

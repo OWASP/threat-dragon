@@ -5,6 +5,7 @@ import { errorCodes } from '../../src/constants/errorCodes.js';
 import { getConfig } from '../../src/controllers/configcontroller.js';
 import {
     buildConfig,
+    buildPlausibleConfig,
     normalizeLocale,
     parseLocalesArray
 } from '../../src/helpers/config.helper.js';
@@ -250,6 +251,75 @@ describe('config.helper.js', () => {
             });
         });
 
+        describe('plausible', () => {
+
+            it('disabled by default when no env vars are set', () => {
+                const { value } = buildConfig({});
+                expect(value.plausible).to.deep.equal({ enabled: false });
+            });
+
+            it('enabled with url and domain', () => {
+                const { value } = buildConfig({
+                    PLAUSIBLE_ENABLED: 'true',
+                    PLAUSIBLE_URL: 'https://analytics.example.com',
+                    PLAUSIBLE_DOMAIN: 'www.threatdragon.com'
+                });
+                expect(value.plausible).to.deep.equal({
+                    enabled: true,
+                    url: 'https://analytics.example.com',
+                    domain: 'www.threatdragon.com'
+                });
+            });
+
+            it('enabled with default url when PLAUSIBLE_URL not set', () => {
+                const { value } = buildConfig({
+                    PLAUSIBLE_ENABLED: 'true',
+                    PLAUSIBLE_DOMAIN: 'www.threatdragon.com'
+                });
+                expect(value.plausible.url).to.equal('https://plausible.io');
+            });
+
+            it('enabled without domain when PLAUSIBLE_DOMAIN not set', () => {
+                const { value } = buildConfig({
+                    PLAUSIBLE_ENABLED: 'true'
+                });
+                expect(value.plausible.enabled).to.be.true;
+                expect(value.plausible.domain).to.be.undefined;
+            });
+
+            it('treats false string as disabled', () => {
+                const { value } = buildConfig({
+                    PLAUSIBLE_ENABLED: 'false'
+                });
+                expect(value.plausible).to.deep.equal({ enabled: false });
+            });
+
+            it('treats null as disabled', () => {
+                const { value } = buildConfig({
+                    PLAUSIBLE_ENABLED: null
+                });
+                expect(value.plausible).to.deep.equal({ enabled: false });
+            });
+
+            it('trims whitespace from url and domain', () => {
+                const { value } = buildConfig({
+                    PLAUSIBLE_ENABLED: 'true',
+                    PLAUSIBLE_URL: '  https://analytics.example.com  ',
+                    PLAUSIBLE_DOMAIN: '  www.threatdragon.com  '
+                });
+                expect(value.plausible.url).to.equal('https://analytics.example.com');
+                expect(value.plausible.domain).to.equal('www.threatdragon.com');
+            });
+
+            it('plausible config is frozen', () => {
+                const { value } = buildConfig({
+                    PLAUSIBLE_ENABLED: 'true',
+                    PLAUSIBLE_DOMAIN: 'example.com'
+                });
+                expect(Object.isFrozen(value.plausible)).to.be.true;
+            });
+        });
+
         describe('Object.freeze', () => {
 
             it('returns frozen config value', () => {
@@ -294,7 +364,8 @@ describe('config.helper.js', () => {
                 googleEnabled: false,
                 localEnabled: true,
                 allowedLocales: ['en', 'es'],
-                defaultLocale: 'es'
+                defaultLocale: 'es',
+                plausible: { enabled: false }
             });
         });
 
@@ -308,6 +379,7 @@ describe('config.helper.js', () => {
             expect(result.localEnabled).to.be.true;
             expect(result.allowedLocales).to.deep.equal([]);
             expect(result.defaultLocale).to.equal('en');
+            expect(result.plausible).to.deep.equal({ enabled: false });
         });
 
         it('normalizes locales from environment', () => {

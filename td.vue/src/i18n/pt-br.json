@@ -532,5 +532,20 @@
     },
     "instructions": "Ótimo! Vamos levá-lo ao seu modelo.",
     "continue": "Continue para Modelo de Ameaça"
+  },
+  "analytics": {
+    "title": "Analytics",
+    "navLink": "Analytics",
+    "enabled": "Analytics are enabled on this instance.",
+    "disabled": "Analytics are not enabled on this instance.",
+    "description": "This page provides transparency about what data is collected.",
+    "instanceUrl": "Plausible Instance",
+    "trackedDomain": "Tracked Domain",
+    "trackedEvents": "Tracked Events",
+    "eventName": "Event Name",
+    "eventDescription": "Description",
+    "dataPolicy": "Plausible Data Policy",
+    "publicDashboard": "Public Dashboard",
+    "eventsExplanation": "The following is a complete list of events tracked on this instance when analytics are enabled. No user-identifiable data or model content is ever sent."
   }
 }

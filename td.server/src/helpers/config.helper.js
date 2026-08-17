@@ -127,6 +127,32 @@ const buildOAuthFlags = (config) => ({
     googleEnabled: !isNullish(config.GOOGLE_CLIENT_ID)
 });
 
+const isTruthy = (val) => {
+    if (isNullish(val)) {return false;}
+    const str = String(val).toLowerCase().trim();
+    return str === 'true' || str === '1';
+};
+
+export const buildPlausibleConfig = (config) => {
+    if (!isTruthy(config.PLAUSIBLE_ENABLED)) {
+        return { enabled: false };
+    }
+
+    const result = { enabled: true };
+
+    if (isString(config.PLAUSIBLE_URL) && config.PLAUSIBLE_URL.trim().length > 0) {
+        result.url = config.PLAUSIBLE_URL.trim();
+    } else {
+        result.url = 'https://plausible.io';
+    }
+
+    if (isString(config.PLAUSIBLE_DOMAIN) && config.PLAUSIBLE_DOMAIN.trim().length > 0) {
+        result.domain = config.PLAUSIBLE_DOMAIN.trim();
+    }
+
+    return result;
+};
+
 export const buildConfig = (config, { intl = Intl } = {}) => {
     const localeConfig = buildLocaleConfig(config, intl);
 
@@ -135,8 +161,10 @@ export const buildConfig = (config, { intl = Intl } = {}) => {
             ...buildOAuthFlags(config),
             localEnabled: true,
             allowedLocales: Object.freeze([...localeConfig.allowedLocales]),
-            defaultLocale: localeConfig.defaultLocale
+            defaultLocale: localeConfig.defaultLocale,
+            plausible: Object.freeze(buildPlausibleConfig(config))
         }),
         errors: Array.isArray(localeConfig.errors) ? localeConfig.errors : []
     };
 };
+

@@ -1,6 +1,11 @@
 import helmet from 'helmet';
 
-const config = (app, forceSecure) => {
+import envDefault from '../env/Env.js';
+
+const config = (app, forceSecure, deps) => {
+    const resolvedDeps = deps || {};
+    const env = resolvedDeps.env || envDefault;
+
     app.set('x-powered-by', false);
     const ninetyDaysInSeconds = 7776000;
     // Is forceSecure ever used?
@@ -10,12 +15,30 @@ const config = (app, forceSecure) => {
     app.use(helmet.noSniff());
     app.use(helmet.xssFilter());
     app.use(helmet.referrerPolicy({ policy: 'strict-origin-when-cross-origin' }));
+
+    const scriptSrc = ["'self'", "'unsafe-eval'"];
+    const connectSrc = ["'self'"];
+
+    try {
+        const envConfig = env.get().config;
+        const plausibleEnabled = envConfig.PLAUSIBLE_ENABLED &&
+            String(envConfig.PLAUSIBLE_ENABLED).toLowerCase().trim() !== 'false';
+
+        if (plausibleEnabled && envConfig.PLAUSIBLE_URL) {
+            const plausibleUrl = envConfig.PLAUSIBLE_URL.trim();
+            scriptSrc.push(plausibleUrl);
+            connectSrc.push(plausibleUrl);
+        }
+    } catch {
+        // env may not be hydrated yet during tests; use defaults
+    }
+
     // can't currently use CSP as i would like because various 3rd party libs are using inline style and javascript eval()
     app.use(helmet.contentSecurityPolicy({
         directives: {
             defaultSrc: ["'none'"],
-            scriptSrc: ["'self'", "'unsafe-eval'"],
-            connectSrc: ["'self'"],
+            scriptSrc,
+            connectSrc,
             styleSrc: ["'self'", 'https://fonts.googleapis.com', "'unsafe-inline'"], // needed for jquery
             imgSrc: ["'self'", 'data:'],
             fontSrc: ["'self'", 'https://fonts.gstatic.com', 'data:'],
@@ -29,3 +52,4 @@ const config = (app, forceSecure) => {
 export default {
     config
 };
+
