@@ -19,5 +19,5 @@ utils/
 sbom.*
 */sbom.*
 # Generated files, not relevent in CI but in local development,
-# theese files will break the docker build if included
-td.vue/src/service/schema/api_json/
+# these files will break the docker build if included
+td.vue/src/assets/downloads/cornucopia/

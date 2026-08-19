@@ -1,4 +1,4 @@
-﻿import cornucopiaEN from '@/service/schema/api_json/cornucopia-companion-en.json';
+﻿import cornucopiaEN from '@/assets/downloads/cornucopia/cornucopia-companion-en.json';
 
 export default {
     id: 'cornucopia-companion',

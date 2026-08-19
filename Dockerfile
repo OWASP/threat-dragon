@@ -40,7 +40,7 @@ COPY ./td.vue/src/ ./td.vue/src/
 COPY ./td.vue/public/ ./td.vue/public/
 COPY ./td.vue/*.config.js ./td.vue/
 
-RUN mkdir -p td.vue/src/service/schema/api_json && \
+RUN mkdir -p td.vue/src/assets/downloads/cornucopia && \
     npm run build && \
     cd td.server && \
     npm run make-sbom
