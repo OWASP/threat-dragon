@@ -21,7 +21,7 @@ export const TrustBoundaryBox = Shape.Rect.define({
             text: '',
             textAnchor : 'bottom',
             textVerticalAnchor : 'top',
-            refX: '15%',
+            refX: '12',
             refY: '12'
         }
     }
@@ -33,7 +33,12 @@ TrustBoundaryBox.prototype.setName = function (name) {
     this.setAttrByPath('label/text', name);
 };
 
-TrustBoundaryBox.prototype.updateStyle = function () {};
+TrustBoundaryBox.prototype.updateStyle = function () {
+    // After the node is dropped, make sure it can only be clicked
+    // on the boundary. This helps prevent accidental clicks in
+    // the middle of the box.
+    this.setAttrByPath('body/style/pointerEvents', 'stroke');
+};
 
 export default {
     name,
