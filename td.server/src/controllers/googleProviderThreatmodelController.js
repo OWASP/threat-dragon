@@ -12,7 +12,7 @@ const folders = (req, res) => responseWrapper.sendResponseAsync(async () => {
     let foldersResp = {};
     let folders = [];
     let parentId = '';
-    
+
     foldersResp = await googleDrive.listFilesInFolderAsync(folderId, pageToken, req.provider.access_token);
     folders = foldersResp.folders;
 
@@ -28,7 +28,7 @@ const folders = (req, res) => responseWrapper.sendResponseAsync(async () => {
     }
 
     return {
-        folders: folders.map((folder) => ({name: folder.name, id: folder.id, mimeType: folder.mimeType})),
+        folders: folders.map((folder) => ({value: folder.name, id: folder.id, mimeType: folder.mimeType})),
         pagination: pagination,
         parentId
     };
@@ -41,7 +41,7 @@ const create = (req, res) => responseWrapper.sendResponseAsync(async () => {
     const { fileContent, fileName } = req.body;
 
     const resp = await googleDrive.createFileInFolderAsync(folderId, fileName, fileContent, req.provider.access_token);
-    
+
     return {
         id: resp.id
     };
@@ -54,7 +54,7 @@ const update = (req, res) => responseWrapper.sendResponseAsync(async () => {
     const { fileContent } = req.body;
 
     const resp = await googleDrive.updateFileAsync(fileId, fileContent, req.provider.access_token);
-    
+
     return {
         id: resp.id
     };
