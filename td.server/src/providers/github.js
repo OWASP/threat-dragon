@@ -36,7 +36,8 @@ const getGithubUrl = () => {
  */
 const getOauthRedirectUrl = () => {
     const scope = env.get().config.GITHUB_SCOPE || 'public_repo';
-    return `${getGithubUrl()}/login/oauth/authorize?scope=${scope}&client_id=${env.get().config.GITHUB_CLIENT_ID}`;
+    const state = oauthHelper.generateState();
+    return `${getGithubUrl()}/login/oauth/authorize?scope=${scope}&client_id=${env.get().config.GITHUB_CLIENT_ID}&state=${state}`;
 };
 
 /**
@@ -49,9 +50,14 @@ const getOauthReturnUrl = (code) => oauthHelper.getOauthReturnUrl(code);
 /**
  * Finishes the OAuth login, issues a JWT
  * @param {String} code
+ * @param {String} state
  * @returns {String} jwt
  */
-const completeLoginAsync = async (code) => {
+const completeLoginAsync = async (code, state) => {
+    if (!oauthHelper.verifyState(state)) {
+        throw new Error('Invalid or missing OAuth state parameter');
+    }
+
     const url = `${getGithubUrl()}/login/oauth/access_token`;
     const body = {
         client_id: env.get().config.GITHUB_CLIENT_ID,

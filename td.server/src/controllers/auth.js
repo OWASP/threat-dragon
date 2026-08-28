@@ -37,7 +37,7 @@ const completeLogin = (req, res) => {
 
         // Errors in here will return as server errors as opposed to bad requests
         return responseWrapper.sendResponseAsync(async () => {
-            const { user, opts } = await provider.completeLoginAsync(req.query.code);
+            const { user, opts } = await provider.completeLoginAsync(req.query.code, req.query.state);
             const { accessToken, refreshToken } = await jwtHelper.createAsync(provider.name, opts, user);
             tokenRepo.add(refreshToken);
             return {
