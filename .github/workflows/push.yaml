@@ -76,10 +76,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
 
-      - name: Use node LTS 24.18.1
+      - name: Use node LTS 24.19.0
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
         with:
-          node-version: '24.18.1'
+          node-version: '24.19.0'
           cache: npm
           cache-dependency-path: td.vue/package-lock.json
 
