@@ -1,6 +1,6 @@
-import google from '@/service/provider/google.provider.js';
+import google from '@/service/provider/google.provider';
 
-describe('service/google.provider.js', () => {
+describe('service/provider/google.provider.js', () => {
     describe('getDashboardActions', () => {
 
         describe('open existing', () => {

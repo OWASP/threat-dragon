@@ -4,29 +4,29 @@ import { createI18n } from 'vue-i18n';
 // Internet Engineering Task Force (IETF) Best Current Practice (BCP) 47
 // ISO 639-1 language codes
 
-import ar from './ar.js';
-import de from './de.js';
-import el from './el.js';
-import en from './en.js';
-import es from './es.js';
-import fi from './fi.js';
-import fr from './fr.js';
-import hi from './hi.js';
-import id from './id.js';
-import ja from './ja.js';
-import ms from './ms.js';
-import pt from './pt.js';
-import ptBr from './pt-br.js';
-// hide RUS & UKR for now: import rus from './ru.js';
-// hide RUS & UKR for now: import ukr from './uk.js';
-import zh from './zh.js';
+import ar from './ar';
+import de from './de';
+import el from './el';
+import en from './en';
+import es from './es';
+import fi from './fi';
+import fr from './fr';
+import hi from './hi';
+import id from './id';
+import ja from './ja';
+import ms from './ms';
+import pt from './pt';
+import ptBr from './pt-br';
+// hide RUS & UKR for now: import rus from './ru';
+// hide RUS & UKR for now: import ukr from './uk';
+import zh from './zh';
 
 
-export const DEFAULT_LOCALE = 'en';
+export const defaultLocale = 'en';
 
-const FALLBACK_LOCALES = Object.freeze({
+const fallbackLocales = Object.freeze({
     pt: ['pt-BR'],
-    default: DEFAULT_LOCALE
+    default: defaultLocale
 });
 
 const messages = Object.freeze({
@@ -46,7 +46,7 @@ const messages = Object.freeze({
     zh
 });
 
-export const SUPPORTED_LOCALES = Object.freeze(Object.keys(messages));
+export const supportedLocales = Object.freeze(Object.keys(messages));
 
 let i18nInstance = null;
 
@@ -76,8 +76,8 @@ const get = () => {
             // Legacy mode is deprecated and will be removed in vue-i18n v12.
             // TODO: remove after refactoring i18n usage
             legacy: true,
-            locale: DEFAULT_LOCALE,
-            fallbackLocale: FALLBACK_LOCALES,
+            locale: defaultLocale,
+            fallbackLocale: fallbackLocales,
             messages
         });
         installLegacyCompat(i18nInstance);

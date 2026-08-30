@@ -6,6 +6,7 @@ describe('store.get()/index.js', () => {
     let store;
 
     beforeEach(() => {
+        console.warn = jest.fn();
         store = storeFactory.get();
     });
 
@@ -47,10 +48,6 @@ describe('store.get()/index.js', () => {
 
     it('defines the repo module', () => {
         expect(store.state.repo).toBeInstanceOf(Object);
-    });
-
-    it('defines the template module', () => {
-        expect(store.state.template).toBeInstanceOf(Object);
     });
 
     it('defines the threatmodel module', () => {

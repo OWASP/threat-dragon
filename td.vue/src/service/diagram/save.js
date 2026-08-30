@@ -2,7 +2,7 @@ import {
     getElementsInsideBoundary,
     getBoundariesCrossedByFlow,
     getFlowsCrossedByBoundary
-} from '@/service/boundary-utils.js';
+} from './boundary-utils';
 import tmActions from '@/store/actions/threatmodel.js';
 
 const enrichBoundaryAndFlowData = (graph) => {

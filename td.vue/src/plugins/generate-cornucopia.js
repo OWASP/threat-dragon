@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
 
-const API_LANGS = [
+const apiLangs = [
     { lang: 'es', type: 'webapp' },
     { lang: 'fr', type: 'webapp' },
     { lang: 'ru', type: 'webapp' },
@@ -16,20 +16,20 @@ const API_LANGS = [
     { lang: 'en', type: 'companion' }
 ];
 
-const OUT_DIR = path.resolve(__dirname, '..', 'service', 'schema');
-const API_JSON_DIR = path.resolve(OUT_DIR, 'api_json');
-const BYPASS = process.argv.includes('--bypass');
+const outDir = path.resolve(__dirname, '..', 'assets', 'downloads');
+const apiJsonDir = path.resolve(outDir, 'cornucopia');
+const bypass = process.argv.includes('--bypass');
 
 (async () => {
-    if (BYPASS) {
+    if (bypass) {
         process.exit(0);
     }
     try {
-        fs.mkdirSync(OUT_DIR, { recursive: true });
-        fs.mkdirSync(API_JSON_DIR, { recursive: true });
-        for (const { lang, type } of API_LANGS) {
+        fs.mkdirSync(outDir, { recursive: true });
+        fs.mkdirSync(apiJsonDir, { recursive: true });
+        for (const { lang, type } of apiLangs) {
             const url = `https://cornucopia.owasp.org/api/cre/${type}/${lang}`;
-            const outFile = path.join(API_JSON_DIR, `cornucopia-${type}-${lang}.json`);
+            const outFile = path.join(apiJsonDir, `cornucopia-${type}-${lang}.json`);
             try {
                 const res = await axios.get(url, { timeout: 15000, headers: { Accept: 'application/json' } });
                 if (res.status !== 200) {

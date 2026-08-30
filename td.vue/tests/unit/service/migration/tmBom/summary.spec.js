@@ -6,6 +6,9 @@ import tmBomModel from '../tmbom-test-model';
 jest.mock('@/service/migration/tmBom/diagrams/assumptions');
 
 describe('service/migration/tmBom/summary.js', () => {
+    beforeEach(() => {
+        console.warn = jest.fn();
+    });
 
     describe('merge TM-BOM', () => {
         let testSummary;

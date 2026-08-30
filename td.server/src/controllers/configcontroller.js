@@ -1,7 +1,7 @@
 import { buildConfig } from '../helpers/config.helper.js';
 import env from '../env/Env';
-import { ERROR_CODES } from '../constants/errorCodes.js';
-import { ERROR_MESSAGES } from '../constants/errorMessages.js';
+import { errorCodes } from '../constants/errorCodes.js';
+import { errorMessages } from '../constants/errorMessages.js';
 import { isNullish } from '../helpers/validators.helper.js';
 import loggerHelper from '../helpers/logger.helper.js';
 import responseWrapper from './responseWrapper';
@@ -28,14 +28,14 @@ export const getConfig = (deps) => {
             typeof error.code === 'string';
 
         if (hasValidCode) {
-            const message = ERROR_MESSAGES[error.code]
-                ? ERROR_MESSAGES[error.code]
+            const message = errorMessages[error.code]
+                ? errorMessages[error.code]
                 : error.code;
 
             loggerDep.warn(message, error.meta);
         } else {
             loggerDep.warn(
-                ERROR_CODES.CONFIG_INVALID_ENTRY,
+                errorCodes.CONFIG_INVALID_ENTRY,
                 { error: error }
             );
         }

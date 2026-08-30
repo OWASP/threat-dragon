@@ -1,3 +1,14 @@
 # default reviewers for pull requests
 *	@jgadsden @lreading
 
+# dependency maintenance
+/.github/dependabot.yaml	@lreading
+/Dockerfile	@lreading
+/package.json	@lreading
+/package-lock.json	@lreading
+/td.server/package.json	@lreading
+/td.server/package-lock.json	@lreading
+/td.vue/package.json	@lreading
+/td.vue/package-lock.json	@lreading
+/docs/Gemfile	@lreading
+/docs/Gemfile.lock	@lreading

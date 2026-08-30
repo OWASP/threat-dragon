@@ -3,6 +3,10 @@ import { mount } from '@vue/test-utils';
 import TdOverlay from '@/components/Overlay.vue';
 
 describe('components/Overlay.vue', () => {
+    beforeEach(() => {
+        console.warn = jest.fn();
+    });
+
     it('renders the default slot', () => {
         const wrapper = mount(TdOverlay, {
             slots: {

@@ -1,13 +1,12 @@
-import Vue from 'vue';
 import { isDesktopApp } from '@/service/environment';
 
 import{
-    PROVIDER_CLEAR,
-    PROVIDER_FETCH,
-    PROVIDER_SELECTED
+    providerClear,
+    providerFetch,
+    providerSelected
 } from '../actions/provider.js';
-import providers from '../../service/provider/providers.js';
-import threatmodelApi from '../../service/api/threatmodelApi.js';
+import providers from '@/service/provider/providers';
+import threatmodelApi from '@/service/api/threatmodelApi';
 
 export const clearState = (state) => {
     state.all.length = 0;
@@ -22,34 +21,34 @@ const state = {
 };
 
 const actions = {
-    [PROVIDER_CLEAR]: ({ commit }) => commit(PROVIDER_CLEAR),
-    [PROVIDER_FETCH]: ({ commit, dispatch }) => {
-        dispatch(PROVIDER_CLEAR);
-        commit(PROVIDER_FETCH, Object.keys(providers.providerNames));
+    [providerClear]: ({ commit }) => commit(providerClear),
+    [providerFetch]: ({ commit, dispatch }) => {
+        dispatch(providerClear);
+        commit(providerFetch, Object.keys(providers.providerNames));
     },
-    [PROVIDER_SELECTED]: async ({ commit }, providerName) => {
+    [providerSelected]: async ({ commit }, providerName) => {
         if (!providerName || !providers.providerNames[providerName]) {
             throw new Error(`Unknown provider: ${providerName}`);
         }
         if (providerName === 'desktop' || isDesktopApp()) {
-            commit(PROVIDER_SELECTED, { 'providerName': 'desktop', 'providerUri': 'threat-dragon-desktop' });
+            commit(providerSelected, { 'providerName': 'desktop', 'providerUri': 'threat-dragon-desktop' });
         } else if (providerName === 'local') {
-            commit(PROVIDER_SELECTED, { 'providerName': 'local', 'providerUri': 'threat-dragon-local' });
+            commit(providerSelected, { 'providerName': 'local', 'providerUri': 'threat-dragon-local' });
         } else {
             const resp = await threatmodelApi.organisationAsync(providerName);
             const providerUri = `${resp.protocol}://${resp.hostname}${resp.port ? ':' + resp.port : ''}`;
-            commit(PROVIDER_SELECTED, { 'providerName': providerName, 'providerUri': providerUri });
+            commit(providerSelected, { 'providerName': providerName, 'providerUri': providerUri });
         }
     }
 };
 
 const mutations = {
-    [PROVIDER_CLEAR]: (state) => clearState(state),
-    [PROVIDER_FETCH]: (state, providers) => {
+    [providerClear]: (state) => clearState(state),
+    [providerFetch]: (state, providers) => {
         state.all.length = 0;
-        providers.forEach((provider, idx) => Vue.set(state.all, idx, provider));
+        providers.forEach((provider, idx) => state.all[idx] = provider);
     },
-    [PROVIDER_SELECTED]: (state, { providerName, providerUri }) => {
+    [providerSelected]: (state, { providerName, providerUri }) => {
         state.selected = providerName;
         state.providerUri = providerUri;
         console.debug('PROVIDER_SELECTED providerName: ' + state.selected + ', providerUri: ' + state.providerUri);

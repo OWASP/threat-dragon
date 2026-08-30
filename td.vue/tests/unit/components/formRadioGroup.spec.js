@@ -3,6 +3,10 @@ import { mount } from '@vue/test-utils';
 import TdFormRadioGroup from '@/components/FormRadioGroup.vue';
 
 describe('components/FormRadioGroup.vue', () => {
+    beforeEach(() => {
+        console.warn = jest.fn();
+    });
+
     it('checks the radio matching the bound value', () => {
         const wrapper = mount(TdFormRadioGroup, {
             propsData: {

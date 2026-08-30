@@ -1,33 +1,33 @@
-import i18nFactory, { DEFAULT_LOCALE, SUPPORTED_LOCALES, t, tc } from '@/i18n/index.js';
+import i18nFactory, { defaultLocale, supportedLocales, t, tc } from '@/i18n';
 describe('i18n/index.js', () => {
-    describe('DEFAULT_LOCALE', () => {
+    describe('default locale', () => {
         it('uses en as the supported default locale', () => {
-            expect(DEFAULT_LOCALE).toBe('en');
-            expect(SUPPORTED_LOCALES).toContain(DEFAULT_LOCALE);
+            expect(defaultLocale).toBe('en');
+            expect(supportedLocales).toContain(defaultLocale);
         });
     });
 
-    describe('SUPPORTED_LOCALES', () => {
+    describe('supported locales', () => {
         it('is a frozen array of all expected locales', () => {
             const expected = [
                 'ar', 'de', 'el', 'en', 'es', 'fi', 'fr',
                 'hi', 'id', 'ja', 'ms', 'pt', 'pt-BR', 'zh'
             ];
 
-            expect(Array.isArray(SUPPORTED_LOCALES)).toBe(true);
-            expect(Object.isFrozen(SUPPORTED_LOCALES)).toBe(true);
-            expect(SUPPORTED_LOCALES).toEqual(expect.arrayContaining(expected));
-            expect(SUPPORTED_LOCALES).toHaveLength(expected.length);
+            expect(Array.isArray(supportedLocales)).toBe(true);
+            expect(Object.isFrozen(supportedLocales)).toBe(true);
+            expect(supportedLocales).toEqual(expect.arrayContaining(expected));
+            expect(supportedLocales).toHaveLength(expected.length);
         });
 
         it('excludes ru and uk (hidden locales)', () => {
-            expect(SUPPORTED_LOCALES).not.toContain('ru');
-            expect(SUPPORTED_LOCALES).not.toContain('uk');
+            expect(supportedLocales).not.toContain('ru');
+            expect(supportedLocales).not.toContain('uk');
         });
 
         it('includes both pt and pt-BR', () => {
-            expect(SUPPORTED_LOCALES).toContain('pt');
-            expect(SUPPORTED_LOCALES).toContain('pt-BR');
+            expect(supportedLocales).toContain('pt');
+            expect(supportedLocales).toContain('pt-BR');
         });
     });
 
@@ -40,7 +40,7 @@ describe('i18n/index.js', () => {
     describe('compatibility layer (installLegacyCompat)', () => {
         afterEach(() => {
             // Restore the default locale to avoid leaking mutations
-            i18nFactory.get().locale = DEFAULT_LOCALE;
+            i18nFactory.get().locale = defaultLocale;
         });
 
         it('proxies locale through legacy getter/setter', () => {

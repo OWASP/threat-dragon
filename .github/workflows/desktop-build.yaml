@@ -1,0 +1,206 @@
+name: Reusable desktop builds
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  windows:
+    name: Windows
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: td.vue
+    env:
+      electron_config_cache: ${{ github.workspace }}/.cache/electron
+      ELECTRON_BUILDER_CACHE: ${{ github.workspace }}/.cache/electron-builder
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+
+      - name: Use node LTS 24.19.0
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+        with:
+          node-version: '24.19.0'
+          cache: npm
+          cache-dependency-path: td.vue/package-lock.json
+
+      - name: Use npm 11.18.0
+        run: npm install --global npm@11.18.0
+
+      - name: Cache Electron binaries
+        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
+        with:
+          path: |
+            ${{ env.electron_config_cache }}
+            ${{ env.ELECTRON_BUILDER_CACHE }}
+          key: ${{ runner.os }}-electron-${{ hashFiles('td.vue/package-lock.json') }}
+
+      - name: Install clean packages
+        run: npm clean-install
+
+      - name: Build Windows executable
+        run: npm run build:desktop -- --windows --publish never
+
+      - name: Save SBOM artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: sboms-desktop-windows-site
+          path: './td.vue/dist-desktop/bundled/.sbom/*'
+          include-hidden-files: true
+          if-no-files-found: error
+
+  macos:
+    name: macOS
+    runs-on: macos-latest
+    defaults:
+      run:
+        working-directory: td.vue
+    env:
+      electron_config_cache: ${{ github.workspace }}/.cache/electron
+      ELECTRON_BUILDER_CACHE: ${{ github.workspace }}/.cache/electron-builder
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+
+      - name: Use node LTS 24.19.0
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+        with:
+          node-version: '24.19.0'
+          cache: npm
+          cache-dependency-path: td.vue/package-lock.json
+
+      - name: Use npm 11.18.0
+        run: npm install --global npm@11.18.0
+
+      - name: Cache Electron binaries
+        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
+        with:
+          path: |
+            ${{ env.electron_config_cache }}
+            ${{ env.ELECTRON_BUILDER_CACHE }}
+          key: ${{ runner.os }}-electron-${{ hashFiles('td.vue/package-lock.json') }}
+
+      - name: Install clean packages
+        run: npm clean-install
+
+      - name: Build MacOS disk image
+        run: npm run build:desktop -- --mac --publish never
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Save SBOM artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: sboms-desktop-macos-site
+          path: './td.vue/dist-desktop/bundled/.sbom/*'
+          include-hidden-files: true
+          if-no-files-found: error
+
+  linux:
+    name: Linux
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: td.vue
+    env:
+      electron_config_cache: ${{ github.workspace }}/.cache/electron
+      ELECTRON_BUILDER_CACHE: ${{ github.workspace }}/.cache/electron-builder
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+
+      - name: Use node LTS 24.19.0
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+        with:
+          node-version: '24.19.0'
+          cache: npm
+          cache-dependency-path: td.vue/package-lock.json
+
+      - name: Use npm 11.18.0
+        run: npm install --global npm@11.18.0
+
+      - name: Cache Electron binaries
+        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
+        with:
+          path: |
+            ${{ env.electron_config_cache }}
+            ${{ env.ELECTRON_BUILDER_CACHE }}
+          key: ${{ runner.os }}-electron-${{ hashFiles('td.vue/package-lock.json') }}
+
+      - name: Install clean packages
+        run: npm clean-install
+
+      - name: Build Linux app images
+        run: npm run build:desktop -- --linux AppImage deb rpm --publish never
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Print logs on error
+        if: ${{ failure() }}
+        run: find . -name "*.log" -exec cat '{}' \; -print
+
+      - name: Save SBOM artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: sboms-desktop-linux-site
+          path: './td.vue/dist-desktop/bundled/.sbom/*'
+          include-hidden-files: true
+          if-no-files-found: error
+
+  snap:
+    name: Snap
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: td.vue
+    env:
+      electron_config_cache: ${{ github.workspace }}/.cache/electron
+      ELECTRON_BUILDER_CACHE: ${{ github.workspace }}/.cache/electron-builder
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+
+      - name: Use node LTS 24.19.0
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+        with:
+          node-version: '24.19.0'
+          cache: npm
+          cache-dependency-path: td.vue/package-lock.json
+
+      - name: Use npm 11.18.0
+        run: npm install --global npm@11.18.0
+
+      - name: Cache Electron binaries
+        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
+        with:
+          path: |
+            ${{ env.electron_config_cache }}
+            ${{ env.ELECTRON_BUILDER_CACHE }}
+          key: ${{ runner.os }}-electron-${{ hashFiles('td.vue/package-lock.json') }}
+
+      - name: Install clean packages
+        run: npm clean-install
+
+      - name: Build Linux snap
+        run: npm run build:desktop -- --linux snap
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Print logs on error
+        if: ${{ failure() }}
+        run: find . -name "*.log" -exec cat '{}' \; -print
+
+      - name: Save SBOM artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: sboms-desktop-linux-snap-site
+          path: './td.vue/dist-desktop/bundled/.sbom/*'
+          include-hidden-files: true
+          if-no-files-found: error

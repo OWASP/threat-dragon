@@ -25,7 +25,7 @@ describe('components/ThreatSuggestDialog.vue', () => {
                 data: { detail: { threatTop: 0 } }
             }
         },
-        actions: { CELL_DATA_UPDATED: () => {} }
+        actions: { cellDataUpdated: () => {} }
     });
 
     const getWrapper = () => {

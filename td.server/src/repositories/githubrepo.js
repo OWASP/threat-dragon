@@ -1,8 +1,6 @@
 import env from '../env/Env.js';
 import github from 'octonode';
 
-
-
 const repoRootDirectory = () => env.get().config.GITHUB_REPO_ROOT_DIRECTORY || env.get().config.REPO_ROOT_DIRECTORY;
 
 const getClient = (accessToken) => {
@@ -26,7 +24,6 @@ const searchAsync = (page, accessToken, searchQuerys = []) => getClient(accessTo
     reposAsync({ page: page, q: searchQuerys });
 
 const userAsync = async (accessToken) => {
-
     const resp = await getClient(accessToken).me().
         infoAsync();
     return resp[0];
@@ -82,17 +79,11 @@ const deleteAsync = async (modelInfo, accessToken) => {
             modelInfo.branch
         );
 };
-const METADATA_PATH = 'templates/template_info.json';
 
 const repoExistsAsync = (accessToken) => {
     const client = getClient(accessToken);
     return client.repo(env.get().config.GITHUB_CONTENT_REPO).infoAsync();
 };
-
-const listTemplatesAsync = (accessToken) => getClient(accessToken).
-    repo(env.get().config.GITHUB_CONTENT_REPO).
-    contentsAsync(METADATA_PATH);
-
 
 const createContentFileAsync = (accessToken, fileName, content) => {
     const repo = getClient(accessToken).repo(env.get().config.GITHUB_CONTENT_REPO);
@@ -102,31 +93,6 @@ const createContentFileAsync = (accessToken, fileName, content) => {
         path, 
         `feat: add content for ${fileName}`, 
         JSON.stringify(content, null, 2),
-        'main'
-    );
-};
-
-const createMetadataAsync = (accessToken) => {
-    const repo = getClient(accessToken).repo(env.get().config.GITHUB_CONTENT_REPO);
-    const fileContent = JSON.stringify({ templates: [] }, null, 2);
-
-    return repo.createContentsAsync(
-        METADATA_PATH,
-        'feat: initialize template repository',
-        fileContent,
-        'main'
-    );
-};
-
-const updateMetadataAsync = (accessToken, newTemplateMetadata, sha) => {
-    const repo = getClient(accessToken).repo(env.get().config.GITHUB_CONTENT_REPO);
-    const fileContent = JSON.stringify({ templates: newTemplateMetadata }, null, 2);
-
-    return repo.updateContentsAsync(
-        METADATA_PATH,
-        'feat: update template index',
-        fileContent,
-        sha,
         'main'
     );
 };
@@ -183,10 +149,7 @@ export default {
     userAsync,
     createBranchAsync,
     getRepoPermissionsAsync,
-    listTemplatesAsync,
-    createMetadataAsync,
     createContentFileAsync,
-    updateMetadataAsync,
     deleteContentFileAsync,
     getContentFileAsync,
     repoExistsAsync

@@ -1,4 +1,4 @@
-import { providerTypes } from './providerTypes.js';
+import { providerTypes } from './providerTypes';
 
 const providerType = providerTypes.local;
 
@@ -17,12 +17,6 @@ const getDashboardActions = () => ([
         to: '/demo/select',
         key: 'readDemo',
         icon: 'cloud-download-alt'
-    },
-
-    {
-        to: `/${providerType}/templates`,
-        key: 'createFromTemplate',
-        icon: 'file-alt'
     }
 ]);
 

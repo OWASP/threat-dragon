@@ -1,5 +1,5 @@
 # NPM: Base image with the pinned npm version (in native host's platform)
-FROM --platform=$BUILDPLATFORM docker.io/library/node:24.18.0-alpine@sha256:a0b9bf06e4e6193cf7a0f58816cc935ff8c2a908f81e6f1a95432d679c54fbfd AS build-npm-base
+FROM --platform=$BUILDPLATFORM docker.io/library/node:24.19.0-alpine@sha256:d32cdf619f63fe0471182d08996dd516c6275bb5fd31ae06e55a570bd9e1ad43 AS build-npm-base
 WORKDIR /build
 
 # Copy over NPM config and enforce usage across all tool calls
@@ -40,7 +40,7 @@ COPY ./td.vue/src/ ./td.vue/src/
 COPY ./td.vue/public/ ./td.vue/public/
 COPY ./td.vue/*.config.js ./td.vue/
 
-RUN mkdir -p td.vue/src/service/schema/api_json && \
+RUN mkdir -p td.vue/src/assets/downloads/cornucopia && \
     npm run build && \
     cd td.server && \
     npm run make-sbom
@@ -74,7 +74,7 @@ RUN cd td.server && \
 
 
 # Build Docs
-FROM --platform=$BUILDPLATFORM docker.io/library/ruby:4.0.5@sha256:8400f102008d4e7322fbe610684312dfe1d1205550075c6c28834b5eb44afb97 AS build-docs
+FROM --platform=$BUILDPLATFORM docker.io/library/ruby:4.0.6@sha256:d9a5d26be31a40fb043069f816ba39139c1f38758aea530341eb7e2c153e4ab4 AS build-docs
 RUN --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
     --mount=type=tmpfs,target=/var/lib/dpkg \
     --mount=type=tmpfs,target=/var/cache \
@@ -90,10 +90,11 @@ COPY docs/.bundle/ .bundle/
 RUN bundle install
 
 COPY docs/ .
+COPY package.json ./_data/package.json
 RUN bundle exec jekyll build -b ./docs/
 
 
-FROM docker.io/library/node:24.18.0-alpine@sha256:a0b9bf06e4e6193cf7a0f58816cc935ff8c2a908f81e6f1a95432d679c54fbfd AS final
+FROM docker.io/library/node:24.19.0-alpine@sha256:d32cdf619f63fe0471182d08996dd516c6275bb5fd31ae06e55a570bd9e1ad43 AS final
 
 # npm is needed only in the build stages. The runtime executes Node directly.
 RUN rm -rf /usr/local/lib/node_modules/npm /usr/local/bin/npm /usr/local/bin/npx

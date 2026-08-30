@@ -1,4 +1,4 @@
-import { LOCALE_SELECTED, RESOLVE_LOCALE } from '@/store/actions/locale.js';
+import { localeSelected, resolveLocale } from '@/store/actions/locale.js';
 import localeModule from '@/store/modules/locale.js';
 
 let mockResolvedLocale = 'en';
@@ -24,8 +24,8 @@ const mockGlobal = {
 jest.mock('@/i18n/index', () => ({
     __esModule: true,
     default: { get: () => ({ global: mockGlobal }) },
-    SUPPORTED_LOCALES: ['en', 'de', 'fr'],
-    DEFAULT_LOCALE: 'en'
+    supportedLocales: ['en', 'de', 'fr'],
+    defaultLocale: 'en'
 }));
 
 describe('store/modules/locale.js', () => {
@@ -63,27 +63,27 @@ describe('store/modules/locale.js', () => {
     describe('actions', () => {
         describe('LOCALE_SELECTED', () => {
             it('commits a valid locale that is in the allowed set', () => {
-                localeModule.actions[LOCALE_SELECTED](mocks, 'de');
-                expect(mocks.commit).toHaveBeenCalledWith(LOCALE_SELECTED, 'de');
+                localeModule.actions[localeSelected](mocks, 'de');
+                expect(mocks.commit).toHaveBeenCalledWith(localeSelected, 'de');
             });
 
             it('marks a selected locale as a user preference', () => {
-                localeModule.actions[LOCALE_SELECTED](mocks, 'de');
+                localeModule.actions[localeSelected](mocks, 'de');
                 expect(mocks.commit).toHaveBeenCalledWith('USER_SELECTED_LOCALE', true);
             });
 
             it('rejects a locale not in the allowed set', () => {
-                localeModule.actions[LOCALE_SELECTED](mocks, 'fr');
+                localeModule.actions[localeSelected](mocks, 'fr');
                 expect(mocks.commit).not.toHaveBeenCalled();
             });
 
             it('updates i18n.global.locale when locale is allowed', () => {
-                localeModule.actions[LOCALE_SELECTED](mocks, 'de');
+                localeModule.actions[localeSelected](mocks, 'de');
                 expect(mockGlobal.locale).toBe('de');
             });
 
             it('does not update i18n.global.locale when locale is rejected', () => {
-                localeModule.actions[LOCALE_SELECTED](mocks, 'fr');
+                localeModule.actions[localeSelected](mocks, 'fr');
                 expect(mockGlobal.locale).toBe('en');
             });
 
@@ -96,7 +96,7 @@ describe('store/modules/locale.js', () => {
                         defaultLocale: 'de'
                     }
                 };
-                localeModule.actions[LOCALE_SELECTED](mocksWithDefault, 'de');
+                localeModule.actions[localeSelected](mocksWithDefault, 'de');
                 expect(mockGlobal.fallbackLocale).toEqual({
                     default: 'de'
                 });
@@ -116,7 +116,7 @@ describe('store/modules/locale.js', () => {
                         defaultLocale: 'de'
                     }
                 };
-                localeModule.actions[LOCALE_SELECTED](mocksWithDefault, 'pt');
+                localeModule.actions[localeSelected](mocksWithDefault, 'pt');
                 expect(mockGlobal.fallbackLocale).toEqual({
                     pt: ['pt-BR'],
                     default: 'de'
@@ -128,7 +128,7 @@ describe('store/modules/locale.js', () => {
                     pt: ['pt-BR'],
                     default: 'en'
                 };
-                localeModule.actions[LOCALE_SELECTED](mocks, 'en');
+                localeModule.actions[localeSelected](mocks, 'en');
                 expect(mockGlobal.fallbackLocale).toEqual({
                     pt: ['pt-BR'],
                     default: 'en'
@@ -140,14 +140,14 @@ describe('store/modules/locale.js', () => {
             it('dispatches LOCALE_SELECTED with resolved locale when no user preference', () => {
                 const dispatch = jest.fn();
                 const ctx = { ...mocks, dispatch };
-                localeModule.actions[RESOLVE_LOCALE](ctx);
-                expect(dispatch).toHaveBeenCalledWith(LOCALE_SELECTED, 'en');
+                localeModule.actions[resolveLocale](ctx);
+                expect(dispatch).toHaveBeenCalledWith(localeSelected, 'en');
             });
 
             it('clears the user preference after resolving a locale automatically', () => {
                 const dispatch = jest.fn();
                 const ctx = { ...mocks, dispatch };
-                localeModule.actions[RESOLVE_LOCALE](ctx);
+                localeModule.actions[resolveLocale](ctx);
                 expect(ctx.commit).toHaveBeenCalledWith('USER_SELECTED_LOCALE', false);
             });
 
@@ -158,8 +158,8 @@ describe('store/modules/locale.js', () => {
                     dispatch,
                     state: { locale: 'de' }
                 };
-                localeModule.actions[RESOLVE_LOCALE](ctx);
-                expect(dispatch).toHaveBeenCalledWith(LOCALE_SELECTED, 'de');
+                localeModule.actions[resolveLocale](ctx);
+                expect(dispatch).toHaveBeenCalledWith(localeSelected, 'de');
                 expect(dispatch).toHaveBeenCalledTimes(1);
             });
 
@@ -177,9 +177,9 @@ describe('store/modules/locale.js', () => {
                     }
                 };
 
-                localeModule.actions[RESOLVE_LOCALE](ctx);
+                localeModule.actions[resolveLocale](ctx);
 
-                expect(dispatch).toHaveBeenCalledWith(LOCALE_SELECTED, 'en');
+                expect(dispatch).toHaveBeenCalledWith(localeSelected, 'en');
             });
 
             it('falls through to resolution when persisted locale is not in allowed set', () => {
@@ -194,9 +194,9 @@ describe('store/modules/locale.js', () => {
                         defaultLocale: undefined
                     }
                 };
-                localeModule.actions[RESOLVE_LOCALE](ctx);
-                expect(dispatch).not.toHaveBeenCalledWith(LOCALE_SELECTED, 'fr');
-                expect(dispatch).toHaveBeenCalledWith(LOCALE_SELECTED, 'en');
+                localeModule.actions[resolveLocale](ctx);
+                expect(dispatch).not.toHaveBeenCalledWith(localeSelected, 'fr');
+                expect(dispatch).toHaveBeenCalledWith(localeSelected, 'en');
                 expect(dispatch).toHaveBeenCalledTimes(1);
             });
         });
@@ -211,7 +211,7 @@ describe('store/modules/locale.js', () => {
 
         describe('selected', () => {
             it('sets the locale', () => {
-                localeModule.mutations[LOCALE_SELECTED](state, 'de');
+                localeModule.mutations[localeSelected](state, 'de');
                 expect(state.locale).toEqual('de');
             });
         });
@@ -222,12 +222,12 @@ describe('store/modules/locale.js', () => {
         });
 
         it('rejects locale with invalid format (numeric string)', () => {
-            localeModule.mutations[LOCALE_SELECTED](state, '12345');
+            localeModule.mutations[localeSelected](state, '12345');
             expect(state.locale).toEqual('en');
         });
 
         it('does not update state when locale is not supported', () => {
-            localeModule.mutations[LOCALE_SELECTED](state, '');
+            localeModule.mutations[localeSelected](state, '');
             expect(state.locale).toBe('en');
         });
     });
@@ -283,7 +283,7 @@ describe('store/modules/locale.js', () => {
     describe('LOCALE_SELECTED edge cases', () => {
         it('skips syncI18nWithServerPolicy when serverDefault is falsy', () => {
             mockGlobal.fallbackLocale = { pt: ['pt-BR'], default: 'en' };
-            localeModule.actions[LOCALE_SELECTED](
+            localeModule.actions[localeSelected](
                 {
                     commit: jest.fn(),
                     rootGetters: {
@@ -303,7 +303,7 @@ describe('store/modules/locale.js', () => {
     describe('RESOLVE_LOCALE edge cases', () => {
         it('keeps current locale when already set and valid', () => {
             const dispatch = jest.fn();
-            localeModule.actions[RESOLVE_LOCALE]({
+            localeModule.actions[resolveLocale]({
                 dispatch,
                 rootGetters: {
                     availableLocales: ['en', 'fr'],
@@ -312,12 +312,12 @@ describe('store/modules/locale.js', () => {
                 },
                 state: { locale: 'fr' }
             });
-            expect(dispatch).toHaveBeenCalledWith(LOCALE_SELECTED, 'fr');
+            expect(dispatch).toHaveBeenCalledWith(localeSelected, 'fr');
         });
 
         it('falls through when persisted locale is not in availableLocales', () => {
             const dispatch = jest.fn();
-            localeModule.actions[RESOLVE_LOCALE]({
+            localeModule.actions[resolveLocale]({
                 commit: jest.fn(),
                 dispatch,
                 state: { locale: 'fr' },
@@ -327,7 +327,7 @@ describe('store/modules/locale.js', () => {
                     defaultLocale: 'en'
                 }
             });
-            expect(dispatch).toHaveBeenCalledWith(LOCALE_SELECTED, 'en');
+            expect(dispatch).toHaveBeenCalledWith(localeSelected, 'en');
         });
     });
 });

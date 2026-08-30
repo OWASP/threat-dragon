@@ -1,4 +1,4 @@
-import { providerTypes } from './providerTypes.js';
+import { providerTypes } from './providerTypes';
 
 const providerType = providerTypes.git;
 
@@ -18,11 +18,6 @@ const getDashboardActions = () => ([
         to: '/demo/select',
         key: 'readDemo',
         icon: 'cloud-download-alt'
-    },
-    {
-        to: `/${providerType}/github/templates`,
-        key: 'createFromTemplate',
-        icon: 'file-alt'
     }
 ]);
 

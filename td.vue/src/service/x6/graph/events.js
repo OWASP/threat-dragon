@@ -5,8 +5,8 @@
 import dataChanged from './data-changed.js';
 import shapes from '@/service/x6/shapes';
 import store from '@/store/index.js';
-import { CELL_SELECTED, CELL_UNSELECTED } from '@/store/actions/cell.js';
-import { THREATMODEL_MODIFIED } from '@/store/actions/threatmodel.js';
+import { cellSelected as cellSelectedAction, cellUnselected as cellUnselectedAction } from '@/store/actions/cell.js';
+import { threatmodelModified } from '@/store/actions/threatmodel.js';
 
 const showPorts = (show) => {
     const container = document.getElementById('graph-container');
@@ -23,7 +23,7 @@ const canvasResized = ({ width, height }) => {
 
 const edgeChangeVertices = () => ({ edge }) => {
     if (edge.constructor.name === 'Edge') {
-        console.debug('vertex for unformatted edge/flow');
+        console.warn('vertex changed for unformatted edge/flow');
     }
 };
 
@@ -95,13 +95,9 @@ const cellAdded = (graph) => ({ cell }) => {
         cell.zIndex = -1;
     }
 
-    store.get().dispatch(CELL_SELECTED, cell);
+    store.get().dispatch(cellSelectedAction, cell);
     dataChanged.updateProperties(cell);
     dataChanged.updateStyleAttrs(cell);
-
-    if (cell.shape === 'edge') {
-        console.debug('added new edge (flow parent)');
-    }
 
     // do not select new data flows or trust boundaries: it surprises the user
     if (cell.shape !== 'path'
@@ -114,7 +110,7 @@ const cellAdded = (graph) => ({ cell }) => {
 
 const cellDeleted = () => {
     console.debug('cell deleted');
-    store.get().dispatch(THREATMODEL_MODIFIED);
+    store.get().dispatch(threatmodelModified);
 };
 
 const cellSelected = (graph) => ({ cell }) => {
@@ -141,10 +137,13 @@ const cellSelected = (graph) => ({ cell }) => {
         graph.addEdge(flow);
         cell.remove();
         cell = flow;
+    }
+
+    if (cell.data?.name) {
         cell.setName(cell.data.name);
     }
 
-    store.get().dispatch(CELL_SELECTED, cell);
+    store.get().dispatch(cellSelectedAction, cell);
     dataChanged.updateProperties(cell);
     dataChanged.updateStyleAttrs(cell);
     dataChanged.setType(cell);
@@ -153,13 +152,13 @@ const cellSelected = (graph) => ({ cell }) => {
 const cellUnselected = ({ cell }) => {
     console.debug('cell unselected');
     mouseLeave({ cell });
-    store.get().dispatch(CELL_UNSELECTED);
+    store.get().dispatch(cellUnselectedAction);
 };
 
 const cellDataChanged = ({ cell }) => {
-    store.get().dispatch(CELL_SELECTED, cell);
+    store.get().dispatch(cellSelectedAction, cell);
     dataChanged.updateStyleAttrs(cell);
-    store.get().dispatch(THREATMODEL_MODIFIED);
+    store.get().dispatch(threatmodelModified);
 };
 
 const listen = (graph) => {

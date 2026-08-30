@@ -1,7 +1,9 @@
 import events from '@/service/x6/graph/events.js';
+
+import dataChanged from '@/service/x6/graph/data-changed';
 import shapes from '@/service/x6/shapes';
 import store from '@/store/index.js';
-import dataChanged from '../../../../../src/service/x6/graph/data-changed';
+import { threatmodelModified } from '@/store/actions/threatmodel.js';
 
 describe('service/x6/graph/events.js', () => {
     let cell, node, edge, graph, mockStore;
@@ -48,11 +50,6 @@ describe('service/x6/graph/events.js', () => {
             constructor: { name: 'Edge' }
         };
 
-        // Mock shapes
-        shapes.Flow = {
-            fromEdge: jest.fn().mockReturnValue({ data: { name: 'flowName' }, setLabels: jest.fn(), setName: jest.fn() })
-        };
-
         // Set up DOM
         const container = document.createElement('div');
         container.id = 'graph-container';
@@ -75,8 +72,47 @@ describe('service/x6/graph/events.js', () => {
         }
     });
 
+    describe('resize', () => {
+        beforeEach(() => {
+            events.listen(graph);
+        });
+
+        it('listens to the resize event', () => {
+            expect(graph.on).toHaveBeenCalledWith('resize', expect.any(Function));
+        });
+
+        it('reports the canvas resize', () => {
+            graph.evts['resize']({ width: 100, height: 200 });
+            expect(console.debug).toHaveBeenCalledTimes(1);
+
+        });
+    });
+
+    describe('edge:change:vertices', () => {
+        beforeEach(() => {
+            events.listen(graph);
+        });
+
+        it('listens to the event', () => {
+            expect(graph.on).toHaveBeenCalledWith('edge:change:vertices', expect.any(Function));
+        });
+
+        it('reports an unformatted Edge / Flow', () => {
+            graph.evts['edge:change:vertices']({ edge });
+            expect(console.warn).toHaveBeenCalledTimes(1);
+        });
+
+        it('passes a Flow', () => {
+            graph.evts['edge:change:vertices']({ edge: {constructor: { name: 'Flow' }} });
+            expect(console.warn).not.toHaveBeenCalled();
+        });
+    });
+
     describe('edge:connected', () => {
         beforeEach(() => {
+            shapes.Flow.fromEdge = jest.fn().mockReturnValue(
+                { data: { name: 'flowName' }, setLabels: jest.fn(), setName: jest.fn() }
+            );
             events.listen(graph);
         });
 
@@ -206,26 +242,37 @@ describe('service/x6/graph/events.js', () => {
                 cell.convertToEdge = true;
                 cell.isNode.mockImplementation(() => true);
                 cell.type = shapes.TrustBoundaryCurveStencil.prototype.type;
+                graph.evts['cell:added']({ cell });
             });
 
             it('gets the cell\'s position', () => {
-                graph.evts['cell:added']({ cell });
                 expect(cell.position).toHaveBeenCalledTimes(1);
             });
 
             it('adds the edge to the graph', () => {
-                graph.evts['cell:added']({ cell });
                 expect(graph.addEdge).toHaveBeenCalled();
             });
 
             it('removes the cell', () => {
-                graph.evts['cell:added']({ cell });
                 expect(cell.remove).toHaveBeenCalledTimes(1);
             });
 
             it('does not select the cell', () => {
-                graph.evts['cell:added']({ cell });
                 expect(graph.select).not.toHaveBeenCalled();
+            });
+        });
+
+        describe('flow', () => {
+            beforeEach(() => {
+                cell.shape = 'path';
+                cell.convertToEdge = true;
+                cell.isNode.mockImplementation(() => true);
+                cell.type = shapes.FlowStencil.prototype.type;
+                graph.evts['cell:added']({ cell });
+            });
+
+            it('adds the edge to the graph', () => {
+                expect(graph.addEdge).toHaveBeenCalled();
             });
         });
 
@@ -239,6 +286,20 @@ describe('service/x6/graph/events.js', () => {
             it('warns about unknown edge', () => {
                 graph.evts['cell:added']({ cell });
                 expect(console.warn).toHaveBeenCalledWith('Unknown edge stencil');
+            });
+        });
+
+        describe('trust boundary box', () => {
+            beforeEach(() => {
+                cell.shape = 'trust-boundary-box';
+                cell.convertToEdge = false;
+                cell.isNode.mockImplementation(() => true);
+                cell.type = shapes.TrustBoundaryBox.prototype.type;
+                graph.evts['cell:added']({ cell });
+            });
+
+            it('sets the trust boundary to background', () => {
+                expect(cell.zIndex).toBe(-1);
             });
         });
     });
@@ -259,6 +320,25 @@ describe('service/x6/graph/events.js', () => {
         it('does not update the style attributes', () => {
             graph.evts['cell:unselected']({ cell });
             expect(dataChanged.updateStyleAttrs).toHaveBeenCalledTimes(0);
+        });
+    });
+
+    describe('cell:removed', () => {
+        beforeEach(() => {
+            cell.hasTools.mockImplementation(() => true);
+            cell.setName = jest.fn();
+            dataChanged.updateStyleAttrs = jest.fn();
+            cell.getData.mockImplementation(() => ({ name: 'test' }));
+            events.listen(graph);
+        });
+
+        it('listens to the cell removed event', () => {
+            expect(graph.on).toHaveBeenCalledWith('cell:removed', expect.any(Function));
+        });
+
+        it('notifies that the threat model is modified', () => {
+            graph.evts['cell:removed']({ cell });
+            expect(store.get().dispatch).toHaveBeenCalledWith(threatmodelModified);
         });
     });
 
@@ -327,6 +407,36 @@ describe('service/x6/graph/events.js', () => {
                     expect(cell.data.name).toBeUndefined();
                 });
             });
+        });
+
+        describe('cell has no data', () => {
+            beforeEach(() => {
+                delete cell.data;
+                graph.evts['cell:selected']({ cell });
+            });
+
+            it('warns of missing data', () => {
+                expect(console.warn).toHaveBeenCalled();
+            });
+        });
+    });
+
+    describe('cell:change:data', () => {
+        beforeEach(() => {
+            events.listen(graph);
+            graph.evts['cell:change:data']({ cell });
+        });
+
+        it('listens to cell:change:data', () => {
+            expect(graph.on).toHaveBeenCalledWith('cell:change:data', expect.any(Function));
+        });
+
+        it('updates the style attributes', () => {
+		    expect(dataChanged.updateStyleAttrs).toHaveBeenCalledWith(cell);
+        });
+
+        it('notifies that the threat model is modified', () => {
+            expect(store.get().dispatch).toHaveBeenCalledWith(threatmodelModified);
         });
     });
 

@@ -1,4 +1,4 @@
-import { PROVIDER_CLEAR, PROVIDER_FETCH, PROVIDER_SELECTED } from '@/store/actions/provider.js';
+import { providerClear, providerFetch, providerSelected } from '@/store/actions/provider.js';
 import providerModule, { clearState } from '@/store/modules/provider.js';
 import providerService from '@/service/provider/providers.js';
 import { isDesktopApp } from '@/service/environment';
@@ -39,22 +39,22 @@ describe('store/modules/provider.js', () => {
 
     describe('actions', () => {
         it('commits the clear action', () => {
-            providerModule.actions[PROVIDER_CLEAR](mocks);
-            expect(mocks.commit).toHaveBeenCalledWith(PROVIDER_CLEAR);
+            providerModule.actions[providerClear](mocks);
+            expect(mocks.commit).toHaveBeenCalledWith(providerClear);
         });
         
         describe('fetch', () => {
             beforeEach(() => {
-                providerModule.actions[PROVIDER_FETCH](mocks);
+                providerModule.actions[providerFetch](mocks);
             });
 
             it('dispatches the clear action', () => {
-                expect(mocks.dispatch).toHaveBeenCalledWith(PROVIDER_CLEAR);
+                expect(mocks.dispatch).toHaveBeenCalledWith(providerClear);
             });
 
             it('commits the fetch action will providerNames', () => {
                 expect(mocks.commit).toHaveBeenCalledWith(
-                    PROVIDER_FETCH,
+                    providerFetch,
                     Object.keys(providerService.providerNames)
                 );
             });
@@ -71,19 +71,28 @@ describe('store/modules/provider.js', () => {
             });
 
             it('throws an error if providerName is falsy', async () => {
-                await expect(() => providerModule.actions[PROVIDER_SELECTED](mocks)).rejects.toThrowError();
+                await expect(() => providerModule.actions[providerSelected](mocks)).rejects.toThrowError();
             });
 
             it('throws an error for an unknown provider', async () => {
-                await expect(() => providerModule.actions[PROVIDER_SELECTED](mocks, 'fake')).rejects.toThrowError();
+                await expect(() => providerModule.actions[providerSelected](mocks, 'fake')).rejects.toThrowError();
             });
 
             it('commits the selected provider', async () => {
-                await providerModule.actions[PROVIDER_SELECTED](mocks, providerService.providerNames.github);
-                expect(mocks.commit).toHaveBeenCalledWith(PROVIDER_SELECTED, 
+                await providerModule.actions[providerSelected](mocks, providerService.providerNames.github);
+                expect(mocks.commit).toHaveBeenCalledWith(providerSelected,
                     { 
                         'providerName': providerService.providerNames.github, 
                         'providerUri': 'https://github.com' 
+                    });
+            });
+
+            it('commits the local provider', async () => {
+                await providerModule.actions[providerSelected](mocks, providerService.providerNames.local);
+                expect(mocks.commit).toHaveBeenCalledWith(providerSelected,
+                    { 
+                        'providerName': providerService.providerNames.local, 
+                        'providerUri': 'threat-dragon-local' 
                     });
             });
         });
@@ -98,16 +107,16 @@ describe('store/modules/provider.js', () => {
             });
 
             it('commits desktop provider when providerName is desktop', async () => {
-                await providerModule.actions[PROVIDER_SELECTED](mocks, 'desktop');
-                expect(mocks.commit).toHaveBeenCalledWith(PROVIDER_SELECTED, {
+                await providerModule.actions[providerSelected](mocks, 'desktop');
+                expect(mocks.commit).toHaveBeenCalledWith(providerSelected, {
                     providerName: 'desktop',
                     providerUri: 'threat-dragon-desktop'
                 });
             });
 
             it('commits desktop provider when isDesktopApp() is true even for non-desktop provider', async () => {
-                await providerModule.actions[PROVIDER_SELECTED](mocks, 'local');
-                expect(mocks.commit).toHaveBeenCalledWith(PROVIDER_SELECTED, {
+                await providerModule.actions[providerSelected](mocks, 'local');
+                expect(mocks.commit).toHaveBeenCalledWith(providerSelected, {
                     providerName: 'desktop',
                     providerUri: 'threat-dragon-desktop'
                 });
@@ -118,11 +127,10 @@ describe('store/modules/provider.js', () => {
     describe('mutations', () => {
         describe('clear', () => {
             beforeEach(() => {
-                providerModule.state.all.push('test1');
-                providerModule.state.all.push('test2');
+                providerModule.state.all.push('test1', 'test2');
                 providerModule.state.selected = 'github';
                 providerModule.state.providerUri = 'https://github.com';
-                providerModule.mutations[PROVIDER_CLEAR](providerModule.state);
+                providerModule.mutations[providerClear](providerModule.state);
             });
 
             it('empties the all array', () => {
@@ -138,19 +146,32 @@ describe('store/modules/provider.js', () => {
             });
         });
 
+        describe('fetch', () => {
+            const providers = ['foo', 'bar'];
+
+            beforeEach(() => {
+                providerModule.mutations[providerFetch](providerModule.state, providers);
+            });
+
+            it('sets the providers property', () => {
+                expect(providerModule.state.all).toHaveLength(2);
+                expect(providerModule.state.all[1]).toBe('bar');
+            });
+        });
+
         describe('selected', () => {
             const provider = 'test';
             const providerUri = 'https://github.com';
 
             beforeEach(() => {
-                providerModule.mutations[PROVIDER_SELECTED](providerModule.state, {'providerName': provider, 'providerUri': providerUri});
+                providerModule.mutations[providerSelected](providerModule.state, {'providerName': provider, 'providerUri': providerUri});
             });
 
-            it('sets the provider prop', () => {
+            it('selects the provider', () => {
                 expect(providerModule.state.selected).toEqual(provider);
             });
 
-            it('sets the providerUri prop', () => {
+            it('sets the providerUri property', () => {
                 expect(providerModule.state.providerUri).toEqual(providerUri);
             });
         });
@@ -160,4 +181,3 @@ describe('store/modules/provider.js', () => {
         expect(providerModule.getters).toBeInstanceOf(Object);
     });
 });
-

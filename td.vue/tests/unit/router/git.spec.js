@@ -91,6 +91,24 @@ describe('routes/git.js', () => {
         });
     });
 
+    describe('Threat model create from local/desktop', () => {
+        let route;
+
+        beforeEach(() => {
+            route = gitRoutes
+                .find(x => x.name === 'gitThreatModelCreate');
+        });
+
+        it('uses the expected path', () => {
+            expect(route.path).toEqual('/git/:provider/:repository/:branch/:threatmodel/create');
+        });
+
+        it('uses the ThreatModelEdit view as a lazily loaded component', async () => {
+            const cmp = await route.component();
+            expect(cmp.default.name).toEqual('ThreatModelEdit');
+        });
+    });
+
     describe('Threat model edit', () => {
         let route;
 
@@ -109,7 +127,7 @@ describe('routes/git.js', () => {
         });
     });
 
-    describe('DiagramEdit', () => {
+    describe('Diagram edit', () => {
         let route;
 
         beforeEach(() => {

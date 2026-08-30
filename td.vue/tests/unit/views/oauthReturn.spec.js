@@ -1,7 +1,7 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
-import { AUTH_SET_JWT } from '@/store/actions/auth.js';
+import { authSetJwt } from '@/store/actions/auth.js';
 import loginApi from '@/service/api/loginApi.js';
 import OAuthReturn from '@/views/OauthReturn.vue';
 
@@ -30,7 +30,7 @@ describe('views/OauthReturn.vue', () => {
                     }
                 },
                 actions: {
-                    [AUTH_SET_JWT]: () => {}
+                    [authSetJwt]: () => {}
                 }
             });
             jest.spyOn(mockStore, 'dispatch');
@@ -50,7 +50,7 @@ describe('views/OauthReturn.vue', () => {
         });
 
         it('sets the jwt', () => {
-            expect(mockStore.dispatch).toHaveBeenCalledWith(AUTH_SET_JWT, jwt);
+            expect(mockStore.dispatch).toHaveBeenCalledWith(authSetJwt, jwt);
         });
 
         it('navigates to the dashboard', () => {
@@ -79,7 +79,7 @@ describe('views/OauthReturn.vue', () => {
                     }
                 },
                 actions: {
-                    [AUTH_SET_JWT]: () => {}
+                    [authSetJwt]: () => {}
                 }
             });
             jest.spyOn(loginApi, 'completeLoginAsync').mockRejectedValue('whoops');

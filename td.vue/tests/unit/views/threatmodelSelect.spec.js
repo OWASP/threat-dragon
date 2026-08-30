@@ -1,13 +1,13 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
-import { BRANCH_CLEAR, BRANCH_SELECTED } from '@/store/actions/branch.js';
-import { PROVIDER_SELECTED } from '@/store/actions/provider.js';
-import { REPOSITORY_CLEAR, REPOSITORY_SELECTED } from '@/store/actions/repository.js';
-import { THREATMODEL_FETCH_ALL } from '@/store/actions/threatmodel.js';
+import { branchClear, branchSelected } from '@/store/actions/branch.js';
+import { providerSelected } from '@/store/actions/provider.js';
+import { repositoryClear, repositorySelected } from '@/store/actions/repository.js';
+import { threatmodelFetchAll } from '@/store/actions/threatmodel.js';
 import TdSelectionPage from '@/components/SelectionPage.vue';
 import ThreatModelSelect from '@/views/git/ThreatModelSelect.vue';
-import { THREATMODEL_CLEAR, THREATMODEL_CREATE, THREATMODEL_FETCH, THREATMODEL_SELECTED } from '../../../src/store/actions/threatmodel';
+import { threatmodelClear, threatmodelCreate, threatmodelFetch, threatmodelSelected } from '../../../src/store/actions/threatmodel';
 
 
 describe('views/ThreatModelSelect.vue', () => {
@@ -15,6 +15,7 @@ describe('views/ThreatModelSelect.vue', () => {
     let wrapper, localVue, mockStore, mockRouter;
 
     beforeEach(() => {
+        console.warn = jest.fn();
         localVue = createLocalVue();
         localVue.use(Vuex);
         mockStore = getMockStore();
@@ -51,16 +52,16 @@ describe('views/ThreatModelSelect.vue', () => {
             }
         },
         actions: {
-            [BRANCH_CLEAR]: () => { },
-            [BRANCH_SELECTED]: () => { },
-            [PROVIDER_SELECTED]: () => { },
-            [REPOSITORY_CLEAR]: () => { },
-            [REPOSITORY_SELECTED]: () => { },
-            [THREATMODEL_CLEAR]: () => { },
-            [THREATMODEL_CREATE]: () => { },
-            [THREATMODEL_FETCH]: () => { },
-            [THREATMODEL_FETCH_ALL]: () => { },
-            [THREATMODEL_SELECTED]: () => { }
+            [branchClear]: () => { },
+            [branchSelected]: () => { },
+            [providerSelected]: () => { },
+            [repositoryClear]: () => { },
+            [repositorySelected]: () => { },
+            [threatmodelClear]: () => { },
+            [threatmodelCreate]: () => { },
+            [threatmodelFetch]: () => { },
+            [threatmodelFetchAll]: () => { },
+            [threatmodelSelected]: () => { }
         }
     });
 
@@ -73,7 +74,7 @@ describe('views/ThreatModelSelect.vue', () => {
                     repository: mockStore.state.repo.selected
                 }
             });
-            expect(mockStore.dispatch).toHaveBeenCalledWith(PROVIDER_SELECTED, 'local');
+            expect(mockStore.dispatch).toHaveBeenCalledWith(providerSelected, 'local');
         });
 
         it('sets the repo name from the route', () => {
@@ -84,7 +85,7 @@ describe('views/ThreatModelSelect.vue', () => {
                     repository: 'fakeRepoBad'
                 }
             });
-            expect(mockStore.dispatch).toHaveBeenCalledWith(REPOSITORY_SELECTED, 'fakeRepoBad');
+            expect(mockStore.dispatch).toHaveBeenCalledWith(repositorySelected, 'fakeRepoBad');
         });
 
         it('sets the branch from the route', () => {
@@ -95,7 +96,7 @@ describe('views/ThreatModelSelect.vue', () => {
                     repository: 'fakeRepoBad'
                 }
             });
-            expect(mockStore.dispatch).toHaveBeenCalledWith(BRANCH_SELECTED, 'notTheRightOne');
+            expect(mockStore.dispatch).toHaveBeenCalledWith(branchSelected, 'notTheRightOne');
         });
         
         it('fetches the threat models', () => {
@@ -105,7 +106,7 @@ describe('views/ThreatModelSelect.vue', () => {
                     repository: mockStore.state.repo.selected
                 }
             });
-            expect(mockStore.dispatch).toHaveBeenCalledWith(THREATMODEL_FETCH_ALL);
+            expect(mockStore.dispatch).toHaveBeenCalledWith(threatmodelFetchAll);
         });
     });
 
@@ -141,7 +142,7 @@ describe('views/ThreatModelSelect.vue', () => {
         });
 
         it('clears the selected repo', () => {
-            expect(mockStore.dispatch).toHaveBeenCalledWith(REPOSITORY_CLEAR);
+            expect(mockStore.dispatch).toHaveBeenCalledWith(repositoryClear);
         });
 
         it('navigates to the repo select page', () => {
@@ -161,7 +162,7 @@ describe('views/ThreatModelSelect.vue', () => {
         });
 
         it('clears the selected branch', () => {
-            expect(mockStore.dispatch).toHaveBeenCalledWith(BRANCH_CLEAR);
+            expect(mockStore.dispatch).toHaveBeenCalledWith(branchClear);
         });
 
         it('navigates to the branch select page', () => {
@@ -189,7 +190,7 @@ describe('views/ThreatModelSelect.vue', () => {
         });
 
         it('sets the selected threat model', () => {
-            expect(mockStore.dispatch).toHaveBeenCalledWith(THREATMODEL_FETCH, tm);
+            expect(mockStore.dispatch).toHaveBeenCalledWith(threatmodelFetch, tm);
         });
 
         it('navigates to the threat model page', () => {

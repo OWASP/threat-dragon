@@ -38,3 +38,7 @@ nvd.nist.gov/
 
 # not interested in certum docs
 certum.eu
+
+# slack needs to be logged in
+owasp.slack.com/
+

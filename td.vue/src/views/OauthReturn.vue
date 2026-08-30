@@ -6,7 +6,7 @@
 <script>
 import { mapState } from 'vuex';
 
-import { AUTH_SET_JWT } from '@/store/actions/auth.js';
+import { authSetJwt } from '@/store/actions/auth.js';
 import loginApi from '@/service/api/loginApi.js';
 
 export default {
@@ -17,7 +17,7 @@ export default {
     async mounted() {
         try {
             const resp = await loginApi.completeLoginAsync(this.provider, this.$route.query.code);
-            this.$store.dispatch(AUTH_SET_JWT, resp.data);
+            this.$store.dispatch(authSetJwt, resp.data);
             this.$router.push('/dashboard');
         } catch (ex) {
             console.error('Error getting token');

@@ -10,10 +10,10 @@ const {
     closeReport
 } = require('../support/report');
 
-const SUITE_TIMEOUT_MS = 30000;
+const suiteTimeoutMs = 30000;
 
 describe('Desktop report smoke tests', function () {
-    this.timeout(SUITE_TIMEOUT_MS);
+    this.timeout(suiteTimeoutMs);
 
     beforeEach(async () => {
         await resetMenuTest();

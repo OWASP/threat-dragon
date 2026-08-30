@@ -3,6 +3,10 @@ import { shallowMount } from '@vue/test-utils';
 import TdImage from '@/components/Image.vue';
 
 describe('components/Image.vue', () => {
+    beforeEach(() => {
+        console.warn = jest.fn();
+    });
+
     it('renders a native image with src and alt text', () => {
         const wrapper = shallowMount(TdImage, {
             propsData: {

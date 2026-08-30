@@ -1,10 +1,10 @@
 import axios from 'axios';
 import Vue from 'vue';
 
-import { AUTH_SET_JWT } from '@/store/actions/auth.js';
+import { authSetJwt } from '@/store/actions/auth.js';
 import httpClient from '@/service/httpClient.js';
 import i18n from '@/i18n/index.js';
-import { LOADER_FINISHED, LOADER_STARTED } from '@/store/actions/loader';
+import { loaderFinished, loaderStarted } from '@/store/actions/loader';
 import router from '@/router/index.js';
 import storeFactory from '@/store/index.js';
 
@@ -37,6 +37,7 @@ describe('service/httpClient.js', () => {
     let client;
 
     beforeEach(() => {
+        console.warn = jest.fn();
         axios.create = jest.fn().mockReturnValue(clientMock);
         jest.spyOn(clientMock.interceptors.request, 'use');
         jest.spyOn(clientMock.interceptors.response, 'use');
@@ -107,7 +108,7 @@ describe('service/httpClient.js', () => {
                 });
 
                 it('dispatches the loader started event', () => {
-                    expect(mockStore.dispatch).toHaveBeenCalledWith(LOADER_STARTED);
+                    expect(mockStore.dispatch).toHaveBeenCalledWith(loaderStarted);
                 });
             });
     
@@ -143,7 +144,7 @@ describe('service/httpClient.js', () => {
             });
 
             it('dispatches the loader finished event', () => {
-                expect(mockStore.dispatch).toHaveBeenCalledWith(LOADER_FINISHED);
+                expect(mockStore.dispatch).toHaveBeenCalledWith(loaderFinished);
             });
         });
 
@@ -162,7 +163,7 @@ describe('service/httpClient.js', () => {
                 });
                 
                 it('dispatches the loader finished event', () => {
-                    expect(mockStore.dispatch).toHaveBeenCalledWith(LOADER_FINISHED);
+                    expect(mockStore.dispatch).toHaveBeenCalledWith(loaderFinished);
                 });
             });
 
@@ -179,7 +180,7 @@ describe('service/httpClient.js', () => {
                 });
 
                 it('dispatches the loader finished event', () => {
-                    expect(mockStore.dispatch).toHaveBeenCalledWith(LOADER_FINISHED);
+                    expect(mockStore.dispatch).toHaveBeenCalledWith(loaderFinished);
                 });
             });
 
@@ -196,7 +197,7 @@ describe('service/httpClient.js', () => {
                 });
 
                 it('dispatches the loader finished event', () => {
-                    expect(mockStore.dispatch).toHaveBeenCalledWith(LOADER_FINISHED);
+                    expect(mockStore.dispatch).toHaveBeenCalledWith(loaderFinished);
                 });
             });
 
@@ -224,7 +225,7 @@ describe('service/httpClient.js', () => {
                 });
 
                 it('dispatches the set jwt event', () => {
-                    expect(mockStore.dispatch).toHaveBeenCalledWith(AUTH_SET_JWT, tokens);
+                    expect(mockStore.dispatch).toHaveBeenCalledWith(authSetJwt, tokens);
                 });
 
                 it('sets the bearer token on the config', () => {
@@ -236,7 +237,7 @@ describe('service/httpClient.js', () => {
                 });
 
                 it('dispatches the loader finished event', () => {
-                    expect(mockStore.dispatch).toHaveBeenCalledWith(LOADER_FINISHED);
+                    expect(mockStore.dispatch).toHaveBeenCalledWith(loaderFinished);
                 });
             });
         });

@@ -5,6 +5,7 @@ describe('service/threatmodelApi.js', () => {
     beforeEach(() => {
         jest.spyOn(api, 'getAsync').mockImplementation(() => {});
         jest.spyOn(api, 'putAsync').mockImplementation(() => {});
+        jest.spyOn(api, 'postAsync').mockImplementation(() => {});
     });
 
     describe('organisationAsync', () => {
@@ -67,6 +68,24 @@ describe('service/threatmodelApi.js', () => {
         });
     });
 
+    describe('createAsync', () => {
+        const repo = 'owasp/with/deep/layers/threat-dragon';
+        const branch = 'main&';
+        const modelName = 'test?';
+        const body = { foo: 'bar' };
+
+        beforeEach(async () => {
+            await threatmodelApi.createAsync(repo, branch, modelName, body);
+        });
+
+        it('calls the update endpoint', () => {
+            expect(api.postAsync).toHaveBeenCalledWith(
+                '/api/threatmodel/owasp/with%2Fdeep%2Flayers%2Fthreat-dragon/main%26/test%3F/create',
+                body
+            );
+        });
+    });
+
     describe('updateAsync', () => {
         const repo = 'owasp/with/deep/layers/threat-dragon';
         const branch = 'main&';
@@ -81,6 +100,23 @@ describe('service/threatmodelApi.js', () => {
             expect(api.putAsync).toHaveBeenCalledWith(
                 '/api/threatmodel/owasp/with%2Fdeep%2Flayers%2Fthreat-dragon/main%26/test%3F/update',
                 body
+            );
+        });
+    });
+
+    describe('createBranchAsync', () => {
+        const repo = 'owasp/with/deep/layers/threat-dragon';
+        const branchName = 'main&';
+        const refBranch = 'test';
+
+        beforeEach(async () => {
+            await threatmodelApi.createBranchAsync(repo, branchName, refBranch);
+        });
+
+        it('calls the update endpoint', () => {
+            expect(api.postAsync).toHaveBeenCalledWith(
+                '/api/threatmodel/owasp/with%2Fdeep%2Flayers%2Fthreat-dragon/main%26/createBranch',
+                { refBranch: refBranch }
             );
         });
     });

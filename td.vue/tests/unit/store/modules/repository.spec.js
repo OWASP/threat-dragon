@@ -1,6 +1,6 @@
-import { REPOSITORY_CLEAR, REPOSITORY_FETCH, REPOSITORY_SELECTED } from '@/store/actions/repository.js';
-import repoModule, { clearState } from '@/store/modules/repository.js';
-import threatmodelApi from '@/service/api/threatmodelApi.js';
+import { repositoryClear, repositoryFetch, repositorySelected } from '@/store/actions/repository';
+import repoModule, { clearState } from '@/store/modules/repository';
+import threatmodelApi from '@/service/api/threatmodelApi';
 import { createStoreMocks } from '../../helpers/store';
 
 describe('store/modules/repository.js', () => {
@@ -36,13 +36,13 @@ describe('store/modules/repository.js', () => {
 
     describe('actions', () => {
         it('commits the clear action', () => {
-            repoModule.actions[REPOSITORY_CLEAR](mocks);
-            expect(mocks.commit).toHaveBeenCalledWith(REPOSITORY_CLEAR);
+            repoModule.actions[repositoryClear](mocks);
+            expect(mocks.commit).toHaveBeenCalledWith(repositoryClear);
         });
 
         it('commits the selected repo', () => {
-            repoModule.actions[REPOSITORY_SELECTED](mocks, 'my-repo');
-            expect(mocks.commit).toHaveBeenCalledWith(REPOSITORY_SELECTED, 'my-repo');
+            repoModule.actions[repositorySelected](mocks, 'my-repo');
+            expect(mocks.commit).toHaveBeenCalledWith(repositorySelected, 'my-repo');
         });
 
         describe('fetch', () => {
@@ -51,15 +51,15 @@ describe('store/modules/repository.js', () => {
 
             beforeEach(async () => {
                 apiSpy.mockResolvedValue({ data: { repos, pagination } });
-                await repoModule.actions[REPOSITORY_FETCH](mocks, { page: 1, searchQuery: '' });
+                await repoModule.actions[repositoryFetch](mocks, { page: 1, searchQuery: '' });
             });
 
             it('dispatches clear before fetching', () => {
-                expect(mocks.dispatch).toHaveBeenCalledWith(REPOSITORY_CLEAR);
+                expect(mocks.dispatch).toHaveBeenCalledWith(repositoryClear);
             });
 
             it('commits the fetch result with pagination', () => {
-                expect(mocks.commit).toHaveBeenCalledWith(REPOSITORY_FETCH, {
+                expect(mocks.commit).toHaveBeenCalledWith(repositoryFetch, {
                     repos,
                     page: pagination.page,
                     pageNext: pagination.next,
@@ -77,19 +77,20 @@ describe('store/modules/repository.js', () => {
 
             it('passes page 3 and search query to reposAsync', async () => {
                 apiSpy.mockResolvedValue({ data: { repos: ['filtered-repo'], pagination: p } });
-                await repoModule.actions[REPOSITORY_FETCH](mocks, { page: 3, searchQuery: 'owasp' });
+                await repoModule.actions[repositoryFetch](mocks, { page: 3, searchQuery: 'owasp' });
                 expect(apiSpy).toHaveBeenCalledWith(3, 'owasp');
             });
 
             it('dispatches clear before the async API call', async () => {
                 apiSpy.mockResolvedValue({ data: { repos: [], pagination: p } });
-                await repoModule.actions[REPOSITORY_FETCH](mocks, { page: 1, searchQuery: '' });
-                expect(mocks.dispatch).toHaveBeenCalledWith(REPOSITORY_CLEAR);
+                await repoModule.actions[repositoryFetch](mocks, { page: 1, searchQuery: '' });
+                expect(mocks.dispatch).toHaveBeenCalledWith(repositoryClear);
             });
         });
     });
 
     describe('mutations', () => {
+
         describe('clear', () => {
             beforeEach(() => {
                 repoModule.state.all.push('test1', 'test2');
@@ -97,7 +98,7 @@ describe('store/modules/repository.js', () => {
                 repoModule.state.page = 5;
                 repoModule.state.pageNext = true;
                 repoModule.state.pagePrev = true;
-                repoModule.mutations[REPOSITORY_CLEAR](repoModule.state);
+                repoModule.mutations[repositoryClear](repoModule.state);
             });
 
             it('resets all state properties', () => {
@@ -109,9 +110,32 @@ describe('store/modules/repository.js', () => {
             });
         });
 
+        describe('fetch', () => {
+            const testRepos = {repos: ['test1', 'test2'], page: 99, pageNext: false, pagePrev: false};
+
+            beforeEach(() => {
+                repoModule.state.all.push('foo', 'bar', 'baz');
+                repoModule.state.page = 5;
+                repoModule.state.pageNext = true;
+                repoModule.state.pagePrev = true;
+                repoModule.mutations[repositoryFetch](repoModule.state, testRepos);
+            });
+
+            it('copies the repo properties', () => {
+                expect(repoModule.state.all).toHaveLength(2);
+                expect(repoModule.state.all[1]).toBe('test2');
+            });
+
+            it('copies the page properties', () => {
+			    expect(repoModule.state.page).toBe(99);
+			    expect(repoModule.state.pageNext).toBe(false);
+			    expect(repoModule.state.pagePrev).toBe(false);
+            });
+        });
+
         describe('selected', () => {
-            it('sets the repo prop', () => {
-                repoModule.mutations[REPOSITORY_SELECTED](repoModule.state, 'my-repo');
+            it('sets the repo properties', () => {
+                repoModule.mutations[repositorySelected](repoModule.state, 'my-repo');
                 expect(repoModule.state.selected).toBe('my-repo');
             });
         });

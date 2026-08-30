@@ -13,10 +13,10 @@ const {
     saveModelAs
 } = require('../support/diagram');
 
-const SUITE_TIMEOUT_MS = 30000;
+const suiteTimeoutMs = 30000;
 
 describe('Desktop diagram save regressions', function () {
-    this.timeout(SUITE_TIMEOUT_MS);
+    this.timeout(suiteTimeoutMs);
 
     beforeEach(async () => {
         await resetMenuTest();

@@ -5,7 +5,7 @@ import Vuex from 'vuex';
 import ThreatModelEdit from '@/views/ThreatModelEdit.vue';
 import TdFormTags from '@/components/FormTags.vue';
 import TdInputGroup from '@/components/InputGroup.vue';
-import { THREATMODEL_CONTRIBUTORS_UPDATED, THREATMODEL_RESTORE, THREATMODEL_NOT_MODIFIED, } from '@/store/actions/threatmodel.js';
+import { threatmodelContributorsUpdated, threatmodelRestore, threatmodelNotModified, } from '@/store/actions/threatmodel.js';
 
 describe('views/ThreatmodelEdit.vue', () => {
     const contributors = ['foo', 'bar' ];
@@ -46,8 +46,8 @@ describe('views/ThreatmodelEdit.vue', () => {
                 }
             },
             actions: {
-                [THREATMODEL_CONTRIBUTORS_UPDATED]: () => { },
-                [THREATMODEL_RESTORE]: () => {}
+                [threatmodelContributorsUpdated]: () => { },
+                [threatmodelRestore]: () => {}
             },
             getters: {
                 modelChanged: () => modelChanged
@@ -153,7 +153,7 @@ describe('views/ThreatmodelEdit.vue', () => {
                 });
 
                 it('dispatches the restore action', () => {
-                    expect(mockStore.dispatch).toHaveBeenCalledWith(THREATMODEL_RESTORE);
+                    expect(mockStore.dispatch).toHaveBeenCalledWith(threatmodelRestore);
                 });
             });
 
@@ -169,11 +169,11 @@ describe('views/ThreatmodelEdit.vue', () => {
                     });
 
                     it('dispatches the restore action', () => {
-                        expect(mockStore.dispatch).toHaveBeenCalledWith(THREATMODEL_RESTORE);
+                        expect(mockStore.dispatch).toHaveBeenCalledWith(threatmodelRestore);
                     });
 
                     it('dispatches the not-modified action', () => {
-                        expect(mockStore.dispatch).toHaveBeenCalledWith(THREATMODEL_NOT_MODIFIED);
+                        expect(mockStore.dispatch).toHaveBeenCalledWith(threatmodelNotModified);
                     });
                 });
 
@@ -323,7 +323,7 @@ describe('views/ThreatmodelEdit.vue', () => {
 
             it('dispatches the contributors updated event', () => {
                 expect(mockStore.dispatch).toHaveBeenCalledWith(
-                    THREATMODEL_CONTRIBUTORS_UPDATED,
+                    threatmodelContributorsUpdated,
                     newContribs
                 );
             });

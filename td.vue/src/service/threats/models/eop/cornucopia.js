@@ -1,8 +1,8 @@
-import i18n from '../../../../i18n';
-import cornucopiaEN from '@/service/schema/api_json/cornucopia-webapp-en.json';
-import cornucopiaES from '@/service/schema/api_json/cornucopia-webapp-es.json';
-import cornucopiaFR from '@/service/schema/api_json/cornucopia-webapp-fr.json';
-import cornucopiaRU from '@/service/schema/api_json/cornucopia-webapp-ru.json';
+import i18n from '@/i18n';
+import cornucopiaEN from '@/assets/downloads/cornucopia/cornucopia-webapp-en.json';
+import cornucopiaES from '@/assets/downloads/cornucopia/cornucopia-webapp-es.json';
+import cornucopiaFR from '@/assets/downloads/cornucopia/cornucopia-webapp-fr.json';
+import cornucopiaRU from '@/assets/downloads/cornucopia/cornucopia-webapp-ru.json';
 
 export default {
 
