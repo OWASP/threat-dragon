@@ -15,7 +15,9 @@ Usage: scripts/td-repo-access-review.sh [options]
 Create an editable YAML review of every OWASP/threat-dragon collaborator whose
 effective repository role is greater than Read. The output includes the latest
 GitHub-attributed authored commit in this repository only; it does not inspect
-global GitHub activity. The output file is gitignored.
+global GitHub activity. A collaborator is selected for demotion only when they
+have no attributed commit in the year before the review runs. The output file is
+gitignored.
 
 The authenticated GitHub CLI account must be permitted to view repository
 collaborators (GitHub generally requires Push access or higher).
@@ -43,9 +45,18 @@ last_commit() {
         --jq 'if length == 0 then empty else .[0] | [.sha, .commit.author.date, .html_url] | @tsv end'
 }
 
+one_year_ago() {
+    if date -u -d '1 year ago' +%Y-%m-%dT%H:%M:%SZ 2>/dev/null; then
+        return
+    fi
+
+    date -u -v-1y +%Y-%m-%dT%H:%M:%SZ 2>/dev/null
+}
+
 write_user() {
     login="$1"
     permission="$2"
+    inactivity_cutoff="$3"
     commit="$(last_commit "$login")" || die "unable to find the last commit for $login"
 
     printf '  - login: "%s"\n' "$login"
@@ -61,7 +72,12 @@ EOF
     else
         printf '    last_contribution: null\n'
     fi
-    printf '    demote_to_read: true\n'
+
+    if [ -z "$commit" ] || [[ "$commit_date" < "$inactivity_cutoff" ]]; then
+        printf '    demote_to_read: true\n'
+    else
+        printf '    demote_to_read: false\n'
+    fi
 }
 
 while [ "$#" -gt 0 ]; do
@@ -94,6 +110,10 @@ output_dir="$(dirname "$output_file")"
 [ -d "$output_dir" ] || die "output directory does not exist: $output_dir"
 tmp_file="${output_file}.tmp.$$"
 trap 'rm -f "$tmp_file"' EXIT HUP INT TERM
+generated_at="$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+    || die "unable to determine the review time"
+inactivity_cutoff="$(one_year_ago)" \
+    || die "unable to calculate the one-year inactivity cutoff"
 
 collaborators="$(
     gh api --paginate "repos/$repository/collaborators?affiliation=all&per_page=100" \
@@ -102,15 +122,17 @@ collaborators="$(
 
 {
     printf '# Review the entries below before applying changes.\n'
+    printf '# demote_to_read is true only when no attributed commit was made in the preceding year.\n'
     printf '# Set demote_to_read to false, or remove an entry, to retain access.\n'
     printf '# last_contribution is the latest GitHub-attributed authored commit in this repository.\n'
     printf 'repository: %s\n' "$repository"
-    printf 'generated_at: "%s"\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+    printf 'generated_at: "%s"\n' "$generated_at"
+    printf 'inactivity_cutoff: "%s"\n' "$inactivity_cutoff"
     printf 'users:\n'
 
     if [ -n "$collaborators" ]; then
         while IFS="$(printf '\t')" read -r login permission; do
-            write_user "$login" "$permission"
+            write_user "$login" "$permission" "$inactivity_cutoff"
         done <<EOF
 $collaborators
 EOF
