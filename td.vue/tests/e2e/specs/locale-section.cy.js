@@ -26,7 +26,7 @@ const loadWithConfig = (overrides = {}, alias = 'getConfig') => {
 
     cy.visit('/');
     cy.wait(`@${alias}`);
-    cy.get('.spinner-border').should('not.exist');
+    cy.get('.td-spinner').should('not.exist');
     cy.get('#local-login-btn').should('be.visible');
 };
 

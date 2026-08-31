@@ -16,11 +16,9 @@
                     />
                 </b-col>
                 <b-col md="8">
-                    <b-row v-if="!ready">
-                        <b-col class="text-center" style="margin-top: 10rem;">
-                            <b-spinner variant="primary" label="Loading" style="width: 7em; height: 7em; border-width: 1em;"></b-spinner>
-                        </b-col>
-                    </b-row>
+                    <div v-if="!ready" class="td-home-loading">
+                        <td-spinner />
+                    </div>
                     <template v-if="ready">
                         <b-row>
                             <p class="td-description mt-5">
@@ -60,6 +58,14 @@
     margin-right: 20px;
     margin-left: 20px;
 }
+
+.td-home-loading {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    min-height: 20rem;
+}
+
 </style>
 
 <script>
@@ -69,6 +75,7 @@ import threatDragonLogo from '@/assets/threatdragon_logo_image.svg';
 import TdHero from '@/components/Hero.vue';
 import TdImage from '@/components/Image.vue';
 import TdProviderLoginButton from '@/components/ProviderLoginButton.vue';
+import TdSpinner from '@/components/Spinner.vue';
 import configActions from '@/store/actions/config.js';
 import { resolveLocale } from '@/store/actions/locale';
 import { mapState } from 'vuex';
@@ -116,5 +123,6 @@ export default {
         TdHero,
         TdImage,
         TdProviderLoginButton,
+        TdSpinner,
     },};
 </script>

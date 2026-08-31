@@ -12,6 +12,7 @@ import HomePage, { resolveProviders } from '@/views/HomePage.vue';
 import TdHero from '@/components/Hero.vue';
 import TdImage from '@/components/Image.vue';
 import TdProviderLoginButton from '@/components/ProviderLoginButton.vue';
+import TdSpinner from '@/components/Spinner.vue';
 
 jest.mock('@/assets/threatdragon_logo_image.svg', () => 'threatdragon_logo_image.svg');
 jest.mock('@/service/environment', () => ({
@@ -42,7 +43,6 @@ const createControlledMount = (store, mocks = {}) => {
         localVue,
         store,
         stubs: {
-            'b-spinner': true,
             'b-container': true
         },
         mocks: {
@@ -166,23 +166,23 @@ describe('HomePage.vue', () => {
     });
 
     describe('loading state', () => {
-        it('shows spinner and hides content before mount resolves', () => {
+        it('shows the loading indicator and hides content before mount resolves', () => {
             const store = createStore({ githubEnabled: true });
             const { wrapper: w } = createControlledMount(store);
 
             expect(w.vm.ready).toBe(false);
-            expect(w.find('b-spinner-stub').exists()).toBe(true);
+            expect(w.findComponent(TdSpinner).exists()).toBe(true);
             expect(w.find('.td-description').exists()).toBe(false);
         });
 
-        it('shows content and hides spinner after mount resolves', async () => {
+        it('shows content and hides the loading indicator after mount resolves', async () => {
             const store = createStore({ githubEnabled: true });
             const { wrapper: w, resolve } = createControlledMount(store);
 
             await finishMount(w, resolve);
 
             expect(w.vm.ready).toBe(true);
-            expect(w.find('b-spinner-stub').exists()).toBe(false);
+            expect(w.findComponent(TdSpinner).exists()).toBe(false);
             expect(w.find('.td-description').exists()).toBe(true);
         });
     });
@@ -192,11 +192,11 @@ describe('HomePage.vue', () => {
             isDesktopApp.mockReturnValue(true);
         });
 
-        it('starts ready with no spinner', () => {
+        it('starts ready with no loading indicator', () => {
             const store = createStore({ githubEnabled: true });
             const { wrapper: w } = createControlledMount(store);
             expect(w.vm.ready).toBe(true);
-            expect(w.find('b-spinner-stub').exists()).toBe(false);
+            expect(w.findComponent(TdSpinner).exists()).toBe(false);
             expect(w.find('.td-description').exists()).toBe(true);
         });
 

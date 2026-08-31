@@ -4,6 +4,6 @@ Cypress.Commands.add('launchThreatDragon', () => {
         onBeforeLoad: (win) => win.sessionStorage.clear()
     });
     cy.wait('@getConfig');
-    cy.get('.spinner-border').should('not.exist');
+    cy.get('.td-spinner').should('not.exist');
     cy.get('#local-login-btn').should('be.visible');
 });

@@ -34,7 +34,7 @@ const loadWithConfig = (overrides = {}, alias = 'getConfig') => {
 
     cy.visit('/');
     cy.wait(`@${alias}`);
-    cy.get('.spinner-border', { timeout: 10000 }).should('not.exist');
+    cy.get('.td-spinner', { timeout: 10000 }).should('not.exist');
 };
 
 const verifyProviderButtons = (expected) => {
@@ -185,7 +185,7 @@ describe('home', () => {
             cy.visit('/');
             cy.wait('@getConfigFail');
 
-            cy.get('.spinner-border').should('not.exist');
+            cy.get('.td-spinner').should('not.exist');
             verifyProviderButtons(['local-login-btn']);
         });
 
@@ -198,13 +198,13 @@ describe('home', () => {
             cy.visit('/');
             cy.wait('@getConfig');
 
-            cy.get('.spinner-border').should('not.exist');
+            cy.get('.td-spinner').should('not.exist');
             verifyProviderButtons(['local-login-btn']);
         });
     });
 
     describe('loading state', () => {
-        it('shows spinner while loading config', () => {
+        it('shows the loading indicator while loading config', () => {
             cy.intercept('GET', '/api/config', (req) => {
                 req.on('response', (res) => {
                     res.setDelay(500);
@@ -213,18 +213,18 @@ describe('home', () => {
             }).as('slowConfig');
 
             cy.visit('/');
-            cy.get('.spinner-border').should('be.visible');
+            cy.get('.td-spinner').should('be.visible');
 
             cy.wait('@slowConfig');
-            cy.get('.spinner-border').should('not.exist');
+            cy.get('.td-spinner').should('not.exist');
         });
 
-        it('spinner disappears after success', () => {
+        it('hides the loading indicator after success', () => {
             cy.launchThreatDragon();
-            cy.get('.spinner-border').should('not.exist');
+            cy.get('.td-spinner').should('not.exist');
         });
 
-        it('spinner disappears after error', () => {
+        it('hides the loading indicator after error', () => {
             cy.intercept('GET', '/api/config', {
                 statusCode: 500,
                 body: { status: 500, error: 'Server error' }
@@ -233,7 +233,7 @@ describe('home', () => {
             cy.visit('/');
             cy.wait('@failConfig');
 
-            cy.get('.spinner-border').should('not.exist');
+            cy.get('.td-spinner').should('not.exist');
         });
     });
 
