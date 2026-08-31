@@ -6,6 +6,7 @@ import envConfig from '../../src/config/env.config.js';
 import GithubEnv from '../../src/env/Github.js';
 import EncryptionEnv from '../../src/env/Encryption.js';
 import ThreatDragonEnv from '../../src/env/ThreatDragon.js';
+import PlausibleEnv from '../../src/env/Plausible.js';
 
 describe('config/env.config.js environment configuration', () => {
     const mockEnv = {
@@ -34,6 +35,11 @@ describe('config/env.config.js environment configuration', () => {
         it('adds the threat dragon provider', () => {
             expect(mockEnv.addProvider).to.have.been
             .calledWith(sinon.match.instanceOf(ThreatDragonEnv));
+        });
+
+        it('adds the plausible provider', () => {
+            expect(mockEnv.addProvider).to.have.been
+            .calledWith(sinon.match.instanceOf(PlausibleEnv));
         });
 
         it('hydrates the config', () => {

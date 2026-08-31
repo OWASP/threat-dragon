@@ -12,14 +12,19 @@ import v1ThreatModel from '../service/migration/v1-test-model';
 import { importOtm } from '@/service/migration/otm/otm';
 import threatDragonV1 from '@/service/migration/tdV1/threatDragonV1';
 import { importTmbom } from '@/service/migration/tmBom/tmBom';
+import analytics from '@/service/analytics.js';
 
 jest.mock('@/service/migration/otm/otm');
 jest.mock('@/service/migration/tdV1/threatDragonV1');
 jest.mock('@/service/migration/tmBom/tmBom');
+jest.mock('@/service/analytics.js', () => ({
+    track: jest.fn()
+}));
 
 describe('views/ImportModel.vue', () => {
     let wrapper, localVue, mockRouter, mockStore, toast;
     beforeEach(() => {
+        analytics.track.mockClear();
         toast = { error: jest.fn(), warning: jest.fn() };
         localVue = createLocalVue();
         mockStore = createStore({
@@ -77,6 +82,10 @@ describe('views/ImportModel.vue', () => {
 
         it('creates a toast notification', () => {
             expect(toast.warning).toHaveBeenCalledWith('threatmodel.warnings.jsonSchema');
+        });
+
+        it('tracks an imported model without its name or contents', () => {
+            expect(analytics.track).toHaveBeenCalledWith('THREAT_MODEL_OPENED', { source: 'import' });
         });
     });
 
@@ -211,6 +220,10 @@ describe('views/ImportModel.vue', () => {
         it('creates a toast notification', () => {
             expect(toast.error).toHaveBeenCalledWith('threatmodel.errors.invalidJson');
         });
+
+        it('does not track an invalid import', () => {
+            expect(analytics.track).not.toHaveBeenCalled();
+        });
     });
 
     describe('importing model with missing title', () => {
@@ -232,6 +245,10 @@ describe('views/ImportModel.vue', () => {
 
         it('does not change the threatmodel view', () => {
             expect(mockRouter.push).not.toHaveBeenCalled();
+        });
+
+        it('does not track a model that cannot be opened', () => {
+            expect(analytics.track).not.toHaveBeenCalled();
         });
     });
 });

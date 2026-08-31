@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import express from 'express';
 import sinon from 'sinon';
 
+import analyticsController from '../../src/controllers/analyticscontroller.js';
 import auth from '../../src/controllers/auth.js';
 import bearer from '../../src/config/bearer.config.js';
 import configcontroller from "../../src/controllers/configcontroller";
@@ -53,6 +54,10 @@ describe('config/routes.config.js routes', () => {
 
         it('routes GET /api/config', () => {
             expect(mockRouter.get).to.have.been.calledWith('/api/config', configcontroller.config);
+        });
+
+        it('routes POST /api/analytics without authentication', () => {
+            expect(mockRouter.post).to.have.been.calledWith('/api/analytics', analyticsController.track);
         });
     });
 

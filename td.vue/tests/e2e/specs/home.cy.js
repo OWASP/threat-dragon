@@ -203,6 +203,32 @@ describe('home', () => {
         });
     });
 
+    describe('analytics opt-in', () => {
+        it('does not post analytics when the server does not enable it', () => {
+            cy.intercept('POST', '/api/analytics').as('analytics');
+            loadWithConfig();
+            cy.get('@analytics.all').should('have.length', 0);
+            cy.get('#nav-analytics').should('not.exist');
+        });
+
+        it('shows the indicator and uses only the server endpoint when enabled', () => {
+            cy.intercept('POST', '/api/analytics', { statusCode: 204 }).as('analytics');
+            cy.intercept('POST', 'https://plausible.test/**').as('directPlausible');
+            loadWithConfig({
+                analytics: {
+                    enabled: true,
+                    dashboardUrl: 'https://plausible.test/share/threatdragon',
+                    eventNames: ['PAGE_VIEW_HOME']
+                }
+            });
+            cy.wait('@analytics').its('request.body').should('deep.equal', { event: 'PAGE_VIEW_HOME' });
+            cy.get('#nav-analytics a')
+                .should('have.attr', 'href', 'https://plausible.test/share/threatdragon')
+                .and('have.attr', 'rel', 'noopener noreferrer');
+            cy.get('@directPlausible.all').should('have.length', 0);
+        });
+    });
+
     describe('loading state', () => {
         it('shows spinner while loading config', () => {
             cy.intercept('GET', '/api/config', (req) => {

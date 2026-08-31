@@ -8,15 +8,20 @@ import { isDesktopApp } from '@/service/environment';
 import TdCoversheet from '@/components/report/Coversheet.vue';
 import TdDiagramDetail from '@/components/report/DiagramDetail.vue';
 import TdExecutiveSummary from '@/components/report/ExecutiveSummary.vue';
+import analytics from '@/service/analytics.js';
 
 jest.mock('@/service/environment', () => ({
     isDesktopApp: jest.fn()
+}));
+jest.mock('@/service/analytics.js', () => ({
+    track: jest.fn()
 }));
 
 describe('views/ReportModel.vue', () => {
     let routerMock, storeMock, wrapper;
 
     beforeEach(() => {
+        analytics.track.mockClear();
         const localVue = createLocalVue();
         localVue.use(Vuex);
 
@@ -123,6 +128,11 @@ describe('views/ReportModel.vue', () => {
         window.print.mockImplementation(() => {});
         wrapper.vm.print();
         expect(window.print).toHaveBeenCalledTimes(1);
+    });
+
+    it('tracks a print request without report contents', () => {
+        wrapper.vm.print();
+        expect(analytics.track).toHaveBeenCalledWith('THREAT_MODEL_REPORT_PRINT_REQUESTED');
     });
 });
 

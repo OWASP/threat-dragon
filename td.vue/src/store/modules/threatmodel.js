@@ -25,6 +25,7 @@ import save from '@/service/save';
 import googleDriveApi from '@/service/api/googleDriveApi';
 import threatmodelApi from '@/service/api/threatmodelApi';
 import tmbom from '@/service/migration/tmBom/tmBom';
+import analytics from '@/service/analytics.js';
 
 const state = {
     all: [],
@@ -71,6 +72,7 @@ const actions = {
             if (result) {
                 dispatch(threatmodelStash);
                 commit(threatmodelNotModified);
+                analytics.track('THREAT_MODEL_CREATED', { provider: rootState.provider.selected });
             }
         }
         return result;
@@ -133,6 +135,7 @@ const actions = {
             if (result) {
                 dispatch(threatmodelStash);
                 commit(threatmodelNotModified);
+                analytics.track('THREAT_MODEL_SAVED', { provider: rootState.provider.selected });
             }
         }
     },

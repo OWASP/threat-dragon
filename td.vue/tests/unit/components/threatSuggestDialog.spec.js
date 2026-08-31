@@ -9,9 +9,13 @@ import TdFormRadioGroup from '@/components/FormRadioGroup.vue';
 import TdFormSelect from '@/components/FormSelect.vue';
 import TdThreatStatusSelector from '@/components/ThreatStatusSelector.vue';
 import TdThreatSuggestDialog from '@/components/ThreatSuggestDialog.vue';
+import analytics from '@/service/analytics.js';
 
 jest.mock('@/service/threats/oats/context-generator.js', () => ({
     GetContextSuggestions: jest.fn()
+}));
+jest.mock('@/service/analytics.js', () => ({
+    track: jest.fn()
 }));
 
 describe('components/ThreatSuggestDialog.vue', () => {
@@ -45,6 +49,7 @@ describe('components/ThreatSuggestDialog.vue', () => {
         localVue.use(Vuex);
         localVue.use(BootstrapVue);
         GetContextSuggestions.mockReset();
+        analytics.track.mockClear();
         wrapper = getWrapper();
     });
 
@@ -249,6 +254,20 @@ describe('components/ThreatSuggestDialog.vue', () => {
         wrapper.vm.acceptSuggestion();
 
         expect(mockStore.state.cell.ref.data.threats).toHaveLength(1);
+    });
+
+    it('tracks the suggestion source when a suggestion is applied', () => {
+        mockStore.dispatch = jest.fn();
+        dataChanged.updateStyleAttrs = jest.fn();
+        wrapper.vm.threat = {
+            type: wrapper.vm.threatTypes[0],
+            modelType: 'STRIDE',
+            status: 'Open'
+        };
+        wrapper.vm.suggestions = [wrapper.vm.threat, { title: 'next' }];
+        wrapper.vm.suggestionSource = 'context';
+        wrapper.vm.acceptSuggestion();
+        expect(analytics.track).toHaveBeenCalledWith('THREAT_SUGGESTION_APPLIED', { source: 'context' });
     });
 
     it('creates a threat frequency map when accepting a suggestion', () => {

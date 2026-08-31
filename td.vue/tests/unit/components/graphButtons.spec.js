@@ -5,6 +5,11 @@ import Vuex from 'vuex';
 import TdDropdown from '@/components/Dropdown.vue';
 import TdFormButton from '@/components/FormButton.vue';
 import TdGraphButtons from '@/components/GraphButtons.vue';
+import analytics from '@/service/analytics.js';
+
+jest.mock('@/service/analytics.js', () => ({
+    track: jest.fn()
+}));
 
 describe('components/GraphButtons.vue', () => {
     let btn, graph, localVue, wrapper, mockUndo, mockRedo, mockCanUndo, mockCanRedo;
@@ -14,6 +19,7 @@ describe('components/GraphButtons.vue', () => {
         mockRedo = jest.fn();
         mockCanUndo = jest.fn().mockReturnValue(true);
         mockCanRedo = jest.fn().mockReturnValue(true);
+        analytics.track.mockClear();
         graph = {
             history: {},
             getPlugin: (name) => {
@@ -42,6 +48,9 @@ describe('components/GraphButtons.vue', () => {
                 state: {
                     provider: {
                         selected: 'github'
+                    },
+                    threatmodel: {
+                        selectedDiagram: { title: 'Test diagram' }
                     }
                 }
             })
@@ -261,6 +270,24 @@ describe('components/GraphButtons.vue', () => {
 
         it('has a dropdown item for SVG', () => {
             expect(btn.find('#export-graph-svg').exists()).toBe(true);
+        });
+
+        it('tracks a PNG export without its file name', async () => {
+            graph.zoom = jest.fn().mockReturnValue(1);
+            graph.zoomTo = jest.fn();
+            graph.exportPNG = jest.fn();
+            wrapper.vm.withSelectionCleared = callback => callback();
+            await wrapper.vm.exportPNG();
+            expect(analytics.track).toHaveBeenCalledWith('DIAGRAM_EXPORTED', { format: 'PNG' });
+        });
+
+        it('tracks an SVG export without its file name', async () => {
+            graph.zoom = jest.fn().mockReturnValue(1);
+            graph.zoomTo = jest.fn();
+            graph.exportSVG = jest.fn();
+            wrapper.vm.withSelectionCleared = callback => callback();
+            await wrapper.vm.exportSVG();
+            expect(analytics.track).toHaveBeenCalledWith('DIAGRAM_EXPORTED', { format: 'SVG' });
         });
     });
 });

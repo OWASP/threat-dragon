@@ -73,6 +73,7 @@ import { mapState } from 'vuex';
 
 import TdDropdown from '@/components/Dropdown.vue';
 import TdFormButton from '@/components/FormButton.vue';
+import analytics from '@/service/analytics.js';
 
 export default {
     name: 'TdGraphButtons',
@@ -149,6 +150,7 @@ export default {
                     this.graph.exportPNG(`${this.diagram.title}.png`, {
                         padding: 50
                     });
+                    analytics.track('DIAGRAM_EXPORTED', { format: 'PNG' });
                 }finally{
                     this.graph.zoomTo(currentZoom);
                 }
@@ -160,6 +162,7 @@ export default {
                 try{
                     this.graph.zoomTo(1);
                     this.graph.exportSVG(`${this.diagram.title}.svg`);
+                    analytics.track('DIAGRAM_EXPORTED', { format: 'SVG' });
                 }finally{
                     this.graph.zoomTo(currentZoom);
                 }

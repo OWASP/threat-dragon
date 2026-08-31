@@ -11,6 +11,7 @@ import provider from './modules/provider.js';
 import repo from './modules/repository.js';
 import threatmodel from './modules/threatmodel.js';
 import vuexPersist from '../plugins/vuex-persist.js';
+import analyticsPlugin from './analytics.js';
 
 let store = null;
 export const buildVersion = require('../../package.json').version;
@@ -35,7 +36,7 @@ const get = () => {
                 repo,
                 threatmodel
             },
-            plugins: [vuexPersist.session.plugin]
+            plugins: [analyticsPlugin, vuexPersist.session.plugin]
         });
     }
 

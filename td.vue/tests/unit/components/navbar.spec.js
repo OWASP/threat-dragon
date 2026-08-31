@@ -31,7 +31,9 @@ describe('components/Navbar.vue', () => {
         mockStore = new Vuex.Store({
             getters: {
                 isAdmin: () => false,
-                username: () => 'foobar'
+                username: () => 'foobar',
+                analyticsEnabled: () => false,
+                analyticsDashboardUrl: () => null
             },
             dispatch: () => {}
         });
@@ -165,6 +167,46 @@ describe('components/Navbar.vue', () => {
             it('uses the OWASP image', () => {
                 expect(tdOwasp.find('img').attributes('src'))
                     .toContain('owasp');
+            });
+        });
+
+        describe('analytics indicator', () => {
+            let analyticsWrapper;
+
+            beforeEach(() => {
+                const store = new Vuex.Store({
+                    getters: {
+                        isAdmin: () => false,
+                        username: () => 'foobar',
+                        analyticsEnabled: () => true,
+                        analyticsDashboardUrl: () => 'https://plausible.test/share/threatdragon'
+                    }
+                });
+                analyticsWrapper = shallowMount(Navbar, {
+                    localVue,
+                    store,
+                    mocks: { $router: routerMock, $t: key => key },
+                    stubs: { RouterLink: RouterLinkStub }
+                });
+            });
+
+            it('is hidden when the server has not enabled analytics', () => {
+                expect(wrapper.find('#nav-analytics').exists()).toBe(false);
+            });
+
+            it('links directly to the configured public dashboard', () => {
+                expect(analyticsWrapper.find('#nav-analytics a').attributes('href'))
+                    .toBe('https://plausible.test/share/threatdragon');
+            });
+
+            it('uses the chart line icon', () => {
+                expect(analyticsWrapper.find('#nav-analytics').findComponent(FontAwesomeIcon).attributes('icon'))
+                    .toBe('chart-line');
+            });
+
+            it('describes its purpose to assistive technology', () => {
+                expect(analyticsWrapper.find('#nav-analytics a').attributes('aria-label'))
+                    .toBe('Analytics enabled: view public dashboard');
             });
         });
     });

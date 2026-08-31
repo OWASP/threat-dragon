@@ -65,6 +65,7 @@ import schema from '@/service/schema/ajv';
 import { importOtm } from '@/service/migration/otm/otm';
 import { importTmbom } from '@/service/migration/tmBom/tmBom';
 import threatDragonV1 from '@/service/migration/tdV1/threatDragonV1';
+import analytics from '@/service/analytics.js';
 
 // only search for text files
 const pickerFileOptions = {
@@ -201,6 +202,7 @@ export default {
                 return;
             }
 
+            analytics.track('THREAT_MODEL_OPENED', { source: 'import' });
             this.$router.push({ name: `${this.providerType}ThreatModel`, params });
         }
     }
