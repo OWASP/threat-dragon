@@ -130,12 +130,12 @@
                             v-for="(diagram, idx) in model.detail.diagrams"
                             :key="idx"
                         >
-                            <b-input-group
+                            <td-input-group
                                 :id="`diagram-group-${idx}`"
                                 :label-for="`diagram-${idx}`"
                                 class="mb-3"
                             >
-                                <b-input-group-prepend>
+                                <template #prepend>
                                     <td-dropdown variant="secondary" class="select-diagram-type" :text="model.detail.diagrams[idx].diagramType === 'EOP' ? $t('threatmodel.diagram.eop.select') : model.detail.diagrams[idx].diagramType">
                                         <template #default="{ close }">
                                             <button type="button" class="td-dropdown-item" @click="onDiagramTypeClick(idx, 'CIA'); close()">{{ $t('threatmodel.diagram.cia.select') }}</button>
@@ -147,7 +147,7 @@
                                             <button type="button" class="td-dropdown-item" @click="onDiagramTypeClick(idx, 'Generic'); close()">{{ $t('threatmodel.diagram.generic.select') }}</button>
                                         </template>
                                     </td-dropdown>
-                                </b-input-group-prepend>
+                                </template>
                                 <b-form-input
                                     v-model="model.detail.diagrams[idx].title"
                                     type="text"
@@ -159,7 +159,7 @@
                                     type="text"
                                     class="td-diagram-description"
                                 ></b-form-input>
-                                <b-input-group-append>
+                                <template #append>
                                     <b-button variant="primary" class="td-duplicate-diagram" @click="onDuplicateDiagramClick(idx)">
                                         <font-awesome-icon icon="clone"></font-awesome-icon>
                                         {{ $t('forms.duplicate') }}
@@ -168,8 +168,8 @@
                                         <font-awesome-icon icon="times"></font-awesome-icon>
                                         {{ $t('forms.remove') }}
                                     </b-button>
-                                </b-input-group-append>
-                            </b-input-group>
+                                </template>
+                            </td-input-group>
                         </b-col>
                     </b-form-row>
 
@@ -233,6 +233,7 @@ import { getProviderType } from '@/service/provider/providers.js';
 import TdDropdown from '@/components/Dropdown.vue';
 import TdFormButton from '@/components/FormButton.vue';
 import TdFormTags from '@/components/FormTags.vue';
+import TdInputGroup from '@/components/InputGroup.vue';
 import tmActions from '@/store/actions/threatmodel.js';
 
 export default {
@@ -240,7 +241,8 @@ export default {
     components: {
         TdDropdown,
         TdFormButton,
-        TdFormTags
+        TdFormTags,
+        TdInputGroup
     },
     computed: {
         ...mapState({
