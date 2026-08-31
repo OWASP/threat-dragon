@@ -63,10 +63,10 @@ jobs:
           GITHUB_CLIENT_ID: ${{ secrets.github-client-id }}
           GITHUB_CLIENT_SECRET: ${{ secrets.github-client-secret }}
 
-      - name: Use node LTS 24.18.0
+      - name: Use node LTS 24.19.0
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
         with:
-          node-version: '24.18.0'
+          node-version: '24.19.0'
           cache: npm
           cache-dependency-path: td.vue/package-lock.json
 
@@ -159,10 +159,10 @@ jobs:
           ENCRYPTION_JWT_SIGNING_KEY: ${{ secrets.jwt-signing-key }}
           ENCRYPTION_KEYS: ${{ secrets.session-encryption-keys }}
 
-      - name: Use node LTS 24.18.0
+      - name: Use node LTS 24.19.0
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
         with:
-          node-version: '24.18.0'
+          node-version: '24.19.0'
           cache: npm
           cache-dependency-path: td.vue/package-lock.json
 

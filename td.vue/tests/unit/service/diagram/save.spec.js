@@ -1,8 +1,8 @@
 import saveDiagram from '@/service/diagram/save';
 import tmActions from '@/store/actions/threatmodel';
-import * as boundaryUtils from '@/service/boundary-utils';
+import * as boundaryUtils from '@/service/diagram/boundary-utils';
 
-jest.mock('@/service/boundary-utils.js', () => ({
+jest.mock('@/service/diagram/boundary-utils.js', () => ({
     __esModule: true,
     getElementsInsideBoundary: jest.fn(),
     getBoundariesCrossedByFlow: jest.fn(),
@@ -14,6 +14,7 @@ describe('service/diagram/save.js', () => {
     const testCells = [{ id: 'actor-1', shape: 'actor', data: { threats: [{ title: 'Saved threat' }] } }];
 
     beforeEach(() => {
+        console.warn = jest.fn();
         diagram = {
             id: 1,
             title: 'Diagram',

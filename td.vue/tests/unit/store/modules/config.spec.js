@@ -1,6 +1,6 @@
-import { configClear, configLoaded, configError, configFetch } from '@/store/actions/config.js';
-import { resolveLocale } from '@/store/actions/locale.js';
-import configModule from '@/store/modules/config.js';
+import { configClear, configLoaded, configError, configFetch } from '@/store/actions/config';
+import { resolveLocale } from '@/store/actions/locale';
+import configModule from '@/store/modules/config';
 
 jest.mock('@/service/api/api', () => ({
     getAsync: jest.fn()
@@ -31,7 +31,7 @@ describe('store/modules/config.js', () => {
     });
 
     describe('mutations', () => {
-        describe('CONFIG_CLEAR', () => {
+        describe('clear', () => {
             it('resets config and configError to null', () => {
                 const state = { config: { githubEnabled: true }, configError: 'previous error' };
                 configModule.mutations[configClear](state);
@@ -40,21 +40,32 @@ describe('store/modules/config.js', () => {
             });
         });
 
-        describe('CONFIG_LOADED', () => {
-            it('sets sanitized config from payload and clears error', () => {
-                const state = { config: null, configError: 'old error' };
-                const payload = { config: { githubEnabled: true, defaultLocale: 'es', allowedLocales: ['es', 'en'] } };
-                configModule.mutations[configLoaded](state, payload);
-                // Recognised provider toggle fields (githubEnabled) are passed through by sanitizeConfig
-                expect(state.config).toEqual({ defaultLocale: 'es', allowedLocales: ['es', 'en'], githubEnabled: true });
+        describe('loaded', () => {
+            const state = { config: null, configError: 'foo' };
+
+            it('sets sanitized config and clears error', () => {
+                const config = {
+                    githubEnabled: true,
+                    defaultLocale: 'es',
+                    allowedLocales: ['es', 'en']
+                };
+                configModule.mutations[configLoaded](state, {config: config});
+                expect(state.config).toEqual(config);
                 expect(state.config.githubEnabled).toEqual(true);
                 expect(state.configError).toBeNull();
             });
 
-            it('rejects a missing config', () => {
-                const state = { config: { localEnabled: true }, configError: null };
-                configModule.mutations[configLoaded](state, { config: null });
-                expect(state.config).toBeNull();
+            it('sets sanitized config with no locales', () => {
+                const config = {
+                    bitbucketEnabled: false,
+                    gitlabEnabled: false,
+                    googleEnabled: false,
+                    localEnabled: true
+                };
+                configModule.mutations[configLoaded](state, {config: config});
+                expect(state.config).toEqual(config);
+                expect(state.config.localEnabled).toEqual(true);
+                expect(state.configError).toBeNull();
             });
 
             it('drops an allowed locale list with no supported values', () => {
@@ -81,6 +92,30 @@ describe('store/modules/config.js', () => {
                     gitlabEnabled: false,
                     googleEnabled: true
                 });
+            });
+
+            it('rejects empty config and sets error', () => {
+                const config = {
+                    defaultLocale: 'foobar',
+                    allowedLocales: ['foo', 'bar']
+                };
+                configModule.mutations[configLoaded](state, {config: config});
+                expect(state.config).toBeNull();
+                expect(state.configError).toContain('rejected');
+            });
+
+            it('rejects unrecognized locales and sets error', () => {
+                configModule.mutations[configLoaded](state, { config: {} });
+                expect(state.config).toBeNull();
+                expect(state.configError).toContain('rejected');
+            });
+
+            it('rejects unsanitized config and sets error', () => {
+                const payload = { config: null};
+                configModule.mutations[configLoaded](state, payload);
+                // Recognised provider toggle fields (githubEnabled) are passed through by sanitizeConfig
+                expect(state.config).toBeNull();
+                expect(state.configError).toContain('rejected');
             });
         });
 
@@ -146,7 +181,7 @@ describe('store/modules/config.js', () => {
             expect(state.config).toBeNull();
         });
 
-        describe('CONFIG_ERROR', () => {
+        describe('error', () => {
             it('sets configError from payload', () => {
                 const state = { config: null, configError: null };
                 configModule.mutations[configError](state, { error: 'network error' });
@@ -156,7 +191,7 @@ describe('store/modules/config.js', () => {
     });
 
     describe('actions', () => {
-        describe('CONFIG_CLEAR', () => {
+        describe('clear', () => {
             it('commits clear', () => {
                 const commit = jest.fn();
                 configModule.actions[configClear]({ commit });
@@ -164,7 +199,7 @@ describe('store/modules/config.js', () => {
             });
         });
 
-        describe('CONFIG_FETCH', () => {
+        describe('fetch', () => {
             let commit;
             let dispatch;
             let context;
@@ -181,19 +216,19 @@ describe('store/modules/config.js', () => {
                 context = { commit, dispatch, rootState };
             });
 
-            it('dispatches CONFIG_CLEAR on start', async () => {
+            it('dispatches configClear on start', async () => {
                 api.getAsync.mockResolvedValue({ data: { githubEnabled: true } });
                 await configModule.actions[configFetch](context);
                 expect(dispatch).toHaveBeenCalledWith(configClear);
             });
 
-            it('requests config with a five-second timeout', async () => {
+            it('fetches config with a five-second timeout', async () => {
                 api.getAsync.mockResolvedValue({ data: { githubEnabled: true } });
                 await configModule.actions[configFetch](context);
                 expect(api.getAsync).toHaveBeenCalledWith('/api/config', { timeout: 5000 });
             });
 
-            it('commits CONFIG_LOADED with config from server "data" wrapper', async () => {
+            it('commits configLoaded with config from server "data" wrapper', async () => {
                 const configData = { githubEnabled: true, defaultLocale: 'es', allowedLocales: ['es', 'en'] };
                 api.getAsync.mockResolvedValue({ data: configData });
                 await configModule.actions[configFetch](context);
@@ -222,7 +257,7 @@ describe('store/modules/config.js', () => {
                 expect(commit).toHaveBeenCalledWith(configLoaded, { config: undefined });
             });
 
-            it('logs error and commits CONFIG_ERROR on API failure', async () => {
+            it('logs error and commits configError on API failure', async () => {
                 const consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
                 api.getAsync.mockRejectedValue(new Error('network error'));
                 await configModule.actions[configFetch](context);
@@ -231,10 +266,11 @@ describe('store/modules/config.js', () => {
                 consoleError.mockRestore();
             });
 
-            it('uses a fallback message for an API failure without a message', async () => {
+            it('logs error and commits configError default message', async () => {
                 const consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
-                api.getAsync.mockRejectedValue({});
+                api.getAsync.mockRejectedValue(new Error(''));
                 await configModule.actions[configFetch](context);
+                expect(consoleError).toHaveBeenCalled();
                 expect(commit).toHaveBeenCalledWith(configError, { error: 'Unknown error fetching config' });
                 consoleError.mockRestore();
             });

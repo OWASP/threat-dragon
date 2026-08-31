@@ -1,13 +1,13 @@
-import i18nFactory, { defaultLocale, supportedLocales, t, tc } from '@/i18n/index.js';
+import i18nFactory, { defaultLocale, supportedLocales, t, tc } from '@/i18n';
 describe('i18n/index.js', () => {
-    describe('DEFAULT_LOCALE', () => {
+    describe('default locale', () => {
         it('uses en as the supported default locale', () => {
             expect(defaultLocale).toBe('en');
             expect(supportedLocales).toContain(defaultLocale);
         });
     });
 
-    describe('SUPPORTED_LOCALES', () => {
+    describe('supported locales', () => {
         it('is a frozen array of all expected locales', () => {
             const expected = [
                 'ar', 'de', 'el', 'en', 'es', 'fi', 'fr',

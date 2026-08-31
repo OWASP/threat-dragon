@@ -7,6 +7,10 @@ const firstArrayPayload = (wrapper, eventName) => wrapper
     ?.find(([payload]) => Array.isArray(payload))?.[0];
 
 describe('components/FormTags.vue', () => {
+    beforeEach(() => {
+        console.warn = jest.fn();
+    });
+
     it('adds separated tags and keeps the unfinished tag in the input', async () => {
         const wrapper = mount(TdFormTags, {
             propsData: {

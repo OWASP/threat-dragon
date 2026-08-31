@@ -69,23 +69,8 @@
     "url": "https://github.com/OWASP/threat-dragon/issues"
   },
   "devDependencies": {
-    "baseline-browser-mapping": "^2.10.43",
+    "baseline-browser-mapping": "^2.11.15",
     "npm-run-all2": "^8.0.4",
     "rimraf": "^6.1.3"
-  },
-  "overrides": {
-    "ansi-regex@>2.1.1 <5.0.1": ">=5.0.1",
-    "brace-expansion@<2.0.0": "^1.1.13",
-    "brace-expansion@>2.0.0 <3.0.0": "^2.0.3",
-    "brace-expansion@>5.0.0 <5.0.5": "^5.0.5",
-    "glob-parent@<5.1.2": ">=5.1.2",
-    "picomatch@<3.0.0": "^2.3.2",
-    "picomatch@>4.0.0 <4.0.4": "^4.0.4",
-    "micromatch": ">=4.0.8",
-    "minimatch@<3.0.5": ">=3.0.5",
-    "tar-fs": ">=3.0.8",
-    "ws": ">=8.18.0",
-    "shell-quote": ">=1.10.0",
-    "brace-expansion": ">=5.0.7"
   }
 }

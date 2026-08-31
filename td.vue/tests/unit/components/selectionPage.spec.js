@@ -10,6 +10,7 @@ describe('components/SelectionPage.vue', () => {
     let localVue;
 
     beforeEach(() => {
+        console.warn = jest.fn();
         localVue = createLocalVue();
         localVue.use(BootstrapVue);
     });

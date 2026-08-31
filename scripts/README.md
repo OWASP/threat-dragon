@@ -16,5 +16,7 @@ Dependencies:
 | ------ | ------- |
 | [`td-build-desktop-linux-appimage.sh`](./td-build-desktop-linux-appimage.sh) | Build Linux AppImage (amd64) |
 | [`td-pr-check.sh`](./td-pr-check.sh) | Run local checks that emulate the PR workflow |
+| [`td-repo-access-review.sh`](./td-repo-access-review.sh) | Create an editable review of collaborators with elevated repository access |
+| [`td-repo-access-demote.sh`](./td-repo-access-demote.sh) | Change selected reviewed collaborators to Read access |
 | [`td-trivy-check.sh`](./td-trivy-check.sh) | Run local Trivy scan (requires docker) |
 | [`td-update-node-version.sh`](./td-update-node-version.sh) | Update digest-pinned Docker Node images and GitHub Actions |

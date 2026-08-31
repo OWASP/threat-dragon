@@ -16,8 +16,8 @@ const apiLangs = [
     { lang: 'en', type: 'companion' }
 ];
 
-const outDir = path.resolve(__dirname, '..', 'service', 'schema');
-const apiJsonDir = path.resolve(outDir, 'api_json');
+const outDir = path.resolve(__dirname, '..', 'assets', 'downloads');
+const apiJsonDir = path.resolve(outDir, 'cornucopia');
 const bypass = process.argv.includes('--bypass');
 
 (async () => {

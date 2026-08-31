@@ -1,11 +1,9 @@
-import Vue from 'vue';
-
 import {
     repositoryClear,
     repositoryFetch,
     repositorySelected
 } from '../actions/repository.js';
-import threatmodelApi from '../../service/api/threatmodelApi.js';
+import threatmodelApi from '@/service/api/threatmodelApi';
 
 export const clearState = (state) => {
     state.all.length = 0;
@@ -43,7 +41,7 @@ const mutations = {
     [repositoryClear]: (state) => clearState(state),
     [repositoryFetch]: (state, { repos, page, pageNext, pagePrev }) => {
         state.all.length = 0;
-        repos.forEach((repo, idx) => Vue.set(state.all, idx, repo));
+        repos.forEach((repo, idx) => state.all[idx] = repo);
         state.page = page;
         state.pageNext = pageNext;
         state.pagePrev = pagePrev;

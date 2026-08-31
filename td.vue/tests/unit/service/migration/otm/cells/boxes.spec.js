@@ -2,6 +2,10 @@ import boxes from '@/service/migration/otm/cells/boxes';
 import otmModel from '../../otm-test-model';
 
 describe('service/migration/otm/cells/boxes.js', () => {
+    beforeEach(() => {
+        console.warn = jest.fn();
+    });
+
     describe('merge OTM', () => {
         let testBox;
 

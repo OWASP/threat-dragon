@@ -49,15 +49,6 @@ describe('service/x6/graph/keys.js', () => {
                 bindings[key] = fn;
             })
         };
-        store.get.mockReturnValue({
-            state: {
-                threatmodel: {
-                    selectedDiagram: {
-                        id: 'diagram-1'
-                    }
-                }
-            }
-        });
     });
 
     describe('delete', () => {
@@ -246,13 +237,45 @@ describe('service/x6/graph/keys.js', () => {
         });
     });
 
-    it('binds ctrl + s to the shared save service', () => {
-        const event = { preventDefault: jest.fn() };
-        keys.bind(graph);
-        bindings['ctrl+s'](event);
+    describe('save', () => {
+        let event;
+        beforeEach(() => {
+            event = { preventDefault: jest.fn() };
+        });
 
-        expect(graph.bindKey).toHaveBeenCalledWith('ctrl+s', expect.any(Function));
-        expect(event.preventDefault).toHaveBeenCalled();
-        expect(saveDiagram.save).toHaveBeenCalledWith(store.get(), graph, { id: 'diagram-1' });
+        it('binds ctrl + s to the shared save service', () => {
+            store.get.mockReturnValue({
+                state: {
+                    threatmodel: {
+                        selectedDiagram: {
+                            id: 'diagram-1'
+                        }
+                    }
+                }
+            });
+            keys.bind(graph);
+            bindings['ctrl+s'](event);
+            expect(graph.bindKey).toHaveBeenCalledWith('ctrl+s', expect.any(Function));
+            expect(event.preventDefault).toHaveBeenCalled();
+            expect(saveDiagram.save).toHaveBeenCalledWith(store.get(), graph, { id: 'diagram-1' });
+        });
+
+        it('provides default for appStore state', () => {
+            store.get.mockReturnValue({state: {}});
+            keys.bind(graph);
+            bindings['ctrl+s'](event);
+            expect(graph.bindKey).toHaveBeenCalledWith('ctrl+s', expect.any(Function));
+            expect(event.preventDefault).toHaveBeenCalled();
+            expect(saveDiagram.save).toHaveBeenCalledWith(store.get(), graph, {});
+        });
+
+        it('provides default for selected diagram', () => {
+            store.get.mockReturnValue({state: {threatmodel: {}}});
+            keys.bind(graph);
+            bindings['ctrl+s'](event);
+            expect(graph.bindKey).toHaveBeenCalledWith('ctrl+s', expect.any(Function));
+            expect(event.preventDefault).toHaveBeenCalled();
+            expect(saveDiagram.save).toHaveBeenCalledWith(store.get(), graph, {});
+        });
     });
 });

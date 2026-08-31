@@ -25,8 +25,9 @@ const sanitizeArray = (v) => {
 };
 
 const canonicalizeLocale = (locale) => {
-    if (typeof locale !== 'string' || locale.length === 0) return null;
-    if (locale.length > maxLocaleLength) return null;
+    if (typeof locale !== 'string' || locale.length === 0 || locale.length > maxLocaleLength) {
+        return null;
+    }
     try {
         return Intl.getCanonicalLocales(locale)[0] ?? null;
     } catch {
@@ -47,9 +48,11 @@ const normalizeList = (list) => {
         .filter((locale) => locale !== null);
 };
 
-const normalizeLocale = (locale, supportedLocales = canonicalSupportedLocales) => {
+const normalizeLocale = (locale, supportedLocales) => {
     const canonical = canonicalizeLocale(locale);
-    if (!canonical) return undefined;
+    if (!canonical) {
+        return undefined;
+    }
     return supportedLocales.includes(canonical) ? canonical : undefined;
 };
 
@@ -58,21 +61,28 @@ export const isSupportedLocale = (locale, supportedLocales = canonicalSupportedL
 };
 
 const candidates = (locale) => {
-    if (typeof locale !== 'string') return [];
     const parts = locale.split('-');
-    if (parts.length === 1) return [locale];
+    if (parts.length === 1) {
+        return [locale];
+    }
     return [locale, parts[0]];
 };
 
 const isLocaleAccepted = (locale, allowed, supported) => {
-    if (!supported.includes(locale)) return false;
-    if (allowed.length === 0) return true;
+    if (!supported.includes(locale)) {
+        return false;
+    }
+    if (allowed.length === 0) {
+        return true;
+    }
     return allowed.includes(locale);
 };
 
 const findMatch = (locale, allowed, supported) => {
     const normalized = canonicalizeLocale(locale);
-    if (!normalized) return undefined;
+    if (!normalized) {
+        return undefined;
+    }
     return candidates(normalized).find((c) => isLocaleAccepted(c, allowed, supported));
 };
 
@@ -80,14 +90,17 @@ const findBrowserMatch = (browsers, allowed, supported) => {
     for (const lang of browsers) {
         // Lang here is already canonical — skip re-canonicalization
         const match = candidates(lang).find((c) => isLocaleAccepted(c, allowed, supported));
-        if (match) return match;
+        if (match) {
+            return match;
+        }
     }
     return undefined;
 };
 
 const selectDefaultLocale = (supported, preferred = defaultLocale) => {
-    if (supported.includes(preferred)) return preferred;
-    if (supported.length === 0) return preferred;
+    if (supported.includes(preferred) || supported.length === 0) {
+        return preferred;
+    }
     return supported[0];
 };
 
@@ -130,12 +143,16 @@ export const getBrowserLanguages = (navigatorLike) => {
         const valid = limited
             .map((raw) => canonicalizeLocale(raw))
             .filter(Boolean);
-        if (valid.length > 0) return valid;
+        if (valid.length > 0) {
+            return valid;
+        }
     }
 
     if (navigatorLike.language) {
         const normalized = canonicalizeLocale(navigatorLike.language);
-        if (normalized) return [normalized];
+        if (normalized) {
+            return [normalized];
+        }
     }
 
     return [defaultLocale];

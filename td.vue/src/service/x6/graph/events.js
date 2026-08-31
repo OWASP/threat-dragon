@@ -23,7 +23,7 @@ const canvasResized = ({ width, height }) => {
 
 const edgeChangeVertices = () => ({ edge }) => {
     if (edge.constructor.name === 'Edge') {
-        console.debug('vertex for unformatted edge/flow');
+        console.warn('vertex changed for unformatted edge/flow');
     }
 };
 
@@ -99,10 +99,6 @@ const cellAdded = (graph) => ({ cell }) => {
     dataChanged.updateProperties(cell);
     dataChanged.updateStyleAttrs(cell);
 
-    if (cell.shape === 'edge') {
-        console.debug('added new edge (flow parent)');
-    }
-
     // do not select new data flows or trust boundaries: it surprises the user
     if (cell.shape !== 'path'
         && cell.shape !== 'edge'
@@ -141,6 +137,9 @@ const cellSelected = (graph) => ({ cell }) => {
         graph.addEdge(flow);
         cell.remove();
         cell = flow;
+    }
+
+    if (cell.data?.name) {
         cell.setName(cell.data.name);
     }
 

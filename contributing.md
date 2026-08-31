@@ -32,6 +32,14 @@ Github issues are used to coordinate contributions and keep track of progress to
 * provide your contributed content as a [pull request][request]
 * you **must** be assigned the issue before submitting a pull request
 
+### Contributor Access
+
+Regular contributors may be granted "Write" or "Maintain" access to this repository.
+These roles grant elevated permissions, including the ability to push code.
+
+Elevated access may be removed after 12 months of inactivity to reduce the risk of
+account takeover. Access can be restored if a contributor becomes active again.
+
 ## Got a Question or Problem?
 
 If you have a question or problem relating to using Threat Dragon then the first thing to do is to check the

@@ -44,16 +44,16 @@
     "@babel/runtime": "^7.29.7",
     "@gitbeaker/rest": "^43.8.0",
     "@googleapis/drive": "^20.2.0",
-    "axios": "^1.18.1",
-    "bitbucket": "^2.11.0",
-    "dotenv": "^16.0.3",
-    "express": "^5.0.1",
-    "express-rate-limit": "^8.6.0",
+    "axios": "^1.19.0",
+    "bitbucket": "^2.12.0",
+    "dotenv": "^16.6.1",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.6.2",
     "helmet": "^8.3.0",
     "jsonwebtoken": "^9.0.3",
     "octonode": "^0.10.2",
-    "serve-favicon": "^2.5.0",
-    "winston": "^3.8.2"
+    "serve-favicon": "^2.5.1",
+    "winston": "^3.19.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.29.7",
@@ -62,13 +62,13 @@
     "@babel/node": "^7.29.7",
     "@babel/plugin-transform-runtime": "^7.29.7",
     "@babel/preset-env": "^7.29.7",
-    "@babel/register": "^7.29.3",
+    "@babel/register": "^7.29.7",
     "@cyclonedx/cyclonedx-npm": "^5.0.0",
-    "chai": "^4.3.7",
-    "chai-as-promised": "^7.1.1",
+    "chai": "^4.5.0",
+    "chai-as-promised": "^7.1.2",
     "cross-env": "^7.0.3",
     "eslint": "^8.46.0",
-    "mocha": "11.7.6",
+    "mocha": "11.8.0",
     "nodemon": "^3.1.14",
     "npm-force-resolutions": "^0.0.10",
     "npm-run-all2": "^8.0.4",
@@ -76,7 +76,7 @@
     "passport-local": "1.0.0",
     "pm2": "^7.0.3",
     "rimraf": "^6.1.3",
-    "sinon": "^10.0.0",
+    "sinon": "^10.0.1",
     "sinon-chai": "^3.7.0",
     "supertest": "^7.2.2"
   },
@@ -84,11 +84,6 @@
     "request": "npm:@cypress/request@4.0.1",
     "js-yaml": "^4.2.0",
     "serialize-javascript": "^7.0.5",
-    "ws": "^8.21.0",
-    "form-data": ">=4.0.6",
-    "diff": ">=7.0.0",
-    "minimatch": ">=9.0.9",
-    "workerpool": ">=9.3.4",
-    "@pm2/js-api": ">=0.8.1"
+    "diff": ">=7.0.0"
   }
 }

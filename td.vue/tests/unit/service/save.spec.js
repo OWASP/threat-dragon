@@ -23,6 +23,10 @@ describe('service/save.js', () => {
         }
     };
 
+    beforeEach(() => {
+        console.warn = jest.fn();
+    });
+
     describe('desktop', () => {
         const fileName = 'test';
         let returnValue = undefined;

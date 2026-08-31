@@ -23,8 +23,10 @@ jest.mock('@/service/analytics.js', () => ({
 
 describe('views/ImportModel.vue', () => {
     let wrapper, localVue, mockRouter, mockStore, toast;
+
     beforeEach(() => {
         analytics.track.mockClear();
+        console.warn = jest.fn();
         toast = { error: jest.fn(), warning: jest.fn() };
         localVue = createLocalVue();
         mockStore = createStore({

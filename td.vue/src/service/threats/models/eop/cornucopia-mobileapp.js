@@ -1,4 +1,4 @@
-import cornucopiaEN from '@/service/schema/api_json/cornucopia-mobileapp-en.json';
+import cornucopiaEN from '@/assets/downloads/cornucopia/cornucopia-mobileapp-en.json';
 
 export default {
     id: 'cornucopia-mobileapp',

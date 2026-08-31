@@ -6,6 +6,7 @@ describe('service/api.js', () => {
     const query = {page: 1};
     const mockResp = { data: 'foo' };
     const mockClient = {
+        delete: () => mockResp,
         get: () => mockResp,
         post: () => mockResp,
         put: () => mockResp
@@ -14,6 +15,7 @@ describe('service/api.js', () => {
     let res;
 
     beforeEach(() => {
+        jest.spyOn(mockClient, 'delete');
         jest.spyOn(httpClient, 'get').mockReturnValue(mockClient);
         jest.spyOn(mockClient, 'get');
         jest.spyOn(mockClient, 'post');
@@ -61,6 +63,19 @@ describe('service/api.js', () => {
 
         it('returns the data', async () => {
             res = await api.putAsync(url);
+            expect(res).toEqual(mockResp.data);
+        });
+    });
+
+    describe('deleteAsync', () => {
+        it('passes the body', async () => {
+            const body = { foo: 'bar' };
+            await api.deleteAsync(url, body);
+            expect(mockClient.delete).toHaveBeenCalledWith(expect.anything(), body);
+        });
+
+        it('returns the data', async () => {
+            res = await api.deleteAsync(url);
             expect(res).toEqual(mockResp.data);
         });
     });

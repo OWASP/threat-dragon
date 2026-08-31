@@ -19,6 +19,10 @@ describe('service/migration/otm/cells/threats.js', () => {
         }
     ]};
 
+    beforeEach(() => {
+        console.warn = jest.fn();
+    });
+
     describe('creating threats', () => {
         let nodeThreats;
 
