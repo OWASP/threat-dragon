@@ -131,6 +131,7 @@ pre
 PRs
 PWD
 pyspelling
+README
 remediations
 renderer
 repo
@@ -155,6 +156,7 @@ td
 threatdragon
 ThreatDragonModels
 TLS
+tmBOM
 Trisqel
 trivy
 Trivy
