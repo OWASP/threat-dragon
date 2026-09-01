@@ -374,74 +374,16 @@ jobs:
 
   dockerhub_release:
     name: Publish to dockerhub
-    runs-on: ubuntu-24.04
     needs: [server_unit_tests, site_unit_tests]
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@96fe6ef7f33517b61c61be40b68a1882f3264fb8 # v4.2.0
-
-      - name: Set up Docker Buildx
-        id: buildx
-        uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e # v4.3.0
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Build for supported architectures and push to Docker Hub
-        id: docker_build
-        uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7.3.0
-        with:
-          context: ./
-          file: ./Dockerfile
-          builder: ${{ steps.buildx.outputs.name }}
-          push: ${{ startsWith(github.ref, 'refs/tags/v') }}
-          tags: ${{ env.IMAGE_NAME }}:${{ github.ref_name }},${{ env.IMAGE_NAME }}:stable
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          # If you add more platforms, make sure to include them in ./pull_request.yaml and ./push.yaml too!
-          platforms: linux/amd64,linux/arm64
-          load: false
-          sbom: true
-          provenance: mode=max,version=v1
-
-      # Required because multiplatform images can't be loaded directly
-      - name: Build for amd64 only to extract SBOM
-        id: docker_build_amd64
-        uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7.3.0
-        with:
-          context: ./
-          file: ./Dockerfile
-          builder: ${{ steps.buildx.outputs.name }}
-          # Do not push, just for the docker run in the next line
-          push: false
-          tags: ${{ env.IMAGE_NAME }}:${{ github.ref_name }},${{ env.IMAGE_NAME }}:stable
-          # Should pull from the step before, so this one should be all cached
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          platforms: linux/amd64
-          load: true
-          # Note: no sbom or provenance, we need to produce the simplest image form
-          # so that the load will actually succeed
-
-      - name: fetch app SBOM
-        run: docker run --rm --entrypoint tar "$IMAGE_ID" -c boms | tar -xv
-        env:
-          IMAGE_ID: ${{ steps.docker_build_amd64.outputs.imageid }}
-
-      - name: Save SBOM artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: sboms-container-image-app
-          path: './boms/*'
-          include-hidden-files: true
-          if-no-files-found: error
+    uses: ./.github/workflows/docker-build.yaml
+    with:
+      image-tags: threatdragon/owasp-threat-dragon:${{ github.ref_name }},threatdragon/owasp-threat-dragon:stable
+      push-image: ${{ startsWith(github.ref, 'refs/tags/v') }}
+      generate-sbom: true
+      use-qemu: true
+    secrets:
+      dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
+      dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
 
   sbom_combiner:
     name: SBOM combiner
