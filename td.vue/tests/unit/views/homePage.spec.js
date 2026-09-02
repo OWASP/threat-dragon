@@ -4,6 +4,11 @@ import Vuex from 'vuex';
 
 import { createLocalVue } from '../helpers/vueTestUtils';
 
+jest.mock('@/service/analytics.js', () => ({
+    track: jest.fn()
+}));
+
+import analytics from '@/service/analytics.js';
 import { isDesktopApp } from '@/service/environment';
 import { authSetLocal } from '@/store/actions/auth.js';
 import configActions from '@/store/actions/config.js';
@@ -127,6 +132,7 @@ describe('HomePage.vue', () => {
     };
 
     beforeEach(() => {
+        jest.clearAllMocks();
         isDesktopApp.mockReset();
         isDesktopApp.mockReturnValue(false);
     });
@@ -162,6 +168,10 @@ describe('HomePage.vue', () => {
 
         it('is ready after mount resolves', () => {
             expect(wrapper.vm.ready).toBe(true);
+        });
+
+        it('tracks the home page after server configuration loads', () => {
+            expect(analytics.track).toHaveBeenCalledWith('PAGE_VIEW_HOME');
         });
     });
 
@@ -206,6 +216,12 @@ describe('HomePage.vue', () => {
             const buttons = w.findAllComponents(TdProviderLoginButton);
             expect(buttons).toHaveLength(1);
             expect(buttons.at(0).props('provider').key).toBe('desktop');
+        });
+
+        it('does not track the desktop home page', () => {
+            const store = createStore();
+            createControlledMount(store);
+            expect(analytics.track).not.toHaveBeenCalled();
         });
     });
 

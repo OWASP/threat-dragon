@@ -1,5 +1,6 @@
 import express from 'express';
 
+import analyticsController from '../controllers/analyticscontroller.js';
 import auth from '../controllers/auth.js';
 import bearer from './bearer.config.js';
 import configController from '../controllers/configcontroller';
@@ -24,6 +25,7 @@ const unauthRoutes = (router) => {
     router.get('/security.txt', metadataController.legacySecurityTxtRedirect);
     router.get('/.well-known/security.txt', metadataController.securityTxt);
     router.get('/api/config', configController.config);
+    router.post('/api/analytics', analyticsController.track);
     router.get('/api/threatmodel/organisation', threatmodelController.organisation);
     
 

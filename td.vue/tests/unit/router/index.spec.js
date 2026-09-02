@@ -1,4 +1,9 @@
 import router from '@/router/index.js';
+import analytics from '@/service/analytics.js';
+
+jest.mock('@/service/analytics.js', () => ({
+    track: jest.fn()
+}));
 
 describe('router/index.js', () => {
     it('creates a vue router', () => {
@@ -48,6 +53,20 @@ describe('router/index.js', () => {
             it('uses the MainDashboard view', () => {
                 expect(dashboardComponent.default.name).toEqual('MainDashboard');
             });
+        });
+    });
+
+    describe('analytics pageviews', () => {
+        beforeEach(() => analytics.track.mockClear());
+
+        it('uses a fixed event name instead of the threat model route', async () => {
+            await router.get().push('/local/private-model-name/edit');
+            expect(analytics.track).toHaveBeenCalledWith('PAGE_VIEW_THREAT_MODEL_EDIT');
+        });
+
+        it('does not pass the route to the analytics service', async () => {
+            await router.get().push('/local/private-model-name');
+            expect(analytics.track.mock.calls.flat()).not.toContain('/local/private-model-name');
         });
     });
 

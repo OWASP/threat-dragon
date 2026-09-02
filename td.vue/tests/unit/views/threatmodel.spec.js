@@ -5,6 +5,15 @@ import Vuex from 'vuex';
 import ThreatModel from '@/views/ThreatModel.vue';
 import ThreatModelSummaryCard from '@/components/ThreatModelSummaryCard.vue';
 import { threatmodelDiagramSelected } from '@/store/actions/threatmodel.js';
+import { writeFile } from '@/service/save.js';
+import analytics from '@/service/analytics.js';
+
+jest.mock('@/service/save.js', () => ({
+    writeFile: jest.fn().mockResolvedValue()
+}));
+jest.mock('@/service/analytics.js', () => ({
+    track: jest.fn()
+}));
 
 describe('views/Threatmodel.vue', () => {
     const contributors = ['foo', 'bar' ];
@@ -21,6 +30,7 @@ describe('views/Threatmodel.vue', () => {
     let wrapper, localVue, mockRouter, mockStore;
 
     beforeEach(() => {
+        jest.clearAllMocks();
         console.log = jest.fn();
         localVue = createLocalVue();
         localVue.use(BootstrapVue);
@@ -47,6 +57,9 @@ describe('views/Threatmodel.vue', () => {
             },
             actions: {
                 [threatmodelDiagramSelected]: () => { }
+            },
+            getters: {
+                tmBomExport: () => ({ bomFormat: 'CycloneDX' })
             }
         });
 
@@ -119,6 +132,20 @@ describe('views/Threatmodel.vue', () => {
 
             it('returns to the Dashboard view', () => {
                 expect(mockRouter.push).toHaveBeenCalledWith('/dashboard');
+            });
+        });
+
+        describe('export', () => {
+            beforeEach(async () => {
+                await wrapper.vm.onExportTmBomClick(evt);
+            });
+
+            it('writes the TM-BOM file', () => {
+                expect(writeFile).toHaveBeenCalledWith({ bomFormat: 'CycloneDX' }, '');
+            });
+
+            it('tracks the export without model contents', () => {
+                expect(analytics.track).toHaveBeenCalledWith('THREAT_MODEL_TMBOM_EXPORTED');
             });
         });
 

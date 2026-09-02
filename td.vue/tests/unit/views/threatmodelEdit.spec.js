@@ -6,6 +6,13 @@ import ThreatModelEdit from '@/views/ThreatModelEdit.vue';
 import TdFormTags from '@/components/FormTags.vue';
 import TdInputGroup from '@/components/InputGroup.vue';
 import { threatmodelContributorsUpdated, threatmodelRestore, threatmodelNotModified, } from '@/store/actions/threatmodel.js';
+import analytics from '@/service/analytics.js';
+
+jest.mock('@/service/analytics.js', () => ({
+    startEditing: jest.fn(),
+    finishEditing: jest.fn(),
+    track: jest.fn()
+}));
 
 describe('views/ThreatmodelEdit.vue', () => {
     const contributors = ['foo', 'bar' ];
@@ -22,6 +29,7 @@ describe('views/ThreatmodelEdit.vue', () => {
     let wrapper, localVue, mockRouter, mockStore, modelChanged;
 
     beforeEach(() => {
+        jest.clearAllMocks();
         console.log = jest.fn();
         modelChanged = false;
         localVue = createLocalVue();
@@ -72,6 +80,10 @@ describe('views/ThreatmodelEdit.vue', () => {
                 $toast: { info: jest.fn() }
             }
         });
+    });
+
+    it('starts an editing session', () => {
+        expect(analytics.startEditing).toHaveBeenCalledTimes(1);
     });
 
     describe('layout', () => {
@@ -212,6 +224,7 @@ describe('views/ThreatmodelEdit.vue', () => {
                         params: mockRouter.params
                     });
                 });
+
             });
 
 
@@ -247,6 +260,10 @@ describe('views/ThreatmodelEdit.vue', () => {
 
             it('adds a new diagram', () => {
                 expect(mockStore.state.threatmodel.data.detail.diagrams).toHaveLength(diagramCount + 1);
+            });
+
+            it('tracks diagram creation', () => {
+                expect(analytics.track).toHaveBeenCalledWith('DIAGRAM_CREATED');
             });
         });
 
@@ -328,5 +345,11 @@ describe('views/ThreatmodelEdit.vue', () => {
                 );
             });
         });
+    });
+
+    it('finishes the editing session when the view unmounts', () => {
+        analytics.finishEditing.mockClear();
+        wrapper.destroy();
+        expect(analytics.finishEditing).toHaveBeenCalledTimes(1);
     });
 });

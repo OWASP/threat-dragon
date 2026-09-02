@@ -292,6 +292,11 @@ describe('config.helper.js', () => {
                 githubEnabled: false,
                 gitlabEnabled: false,
                 googleEnabled: false,
+                analytics: {
+                    enabled: false,
+                    dashboardUrl: null,
+                    eventNames: []
+                },
                 localEnabled: true,
                 allowedLocales: ['en', 'es'],
                 defaultLocale: 'es'
@@ -305,6 +310,11 @@ describe('config.helper.js', () => {
             expect(result.githubEnabled).to.be.false;
             expect(result.gitlabEnabled).to.be.false;
             expect(result.googleEnabled).to.be.false;
+            expect(result.analytics).to.deep.equal({
+                enabled: false,
+                dashboardUrl: null,
+                eventNames: []
+            });
             expect(result.localEnabled).to.be.true;
             expect(result.allowedLocales).to.deep.equal([]);
             expect(result.defaultLocale).to.equal('en');
@@ -316,6 +326,17 @@ describe('config.helper.js', () => {
             });
             const result = getConfig();
             expect(result.allowedLocales).to.deep.equal(['en', 'pt-BR']);
+        });
+
+        it('exposes analytics only after server configuration enables it', () => {
+            sinon.stub(env, 'get').returns({
+                config: {
+                    PLAUSIBLE_ENABLED: true,
+                    PLAUSIBLE_DASHBOARD_URL: 'https://plausible.test/share/threatdragon'
+                }
+            });
+            const result = getConfig();
+            expect(result.analytics.eventNames).to.not.be.empty;
         });
     });
 });

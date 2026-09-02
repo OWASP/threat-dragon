@@ -35,6 +35,7 @@ import tmActions from '@/store/actions/threatmodel.js';
 import schema from '@/service/schema/ajv';
 import { importOtm } from '@/service/migration/otm/otm';
 import { importTmbom } from '@/service/migration/tmBom/tmBom';
+import analytics from '@/service/analytics.js';
 
 export default {
     name: 'SelectDemoModel',
@@ -56,6 +57,7 @@ export default {
     },
     methods: {
         onModelClick(model) {
+            analytics.track('THREAT_MODEL_OPENED', { source: 'demo' });
             if (schema.isTmBom(model.model)) {
                 this.$store.dispatch(tmActions.selected, importTmbom(model.model));
             } else if (schema.isOtm(model.model)) {

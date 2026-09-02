@@ -6,7 +6,13 @@ jest.mock('@/service/api/api', () => ({
     getAsync: jest.fn()
 }));
 
+jest.mock('@/service/analytics.js', () => ({
+    configure: jest.fn(),
+    disable: jest.fn()
+}));
+
 import api from '@/service/api/api';
+import analytics from '@/service/analytics.js';
 
 describe('store/modules/config.js', () => {
 
@@ -62,6 +68,32 @@ describe('store/modules/config.js', () => {
                 expect(state.configError).toBeNull();
             });
 
+            it('drops an allowed locale list with no supported values', () => {
+                const state = { config: null, configError: null };
+                configModule.mutations[configLoaded](state, {
+                    config: { localEnabled: true, allowedLocales: ['xx'] }
+                });
+                expect(state.config).toEqual({ localEnabled: true });
+            });
+
+            it('retains all boolean provider settings', () => {
+                const state = { config: null, configError: null };
+                configModule.mutations[configLoaded](state, {
+                    config: {
+                        localEnabled: true,
+                        bitbucketEnabled: true,
+                        gitlabEnabled: false,
+                        googleEnabled: true
+                    }
+                });
+                expect(state.config).toEqual({
+                    localEnabled: true,
+                    bitbucketEnabled: true,
+                    gitlabEnabled: false,
+                    googleEnabled: true
+                });
+            });
+
             it('rejects empty config and sets error', () => {
                 const config = {
                     defaultLocale: 'foobar',
@@ -85,6 +117,68 @@ describe('store/modules/config.js', () => {
                 expect(state.config).toBeNull();
                 expect(state.configError).toContain('rejected');
             });
+        });
+
+        it('retains complete analytics configuration', () => {
+            const state = { config: null, configError: null };
+            const analyticsConfig = {
+                enabled: true,
+                dashboardUrl: 'https://plausible.test/share/threatdragon',
+                eventNames: ['PAGE_VIEW_HOME']
+            };
+            configModule.mutations[configLoaded](state, { config: { analytics: analyticsConfig } });
+            expect(state.config.analytics).toEqual(analyticsConfig);
+        });
+
+        it('retains an explicitly disabled analytics configuration', () => {
+            const state = { config: null, configError: null };
+            const analyticsConfig = { enabled: false, dashboardUrl: null, eventNames: [] };
+            configModule.mutations[configLoaded](state, { config: { analytics: analyticsConfig } });
+            expect(state.config.analytics).toEqual(analyticsConfig);
+        });
+
+        it('rejects a malformed analytics dashboard URL', () => {
+            const state = { config: null, configError: null };
+            configModule.mutations[configLoaded](state, {
+                config: { analytics: { enabled: true, dashboardUrl: 'not-a-url', eventNames: ['PAGE_VIEW_HOME'] } }
+            });
+            expect(state.config).toBeNull();
+        });
+
+        it('rejects an analytics dashboard URL with an unsafe protocol', () => {
+            const state = { config: null, configError: null };
+            configModule.mutations[configLoaded](state, {
+                config: {
+                    analytics: {
+                        enabled: true,
+                        dashboardUrl: 'javascript:alert(1)',
+                        eventNames: ['PAGE_VIEW_HOME']
+                    }
+                }
+            });
+            expect(state.configError).toContain('Server config rejected');
+        });
+
+        it('rejects analytics configuration with a non-boolean enabled value', () => {
+            const state = { config: null, configError: null };
+            configModule.mutations[configLoaded](state, {
+                config: { analytics: { enabled: 'true', dashboardUrl: null, eventNames: [] } }
+            });
+            expect(state.config).toBeNull();
+        });
+
+        it('rejects analytics configuration with non-string event names', () => {
+            const state = { config: null, configError: null };
+            configModule.mutations[configLoaded](state, {
+                config: { analytics: { enabled: false, dashboardUrl: null, eventNames: [null] } }
+            });
+            expect(state.config).toBeNull();
+        });
+
+        it('rejects analytics configuration arrays', () => {
+            const state = { config: null, configError: null };
+            configModule.mutations[configLoaded](state, { config: { analytics: [] } });
+            expect(state.config).toBeNull();
         });
 
         describe('error', () => {
@@ -139,6 +233,17 @@ describe('store/modules/config.js', () => {
                 api.getAsync.mockResolvedValue({ data: configData });
                 await configModule.actions[configFetch](context);
                 expect(commit).toHaveBeenCalledWith(configLoaded, { config: configData });
+            });
+
+            it('enables analytics only from the server response', async () => {
+                const analyticsConfig = {
+                    enabled: true,
+                    dashboardUrl: 'https://plausible.test/share/threatdragon',
+                    eventNames: ['PAGE_VIEW_HOME']
+                };
+                api.getAsync.mockResolvedValue({ data: { analytics: analyticsConfig } });
+                await configModule.actions[configFetch](context);
+                expect(analytics.configure).toHaveBeenCalledWith(analyticsConfig);
             });
 
             it('handles server response without "data" wrapper', async () => {
@@ -219,6 +324,26 @@ describe('store/modules/config.js', () => {
             it('returns defaultLocale when present', () => {
                 const state = { config: { defaultLocale: 'de' } };
                 expect(configModule.getters.defaultLocale(state)).toBe('de');
+            });
+        });
+
+        describe('analytics', () => {
+            it('reports analytics as disabled without server configuration', () => {
+                expect(configModule.getters.analyticsEnabled({ config: null })).toBe(false);
+            });
+
+            it('reports analytics as enabled from server configuration', () => {
+                const state = { config: { analytics: { enabled: true } } };
+                expect(configModule.getters.analyticsEnabled(state)).toBe(true);
+            });
+
+            it('returns no dashboard URL without server configuration', () => {
+                expect(configModule.getters.analyticsDashboardUrl({ config: null })).toBeNull();
+            });
+
+            it('returns the server-configured dashboard URL', () => {
+                const state = { config: { analytics: { dashboardUrl: 'https://plausible.test/share/td' } } };
+                expect(configModule.getters.analyticsDashboardUrl(state)).toBe('https://plausible.test/share/td');
             });
         });
     });

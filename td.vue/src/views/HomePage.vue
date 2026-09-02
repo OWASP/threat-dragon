@@ -70,6 +70,7 @@
 
 <script>
 import {allProviders} from '@/service/provider/providers.js';
+import analytics from '@/service/analytics.js';
 import { isDesktopApp } from '@/service/environment';
 import threatDragonLogo from '@/assets/threatdragon_logo_image.svg';
 import TdHero from '@/components/Hero.vue';
@@ -116,6 +117,7 @@ export default {
             await this.$store.dispatch(resolveLocale);
         } else {
             await this.$store.dispatch(configActions.fetch);
+            analytics.track('PAGE_VIEW_HOME');
             this.ready = true;
         }
     },

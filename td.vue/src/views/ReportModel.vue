@@ -238,6 +238,7 @@ import TdFormButton from '@/components/FormButton.vue';
 import TdPrintCoversheet from '@/components/printed-report/Coversheet.vue';
 import TdPrintExecutiveSummary from '@/components/printed-report/ExecutiveSummary.vue';
 import threatService from '@/service/threats/index.js';
+import analytics from '@/service/analytics.js';
 
 export default {
     name: 'ReportModel',
@@ -295,6 +296,7 @@ export default {
         },
         print() {
             console.debug('Print the report window');
+            analytics.track('THREAT_MODEL_REPORT_PRINT_REQUESTED');
             window.print();
         },
         printPdf() {

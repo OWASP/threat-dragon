@@ -1,4 +1,5 @@
 import { isNullish, isString } from './validators.helper.js';
+import { analyticsEventNames } from '../constants/analyticsEvents.js';
 import { errorCodes } from '../constants/errorCodes.js';
 
 const fallbackLocale = 'en';
@@ -133,6 +134,15 @@ export const buildConfig = (config, { intl = Intl } = {}) => {
     return {
         value: Object.freeze({
             ...buildOAuthFlags(config),
+            analytics: Object.freeze({
+                enabled: config.PLAUSIBLE_ENABLED === true,
+                dashboardUrl: config.PLAUSIBLE_ENABLED === true
+                    ? config.PLAUSIBLE_DASHBOARD_URL
+                    : null,
+                eventNames: Object.freeze(config.PLAUSIBLE_ENABLED === true
+                    ? [...analyticsEventNames]
+                    : [])
+            }),
             localEnabled: true,
             allowedLocales: Object.freeze([...localeConfig.allowedLocales]),
             defaultLocale: localeConfig.defaultLocale

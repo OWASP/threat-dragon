@@ -4,6 +4,7 @@ import env from '../env/Env.js';
 import GithubEnv from '../env/Github.js';
 import GitlabEnv from '../env/Gitlab';
 import GoogleEnv from '../env/Google.js';
+import PlausibleEnv from '../env/Plausible.js';
 import SecurityTxtEnv from '../env/SecurityTxt.js';
 import ThreatDragonEnv from '../env/ThreatDragon.js';
 
@@ -15,6 +16,7 @@ const tryLoadDotEnv = () => {
     const securityTxt = new SecurityTxtEnv();
     const threatDragon = new ThreatDragonEnv();
     const google = new GoogleEnv();
+    const plausible = new PlausibleEnv();
     env.get().addProvider(github);
     env.get().addProvider(gitlab);
     env.get().addProvider(encryption);
@@ -22,6 +24,7 @@ const tryLoadDotEnv = () => {
     env.get().addProvider(threatDragon);
     env.get().addProvider(google);
     env.get().addProvider(securityTxt);
+    env.get().addProvider(plausible);
     env.get().hydrate();
 };
 

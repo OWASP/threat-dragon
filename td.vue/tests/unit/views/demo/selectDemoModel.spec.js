@@ -12,15 +12,20 @@ import SelectDemoModel from '@/views/demo/SelectDemoModel.vue';
 import TdHero from '@/components/Hero.vue';
 import { importOtm } from '@/service/migration/otm/otm';
 import { importTmbom } from '@/service/migration/tmBom/tmBom';
+import analytics from '@/service/analytics.js';
 
 jest.mock('@/service/migration/otm/otm');
 jest.mock('@/service/migration/tmBom/tmBom');
+jest.mock('@/service/analytics.js', () => ({
+    track: jest.fn()
+}));
 
 describe('views/demo/SelectDemoModel.vue', () => {
 
     let wrapper, localVue, mockRouter, mockStore;
 
     beforeEach(() => {
+        analytics.track.mockClear();
         localVue = createLocalVue();
         localVue.use(Vuex);
 
@@ -263,6 +268,10 @@ describe('views/demo/SelectDemoModel.vue', () => {
 
             it('does not stash the model', () => {
                 expect(mockStore.dispatch).not.toHaveBeenCalledWith('THREATMODEL_STASH');
+            });
+
+            it('tracks demo usage without the model name', () => {
+                expect(analytics.track).toHaveBeenCalledWith('THREAT_MODEL_OPENED', { source: 'demo' });
             });
         });
 

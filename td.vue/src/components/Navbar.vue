@@ -54,6 +54,13 @@
               alt="OWASP Threat Dragon" />
           </a>
         </li>
+        <li v-if="analyticsEnabled" class="nav-item" id="nav-analytics">
+          <a class="nav-link" :href="analyticsDashboardUrl" target="_blank"
+            rel="noopener noreferrer" aria-label="Analytics enabled: view public dashboard"
+            title="Analytics enabled: view public dashboard">
+            <font-awesome-icon icon="chart-line" class="td-fa-nav td-analytics-icon"></font-awesome-icon>
+          </a>
+        </li>
       </ul>
     </div>
   </nav>
@@ -61,6 +68,7 @@
 
 <style lang="scss" scoped>
 $icon-height: 1.2rem;
+$analytics-blue: #00a8ff;
 
 .navbar {
   background-color: $orange;
@@ -105,6 +113,29 @@ $icon-height: 1.2rem;
 .td-admin-nav-dropdown :deep(.td-dropdown-toggle-link:hover),
 .td-admin-nav-dropdown :deep(.td-dropdown-toggle-link:focus) {
   background-color: transparent;
+}
+
+.td-analytics-icon {
+  animation: analytics-pulse 2.8s ease-in-out infinite;
+}
+
+@keyframes analytics-pulse {
+  0%,
+  100% {
+    color: $white;
+    opacity: 0.85;
+  }
+
+  50% {
+    color: $analytics-blue;
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .td-analytics-icon {
+    animation: none;
+  }
 }
 
 @media (max-width: 576px) {
@@ -154,7 +185,9 @@ export default {
     computed: {
         ...mapGetters([
             'username',
-            'isAdmin'
+            'isAdmin',
+            'analyticsEnabled',
+            'analyticsDashboardUrl'
         ])
     },
     methods: {

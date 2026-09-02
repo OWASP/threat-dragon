@@ -98,6 +98,7 @@ import TdFormSelect from '@/components/FormSelect.vue';
 import TdThreatStatusSelector from '@/components/ThreatStatusSelector.vue';
 import { GetContextSuggestions } from '@/service/threats/oats/context-generator.js';
 import { v4 as uuidv4 } from 'uuid';
+import analytics from '@/service/analytics.js';
 export default {
     name: 'TdThreatSuggest',
     components: {
@@ -137,12 +138,14 @@ export default {
             suggestions: [],
             types: [],
             threat: {},
-            index: 0
+            index: 0,
+            suggestionSource: null
         };
     },
     methods: {
         showModal(type) {
             this.index = 0;
+            this.suggestionSource = type;
             const tmpThreat = createNewTypedThreat(this.modelType, this.cellRef.data.type, this.threatTop + 1);
             this.types = [...this.threatTypes];
             if (type == 'type') {
@@ -172,6 +175,7 @@ export default {
             this.suggestions = [];
             this.types = [];
             this.index = 0;
+            this.suggestionSource = null;
             this.$refs.editModal.hide();
         },
         next() {
@@ -205,6 +209,7 @@ export default {
             this.$store.dispatch(tmActions.modified);
             this.$store.dispatch(cellDataUpdated, this.cellRef.data);
             dataChanged.updateStyleAttrs(this.cellRef);
+            analytics.track('THREAT_SUGGESTION_APPLIED', { source: this.suggestionSource });
             this.next();
 
         },

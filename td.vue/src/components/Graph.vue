@@ -56,6 +56,17 @@ import diagramService from '@/service/diagram/diagram.js';
 import saveDiagram from '@/service/diagram/save.js';
 import stencil from '@/service/x6/stencil.js';
 import tmActions from '@/store/actions/threatmodel.js';
+import analytics from '@/service/analytics.js';
+
+const methodologies = Object.freeze({
+    CIA: 'CIA',
+    DIE: 'CIADIE',
+    CIADIE: 'CIADIE',
+    LINDDUN: 'LINDDUN',
+    PLOT4ai: 'PLOT4AI',
+    STRIDE: 'STRIDE',
+    EOP: 'EOP'
+});
 
 export default {
     name: 'TdGraph',
@@ -78,6 +89,10 @@ export default {
     },
     async mounted() {
         this.init();
+        analytics.startEditing();
+        analytics.track('DIAGRAM_METHODOLOGY_USED', {
+            methodology: methodologies[this.diagram.diagramType] || 'GENERIC'
+        });
         if (this.providerType === providerTypes.desktop) {
             this.desktopSaveRequestHandler = () => this.handleDesktopSaveRequest();
             window.addEventListener(desktopDiagramSaveRequestEvent, this.desktopSaveRequestHandler);
@@ -129,6 +144,7 @@ export default {
         }
     },
     unmounted() {
+        analytics.finishEditing();
         if (this.desktopSaveRequestHandler) {
             window.removeEventListener(desktopDiagramSaveRequestEvent, this.desktopSaveRequestHandler);
         }

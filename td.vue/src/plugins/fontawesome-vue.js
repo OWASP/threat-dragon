@@ -34,6 +34,7 @@ import {
     faLock,
     faClone,
     faCog,
+    faChartLine,
     faEllipsisV,
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -77,6 +78,7 @@ library.add(
     faLock,
     faClone,
     faCog,
+    faChartLine,
     faEllipsisV
 );
 

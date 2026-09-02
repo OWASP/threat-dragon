@@ -24,6 +24,11 @@ import threatmodelModule, { clearState } from '@/store/modules/threatmodel.js';
 import googleDriveApi from '@/service/api/googleDriveApi';
 import threatmodelApi from '@/service/api/threatmodelApi.js';
 import tmbom from '@/service/migration/tmBom/tmBom';
+import analytics from '@/service/analytics.js';
+
+jest.mock('@/service/analytics.js', () => ({
+    track: jest.fn()
+}));
 
 describe('store/modules/threatmodel.js', () => {
     const getRootState = () => ({
@@ -75,6 +80,7 @@ describe('store/modules/threatmodel.js', () => {
     describe('actions', () => {
 
         beforeEach(() => {
+            analytics.track.mockClear();
             jest.spyOn(mocks, 'commit');
             jest.spyOn(mocks, 'dispatch');
             mocks.rootState = getRootState();
@@ -151,6 +157,10 @@ describe('store/modules/threatmodel.js', () => {
                     it('commits the threat model as not modified', () => {
                         expect(mocks.commit).toHaveBeenCalledWith(threatmodelNotModified);
                     });
+
+                    it('tracks the provider only after the model is created', () => {
+                        expect(analytics.track).toHaveBeenCalledWith('THREAT_MODEL_CREATED', { provider: 'github' });
+                    });
                 });
 
                 describe('with API error', () => {
@@ -166,6 +176,10 @@ describe('store/modules/threatmodel.js', () => {
                     it('skips the set rollback copy event', () => {
                         expect(mocks.dispatch).not.toHaveBeenCalledWith(threatmodelStash);
                         expect(mocks.commit).not.toHaveBeenCalledWith(threatmodelNotModified);
+                    });
+
+                    it('does not track a failed create', () => {
+                        expect(analytics.track).not.toHaveBeenCalled();
                     });
                 });
             });
@@ -187,6 +201,10 @@ describe('store/modules/threatmodel.js', () => {
                     it('dispatches the set rollback copy event', () => {
                         expect(mocks.dispatch).toHaveBeenCalledWith(threatmodelStash);
                         expect(mocks.commit).toHaveBeenCalledWith(threatmodelNotModified);
+                    });
+
+                    it('tracks the provider only after the model is created', () => {
+                        expect(analytics.track).toHaveBeenCalledWith('THREAT_MODEL_CREATED', { provider: 'google' });
                     });
                 });
     
@@ -398,6 +416,10 @@ describe('store/modules/threatmodel.js', () => {
                         expect(mocks.dispatch).toHaveBeenCalledWith(threatmodelStash);
                         expect(mocks.commit).toHaveBeenCalledWith(threatmodelNotModified);
                     });
+
+                    it('tracks the provider only after the model is saved', () => {
+                        expect(analytics.track).toHaveBeenCalledWith('THREAT_MODEL_SAVED', { provider: 'github' });
+                    });
                 });
 
                 describe('with API error', () => {
@@ -413,6 +435,10 @@ describe('store/modules/threatmodel.js', () => {
                     it('skips the set rollback copy event', () => {
                         expect(mocks.dispatch).not.toHaveBeenCalledWith(threatmodelStash);
                         expect(mocks.commit).not.toHaveBeenCalledWith(threatmodelNotModified);
+                    });
+
+                    it('does not track a failed save', () => {
+                        expect(analytics.track).not.toHaveBeenCalled();
                     });
                 });
             });

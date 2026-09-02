@@ -132,6 +132,7 @@ import dataChanged from '@/service/x6/graph/data-changed.js';
 import tmActions from '@/store/actions/threatmodel.js';
 import TdGraphProperties from '@/components/GraphProperties.vue';
 import TdGraphThreats from '@/components/GraphThreats.vue';
+import analytics from '@/service/analytics.js';
 
 export default {
     name: 'TdGraphMeta',
@@ -172,12 +173,15 @@ export default {
             this.$store.dispatch(cellDataUpdated, this.cellRef.data);
             dataChanged.updateStyleAttrs(this.cellRef);
             this.threatSelected(threat.id, 'new');
+            analytics.track('THREAT_CREATED_MANUALLY');
         },
         AddThreatByType(){
             this.$emit('threatSuggest', 'type');
+            analytics.track('THREAT_SUGGESTIONS_REQUESTED', { source: 'type' });
         },
         AddThreatByContext(){
             this.$emit('threatSuggest', 'context');
+            analytics.track('THREAT_SUGGESTIONS_REQUESTED', { source: 'context' });
         }
     },
 };

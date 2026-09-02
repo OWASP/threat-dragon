@@ -235,6 +235,7 @@ import TdFormButton from '@/components/FormButton.vue';
 import TdFormTags from '@/components/FormTags.vue';
 import TdInputGroup from '@/components/InputGroup.vue';
 import tmActions from '@/store/actions/threatmodel.js';
+import analytics from '@/service/analytics.js';
 
 export default {
     name: 'ThreatModelEdit',
@@ -264,6 +265,7 @@ export default {
     },
     async mounted() {
         this.init();
+        analytics.startEditing();
     },
     methods: {
         init() {
@@ -319,6 +321,7 @@ export default {
             this.$store.dispatch(tmActions.update, { diagramTop: this.diagramTop + 1 });
             this.model.detail.diagrams.push(newDiagram);
             this.$store.dispatch(tmActions.modified);
+            analytics.track('DIAGRAM_CREATED');
         },
         onDiagramTypeClick(idx, type) {
             let defaultTitle;
@@ -418,6 +421,9 @@ export default {
                 centered: true
             });
         }
+    },
+    unmounted() {
+        analytics.finishEditing();
     }
 };
 

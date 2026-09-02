@@ -5,6 +5,32 @@ import HomePage from '../views/HomePage.vue';
 import { localRoutes } from './local.js';
 import { desktopRoutes } from './desktop.js';
 import { googleRoutes } from './google.js';
+import analytics from '@/service/analytics.js';
+
+const pageViewEvents = Object.freeze({
+    MainDashboard: 'PAGE_VIEW_DASHBOARD',
+    DemoSelect: 'PAGE_VIEW_DEMO_MODEL_SELECT',
+    gitRepository: 'PAGE_VIEW_REPOSITORY_SELECT',
+    gitBranch: 'PAGE_VIEW_BRANCH_SELECT',
+    gitThreatModelSelect: 'PAGE_VIEW_THREAT_MODEL_SELECT',
+    googleFolder: 'PAGE_VIEW_GOOGLE_FOLDER_SELECT',
+    localThreatModelImport: 'PAGE_VIEW_IMPORT_MODEL',
+    localNewThreatModel: 'PAGE_VIEW_NEW_THREAT_MODEL',
+    gitNewThreatModel: 'PAGE_VIEW_NEW_THREAT_MODEL',
+    googleNewThreatModel: 'PAGE_VIEW_NEW_THREAT_MODEL',
+    localThreatModel: 'PAGE_VIEW_THREAT_MODEL',
+    gitThreatModel: 'PAGE_VIEW_THREAT_MODEL',
+    googleThreatModel: 'PAGE_VIEW_THREAT_MODEL',
+    localThreatModelEdit: 'PAGE_VIEW_THREAT_MODEL_EDIT',
+    gitThreatModelEdit: 'PAGE_VIEW_THREAT_MODEL_EDIT',
+    googleThreatModelEdit: 'PAGE_VIEW_THREAT_MODEL_EDIT',
+    localDiagramEdit: 'PAGE_VIEW_DIAGRAM_EDITOR',
+    gitDiagramEdit: 'PAGE_VIEW_DIAGRAM_EDITOR',
+    googleDiagramEdit: 'PAGE_VIEW_DIAGRAM_EDITOR',
+    localReport: 'PAGE_VIEW_THREAT_MODEL_REPORT',
+    gitReport: 'PAGE_VIEW_THREAT_MODEL_REPORT',
+    googleReport: 'PAGE_VIEW_THREAT_MODEL_REPORT'
+});
 
 const routes = [
     {
@@ -41,6 +67,8 @@ const get = () => {
             history: createWebHashHistory(),
             routes
         });
+
+        routerInstance.afterEach((to) => analytics.track(pageViewEvents[to.name]));
     }
 
     return routerInstance;

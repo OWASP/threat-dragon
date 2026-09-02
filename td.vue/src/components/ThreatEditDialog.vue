@@ -269,6 +269,7 @@ import TdFormRadioGroup from '@/components/FormRadioGroup.vue';
 import TdFormSelect from '@/components/FormSelect.vue';
 import TdThreatStatusSelector from '@/components/ThreatStatusSelector.vue';
 import { getGame, getAllGames } from '../service/threats/models/eop';
+import analytics from '@/service/analytics.js';
 
 export default {
     name: 'TdThreatEditDialog',
@@ -431,6 +432,7 @@ export default {
                 (x) => x.id === this.threat.id
             );
             if (threatRef) {
+                const previousStatus = threatRef.status;
                 const objRef = this.cellRef.data;
                 if (!objRef.threatFrequency) {
                     const tmpfreq = threatModels.getFrequencyMapByElement(
@@ -468,10 +470,17 @@ export default {
                 this.$store.dispatch(cellDataUpdated, this.cellRef.data);
                 this.$store.dispatch(tmActions.modified);
                 dataChanged.updateStyleAttrs(this.cellRef);
+                if (!this.newThreat) {
+                    analytics.track('THREAT_UPDATED');
+                    if (previousStatus !== this.threat.status) {
+                        analytics.track('THREAT_STATUS_UPDATED', { status: this.threat.status });
+                    }
+                }
             }
             this.hideModal();
         },
         deleteThreat() {
+            const threatExists = this.cellRef.data.threats.some((x) => x.id === this.threat.id);
             if (!this.threat.new && this.cellRef.data.threatFrequency) {
                 const threatMap = this.cellRef.data.threatFrequency;
                 Object.keys(threatMap).forEach((k) => {
@@ -491,6 +500,7 @@ export default {
             this.$store.dispatch(cellDataUpdated, this.cellRef.data);
             this.$store.dispatch(tmActions.modified);
             dataChanged.updateStyleAttrs(this.cellRef);
+            if (threatExists) analytics.track('THREAT_DELETED');
         },
         hideModal() {
             this.$refs.editModal.hide();

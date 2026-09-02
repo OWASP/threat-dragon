@@ -104,6 +104,7 @@ import TdFormButton from '@/components/FormButton.vue';
 import TdImage from '@/components/Image.vue';
 import TdThreatModelSummaryCard from '@/components/ThreatModelSummaryCard.vue';
 import tmActions from '@/store/actions/threatmodel.js';
+import analytics from '@/service/analytics.js';
 
 export default {
     name: 'ThreatModel',
@@ -143,6 +144,7 @@ export default {
             const tmBom = this.$store.getters.tmBomExport;
             console.debug('Export to TM-BOM ' + JSON.stringify(tmBom, null, 2));
             await writeFile(tmBom, '');
+            analytics.track('THREAT_MODEL_TMBOM_EXPORTED');
         },
         getThumbnailUrl(diagram) {
             if (!diagram || !diagram.diagramType) {
