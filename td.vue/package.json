@@ -177,15 +177,7 @@
     "ip-address": ">=10.5.0",
     "nanoid": ">=3.3.18",
     "serialize-javascript": "7.0.5",
-    "tar@>=7.0.0 <7.5.21": "7.5.21",
-    "@wdio/config": ">=9.31.2",
-    "@wdio/types": ">=9.31.2",
-    "@wdio/utils": ">=9.31.2",
-    "chrome-remote-interface": ">=0.33.3",
-    "commander": ">=2.11.0",
-    "ws": ">=7.5.13",
-    "is-unsafe": ">=2.0.2",
-    "webdriver": ">=9.31.2"
+    "tar@>=7.0.0 <7.5.21": "7.5.21"
   },
   "main": "background.js",
   "allowScripts": {
