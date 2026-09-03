@@ -161,11 +161,6 @@ export default {
             type: Function,
             default: () => {
             }
-        },
-        isGoogleProvider: {
-            required: false,
-            type: Boolean,
-            default: false
         }
     },
     computed: {
@@ -173,12 +168,7 @@ export default {
             if (!this.filter) {
                 return this.items;
             }
-            if (this.$props.isGoogleProvider) {
-                return this.items.filter(x => x.name.toLowerCase().includes(this.filter.toLowerCase()));
-            } else {
-                console.log(this.items);
-                return this.items.filter(x => (x.value || x).toLowerCase().includes(this.filter.toLowerCase()));
-            }
+            return this.items.filter(x => (x.value || x).toLowerCase().includes(this.filter.toLowerCase()));
         }
     }
 };
