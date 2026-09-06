@@ -1,4 +1,4 @@
-﻿import cornucopiaEN from '@/service/schema/api_json/cornucopia-eop-en.json';
+import cornucopiaEN from '@/service/schema/api_json/cornucopia-eop-en.json';
 
 export default {
     id: 'cornucopia-eop',

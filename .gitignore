@@ -189,6 +189,7 @@
 !td.vue/src/service/schema/
 !td.vue/src/service/schema/*.js
 !td.vue/src/service/schema/*.json
+!td.vue/src/service/schema/api_json/*.json
 !td.vue/src/service/threats/
 !td.vue/src/service/threats/*.js
 !td.vue/src/service/threats/models/
