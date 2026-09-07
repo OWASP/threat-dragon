@@ -41,7 +41,8 @@ export const analyticsEventProperties = Object.freeze({
     [analyticsEvents.PROVIDER_SELECTED]: Object.freeze({ provider: providerValues }),
     [analyticsEvents.PROVIDER_AUTHENTICATION_SUCCEEDED]: Object.freeze({ provider: remoteProviderValues }),
     [analyticsEvents.THREAT_MODEL_OPENED]: Object.freeze({
-        source: Object.freeze([...remoteProviderValues, 'import', 'demo'])
+        source: Object.freeze([...remoteProviderValues, 'import', 'demo']),
+        provider: providerValues
     }),
     [analyticsEvents.THREAT_MODEL_CREATED]: Object.freeze({ provider: providerValues }),
     [analyticsEvents.THREAT_MODEL_SAVED]: Object.freeze({ provider: providerValues }),
@@ -55,12 +56,25 @@ export const analyticsEventProperties = Object.freeze({
             'FIFTEEN_TO_THIRTY_MINUTES',
             'THIRTY_TO_SIXTY_MINUTES',
             'SIXTY_PLUS_MINUTES'
-        ])
+        ]),
+        editor: Object.freeze(['diagram', 'threat_model'])
+    }),
+    [analyticsEvents.DIAGRAM_CREATED]: Object.freeze({
+        methodology: Object.freeze(['CIA', 'CIADIE', 'LINDDUN', 'PLOT4AI', 'STRIDE', 'EOP', 'GENERIC'])
     }),
     [analyticsEvents.DIAGRAM_METHODOLOGY_USED]: Object.freeze({
         methodology: Object.freeze(['CIA', 'CIADIE', 'LINDDUN', 'PLOT4AI', 'STRIDE', 'EOP', 'GENERIC'])
     }),
     [analyticsEvents.THREAT_STATUS_UPDATED]: Object.freeze({
+        status: Object.freeze(['NotApplicable', 'Open', 'Mitigated', 'Accepted', 'Transferred', 'Avoided', 'Eliminated'])
+    }),
+    [analyticsEvents.THREAT_CREATED_MANUALLY]: Object.freeze({
+        status: Object.freeze(['NotApplicable', 'Open', 'Mitigated', 'Accepted', 'Transferred', 'Avoided', 'Eliminated'])
+    }),
+    [analyticsEvents.THREAT_UPDATED]: Object.freeze({
+        status: Object.freeze(['NotApplicable', 'Open', 'Mitigated', 'Accepted', 'Transferred', 'Avoided', 'Eliminated'])
+    }),
+    [analyticsEvents.THREAT_DELETED]: Object.freeze({
         status: Object.freeze(['NotApplicable', 'Open', 'Mitigated', 'Accepted', 'Transferred', 'Avoided', 'Eliminated'])
     }),
     [analyticsEvents.THREAT_SUGGESTIONS_REQUESTED]: Object.freeze({
@@ -69,7 +83,9 @@ export const analyticsEventProperties = Object.freeze({
     [analyticsEvents.THREAT_SUGGESTION_APPLIED]: Object.freeze({
         source: Object.freeze(['type', 'context'])
     }),
-    [analyticsEvents.DIAGRAM_EXPORTED]: Object.freeze({ format: Object.freeze(['PNG', 'SVG']) })
+    [analyticsEvents.DIAGRAM_EXPORTED]: Object.freeze({ format: Object.freeze(['PNG', 'SVG']) }),
+    [analyticsEvents.THREAT_MODEL_TMBOM_EXPORTED]: Object.freeze({ format: Object.freeze(['TM_BOM']) }),
+    [analyticsEvents.THREAT_MODEL_REPORT_PRINT_REQUESTED]: Object.freeze({ format: Object.freeze(['PRINT']) })
 });
 
 export const pageViewPaths = Object.freeze({

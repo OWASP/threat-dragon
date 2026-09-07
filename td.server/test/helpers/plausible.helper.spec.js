@@ -23,11 +23,11 @@ describe('helpers/plausible.helper.js', () => {
     });
 
     it('allows no properties for an event without properties', () => {
-        expect(hasValidProperties(analyticsEvents.DIAGRAM_CREATED)).to.equal(true);
+        expect(hasValidProperties(analyticsEvents.PAGE_VIEW_HOME)).to.equal(true);
     });
 
     it('rejects properties for an event without properties', () => {
-        expect(hasValidProperties(analyticsEvents.DIAGRAM_CREATED, { title: 'model name' })).to.equal(false);
+        expect(hasValidProperties(analyticsEvents.PAGE_VIEW_HOME, { title: 'model name' })).to.equal(false);
     });
 
     it('requires properties for an event with a property', () => {
@@ -62,19 +62,42 @@ describe('helpers/plausible.helper.js', () => {
     });
 
     it('rejects local as a model-open source', () => {
-        expect(hasValidProperties(analyticsEvents.THREAT_MODEL_OPENED, { source: 'local' })).to.equal(false);
+        expect(hasValidProperties(analyticsEvents.THREAT_MODEL_OPENED, {
+            source: 'local',
+            provider: 'local'
+        })).to.equal(false);
+    });
+
+    it('allows a local provider when a model is imported', () => {
+        expect(hasValidProperties(analyticsEvents.THREAT_MODEL_OPENED, {
+            source: 'import',
+            provider: 'local'
+        })).to.equal(true);
+    });
+
+    it('requires a storage provider for a model-open event', () => {
+        expect(hasValidProperties(analyticsEvents.THREAT_MODEL_OPENED, { source: 'import' })).to.equal(false);
+    });
+
+    it('rejects a report format that the browser cannot identify', () => {
+        expect(hasValidProperties(analyticsEvents.THREAT_MODEL_REPORT_PRINT_REQUESTED, { format: 'PDF' })).to.equal(false);
     });
 
     it('allows the fixed property value for an event', () => {
         expect(hasValidProperties(analyticsEvents.PROVIDER_SELECTED, { provider: 'local' })).to.equal(true);
     });
 
+    it('requires both properties for an editing session', () => {
+        expect(hasValidProperties(analyticsEvents.THREAT_MODEL_EDIT_SESSION_ENDED, {
+            duration_bucket: 'LESS_THAN_5_MINUTES'
+        })).to.equal(false);
+    });
+
     Object.entries(analyticsEventProperties).forEach(([event, allowedProperties]) => {
-        const [propertyName] = Object.keys(allowedProperties);
         it(`allows the declared property for ${event}`, () => {
-            expect(hasValidProperties(event, {
-                [propertyName]: allowedProperties[propertyName][0]
-            })).to.equal(true);
+            const props = Object.fromEntries(Object.entries(allowedProperties)
+                .map(([propertyName, values]) => [propertyName, values[0]]));
+            expect(hasValidProperties(event, props)).to.equal(true);
         });
     });
 
@@ -94,12 +117,12 @@ describe('helpers/plausible.helper.js', () => {
         expect(createPlausiblePayload(
             config,
             analyticsEvents.THREAT_MODEL_EDIT_SESSION_ENDED,
-            { duration_bucket: 'SIXTY_PLUS_MINUTES' }
+            { duration_bucket: 'SIXTY_PLUS_MINUTES', editor: 'diagram' }
         )).to.deep.equal({
             domain: 'threatdragon.test',
             name: analyticsEvents.THREAT_MODEL_EDIT_SESSION_ENDED,
             url: 'https://threatdragon.test/analytics',
-            props: { duration_bucket: 'SIXTY_PLUS_MINUTES' }
+            props: { duration_bucket: 'SIXTY_PLUS_MINUTES', editor: 'diagram' }
         });
     });
 });

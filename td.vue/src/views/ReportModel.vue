@@ -296,7 +296,7 @@ export default {
         },
         print() {
             console.debug('Print the report window');
-            analytics.track('THREAT_MODEL_REPORT_PRINT_REQUESTED');
+            analytics.track('THREAT_MODEL_REPORT_PRINT_REQUESTED', { format: 'PRINT' });
             window.print();
         },
         printPdf() {

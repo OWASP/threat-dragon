@@ -20,7 +20,10 @@ const analyticsPlugin = (store) => {
                 break;
             case threatmodelFetch:
                 if (remoteProviders.includes(state.provider.selected)) {
-                    analytics.track('THREAT_MODEL_OPENED', { source: state.provider.selected });
+                    analytics.track('THREAT_MODEL_OPENED', {
+                        source: state.provider.selected,
+                        provider: state.provider.selected
+                    });
                 }
                 break;
             default:

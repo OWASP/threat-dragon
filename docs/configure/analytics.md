@@ -63,7 +63,7 @@ _Threat Dragon uses an allow-list for property values to help protect privacy._
 2. Select **Custom Properties**.
 3. Select **Add property**.
 4. Enter one property name from the table below.
-5. Save the property and repeat for all seven names.
+5. Save the property and repeat for all names.
 
 | Property | Threat Dragon's Allowed Values |
 | --- | --- |
@@ -71,9 +71,10 @@ _Threat Dragon uses an allow-list for property values to help protect privacy._
 | `source` | `github`, `gitlab`, `bitbucket`, `google`, `import`, `demo`, `type`, `context` |
 | `language` | `ar`, `de`, `el`, `en`, `es`, `fi`, `fr`, `hi`, `id`, `ja`, `ms`, `pt`, `pt-BR`, `zh` |
 | `duration_bucket` | `LESS_THAN_5_MINUTES`, `FIVE_TO_FIFTEEN_MINUTES`, `FIFTEEN_TO_THIRTY_MINUTES`, `THIRTY_TO_SIXTY_MINUTES`, `SIXTY_PLUS_MINUTES` |
+| `editor` | `diagram`, `threat_model` |
 | `methodology` | `CIA`, `CIADIE`, `LINDDUN`, `PLOT4AI`, `STRIDE`, `EOP`, `GENERIC` |
 | `status` | `NotApplicable`, `Open`, `Mitigated`, `Accepted`, `Transferred`, `Avoided`, `Eliminated` |
-| `format` | `PNG`, `SVG` |
+| `format` | `PNG`, `SVG`, `TM_BOM`, `PRINT` |
 
 #### Segments (optional)
 
