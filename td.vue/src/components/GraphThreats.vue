@@ -89,9 +89,9 @@
             </b-col>
 
             <b-col align-h="end">
-                <b-badge v-if="modelTypeResolved">
+                <td-badge v-if="modelTypeResolved">
                     {{ modelTypeResolved === 'EOP' ? 'EoP' : modelTypeResolved }}
-                </b-badge>
+                </td-badge>
             </b-col>
         </b-row>
     </b-card-text>
@@ -138,11 +138,15 @@
 </style>
 
 <script>
+import TdBadge from '@/components/Badge.vue';
 import { getGame } from '../service/threats/models/eop';
 import { isResolved } from '@/service/threats/status.js';
 
 export default {
     name: 'TdGraphThreats',
+    components: {
+        TdBadge
+    },
 
     props: {
         threat: {

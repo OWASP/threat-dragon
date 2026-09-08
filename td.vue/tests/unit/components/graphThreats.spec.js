@@ -3,6 +3,7 @@ import { shallowMount } from '@vue/test-utils';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 import { createLocalVue, mountOptions } from '../helpers/vueTestUtils';
+import TdBadge from '@/components/Badge.vue';
 import TdGraphThreats from '@/components/GraphThreats.vue';
 
 describe('components/GraphThreats.vue', () => {
@@ -165,7 +166,7 @@ describe('components/GraphThreats.vue', () => {
         });
 
         it('displays the model type', () => {
-            expect(wrapper.find('.threat-card').text()).toContain('CIA');
+            expect(wrapper.findComponent(TdBadge).text()).toBe('CIA');
         });
     });
 
