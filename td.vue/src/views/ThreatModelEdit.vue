@@ -235,7 +235,7 @@ import TdFormButton from '@/components/FormButton.vue';
 import TdFormTags from '@/components/FormTags.vue';
 import TdInputGroup from '@/components/InputGroup.vue';
 import tmActions from '@/store/actions/threatmodel.js';
-import analytics from '@/service/analytics.js';
+import analytics, { methodologyForDiagramType } from '@/service/analytics.js';
 
 export default {
     name: 'ThreatModelEdit',
@@ -244,6 +244,11 @@ export default {
         TdFormButton,
         TdFormTags,
         TdInputGroup
+    },
+    data() {
+        return {
+            createdDiagramIds: []
+        };
     },
     computed: {
         ...mapState({
@@ -265,7 +270,7 @@ export default {
     },
     async mounted() {
         this.init();
-        analytics.startEditing();
+        analytics.startEditing('threat_model');
     },
     methods: {
         init() {
@@ -289,6 +294,7 @@ export default {
                 const result = await this.$store.dispatch(tmActions.create);
                 // Only navigate to edit route if create was successful
                 if (result) {
+                    this.trackCreatedDiagrams();
                     const params = Object.assign({}, this.$route.params, {
                         threatmodel: this.model.summary.title
                     });
@@ -296,6 +302,7 @@ export default {
                 }
             } else {
                 await this.$store.dispatch(tmActions.saveModel);
+                if (!this.$store.getters.modelChanged) this.trackCreatedDiagrams();
             }
         },
         async onReloadClick(evt) {
@@ -320,8 +327,19 @@ export default {
             };
             this.$store.dispatch(tmActions.update, { diagramTop: this.diagramTop + 1 });
             this.model.detail.diagrams.push(newDiagram);
+            this.createdDiagramIds.push(newDiagram.id);
             this.$store.dispatch(tmActions.modified);
-            analytics.track('DIAGRAM_CREATED');
+        },
+        trackCreatedDiagrams() {
+            this.createdDiagramIds.forEach((diagramId) => {
+                const diagram = this.model.detail.diagrams.find((item) => item.id === diagramId);
+                if (diagram) {
+                    analytics.track('DIAGRAM_CREATED', {
+                        methodology: methodologyForDiagramType(diagram.diagramType)
+                    });
+                }
+            });
+            this.createdDiagramIds = [];
         },
         onDiagramTypeClick(idx, type) {
             let defaultTitle;

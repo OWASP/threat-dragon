@@ -145,7 +145,7 @@ describe('views/Threatmodel.vue', () => {
             });
 
             it('tracks the export without model contents', () => {
-                expect(analytics.track).toHaveBeenCalledWith('THREAT_MODEL_TMBOM_EXPORTED');
+                expect(analytics.track).toHaveBeenCalledWith('THREAT_MODEL_TMBOM_EXPORTED', { format: 'TM_BOM' });
             });
         });
 

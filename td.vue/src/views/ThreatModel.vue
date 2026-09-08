@@ -144,7 +144,7 @@ export default {
             const tmBom = this.$store.getters.tmBomExport;
             console.debug('Export to TM-BOM ' + JSON.stringify(tmBom, null, 2));
             await writeFile(tmBom, '');
-            analytics.track('THREAT_MODEL_TMBOM_EXPORTED');
+            analytics.track('THREAT_MODEL_TMBOM_EXPORTED', { format: 'TM_BOM' });
         },
         getThumbnailUrl(diagram) {
             if (!diagram || !diagram.diagramType) {

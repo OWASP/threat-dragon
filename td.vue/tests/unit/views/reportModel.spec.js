@@ -132,7 +132,7 @@ describe('views/ReportModel.vue', () => {
 
     it('tracks a print request without report contents', () => {
         wrapper.vm.print();
-        expect(analytics.track).toHaveBeenCalledWith('THREAT_MODEL_REPORT_PRINT_REQUESTED');
+        expect(analytics.track).toHaveBeenCalledWith('THREAT_MODEL_REPORT_PRINT_REQUESTED', { format: 'PRINT' });
     });
 });
 
@@ -186,5 +186,10 @@ describe('ReportModel.vue — desktop app', () => {
     it('calls electronAPI.modelPrint on printPdf', () => {
         wrapper.vm.printPdf();
         expect(window.electronAPI.modelPrint).toHaveBeenCalledWith('PDF');
+    });
+
+    it('does not track a PDF report export in the desktop app', () => {
+        wrapper.vm.printPdf();
+        expect(analytics.track).not.toHaveBeenCalled();
     });
 });

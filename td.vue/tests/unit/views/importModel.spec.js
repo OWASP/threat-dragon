@@ -87,7 +87,10 @@ describe('views/ImportModel.vue', () => {
         });
 
         it('tracks an imported model without its name or contents', () => {
-            expect(analytics.track).toHaveBeenCalledWith('THREAT_MODEL_OPENED', { source: 'import' });
+            expect(analytics.track).toHaveBeenCalledWith('THREAT_MODEL_OPENED', {
+                source: 'import',
+                provider: 'local'
+            });
         });
     });
 

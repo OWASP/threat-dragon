@@ -30,6 +30,11 @@ describe('views/demo/SelectDemoModel.vue', () => {
         localVue.use(Vuex);
 
         mockStore = new Vuex.Store({
+            state: {
+                provider: {
+                    selected: 'local'
+                }
+            },
             actions: {
                 threatmodelClear: () => {},
                 threatmodelLoadDemos: () => {},
@@ -271,7 +276,10 @@ describe('views/demo/SelectDemoModel.vue', () => {
             });
 
             it('tracks demo usage without the model name', () => {
-                expect(analytics.track).toHaveBeenCalledWith('THREAT_MODEL_OPENED', { source: 'demo' });
+                expect(analytics.track).toHaveBeenCalledWith('THREAT_MODEL_OPENED', {
+                    source: 'demo',
+                    provider: 'local'
+                });
             });
         });
 

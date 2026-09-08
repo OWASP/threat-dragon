@@ -1,6 +1,20 @@
 import api from '@/service/api/api.js';
+import { isDesktopApp } from '@/service/environment.js';
 
 const analyticsPath = '/api/analytics';
+const editorTypes = new Set(['diagram', 'threat_model']);
+const methodologies = Object.freeze({
+    CIA: 'CIA',
+    DIE: 'CIADIE',
+    CIADIE: 'CIADIE',
+    LINDDUN: 'LINDDUN',
+    PLOT4ai: 'PLOT4AI',
+    STRIDE: 'STRIDE',
+    EOP: 'EOP'
+});
+
+const methodologyForDiagramType = (diagramType) => methodologies[diagramType] || 'GENERIC';
+
 const durationBucket = (durationMs) => {
     if (durationMs < 5 * 60 * 1000) return 'LESS_THAN_5_MINUTES';
     if (durationMs < 15 * 60 * 1000) return 'FIVE_TO_FIFTEEN_MINUTES';
@@ -20,16 +34,16 @@ const hasSafeDashboardUrl = (value) => {
 
 let enabled = false;
 let eventNames = new Set();
-let editStartedAt = null;
+let editSession = null;
 
 const disable = () => {
     enabled = false;
     eventNames = new Set();
-    editStartedAt = null;
+    editSession = null;
 };
 
 const configure = (config) => {
-    if (!config?.enabled || !hasSafeDashboardUrl(config.dashboardUrl) || !Array.isArray(config.eventNames)) {
+    if (isDesktopApp() || !config?.enabled || !hasSafeDashboardUrl(config.dashboardUrl) || !Array.isArray(config.eventNames)) {
         disable();
         return false;
     }
@@ -58,26 +72,37 @@ const track = async (event, props) => {
     }
 };
 
-const startEditing = (now = Date.now()) => {
-    if (!enabled || editStartedAt !== null) return false;
-    editStartedAt = now;
+const startEditing = (editor, now = Date.now()) => {
+    if (!enabled || editSession !== null || !editorTypes.has(editor)) return false;
+    editSession = { editor, startedAt: now };
     return true;
 };
 
-const finishEditing = (now = Date.now()) => {
-    if (editStartedAt === null) return false;
+const sendWithBeacon = (event, props) => {
+    if (!enabled || !eventNames.has(event) || typeof navigator.sendBeacon !== 'function') return false;
 
-    const startedAt = editStartedAt;
-    editStartedAt = null;
-    track('THREAT_MODEL_EDIT_SESSION_ENDED', {
-        duration_bucket: durationBucket(Math.max(0, now - startedAt))
-    });
+    const body = JSON.stringify({ event, props });
+    return navigator.sendBeacon(analyticsPath, new Blob([body], { type: 'application/json' }));
+};
+
+const finishEditing = (now = Date.now(), useBeacon = false) => {
+    if (editSession === null) return false;
+
+    const { editor, startedAt } = editSession;
+    editSession = null;
+    const props = {
+        duration_bucket: durationBucket(Math.max(0, now - startedAt)),
+        editor
+    };
+    if (!useBeacon || !sendWithBeacon('THREAT_MODEL_EDIT_SESSION_ENDED', props)) {
+        track('THREAT_MODEL_EDIT_SESSION_ENDED', props);
+    }
     return true;
 };
 
-window.addEventListener('pagehide', () => finishEditing());
+window.addEventListener('pagehide', () => finishEditing(Date.now(), true));
 
-export { durationBucket };
+export { durationBucket, methodologyForDiagramType };
 
 export default {
     configure,
