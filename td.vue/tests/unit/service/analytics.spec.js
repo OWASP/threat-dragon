@@ -2,10 +2,16 @@ jest.mock('@/service/api/api.js', () => ({
     postAsync: jest.fn()
 }));
 
+jest.mock('@/service/environment.js', () => ({
+    isDesktopApp: jest.fn(() => false)
+}));
+
 import api from '@/service/api/api.js';
-import analytics, { durationBucket } from '@/service/analytics.js';
+import { isDesktopApp } from '@/service/environment.js';
+import analytics, { durationBucket, methodologyForDiagramType } from '@/service/analytics.js';
 
 describe('service/analytics.js', () => {
+    const sendBeaconDescriptor = Object.getOwnPropertyDescriptor(navigator, 'sendBeacon');
     const config = {
         enabled: true,
         dashboardUrl: 'https://plausible.test/share/threatdragon',
@@ -18,6 +24,15 @@ describe('service/analytics.js', () => {
         api.postAsync.mockResolvedValue({});
     });
 
+    afterEach(() => {
+        isDesktopApp.mockReturnValue(false);
+        if (sendBeaconDescriptor) {
+            Object.defineProperty(navigator, 'sendBeacon', sendBeaconDescriptor);
+        } else {
+            delete navigator.sendBeacon;
+        }
+    });
+
     it('does not send while disabled', async () => {
         await analytics.track('PAGE_VIEW_HOME');
         expect(api.postAsync).not.toHaveBeenCalled();
@@ -25,6 +40,13 @@ describe('service/analytics.js', () => {
 
     it('rejects incomplete configuration', () => {
         expect(analytics.configure({ enabled: true, eventNames: [] })).toBe(false);
+    });
+
+    it('does not configure analytics in the desktop app', async () => {
+        isDesktopApp.mockReturnValue(true);
+        expect(analytics.configure(config)).toBe(false);
+        await analytics.track('PAGE_VIEW_HOME');
+        expect(api.postAsync).not.toHaveBeenCalled();
     });
 
     it('rejects a malformed dashboard URL', () => {
@@ -74,11 +96,12 @@ describe('service/analytics.js', () => {
     it('sends fixed event properties to the same-origin endpoint', async () => {
         analytics.configure(config);
         await analytics.track('THREAT_MODEL_EDIT_SESSION_ENDED', {
-            duration_bucket: 'LESS_THAN_5_MINUTES'
+            duration_bucket: 'LESS_THAN_5_MINUTES',
+            editor: 'diagram'
         });
         expect(api.postAsync).toHaveBeenCalledWith('/api/analytics', {
             event: 'THREAT_MODEL_EDIT_SESSION_ENDED',
-            props: { duration_bucket: 'LESS_THAN_5_MINUTES' }
+            props: { duration_bucket: 'LESS_THAN_5_MINUTES', editor: 'diagram' }
         });
     });
 
@@ -109,24 +132,42 @@ describe('service/analytics.js', () => {
         expect(durationBucket(duration)).toBe(expected);
     });
 
+    it.each([
+        ['CIA', 'CIA'],
+        ['DIE', 'CIADIE'],
+        ['CIADIE', 'CIADIE'],
+        ['LINDDUN', 'LINDDUN'],
+        ['PLOT4ai', 'PLOT4AI'],
+        ['STRIDE', 'STRIDE'],
+        ['EOP', 'EOP'],
+        ['unknown', 'GENERIC']
+    ])('uses the fixed methodology value for %s', (diagramType, expected) => {
+        expect(methodologyForDiagramType(diagramType)).toBe(expected);
+    });
+
     it('does not start an edit session while disabled', () => {
-        expect(analytics.startEditing(1000)).toBe(false);
+        expect(analytics.startEditing('diagram', 1000)).toBe(false);
     });
 
     it('starts one edit session', () => {
         analytics.configure(config);
-        expect(analytics.startEditing(1000)).toBe(true);
+        expect(analytics.startEditing('diagram', 1000)).toBe(true);
     });
 
     it('does not start a second editing session', () => {
         analytics.configure(config);
-        analytics.startEditing(1000);
-        expect(analytics.startEditing(2000)).toBe(false);
+        analytics.startEditing('diagram', 1000);
+        expect(analytics.startEditing('threat_model', 2000)).toBe(false);
     });
 
     it('uses the current time when starting an edit session', () => {
         analytics.configure(config);
-        expect(analytics.startEditing()).toBe(true);
+        expect(analytics.startEditing('diagram')).toBe(true);
+    });
+
+    it('does not start an edit session for an unknown editor', () => {
+        analytics.configure(config);
+        expect(analytics.startEditing('other', 1000)).toBe(false);
     });
 
     it('does not finish a session that was not started', () => {
@@ -136,38 +177,54 @@ describe('service/analytics.js', () => {
 
     it('tracks a completed edit session once', () => {
         analytics.configure(config);
-        analytics.startEditing(1000);
+        analytics.startEditing('diagram', 1000);
         expect(analytics.finishEditing(2000)).toBe(true);
     });
 
     it('clamps a negative edit duration to the first bucket', async () => {
         analytics.configure(config);
-        analytics.startEditing(2000);
+        analytics.startEditing('diagram', 2000);
         analytics.finishEditing(1000);
         await Promise.resolve();
         expect(api.postAsync).toHaveBeenCalledWith('/api/analytics', {
             event: 'THREAT_MODEL_EDIT_SESSION_ENDED',
-            props: { duration_bucket: 'LESS_THAN_5_MINUTES' }
+            props: { duration_bucket: 'LESS_THAN_5_MINUTES', editor: 'diagram' }
         });
     });
 
     it('uses the current time when finishing an edit session', () => {
         analytics.configure(config);
-        analytics.startEditing(1000);
+        analytics.startEditing('diagram', 1000);
         expect(analytics.finishEditing()).toBe(true);
     });
 
     it('clears an edit session after it finishes', () => {
         analytics.configure(config);
-        analytics.startEditing(1000);
+        analytics.startEditing('diagram', 1000);
         analytics.finishEditing(2000);
         expect(analytics.finishEditing(3000)).toBe(false);
     });
 
-    it('ends editing when the page is hidden', () => {
+    it('uses a beacon to end editing when the page is hidden', () => {
+        Object.defineProperty(navigator, 'sendBeacon', {
+            configurable: true,
+            value: jest.fn().mockReturnValue(true)
+        });
         analytics.configure(config);
-        analytics.startEditing(1000);
+        analytics.startEditing('threat_model', 1000);
         window.dispatchEvent(new Event('pagehide'));
+        expect(navigator.sendBeacon).toHaveBeenCalledWith('/api/analytics', expect.any(Blob));
         expect(analytics.finishEditing(2000)).toBe(false);
+    });
+
+    it('does not bypass the server event allow-list when the page is hidden', () => {
+        Object.defineProperty(navigator, 'sendBeacon', {
+            configurable: true,
+            value: jest.fn().mockReturnValue(true)
+        });
+        analytics.configure({ ...config, eventNames: ['PAGE_VIEW_HOME'] });
+        analytics.startEditing('diagram', 1000);
+        window.dispatchEvent(new Event('pagehide'));
+        expect(navigator.sendBeacon).not.toHaveBeenCalled();
     });
 });

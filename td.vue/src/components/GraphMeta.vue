@@ -173,7 +173,7 @@ export default {
             this.$store.dispatch(cellDataUpdated, this.cellRef.data);
             dataChanged.updateStyleAttrs(this.cellRef);
             this.threatSelected(threat.id, 'new');
-            analytics.track('THREAT_CREATED_MANUALLY');
+            analytics.track('THREAT_CREATED_MANUALLY', { status: threat.status });
         },
         AddThreatByType(){
             this.$emit('threatSuggest', 'type');

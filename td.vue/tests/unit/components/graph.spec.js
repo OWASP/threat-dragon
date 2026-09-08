@@ -12,7 +12,7 @@ import diagramService from '@/service/diagram/diagram.js';
 import stencilService from '@/service/x6/stencil.js';
 import saveDiagram from '@/service/diagram/save.js';
 import tmActions from '@/store/actions/threatmodel.js';
-import analytics from '@/service/analytics.js';
+import analytics, { methodologyForDiagramType } from '@/service/analytics.js';
 
 jest.mock('@/service/diagram/save.js', () => ({
     __esModule: true,
@@ -23,7 +23,8 @@ jest.mock('@/service/diagram/save.js', () => ({
 jest.mock('@/service/analytics.js', () => ({
     startEditing: jest.fn(),
     finishEditing: jest.fn(),
-    track: jest.fn()
+    track: jest.fn(),
+    methodologyForDiagramType: jest.fn()
 }));
 
 describe('components/GraphButtons.vue', () => {
@@ -73,6 +74,7 @@ describe('components/GraphButtons.vue', () => {
         analytics.startEditing.mockClear();
         analytics.finishEditing.mockClear();
         analytics.track.mockClear();
+        methodologyForDiagramType.mockReturnValue('STRIDE');
         localVue = createLocalVue();
         localVue.use(BootstrapVue);
         localVue.use(Vuex);
@@ -141,24 +143,24 @@ describe('components/GraphButtons.vue', () => {
     });
 
     it('starts an editing session', () => {
-        expect(analytics.startEditing).toHaveBeenCalledTimes(1);
+        expect(analytics.startEditing).toHaveBeenCalledWith('diagram');
     });
 
-    it.each([
-        ['CIA', 'CIA'],
-        ['DIE', 'CIADIE'],
-        ['CIADIE', 'CIADIE'],
-        ['LINDDUN', 'LINDDUN'],
-        ['PLOT4ai', 'PLOT4AI'],
-        ['STRIDE', 'STRIDE'],
-        ['EOP', 'EOP'],
-        ['Generic', 'GENERIC']
-    ])('tracks %s when its diagram editor opens', (diagramType, methodology) => {
+    it('uses the analytics methodology mapping when its diagram editor opens', () => {
+        wrapper.destroy();
+        methodologyForDiagramType.mockClear();
+        wrapper = mountComponent('github', 'CIA');
+
+        expect(methodologyForDiagramType).toHaveBeenCalledWith('CIA');
+    });
+
+    it('tracks the mapped methodology when its diagram editor opens', () => {
         wrapper.destroy();
         analytics.track.mockClear();
-        wrapper = mountComponent('github', diagramType);
+        methodologyForDiagramType.mockReturnValue('CIA');
+        wrapper = mountComponent('github', 'CIA');
 
-        expect(analytics.track).toHaveBeenCalledWith('DIAGRAM_METHODOLOGY_USED', { methodology });
+        expect(analytics.track).toHaveBeenCalledWith('DIAGRAM_METHODOLOGY_USED', { methodology: 'CIA' });
     });
 
     it('shows the threat edit modal dialog', () => {

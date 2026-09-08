@@ -88,7 +88,8 @@ export default {
     },
     computed: {
         ...mapState({
-            providerType: (state) => getProviderType(state.provider.selected)
+            providerType: (state) => getProviderType(state.provider.selected),
+            selectedProvider: (state) => state.provider.selected
         }),
         prompt() { return '{ ' + this.$t('threatmodel.dragAndDrop') + this.$t('threatmodel.jsonPaste') + ' ... }'; }
     },
@@ -202,7 +203,10 @@ export default {
                 return;
             }
 
-            analytics.track('THREAT_MODEL_OPENED', { source: 'import' });
+            analytics.track('THREAT_MODEL_OPENED', {
+                source: 'import',
+                provider: this.selectedProvider
+            });
             this.$router.push({ name: `${this.providerType}ThreatModel`, params });
         }
     }

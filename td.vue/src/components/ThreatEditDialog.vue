@@ -472,7 +472,7 @@ export default {
                 this.$store.dispatch(tmActions.modified);
                 dataChanged.updateStyleAttrs(this.cellRef);
                 if (!this.newThreat) {
-                    analytics.track('THREAT_UPDATED');
+                    analytics.track('THREAT_UPDATED', { status: this.threat.status });
                     if (previousStatus !== this.threat.status) {
                         analytics.track('THREAT_STATUS_UPDATED', { status: this.threat.status });
                     }
@@ -501,7 +501,7 @@ export default {
             this.$store.dispatch(cellDataUpdated, this.cellRef.data);
             this.$store.dispatch(tmActions.modified);
             dataChanged.updateStyleAttrs(this.cellRef);
-            if (threatExists) analytics.track('THREAT_DELETED');
+            if (threatExists) analytics.track('THREAT_DELETED', { status: this.threat.status });
         },
         hideModal() {
             this.$refs.editModal.hide();

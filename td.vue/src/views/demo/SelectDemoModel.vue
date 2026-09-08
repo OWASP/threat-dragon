@@ -57,7 +57,10 @@ export default {
     },
     methods: {
         onModelClick(model) {
-            analytics.track('THREAT_MODEL_OPENED', { source: 'demo' });
+            analytics.track('THREAT_MODEL_OPENED', {
+                source: 'demo',
+                provider: this.selectedProvider
+            });
             if (schema.isTmBom(model.model)) {
                 this.$store.dispatch(tmActions.selected, importTmbom(model.model));
             } else if (schema.isOtm(model.model)) {

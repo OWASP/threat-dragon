@@ -6,16 +6,33 @@ import {
 
 export const isAnalyticsEvent = (event) => analyticsEventNames.includes(event);
 
-export const hasValidProperties = (event, props) => {
-    const allowedProperties = analyticsEventProperties[event];
-    if (!allowedProperties) {return props === undefined;}
-    if (!props || typeof props !== 'object' || Array.isArray(props)) {return false;}
-
+const hasExpectedPropertyNames = (allowedProperties, props) => {
     const propertyNames = Object.keys(props);
     const allowedPropertyNames = Object.keys(allowedProperties);
-    if (propertyNames.length !== 1 || propertyNames[0] !== allowedPropertyNames[0]) {return false;}
 
-    return allowedProperties[propertyNames[0]].includes(props[propertyNames[0]]);
+    const hasNoUnexpectedProperties = propertyNames.
+        every((propertyName) => allowedPropertyNames.includes(propertyName));
+    const hasNoMissingProperties = allowedPropertyNames.
+        every((propertyName) => propertyNames.includes(propertyName));
+
+    return hasNoUnexpectedProperties && hasNoMissingProperties;
+};
+
+export const hasValidProperties = (event, props) => {
+    const allowedProperties = analyticsEventProperties[event];
+    if (!allowedProperties) {
+        return props === undefined;
+    }
+    if (!props || typeof props !== 'object' || Array.isArray(props)) {
+        return false;
+    }
+
+    if (!hasExpectedPropertyNames(allowedProperties, props)) {
+        return false;
+    }
+
+    return Object.keys(allowedProperties).
+        every((propertyName) => allowedProperties[propertyName].includes(props[propertyName]));
 };
 
 export const createPlausiblePayload = (config, event, props) => {

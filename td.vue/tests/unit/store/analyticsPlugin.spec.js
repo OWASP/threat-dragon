@@ -20,7 +20,7 @@ describe('store/analytics.js', () => {
     });
 
     it('ignores a provider selection outside the allow-list', () => {
-        after({ type: 'PROVIDER_SELECTED', payload: 'desktop' }, {});
+        after({ type: 'PROVIDER_SELECTED', payload: 'private' }, {});
         expect(analytics.track).not.toHaveBeenCalled();
     });
 
@@ -31,7 +31,10 @@ describe('store/analytics.js', () => {
 
     it('tracks a model opened from the selected provider', () => {
         after({ type: 'THREATMODEL_FETCH' }, { provider: { selected: 'google' } });
-        expect(analytics.track).toHaveBeenCalledWith('THREAT_MODEL_OPENED', { source: 'google' });
+        expect(analytics.track).toHaveBeenCalledWith('THREAT_MODEL_OPENED', {
+            source: 'google',
+            provider: 'google'
+        });
     });
 
     it('does not report local imports as provider fetches', () => {

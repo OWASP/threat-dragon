@@ -220,7 +220,7 @@ describe('components/GraphMeta.vue', () => {
         });
 
         it('tracks manual threat creation', () => {
-            expect(analytics.track).toHaveBeenCalledWith('THREAT_CREATED_MANUALLY');
+            expect(analytics.track).toHaveBeenCalledWith('THREAT_CREATED_MANUALLY', { status: 'Open' });
         });
     });
 

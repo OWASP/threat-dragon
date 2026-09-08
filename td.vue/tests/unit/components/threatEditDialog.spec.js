@@ -182,7 +182,7 @@ describe('components/ThreatEditDialog.vue', () => {
             });
 
             it('tracks a deleted threat without its contents', () => {
-                expect(analytics.track).toHaveBeenCalledWith('THREAT_DELETED');
+                expect(analytics.track).toHaveBeenCalledWith('THREAT_DELETED', { status: 'Open' });
             });
         });
     });
@@ -208,7 +208,7 @@ describe('components/ThreatEditDialog.vue', () => {
         });
 
         it('tracks an existing threat update without its contents', () => {
-            expect(analytics.track).toHaveBeenCalledWith('THREAT_UPDATED');
+            expect(analytics.track).toHaveBeenCalledWith('THREAT_UPDATED', { status: 'Open' });
         });
 
         it('tracks an allowlisted status when the status changes', () => {

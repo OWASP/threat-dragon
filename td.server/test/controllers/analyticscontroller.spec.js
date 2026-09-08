@@ -67,7 +67,7 @@ describe('controllers/analyticscontroller.js', () => {
         const request = getMockRequest();
         request.ip = '192.0.2.1';
         request.get.withArgs('user-agent').returns('test-agent');
-        request.body = { event: analyticsEvents.DIAGRAM_CREATED };
+        request.body = { event: analyticsEvents.DIAGRAM_CREATED, props: { methodology: 'STRIDE' } };
         const response = getMockResponse();
         await controller.track(request, response);
         expect(sendEventDep).to.have.been.calledWith(
@@ -83,7 +83,7 @@ describe('controllers/analyticscontroller.js', () => {
             sendEventDep: sinon.stub().resolves()
         });
         const request = getMockRequest();
-        request.body = { event: analyticsEvents.DIAGRAM_CREATED };
+        request.body = { event: analyticsEvents.DIAGRAM_CREATED, props: { methodology: 'STRIDE' } };
         const response = getMockResponse();
         await controller.track(request, response);
         expect(response.status).to.have.been.calledWith(204);
@@ -97,7 +97,7 @@ describe('controllers/analyticscontroller.js', () => {
             loggerDep
         });
         const request = getMockRequest();
-        request.body = { event: analyticsEvents.DIAGRAM_CREATED };
+        request.body = { event: analyticsEvents.DIAGRAM_CREATED, props: { methodology: 'STRIDE' } };
         const response = getMockResponse();
         await controller.track(request, response);
         expect(loggerDep.warn).to.have.been.calledWith('Plausible event forwarding failed.');
