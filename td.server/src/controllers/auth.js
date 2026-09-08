@@ -1,7 +1,7 @@
-import env from '../env/Env.js';
 import errors from './errors.js';
 import jwtHelper from '../helpers/jwt.helper.js';
 import loggerHelper from '../helpers/logger.helper.js';
+import oauthHelper from '../helpers/oauth.helper.js';
 import providers from '../providers/index.js';
 import responseWrapper from './responseWrapper.js';
 import tokenRepo from '../repositories/token.js';
@@ -22,11 +22,7 @@ const login = (req, res) => {
 const oauthReturn = (req, res) => {
     logger.debug(`API oauthReturn request: ${logger.transformToString(req)}`);
 
-    let returnUrl = `/#/oauth-return?code=${req.query.code}`;
-    if (env.get().config.NODE_ENV === 'development') {
-        returnUrl = `http://localhost:8080${returnUrl}`;
-    }
-    return res.redirect(returnUrl);
+    return res.redirect(oauthHelper.getOauthReturnUrl(req.query.code));
 };
 
 const completeLogin = (req, res) => {
