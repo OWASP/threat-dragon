@@ -36,6 +36,7 @@ import {
 } from '@/service/threats/status.js';
 import TdDropdown from '@/components/Dropdown.vue';
 import TdFormRadioGroup from '@/components/FormRadioGroup.vue';
+import { translateKnownKey } from '@/service/i18n/translation.js';
 
 export default {
     name: 'TdThreatStatusSelector',
@@ -59,10 +60,10 @@ export default {
     },
     computed: {
         primaryOptions() {
-            return getPrimaryStatusOptions((key) => this.$t(key));
+            return getPrimaryStatusOptions((key) => translateKnownKey(this.$t, key));
         },
         treatmentOptions() {
-            return getTreatmentStatusOptions((key) => this.$t(key));
+            return getTreatmentStatusOptions((key) => translateKnownKey(this.$t, key));
         },
         treatmentSelected() {
             return isResolved(this.value);

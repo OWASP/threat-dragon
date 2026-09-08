@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import models from './models/index.js';
 import { isOpen, isResolved } from './status.js';
 import { tc } from '../../i18n/index.js';
+import { translateKnownKey } from '@/service/i18n/translation.js';
 import store from '@/store/index.js';
 
 
@@ -56,7 +57,7 @@ export const createNewTypedThreat = function (modelType, cellType, number) {
     } else if (modelType === 'DIE') {
         modelType = 'CIADIE';
     }
-    title = tc(`threats.generic.${modelType.toLowerCase()}`);
+    title = translateKnownKey(tc, `threats.generic.${modelType.toLowerCase()}`);
 
     const freqMap = store.get().state.cell?.ref?.data.threatFrequency;
     if (freqMap) {
@@ -68,7 +69,7 @@ export const createNewTypedThreat = function (modelType, cellType, number) {
                 choice = k;
             }
         });
-        type = tc(`threats.model.${modelType.toLowerCase()}.${choice}`);
+        type = translateKnownKey(tc, `threats.model.${modelType.toLowerCase()}.${choice}`);
     } else {
         switch (modelType) {
 

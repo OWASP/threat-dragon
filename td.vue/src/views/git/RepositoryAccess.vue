@@ -7,8 +7,8 @@
         :pagePrev="pagePrev"
         :onItemClick="onRepoClick"
         :paginate="paginate"
-        :emptyStateText="`${$t('repository.noneFound')} ${$t('providers.' + provider + '.displayName')}`">
-        {{ $t('repository.select') }} {{ $t(`providers.${provider}.displayName`) }} {{ $t('repository.from') }}
+        :emptyStateText="`${$t('repository.noneFound')} ${providerDisplayName()}`">
+        {{ $t('repository.select') }} {{ providerDisplayName() }} {{ $t('repository.from') }}
     </td-selection-page>
 </template>
 
@@ -19,6 +19,7 @@ import { getProviderType } from '@/service/provider/providers.js';
 import providerActions from '@/store/actions/provider.js';
 import repoActions from '@/store/actions/repository.js';
 import TdSelectionPage from '@/components/SelectionPage.vue';
+import { translateProviderDisplayName } from '@/service/i18n/translation.js';
 
 export default {
     name: 'RepositoryAccess',
@@ -63,6 +64,7 @@ export default {
         this.$store.dispatch(repoActions.fetch, { page });
     },
     methods: {
+        providerDisplayName() { return translateProviderDisplayName(this.$t, this.provider); },
         onRepoClick(repoName) {
             this.$store.dispatch(repoActions.selected, repoName);
             const params = Object.assign({}, this.$route.params, {
@@ -76,4 +78,3 @@ export default {
     }
 };
 </script>
-

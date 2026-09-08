@@ -26,7 +26,7 @@ module.exports = {
     ],
     rules: {
         ...shared.rules,
-        '@intlify/vue-i18n/no-dynamic-keys': 'warn',
+        '@intlify/vue-i18n/no-dynamic-keys': 'error',
         '@intlify/vue-i18n/no-missing-keys': 'error',
         '@intlify/vue-i18n/no-missing-keys-in-other-locales': 'error',
         'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',

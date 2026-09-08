@@ -85,14 +85,19 @@ const get = () => {
     return i18nInstance;
 };
 
-export const t = (...args) => get().global.t(...args);
+export const t = (...args) => {
+    const { t: translate } = get().global;
+    return translate(...args);
+};
 
 // Temporary compatibility wrapper.
 // Vue-i18n v9+ uses t() for pluralization.
 // TODO: remove after migrating all tc() usages.
-export const tc = (key, ...args) => t(key, ...args);
+export const tc = (key, ...args) => {
+    const translate = t;
+    return translate(key, ...args);
+};
 
 export default {
     get
 };
-

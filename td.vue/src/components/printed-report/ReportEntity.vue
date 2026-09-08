@@ -61,6 +61,7 @@
 
 <script>
 import threatService from '@/service/threats/index.js';
+import { translateKnownKey } from '@/service/i18n/translation.js';
 
 export default {
     name: 'TdPrintReportEntity',
@@ -86,7 +87,7 @@ export default {
     computed: {
         dataType: function () {
             const entityType = this.entity.data.type.replace('tm.', '').replace('td.', '');
-            return this.$t(`threatmodel.shapes.${this.toCamelCase(entityType)}`);
+            return translateKnownKey(this.$t, `threatmodel.shapes.${this.toCamelCase(entityType)}`);
         },
         threats: function () {
             return threatService.filterForDiagram(this.entity.data, {
