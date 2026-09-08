@@ -1,6 +1,10 @@
 import { v4 as uuidv4 } from 'uuid';
 
 import models from './models/index.js';
+import cia from './models/cia.json';
+import ciadie from './models/ciadie.json';
+import linddun from './models/linddun.json';
+import stride from './models/stride.json';
 import { isOpen, isResolved } from './status.js';
 import { tc } from '../../i18n/index.js';
 import { translateKnownKey } from '@/service/i18n/translation.js';
@@ -9,21 +13,21 @@ import store from '@/store/index.js';
 
 const valuesToTranslations = {
     /* CIA */
-    Confidentiality: 'threats.model.cia.confidentiality',
-    Integrity: 'threats.model.cia.integrity',
-    Availability: 'threats.model.cia.availability',
+    Confidentiality: cia.confidentiality,
+    Integrity: cia.integrity,
+    Availability: cia.availability,
     /* CIADIE */
-    Distributed: 'threats.model.die.distributed',
-    Immutable: 'threats.model.die.immutable',
-    Ephemeral: 'threats.model.die.ephemeral',
+    Distributed: ciadie.distributed,
+    Immutable: ciadie.immutable,
+    Ephemeral: ciadie.ephemeral,
     /* LINDDUN */
-    Linkability: 'threats.model.linddun.linkability',
-    Identifiability: 'threats.model.linddun.identifiability',
-    'Non-repudiation': 'threats.model.linddun.nonRepudiation',
-    Detectability: 'threats.model.linddun.detectability',
-    'Disclosure of information': 'threats.model.linddun.disclosureOfInformation',
-    Unawareness: 'threats.model.linddun.unawareness',
-    'Non-compliance': 'threats.model.linddun.nonCompliance',
+    Linkability: linddun.all.linkability,
+    Identifiability: linddun.all.identifiability,
+    'Non-repudiation': linddun.all.nonRepudiation,
+    Detectability: linddun.all.detectability,
+    'Disclosure of information': linddun.all.disclosureOfInformation,
+    Unawareness: linddun.all.unawareness,
+    'Non-compliance': linddun.all.nonCompliance,
     /**
  * PLOT4ai is intentionally not added here.
  *
@@ -36,12 +40,12 @@ const valuesToTranslations = {
  * it should not be a problem that plot4ai is not added here
  */
     /* STRIDE */
-    Spoofing: 'threats.model.stride.spoofing',
-    Tampering: 'threats.model.stride.tampering',
-    Repudiation: 'threats.model.stride.repudiation',
-    'Information disclosure': 'threats.model.stride.informationDisclosure',
-    'Denial of service': 'threats.model.stride.denialOfService',
-    'Elevation of privilege': 'threats.model.stride.elevationOfPrivilege',
+    Spoofing: stride.all.spoofing,
+    Tampering: stride.all.tampering,
+    Repudiation: stride.all.repudiation,
+    'Information disclosure': stride.all.informationDisclosure,
+    'Denial of service': stride.all.denialOfService,
+    'Elevation of privilege': stride.all.elevationOfPrivilege,
 
 };
 
