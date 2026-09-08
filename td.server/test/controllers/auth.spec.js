@@ -79,10 +79,27 @@ describe('controllers/auth.js', () => {
 
     describe('oauthReturn', () => {
         beforeEach(() => {
-            mockRequest.query.code = '12345';
+            mockRequest.query.code = 'valid-oauth-code';
         });
 
-        describe('development', () => {
+        describe('with OAUTH_FRONTEND_RETURN_URL configured', () => {
+            beforeEach(() => {
+                sinon.stub(env, 'get').returns({
+                    config: {
+                        NODE_ENV: 'production',
+                        OAUTH_FRONTEND_RETURN_URL: 'https://threatdragon.example'
+                    }
+                });
+                auth.oauthReturn(mockRequest, mockResponse);
+            });
+
+            it('redirects to the configured frontend url', () => {
+                const expected = `https://threatdragon.example/#/oauth-return?code=${mockRequest.query.code}`;
+                expect(mockResponse.redirect).to.have.been.calledWith(expected);
+            });
+        });
+
+        describe('development default', () => {
             beforeEach(() => {
                 sinon.stub(env, 'get').returns({ config: { NODE_ENV: 'development' }});
                 auth.oauthReturn(mockRequest, mockResponse);
@@ -94,7 +111,7 @@ describe('controllers/auth.js', () => {
             });
         });
 
-        describe('simulated production', () => {
+        describe('production default', () => {
             beforeEach(() => {
                 sinon.stub(env, 'get').returns({ config: { NODE_ENV: 'simulated_production' }});
                 auth.oauthReturn(mockRequest, mockResponse);
