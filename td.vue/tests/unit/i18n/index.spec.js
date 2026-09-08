@@ -10,7 +10,7 @@ describe('i18n/index.js', () => {
     describe('supported locales', () => {
         it('is a frozen array of all expected locales', () => {
             const expected = [
-                'ar', 'de', 'el', 'en', 'es', 'fi', 'fr',
+                'ar', 'az', 'de', 'el', 'en', 'es', 'fi', 'fr',
                 'hi', 'id', 'ja', 'ms', 'pt', 'pt-BR', 'zh'
             ];
 

@@ -6,6 +6,7 @@ jest.mock('fs', () => require('./helpers/mockFs'));
 import { utils } from './helpers/mockUtils';
 import menu, { model } from '@/desktop/menu';
 import ar from '@/i18n/ar';
+import az from '@/i18n/az';
 import de from '@/i18n/de';
 import el from '@/i18n/el';
 import en from '@/i18n/en';
@@ -644,6 +645,7 @@ describe('desktop/menu.js', () => {
         describe('Locale selection', () => {
             const locales = [
                 { code: 'ar', label: ar.desktop.help.heading, name: 'Arabic' },
+                { code: 'az', label: az.desktop.help.heading, name: 'Azerbaijani' },
                 { code: 'de', label: de.desktop.help.heading, name: 'German' },
                 { code: 'el', label: el.desktop.help.heading, name: 'Greek (Modern)' },
                 { code: 'en', label: en.desktop.help.heading, name: 'English' },

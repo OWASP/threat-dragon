@@ -1,0 +1,540 @@
+{
+    "auth": {
+        "sessionExpired": "Sessiyanızın vaxtı bitib. Davam etmək üçün yenidən daxil olun."
+    },
+    "nav": {
+        "loggedInAs": "Daxil olan istifadəçi",
+        "logOut": "Çıxış",
+        "contentManagement": "Məzmunun idarə edilməsi"
+    },
+    "home": {
+        "title": "OWASP Threat Dragon",
+        "imgAlt": "Threat Dragon loqosu",
+        "description": "OWASP Threat Dragon təhdid modelləri yaratmaq üçün pulsuz, açıq mənbəli və müxtəlif platformalarda işləyən tətbiqdir. Ondan təhdid modelləşdirməsi diaqramlarını çəkmək və sisteminizə qarşı təhdidləri müəyyən etmək üçün istifadə edin. Çevikliyi və sadəliyi sayəsində bütün istifadəçilər üçün əlçatandır.",
+        "errors": {
+            "configLoadFailed": "Server konfiqurasiyasını yükləmək mümkün olmadı. Yalnız yerli giriş mümkündür."
+        }
+    },
+    "providers": {
+        "desktop": {
+            "displayName": "Threat Dragon",
+            "loginWith": "Başla"
+        },
+        "github": {
+            "displayName": "GitHub",
+            "loginWith": "Daxil ol"
+        },
+        "gitlab": {
+            "displayName": "GitLab",
+            "loginWith": "Daxil ol"
+        },
+        "bitbucket": {
+            "displayName": "Bitbucket",
+            "loginWith": "Daxil ol"
+        },
+        "google": {
+            "displayName": "Google",
+            "loginWith": "Daxil ol"
+        },
+        "local": {
+            "displayName": "Yerli sessiya",
+            "loginWith": "Daxil ol"
+        }
+    },
+    "dashboard": {
+        "welcome": {
+            "title": "Xoş gəlmisiniz!",
+            "description": "Tətbiq layihələrinizi daha təhlükəsiz etməyə hazırsınız. Aşağıdakı seçimlərdən birini seçərək mövcud təhdid modelini aça və ya yenisini yarada bilərsiniz. "
+        },
+        "actions": {
+            "openExisting": "Mövcud təhdid modelini aç",
+            "createNew": "Yeni, boş təhdid modeli yarat",
+            "readDemo": "Nümunə təhdid modelini araşdır",
+            "importExisting": "Təhdid modelini JSON vasitəsilə idxal et",
+            "createFromTemplate": "Şablondan model yarat"
+        }
+    },
+    "demo": {
+        "select": "Aşağıdakı siyahıdan nümunə təhdid modeli seçin"
+    },
+    "desktop": {
+        "file": {
+            "heading": "Fayl",
+            "clearRecentDocs": "Menyunu təmizlə",
+            "close": "Modeli bağla",
+            "closeWindow": "Pəncərəni bağla",
+            "new": "Yeni model",
+            "open": "Modeli aç",
+            "recentDocs": "Son açılanlar",
+            "save": "Modeli saxla",
+            "saveAs": "Modeli başqa adla saxla"
+        },
+        "help": {
+            "heading": "Kömək",
+            "docs": "Sənədləşmə",
+            "visit": "OWASP səhifəmizə keçin",
+            "sheets": "OWASP qısa arayış vərəqləri",
+            "github": "GitHub səhifəmizə keçin",
+            "submit": "Problem bildir",
+            "check": "Yeniləmələri yoxla ...",
+            "about": {
+                "about": "Haqqında",
+                "version": "Versiya"
+            }
+        }
+    },
+    "repository": {
+        "select": "Seçin",
+        "from": "Yeni təhdid modelini saxlamaq və ya mövcud təhdid modelini seçmək üçün aşağıdakı siyahıdan repozitoriya seçin",
+        "noneFound": "Repozitoriya tapılmadı. Başlamaq üçün bu platformada yeni repozitoriya yaradın:"
+    },
+    "branch": {
+        "select": "Budaq seçin:",
+        "from": "aşağıdakı siyahıdan və ya",
+        "chooseRepo": "başqa repozitoriya seçin",
+        "or": "və ya",
+        "addNew": "yeni budaq əlavə edin",
+        "protectedBranch": "Qorunan budaq",
+        "refBranch": "İstinad budağı",
+        "nameRequired": "Budağın adı tələb olunur",
+        "nameExists": "Bu adda budaq artıq mövcuddur",
+        "add": "Budaq əlavə et",
+        "cancel": "Ləğv et",
+        "name": "Budağın adı"
+    },
+    "folder": {
+        "select": "Seçin",
+        "from": "aşağıdakı siyahıdan qovluq seçin",
+        "noneFound": "Bu qovluq boşdur. Burada yeni təhdid modeli yarada bilərsiniz."
+    },
+    "threatmodelSelect": {
+        "select": "Təhdid modeli seçin:",
+        "from": "aşağıdakı siyahıdan və ya başqasını seçin",
+        "branch": "budaq",
+        "or": "və ya",
+        "repo": "repozitoriya",
+        "newThreatModel": "Yeni təhdid modeli yarat"
+    },
+    "template": {
+        "startFromLocalTemplate": "Yerli şablondan başla",
+        "select": "Aşağıdakı siyahıdan şablon seçin",
+        "selectDescription": "Şablonlar müvafiq komponentlər və təhdidlərlə əvvəlcədən doldurulmuş yeni təhdid modelləri üçün başlanğıc nöqtəsidir.",
+        "noTemplates": "Şablon tapılmadı",
+        "templatesLocalSession": "Yerli sessiyalarda uzaq şablonlar əlçatan deyil.",
+        "search": "Şablonları axtar...",
+        "exportTemplate": "Şablon kimi ixrac et",
+        "tags": "Etiketlər",
+        "name": "Şablonun adı",
+        "description": "Şablonun təsviri",
+        "saveTemplate": "Şablonu saxla",
+        "addNew": "Yeni şablon əlavə et",
+        "manage": "Şablonları idarə et",
+        "manageDescription": "Təhdid modeli şablonlarınızı burada idxal, ixrac və idarə edin.",
+        "editTemplate": "Şablonu redaktə et",
+        "addTagsPlaceholder": "Etiket əlavə et...",
+        "updateSuccess": "Şablon uğurla yeniləndi",
+        "importSuccess": "Şablon uğurla idxal edildi",
+        "deleteSuccess": "Şablon uğurla silindi",
+        "deleteTitle": "Silməni təsdiqlə",
+        "deleteConfirm": "\"{name}\" şablonunu silmək istədiyinizə əminsiniz?",
+        "errors": {
+            "invalidJson": "Yanlış JSON. Şablon faylınızı yoxlayıb yenidən cəhd edin",
+            "invalidTemplate": "Yanlış şablon formatı. Şablon faylınızı yoxlayıb yenidən cəhd edin",
+            "loadFailed": "Şablonları yükləmək mümkün olmadı. Yenidən cəhd edin",
+            "duplicateTemplate": "Bu adda şablon artıq mövcuddur. Başqa ad istifadə edin",
+            "updateFailed": "Şablonu yeniləmək mümkün olmadı",
+            "deleteFailed": "Şablonu silmək mümkün olmadı"
+        },
+        "warnings": {
+            "templateSave": "Şablonu saxlamaq mümkün olmadı. Ətraflı məlumat üçün tərtibatçı konsolunu yoxlayın",
+            "invalidSchema": "Şablon sxemə tam uyğun deyil. Ətraflı məlumat tərtibatçı konsolundadır"
+        },
+        "prompts": {
+            "templateSaved": "Şablon uğurla saxlanıldı",
+            "templateDownloading": "Şablon endirilir"
+        },
+        "repo": {
+            "notInitialized": {
+                "title": "Şablon repozitoriyası istifadəyə hazırlanmayıb",
+                "userMessage": "Şablon repozitoriyası istifadəyə hazırlanmayıb. Administratorunuzla əlaqə saxlayın.",
+                "adminMessage": "Şablon repozitoriyasını istifadəyə hazırlamaq üçün şablonların idarə edilməsi səhifəsinə keçin."
+            },
+            "notConfigured": {
+                "title": "Şablon repozitoriyası konfiqurasiya edilməyib",
+                "userMessage": "Şablon repozitoriyası konfiqurasiya edilməyib. Şablonlara giriş əldə etmək üçün repozitoriyanı qurun."
+            },
+            "notFound": {
+                "title": "Şablon repozitoriyası tapılmadı",
+                "userMessage": "{repoName} etibarlı repozitoriya deyil. Konfiqurasiyanızı yoxlayın."
+            },
+            "bootstrap": {
+                "bootstrapping": "İstifadəyə hazırlanır..",
+                "title": "Şablon repozitoriyasını istifadəyə hazırla",
+                "description": "Bu əməliyyat repozitoriyada lazımi qovluq strukturu yoxdursa, onu yaradacaq.",
+                "action": "İstifadəyə hazırla",
+                "success": "Şablon repozitoriyası uğurla istifadəyə hazırlandı.",
+                "error": "Şablon repozitoriyasını istifadəyə hazırlamaq mümkün olmadı. Ətraflı məlumat üçün tərtibatçı konsolunu yoxlayın."
+            }
+        }
+    },
+    "threatmodel": {
+        "contributors": "Töhfə verənlər",
+        "contributorsPlaceholder": "Töhfə verən şəxsi əlavə etmək üçün yazmağa başlayın",
+        "description": "Sistemin ümumi təsviri",
+        "dragAndDrop": "Sürükləyib buraxın və ya ",
+        "editing": "Redaktə edilir",
+        "jsonPaste": "Təhdid modelinin JSON faylını buraya buraxın və ya məzmununu yapışdırın:",
+        "owner": "Sahib",
+        "reviewer": "Yoxlayan şəxs",
+        "title": "Başlıq",
+        "releaseVersion": "Buraxılış versiyası",
+        "releasedAt": "Buraxılış tarixi",
+        "diagram": {
+            "diagrams": "Diaqramlar",
+            "addNewDiagram": "Yeni diaqram əlavə et...",
+            "generic": {
+                "defaultTitle": "Yeni ümumi diaqram",
+                "defaultDescription": "Yeni ümumi diaqramın təsviri",
+                "select": "Ümumi"
+            },
+            "stride": {
+                "defaultTitle": "Yeni STRIDE diaqramı",
+                "defaultDescription": "Yeni STRIDE diaqramının təsviri",
+                "select": "STRIDE"
+            },
+            "linddun": {
+                "defaultTitle": "Yeni LINDDUN diaqramı",
+                "defaultDescription": "Yeni LINDDUN diaqramının təsviri",
+                "select": "LINDDUN"
+            },
+            "plot4ai": {
+                "defaultTitle": "Yeni PLOT4ai diaqramı",
+                "defaultDescription": "Yeni PLOT4ai diaqramının təsviri",
+                "select": "PLOT4ai"
+            },
+            "die": {
+                "defaultTitle": "Yeni CIA-DIE diaqramı",
+                "defaultDescription": "Yeni CIA-DIE diaqramının təsviri",
+                "select": "CIADIE"
+            },
+            "cia": {
+                "defaultTitle": "Yeni CIA diaqramı",
+                "defaultDescription": "Yeni CIA diaqramının təsviri",
+                "select": "CIA"
+            },
+            "eop": {
+                "defaultTitle": "Yeni EoP oyunları diaqramı",
+                "defaultDescription": "Yeni EoP oyunları diaqramının təsviri",
+                "select": "EoP oyunları"
+            }
+        },
+        "threats": "Təhdidlər",
+        "errors": {
+            "create": "Təhdid modeli faylını yaratmaq mümkün olmadı. Ətraflı məlumat üçün tərtibatçı konsolunu yoxlayın",
+            "dropSingleFileOnly": "Sürükləyib buraxmaq üçün yalnız bir fayl seçilməlidir.",
+            "invalidJson": "Yanlış JSON. Modelinizi yoxlayıb yenidən cəhd edin",
+            "invalidModel": "Təhdid modeli faylı yoxlamadan keçmir. Modelinizi yoxlayıb yenidən cəhd edin",
+            "onlyJsonAllowed": "Yalnız .json genişlənməli fayllar dəstəklənir.",
+            "open": "Bu təhdid modelini açarkən xəta baş verdi. Ətraflı məlumat üçün tərtibatçı konsolunu yoxlayın",
+            "save": "Təhdid modelini saxlayarkən xəta baş verdi. Ətraflı məlumat üçün tərtibatçı konsolunu yoxlayın",
+            "createConflict": "Bu adda təhdid modeli artıq mövcuddur. Başqa ad istifadə edin."
+        },
+        "warnings": {
+            "export": "Təhdid modelini ixrac etmək mümkün olmadı. Ətraflı məlumat üçün tərtibatçı konsolunu yoxlayın",
+            "jsonSchema": "Model sxemə tam uyğun deyil. Ətraflı məlumat tərtibatçı konsolundadır",
+            "noModelOpen": "Açıq model yoxdur",
+            "otmImported": "Open Threat Model idxalı faylı Threat Dragon formatına çevirir",
+            "save": "Təhdid modelini saxlamaq mümkün olmadı. Ətraflı məlumat üçün tərtibatçı konsolunu yoxlayın",
+            "tmBomImported": "TM-BOM idxalı fayl formatını Threat Dragon formatına çevirir",
+            "v1Translate": "İdxal edilmiş 1.x versiyalı model 2.x versiyasının formatına yeniləndi"
+        },
+        "prompts": {
+            "created": "Təhdid modeli uğurla yaradıldı",
+            "exported": "Təhdid modeli ixrac edildi",
+            "opened": "Təhdid modeli uğurla açıldı",
+            "downloading": "Təhdid modeli endirilir",
+            "saved": "Təhdid modeli uğurla saxlanıldı"
+        },
+        "properties": {
+            "title": "Xüsusiyyətlər",
+            "emptyState": "Redaktə etmək üçün qrafda element seçin",
+            "name": "Ad",
+            "text": "Mətn",
+            "description": "Təsvir",
+            "outOfScope": "Əhatə dairəsindən kənar",
+            "bidirection": "İkiistiqamətli",
+            "reasonOutOfScope": "Əhatə dairəsindən kənarda qalma səbəbi",
+            "handlesCardPayment": "Kartla ödəniş",
+            "handlesGoodsOrServices": "Mallar və ya xidmətlər",
+            "isALog": "Jurnaldır",
+            "isEncrypted": "Şifrələnib",
+            "isSigned": "İmzalanıb",
+            "isWebApplication": "Veb tətbiqi",
+            "privilegeLevel": "Səlahiyyət səviyyəsi",
+            "providesAuthentication": "Autentifikasiyanı təmin edir",
+            "protocol": "Protokol",
+            "publicNetwork": "İctimai şəbəkə",
+            "storesCredentials": "Giriş məlumatlarını saxlayır",
+            "storesInventory": "Mal ehtiyatlarını saxlayır"
+        },
+        "buttons": {
+            "delete": "Seçiləni sil",
+            "redo": "Redaktəni təkrarla",
+            "shortcuts": "Klaviatura qısaltmaları",
+            "toggleGrid": "Toru göstər/gizlət",
+            "undo": "Redaktəni geri al",
+            "zoomIn": "Yaxınlaşdır",
+            "zoomOut": "Uzaqlaşdır"
+        },
+        "shortcuts": {
+            "title": "Qısaltmalar",
+            "copy": {
+                "shortcut": "(ctrl/cmd) + c",
+                "action": "Surətini çıxar"
+            },
+            "paste": {
+                "shortcut": "(ctrl/cmd) + v",
+                "action": "Yapışdır"
+            },
+            "undo": {
+                "shortcut": "(ctrl/cmd) + z",
+                "action": "Geri al"
+            },
+            "redo": {
+                "shortcut": "(ctrl/cmd) + y",
+                "action": "Təkrarla"
+            },
+            "delete": {
+                "shortcut": "del",
+                "action": "Sil"
+            },
+            "pan": {
+                "shortcut": "shift + siçanın sol düyməsi (basılı saxla/sürüklə)",
+                "action": "Görünüşü sürüşdür"
+            },
+            "multiSelect": {
+                "shortcut": "Boş sahədə siçanın sol düyməsini basıb sürükləyin",
+                "action": "Çoxlu seçim"
+            },
+            "zoom": {
+                "shortcut": "(ctrl/cmd) + siçanın çarxı",
+                "action": "Miqyası dəyiş"
+            },
+            "save": {
+                "shortcut": "(ctrl/cmd) + s",
+                "action": "Saxla"
+            }
+        },
+        "stencil": {
+            "boundaries": "Sərhədlər",
+            "components": "Komponentlər",
+            "entities": "Varlıqlar",
+            "metadata": "Metaməlumatlar",
+            "search": "Axtar",
+            "notFound": "Bu hələ mövcud deyil, bununla bağlı sorğu açmaq istəyirsiniz? :)"
+        },
+        "shapes": {
+            "actor": "İştirakçı",
+            "flow": "Məlumat axını",
+            "flowStencil": "Məlumat axını",
+            "process": "Proses",
+            "store": "Məlumat anbarı",
+            "text": "İzahedici mətn",
+            "trustBoundary": "Etimad sərhədi"
+        }
+    },
+    "forms": {
+        "apply": "Tətbiq et",
+        "cancel": "Ləğv et",
+        "close": "Bağla",
+        "closeModel": "Modeli bağla",
+        "delete": "Sil",
+        "discardTitle": "Dəyişikliklər ləğv edilsin?",
+        "discardMessage": "Dəyişikliklərinizi ləğv etmək istədiyinizə əminsiniz?",
+        "duplicate": "Surətini yarat",
+        "edit": "Redaktə et",
+        "export": "İxrac et",
+        "exportAs": "Modeli bu formatda ixrac et",
+        "exportHtml": "HTML hesabatı",
+        "exportPdf": "PDF hesabatı",
+        "exportTd": "Orijinal (Threat Dragon)",
+        "exportTemplate": "Şablon kimi",
+        "exportTmBom": "TM-BOM kimi",
+        "exportOtm": "Open Threat Model (OTM)",
+        "import": "İdxal et",
+        "ok": "Oldu",
+        "open": "Aç",
+        "openModel": "Modeli aç",
+        "print": "Çap et",
+        "reload": "Yenidən yüklə",
+        "remove": "Sil",
+        "report": "Hesabat",
+        "save": "Saxla",
+        "saveAs": "Başqa adla saxla",
+        "saveModel": "Modeli saxla",
+        "saveModelAs": "Modeli başqa adla saxla",
+        "search": "Axtar",
+        "next": "Növbəti",
+        "previous": "Əvvəlki"
+    },
+    "cards": {
+        "details": "Kartın təfərrüatları",
+        "noDetails": "Təfərrüatlar mövcud deyil",
+        "unknown": "Naməlum",
+        "properties": {
+            "suit": "Kateqoriya",
+            "number": "Nömrə"
+        }
+    },
+    "threats": {
+        "model": {
+            "cia": {
+                "header": "--- CIA ---",
+                "confidentiality": "Məxfilik",
+                "integrity": "Bütövlük",
+                "availability": "Əlçatanlıq"
+            },
+            "ciadie": {
+                "header": "--- CIA-DIE ---",
+                "confidentiality": "Məxfilik",
+                "integrity": "Bütövlük",
+                "availability": "Əlçatanlıq",
+                "distributed": "Paylanmış",
+                "immutable": "Dəyişməz",
+                "ephemeral": "Qısamüddətli"
+            },
+            "linddun": {
+                "header": "--- LINDDUN ---",
+                "linkability": "Əlaqələndirilə bilmə",
+                "identifiability": "Şəxsiyyətin müəyyən edilə bilməsi",
+                "nonRepudiation": "İnkar edilə bilməmə",
+                "detectability": "Aşkarlana bilmə",
+                "disclosureOfInformation": "Məlumatın açıqlanması",
+                "unawareness": "Məlumatsızlıq",
+                "nonCompliance": "Tələblərə uyğunsuzluq"
+            },
+            "plot4ai": {
+                "header": "--- PLOT4ai ---",
+                "techniqueProcesses": "Texnika və proseslər",
+                "accessibility": "Əlçatanlıq",
+                "identifiabilityLinkability": "Şəxsiyyətin müəyyən edilə bilməsi və əlaqələndirilə bilmə",
+                "security": "İnformasiya təhlükəsizliyi",
+                "safety": "Zərərdən qorunma",
+                "unawareness": "Məlumatsızlıq",
+                "ethicsHumanRights": "Etika və insan hüquqları",
+                "nonCompliance": "Tələblərə uyğunsuzluq"
+            },
+            "stride": {
+                "header": "--- STRIDE ---",
+                "spoofing": "Kimliyin saxtalaşdırılması",
+                "tampering": "Məlumatın təhrif edilməsi",
+                "repudiation": "İnkar etmə",
+                "informationDisclosure": "Məlumatın açıqlanması",
+                "denialOfService": "Xidmətdən imtina",
+                "elevationOfPrivilege": "Səlahiyyətlərin yüksəldilməsi"
+            },
+            "eop": {
+                "header": "--- EoP ---",
+                "dataValidationAndEncoding": "Məlumatların yoxlanması və kodlaşdırılması",
+                "authentication": "Autentifikasiya",
+                "sessionManagement": "Sessiyanın idarə edilməsi",
+                "authorization": "Avtorizasiya",
+                "cryptography": "Kriptoqrafiya",
+                "cornucopia": "Cornucopia",
+                "wildCard": "Wild Card"
+            }
+        },
+        "generic": {
+            "default": "Yeni ümumi təhdid",
+            "cia": "Yeni CIA təhdidi",
+            "ciadie": "Yeni CIA-DIE təhdidi",
+            "linddun": "Yeni LINDDUN təhdidi",
+            "plot4ai": "Yeni PLOT4ai təhdidi",
+            "stride": "Yeni STRIDE təhdidi",
+            "eop": "Yeni EoP təhdidi"
+        },
+        "edit": "Təhdidi redaktə et",
+        "confirmDeleteTitle": "Silməni təsdiqlə",
+        "confirmDeleteMessage": "Bu təhdidi silmək istədiyinizə əminsiniz?",
+        "description": "Bu təhdidin təsvirini daxil edin",
+        "emptyThreat": "Təhdid əlavə etmək üçün qrafda element seçin",
+        "mitigation": "Bu təhdidin təsirini azaltmaq üçün tədbirləri, status tətbiq olunmursa, səbəbini qeyd edin",
+        "newThreat": "Yeni təhdid",
+        "newThreatByType": "Növə görə yeni təhdid",
+        "newThreatByContext": "Kontekstə görə yeni təhdid",
+        "properties": {
+            "description": "Təsvir",
+            "mitigation": "Təsirin azaldılması tədbirləri",
+            "modelType": "Modelin növü",
+            "number": "Nömrə",
+            "severity": "Ciddilik",
+            "score": "Bal",
+            "status": "Vəziyyət",
+            "title": "Başlıq",
+            "type": "Növ"
+        },
+        "status": {
+            "accepted": "Qəbul edilib",
+            "avoided": "Yol verilməyib",
+            "eliminated": "Aradan qaldırılıb",
+            "transferred": "Ötürülüb",
+            "notApplicable": "Tətbiq olunmur",
+            "open": "Açıq",
+            "mitigated": "Təsiri azaldılıb"
+        },
+        "severity": {
+            "tbd": "Müəyyən ediləcək",
+            "low": "Aşağı",
+            "medium": "Orta",
+            "high": "Yüksək",
+            "critical": "Kritik"
+        },
+        "validation": {
+            "error": "Kartın nömrəsi tələb olunur.",
+            "cardNumberRequired": "Saxlamazdan əvvəl kart nömrəsi seçməlisiniz."
+        }
+    },
+    "report": {
+        "options": {
+            "showOutOfScope": "Əhatə dairəsindən kənar elementləri göstər",
+            "showMitigatedThreats": "Təsiri azaldılmış təhdidləri göstər",
+            "showModelDiagrams": "Model diaqramlarını göstər",
+            "showEmpty": "Boş elementləri göstər",
+            "showProperties": "Elementlərin xüsusiyyətlərini göstər",
+            "showBranding": "Threat Dragon loqosu"
+        },
+        "title": "Təhdid modeli hesabatı:",
+        "dateGenerated": "Yaradılma tarixi",
+        "executiveSummary": "Rəhbərlik üçün xülasə",
+        "notProvided": "Təqdim edilməyib",
+        "summary": "Xülasə",
+        "releaseVersion": "Buraxılış versiyası",
+        "releasedAt": "Buraxılış tarixi",
+        "threatStats": {
+            "accepted": "Qəbul edilmiş təhdidlərin ümumi sayı",
+            "avoided": "Yol verilməmiş təhdidlərin ümumi sayı",
+            "eliminated": "Aradan qaldırılmış təhdidlərin ümumi sayı",
+            "transferred": "Ötürülmüş təhdidlərin ümumi sayı",
+            "total": "Təhdidlərin ümumi sayı",
+            "mitigated": "Təsiri azaldılmış təhdidlərin ümumi sayı",
+            "notApplicable": "Tətbiq olunmayan təhdidlərin ümumi sayı",
+            "notMitigated": "Açıq təhdidlərin ümumi sayı",
+            "openCritical": "Açıq / kritik ciddilik",
+            "openHigh": "Açıq / yüksək ciddilik",
+            "openMedium": "Açıq / orta ciddilik",
+            "openLow": "Açıq / aşağı ciddilik",
+            "openTbd": "Açıq / ciddiliyi müəyyən ediləcək",
+            "openUnknown": "Açıq / ciddiliyi naməlum"
+        }
+    },
+    "upgrade": {
+        "modal": {
+            "header": "Təhdid modelinin yenilənməsi",
+            "welcome": "OWASP Threat Dragon tətbiqinin 2-ci versiyasına xoş gəlmisiniz!",
+            "p1": "2-ci versiya fərqli rəsm kitabxanasından istifadə edir. Bu, təhdid modellərinizin hissələrinin saxlanma qaydasını dəyişəcək. Diaqramların əksəriyyəti Threat Dragon tətbiqinin əvvəlki versiyalarındakı kimi görünsə də, bəzilərində kiçik düzəlişlər lazım ola bilər.",
+            "p2": "Bu dialoq pəncərəsini bağladıqdan sonra modeldəki hər bir diaqramın 2-ci versiyanın formatında necə göründüyünü görəcəksiniz. Düzəliş tələb edən diaqramları qeyd edin. Bu yeniləmə bir dəfə həyata keçirilir və modeli saxladıqdan sonra bu mesajı bir daha görməməlisiniz."
+        },
+        "instructions": "Əla! Modelinizə keçək.",
+        "continue": "Təhdid modelinə keç"
+    }
+}

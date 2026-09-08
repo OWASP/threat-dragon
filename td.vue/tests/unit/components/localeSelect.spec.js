@@ -11,6 +11,7 @@ jest.mock('@/service/environment');
 
 const allLocaleLabels = {
     ar: 'العربية',
+    az: 'Azərbaycan dili',
     de: 'Deutsch',
     el: 'Ελληνικά',
     en: 'English',

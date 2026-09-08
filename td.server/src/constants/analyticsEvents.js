@@ -47,7 +47,7 @@ export const analyticsEventProperties = Object.freeze({
     [analyticsEvents.THREAT_MODEL_CREATED]: Object.freeze({ provider: providerValues }),
     [analyticsEvents.THREAT_MODEL_SAVED]: Object.freeze({ provider: providerValues }),
     [analyticsEvents.APPLICATION_LANGUAGE_USED]: Object.freeze({
-        language: Object.freeze(['ar', 'de', 'el', 'en', 'es', 'fi', 'fr', 'hi', 'id', 'ja', 'ms', 'pt', 'pt-BR', 'zh'])
+        language: Object.freeze(['ar', 'az', 'de', 'el', 'en', 'es', 'fi', 'fr', 'hi', 'id', 'ja', 'ms', 'pt', 'pt-BR', 'zh'])
     }),
     [analyticsEvents.THREAT_MODEL_EDIT_SESSION_ENDED]: Object.freeze({
         duration_bucket: Object.freeze([

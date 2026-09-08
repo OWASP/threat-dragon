@@ -5,6 +5,7 @@ import { createI18n } from 'vue-i18n';
 // ISO 639-1 language codes
 
 import ar from './ar';
+import az from './az';
 import de from './de';
 import el from './el';
 import en from './en';
@@ -31,6 +32,7 @@ const fallbackLocales = Object.freeze({
 
 const messages = Object.freeze({
     ar,
+    az,
     de,
     el,
     en,

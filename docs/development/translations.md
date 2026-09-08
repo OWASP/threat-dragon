@@ -33,6 +33,7 @@ structure as `en.js`.
 | Language                      | BCP 47  | Filename | Status                                                      |
 |-------------------------------|---------|----------|-------------------------------------------------------------|
 | العربية (Arabic)              | `ar`    | `ar.json` | Some values are in English (untranslated) |
+| Azərbaycan dili (Azerbaijani) | `az`    | `az.json` | Some values are in English (untranslated) |
 | Deutsch (German)              | `de`    | `de.json` | Some values are in English (untranslated) |
 | Ελληνικά (Greek)              | `el`    | `el.json` | Some values are in English (untranslated) |
 | English                       | `en`    | `en.json` |                                                             |

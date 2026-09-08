@@ -14,6 +14,7 @@ let mainWindow;
 
 // access the i18n message strings
 import ar from '@/i18n/ar';
+import az from '@/i18n/az';
 import de from '@/i18n/de';
 import el from '@/i18n/el';
 import en from '@/i18n/en';
@@ -28,7 +29,7 @@ import pt from '@/i18n/pt';
 import ptBr from '@/i18n/pt-br';
 import zh from '@/i18n/zh';
 
-const messages = { ar, de, el, en, es, fi, fr, hi, id, ja, ms, pt, 'pt-BR': ptBr, zh };
+const messages = { ar, az, de, el, en, es, fi, fr, hi, id, ja, ms, pt, 'pt-BR': ptBr, zh };
 const defaultLanguage = 'en';
 let language = defaultLanguage;
 
@@ -463,7 +464,7 @@ export const modelSave = (modelData, fileName) => {
 
 // the renderer has changed the language
 export const setLocale = (locale) => {
-    const languages = [ 'ar', 'de', 'el', 'en', 'es', 'fi', 'fr', 'hi', 'id', 'ja', 'ms', 'pt', 'pt-BR', 'zh' ];
+    const languages = [ 'ar', 'az', 'de', 'el', 'en', 'es', 'fi', 'fr', 'hi', 'id', 'ja', 'ms', 'pt', 'pt-BR', 'zh' ];
     language = languages.includes(locale) ? locale : defaultLanguage;
 };
 
