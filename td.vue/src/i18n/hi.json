@@ -187,6 +187,8 @@
     "owner": "मालिक",
     "reviewer": "समीक्षक",
     "title": "शीर्षक",
+    "releaseVersion": "Release version",
+    "releasedAt": "Release date",
     "diagram": {
       "diagrams": "चित्",
       "addNewDiagram": "एक नया चित्र जोड़ें...",
@@ -506,6 +508,8 @@
     "executiveSummary": "कार्यकारी सारांश",
     "notProvided": "प्रदान नहीं किया गया",
     "summary": "सारांश",
+    "releaseVersion": "Release Version",
+    "releasedAt": "Release Date",
     "threatStats": {
       "accepted": "Total Accepted",
       "avoided": "Total Avoided",

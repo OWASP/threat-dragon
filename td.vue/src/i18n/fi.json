@@ -187,6 +187,8 @@
     "owner": "Omistaja",
     "reviewer": "Katselmoija",
     "title": "Otsikko",
+    "releaseVersion": "Release version",
+    "releasedAt": "Release date",
     "diagram": {
       "diagrams": "Kaaviot",
       "addNewDiagram": "Lisää uusi kaavio...",
@@ -506,6 +508,8 @@
     "executiveSummary": "Johdon yhteenveto",
     "notProvided": "Ei sisälly",
     "summary": "Yhteenveto",
+    "releaseVersion": "Release Version",
+    "releasedAt": "Release Date",
     "threatStats": {
       "accepted": "Total Accepted",
       "avoided": "Total Avoided",
