@@ -6,8 +6,14 @@ module.exports = {
     },
     'extends': [
         'plugin:vue/vue3-essential',
+        'plugin:@intlify/vue-i18n/base',
         'eslint:recommended'
     ],
+    settings: {
+        'vue-i18n': {
+            localeDir: './src/i18n/*.json'
+        }
+    },
     globals: {
         __static: 'readonly',
     },
@@ -20,6 +26,9 @@ module.exports = {
     ],
     rules: {
         ...shared.rules,
+        '@intlify/vue-i18n/no-dynamic-keys': 'warn',
+        '@intlify/vue-i18n/no-missing-keys': 'error',
+        '@intlify/vue-i18n/no-missing-keys-in-other-locales': 'error',
         'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
         'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
     },
