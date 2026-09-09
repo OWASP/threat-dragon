@@ -63,7 +63,7 @@ const swapKeyValuePairs = (obj) => {
 const generic = Object.assign(
     Object.assign({ 'threats.model.stride.header': 'strideHeader' }, swapKeyValuePairs(stride.all)),
     Object.assign({ 'threats.model.cia.header': 'ciaHeader' }, swapKeyValuePairs(cia)),
-    Object.assign({ 'threats.model.ciedie.header': 'ciaDieHeader' }, swapKeyValuePairs(ciaDie)),
+    Object.assign({ 'threats.model.ciadie.header': 'ciaDieHeader' }, swapKeyValuePairs(ciaDie)),
     Object.assign({ 'threats.model.linddun.header': 'linddunHeader' }, swapKeyValuePairs(linddun.all)),
     Object.assign({ 'threats.model.plot4ai.header': 'plot4aiHeader' }, swapKeyValuePairs(plot4ai.all))
 );

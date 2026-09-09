@@ -12,6 +12,7 @@ import { providerNames } from './service/provider/providers.js';
 import threatDragonV1 from './service/migration/tdV1/threatDragonV1';
 import { importOtm } from './service/migration/otm/otm';
 import { importTmbom } from './service/migration/tmBom/tmBom';
+import { translateKnownKey } from './service/i18n/translation.js';
 
 import schema from './service/schema/ajv';
 import storeFactory from './store/index.js';
@@ -23,7 +24,10 @@ import BootstrapVue from './plugins/bootstrap-vue.js';
 import { FontAwesomeIcon } from './plugins/fontawesome-vue.js';
 import Toast, { toastOptions, installToastGlobalProperties } from './plugins/toastification.js';
 
-const t = (...args) => i18nFactory.get().t(...args);
+const t = (...args) => {
+    const { t: translate } = i18nFactory.get();
+    return translate(...args);
+};
 
 const getConfirmModal = () => {
     return appProxy.$bvModal.msgBoxConfirm(t('forms.discardMessage'), {
@@ -85,7 +89,7 @@ window.electronAPI.onOpenModel((_event, fileName, jsonModel) => {
     let params;
 
     if (Object.prototype.hasOwnProperty.call(jsonModel, 'modelError')) {
-        appProxy.$toast.error(t('threatmodel.errors.' + jsonModel.modelError));
+        appProxy.$toast.error(translateKnownKey(t, `threatmodel.errors.${jsonModel.modelError}`));
         return;
     }
 

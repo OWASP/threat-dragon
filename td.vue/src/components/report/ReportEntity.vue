@@ -53,6 +53,7 @@
 
 <script>
 import threatService from '@/service/threats/index.js';
+import { translateKnownKey } from '@/service/i18n/translation.js';
 
 export default {
     name: 'TdReportEntity',
@@ -77,8 +78,7 @@ export default {
     },
     computed: {
         dataType: function () {
-            const entityType = this.entity.data.type.replace('tm.', '').replace('td.', '');
-            return this.$t(`threatmodel.shapes.${this.toCamelCase(entityType)}`);
+            return translateKnownKey(this.$t, this.entity.data.type);
         },
         tableData: function () {
             return threatService.filterForDiagram(this.entity.data, {
@@ -147,7 +147,6 @@ export default {
     },
     methods: {
         toCamelCase(str) {
-            // https://stackoverflow.com/questions/2970525/converting-any-string-into-camel-case
             return str.replace(/(?:^\w|[A-Z]|\b\w)/g, (ltr, idx) => idx === 0 ? ltr.toLowerCase() : ltr.toUpperCase()).replace(/\s+/g, '');
         },
         translateSeverity(severity) {
