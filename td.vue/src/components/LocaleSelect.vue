@@ -117,6 +117,8 @@ export default {
             switch (locale) {
             case 'ar':
                 return 'العربية'; // Arabic
+            case 'az':
+                return 'Azərbaycan dili'; // Azerbaijani
             case 'de':
                 return 'Deutsch'; // German
             case 'el':

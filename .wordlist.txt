@@ -9,6 +9,7 @@ AppImage
 ara
 Atlassian
 auth
+Az
 backend
 Backend
 Bahasa
@@ -45,6 +46,7 @@ Detectability
 deu
 Deutsch
 dev
+dili
 dmg
 Dockerfile
 dockerhub
@@ -131,6 +133,7 @@ pre
 PRs
 PWD
 pyspelling
+rbaycan
 README
 remediations
 renderer
