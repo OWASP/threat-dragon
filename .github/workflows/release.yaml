@@ -1,464 +1,480 @@
-name: Release pipeline
+name: Release
 
-# only for version 2.x.x releases, and release candidates
 on:
   push:
     tags:
-      - v2.?.*
+      - 'v*.*.*'
   workflow_dispatch:
 
 permissions:
   contents: read
 
+concurrency:
+  group: release-${{ github.ref_name }}
+  cancel-in-progress: false
+
 env:
-  # threatdragon is the working area on docker hub so use this area
-  # owasp/threat-dragon is the final release area so DO NOT use that
+  NODE_VERSION: '24.20.0'
+  NPM_VERSION: '11.18.0'
   IMAGE_NAME: threatdragon/owasp-threat-dragon
 
-# for security reasons the github actions are pinned to specific SHAs
 jobs:
-  site_unit_tests:
-    name: Site unit tests
+  validate:
+    name: Validate release context
     runs-on: ubuntu-24.04
-    defaults:
-      run:
-        working-directory: td.vue
-
+    timeout-minutes: 10
+    outputs:
+      version: ${{ steps.context.outputs.version }}
+      tag: ${{ github.ref_name }}
+      release: ${{ github.event_name == 'push' && !contains(github.ref_name, '-RC') }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
-
-      - name: Use node LTS 24.20.0
-        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
-          node-version: '24.20.0'
+          persist-credentials: false
+      - id: context
+        run: |
+          version="$(jq -r .version package.json)"
+          [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-RC[1-9][0-9]*)?$ ]]
 
-      - name: Use npm 11.18.0
-        run: npm install --global npm@11.18.0
+          if [ "$GITHUB_EVENT_NAME" = push ]; then
+            test "$GITHUB_REF_NAME" = "v$version"
+          fi
 
-      - name: Cache NPM dir
-        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-            ${{ runner.os }}-
+          echo "version=$version" >> "$GITHUB_OUTPUT"
 
-      - name: Install clean packages
-        run: npm clean-install
-
-      - name: lint
-        run: npm run lint
-
-      - name: Unit test
-        run: npm run test:unit
-
-  server_unit_tests:
-    name: Server unit tests
+  quality:
+    name: Release quality checks
+    needs: validate
     runs-on: ubuntu-24.04
-    defaults:
-      run:
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - run: npm install --global npm@${{ env.NPM_VERSION }}
+      - run: npm clean-install
+      - run: npm run lint
+      - run: npm run test:site
+      - run: npm run test:server
+      - run: npm run test:desktop
+      - run: npm run make-sbom
         working-directory: td.server
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
-
-      - name: Use node LTS 24.20.0
-        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          node-version: '24.20.0'
+          name: release-server-sbom
+          path: td.server/sbom.*
+          if-no-files-found: error
 
-      - name: Use npm 11.18.0
-        run: npm install --global npm@11.18.0
-
-      - name: Cache NPM dir
-        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-            ${{ runner.os }}-
-
-      - name: Install clean packages
-        run: npm clean-install
-
-      - name: lint
-        run: npm run lint
-
-      - name: Unit test
-        run: npm run test:unit
-
-      - name: Create server SBOM
-        run: npm run make-sbom
-
-      - name: Save SBOM artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: sboms-server
-          path: './td.server/sbom.*'
-          include-hidden-files: true
-
-  desktop_unit_tests:
-    name: Desktop unit tests
-    runs-on: ubuntu-24.04
-    defaults:
-      run:
-        working-directory: td.vue
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
-
-      - name: Use node LTS 24.20.0
-        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
-        with:
-          node-version: '24.20.0'
-
-      - name: Use npm 11.18.0
-        run: npm install --global npm@11.18.0
-
-      - name: Cache NPM dir
-        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-            ${{ runner.os }}-
-
-      - name: Install clean packages
-        run: npm clean-install
-
-      - name: lint
-        run: npm run lint:desktop
-
-      - name: Unit test
-        run: npm run test:desktop
-
-  desktop_windows:
-    # Build only Windows installer and provide to github Release Draft
-    name: Windows installer
-    runs-on: windows-latest
-    needs: [desktop_unit_tests, site_unit_tests]
+  windows:
+    name: Build Windows installer
+    needs: [validate, quality]
+    runs-on: windows-2025
+    timeout-minutes: 45
     permissions:
-      contents: write
+      contents: read
+      id-token: write
+      attestations: write
     defaults:
       run:
         working-directory: td.vue
-
     steps:
-      - name: Check out
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
-
-      - name: Use node LTS 24.20.0
-        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
-          node-version: '24.20.0'
-
-      - name: Use npm 11.18.0
-        run: npm install --global npm@11.18.0
-
-      - name: Cache NPM dir
-        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-            ${{ runner.os }}-
-
-      - name: Install clean packages
-        run: npm clean-install
-
-      - name: Build Windows executable
-        # code signing using Extended Verification (EV) open source certificate
-        # must be done using a hardware key
+          node-version: ${{ env.NODE_VERSION }}
+      - run: npm install --global npm@${{ env.NPM_VERSION }}
+      - run: npm clean-install
+      - name: Build unsigned installer
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npm run build:desktop -- --windows --publish always
-
-      - name: Save SBOM artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+        run: npm run build:desktop -- --win nsis --x64 --arm64 --publish never
+      - name: Prepare signing kit
+        shell: pwsh
+        env:
+          VERSION: ${{ needs.validate.outputs.version }}
+        run: |
+          New-Item -ItemType Directory -Force ../release/windows | Out-Null
+          $filename = "Threat-Dragon-ng-Setup-$env:VERSION.exe"
+          Copy-Item "dist-desktop/$filename" ../release/windows/
+          Copy-Item dist-desktop/latest.yml ../release/windows/
+          $checksum = Get-FileHash "../release/windows/$filename" -Algorithm SHA256
+          $hash = $checksum.Hash.ToLower()
+          "$hash  $filename" | Set-Content ../release/windows/SHA256SUMS
+      - uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-path: release/windows/Threat-Dragon-ng-Setup-${{ needs.validate.outputs.version }}.exe
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: release-windows-unsigned
+          path: release/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: sboms-desktop-windows-site
-          path: './td.vue/dist-desktop/bundled/.sbom/*'
+          path: td.vue/dist-desktop/bundled/.sbom/*
           include-hidden-files: true
           if-no-files-found: error
 
-  desktop_macos:
-    # Build and publish MacOS installer to github Release Draft
-    # the draft name uses version and is created if it does not already exist
-    name: MacOS installer
-    runs-on: macos-latest
-    needs: [desktop_unit_tests, site_unit_tests]
+  macos:
+    name: Build macOS installers
+    needs: [validate, quality]
+    runs-on: macos-15
+    timeout-minutes: 60
     permissions:
-      contents: write
-    env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      # MacOS signing: certificate and password, see electron.build/code-signing
-      CSC_KEY_PASSWORD: ${{ secrets.MAC_CERTS_PASSWORD }}
-      CSC_LINK:  ${{ secrets.MAC_CERTS }}
-      # MacOS notarization: see github.com/electron/notarize#readme
-      API_KEY_ID: ${{ secrets.API_KEY_ID }}
-      API_KEY_ISSUER_ID: ${{ secrets.API_KEY_ISSUER_ID }}
-      # APPLE_ID: ${{ secrets.APPLE_ID }}
-      # APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
-      # APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+      contents: read
+      id-token: write
+      attestations: write
     defaults:
       run:
         working-directory: td.vue
-
     steps:
-      - name: Check out
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
-
-      - name: Use node LTS 24.20.0
-        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
-          node-version: '24.20.0'
-
-      - name: Use npm 11.18.0
-        run: npm install --global npm@11.18.0
-
-      - name: Cache NPM dir
-        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-            ${{ runner.os }}-
-
-      - name: Install clean packages
-        run: npm clean-install
-
-      - name: Prepare for MacOS notarization
-        # Import Apple API key to support signing of app
+          node-version: ${{ env.NODE_VERSION }}
+      - run: npm install --global npm@${{ env.NPM_VERSION }}
+      - run: npm clean-install
+      - name: Build unsigned packages
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+        run: npm run build:desktop -- --mac dmg zip --x64 --arm64 --publish never
+      - name: Prepare signing kit
+        env:
+          VERSION: ${{ needs.validate.outputs.version }}
         run: |
-          mkdir -p ~/private_keys/
-          echo '${{ secrets.API_KEY }}' > ~/private_keys/AuthKey_${{ secrets.API_KEY_ID }}.p8
-
-      - name: Publish MacOS disk image
-        run: npm run build:desktop -- --mac --publish always
-
-      - name: Print logs on error
-        if: ${{ failure() }}
-        run: find . -name "*.log" -exec cat '{}' \; -print
-
-      - name: Save SBOM artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+          mkdir -p ../release/macos
+          cp "dist-desktop/Threat-Dragon-ng-$VERSION.dmg" ../release/macos/
+          cp "dist-desktop/Threat-Dragon-ng-$VERSION-mac.zip" ../release/macos/
+          cp "dist-desktop/Threat-Dragon-ng-$VERSION-arm64.dmg" ../release/macos/
+          cp "dist-desktop/Threat-Dragon-ng-$VERSION-arm64-mac.zip" ../release/macos/
+          cp dist-desktop/latest-mac.yml ../release/macos/
+          cd ../release/macos
+          shasum -a 256 Threat-Dragon-ng-* > SHA256SUMS
+      - uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-path: release/macos/Threat-Dragon-ng-*
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: release-macos-unsigned
+          path: release/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: sboms-desktop-macos-site
-          path: './td.vue/dist-desktop/bundled/.sbom/*'
+          path: td.vue/dist-desktop/bundled/.sbom/*
           include-hidden-files: true
           if-no-files-found: error
 
-  desktop_linux:
-    name: Linux installers
+  linux:
+    name: Build Linux packages
+    needs: [validate, quality]
     runs-on: ubuntu-24.04
-    needs: [desktop_unit_tests, site_unit_tests]
+    timeout-minutes: 60
     permissions:
-      contents: write
+      contents: read
+      id-token: write
+      attestations: write
     defaults:
       run:
         working-directory: td.vue
-
     steps:
-      - name: Check out
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
-
-      - name: Use node LTS 24.20.0
-        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
-          node-version: '24.20.0'
-
-      - name: Use npm 11.18.0
-        run: npm install --global npm@11.18.0
-
-      - name: Cache NPM dir
-        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-            ${{ runner.os }}-
-
-      - name: Install clean packages
-        run: npm clean-install
-
-      # Build and publish Linux installers to github Release Draft
-      # for all linux images EXCEPT for the snap
-      # Snaps do not publish, even with snapcraft installed, so use Snap Store
-      - name: Publish Linux app images
-        shell: bash
+          node-version: ${{ env.NODE_VERSION }}
+      - run: npm install --global npm@${{ env.NPM_VERSION }}
+      - run: npm clean-install
+      - name: Build Linux packages
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npm run build:desktop -- --linux AppImage deb rpm --publish always
-
-      - name: Print logs on error
-        if: ${{ failure() }}
-        run: find . -name "*.log" -exec cat '{}' \; -print
-
-      - name: Save SBOM artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+        run: |
+          npm run build:desktop -- --linux AppImage deb rpm --x64 --publish never
+          npm run build:desktop -- --linux AppImage --arm64 --publish never
+      - name: Collect outputs
+        env:
+          VERSION: ${{ needs.validate.outputs.version }}
+        run: |
+          mkdir -p ../release/linux
+          cp "dist-desktop/Threat-Dragon-ng-$VERSION.AppImage" ../release/linux/
+          cp dist-desktop/latest-linux*.yml ../release/linux/
+          cp "dist-desktop/Threat-Dragon-ng-$VERSION-arm64.AppImage" ../release/linux/
+          cp "dist-desktop/threat-dragon_${VERSION}_amd64.deb" ../release/linux/
+          cp "dist-desktop/threat-dragon-$VERSION.x86_64.rpm" ../release/linux/
+          cd ../release/linux
+          sha512sum "Threat-Dragon-ng-$VERSION.AppImage" > checksum-linux.yml
+      - uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-path: release/linux/*
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: release-linux
+          path: release/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: sboms-desktop-linux-site
-          path: './td.vue/dist-desktop/bundled/.sbom/*'
+          path: td.vue/dist-desktop/bundled/.sbom/*
           include-hidden-files: true
           if-no-files-found: error
 
-  desktop_linux_snap:
-    name: Linux snap
+  snap:
+    name: Build Snap packages
+    needs: [validate, quality]
     runs-on: ubuntu-24.04
-    needs: [desktop_unit_tests, site_unit_tests]
-    env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
+    timeout-minutes: 60
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
     defaults:
       run:
         working-directory: td.vue
-
     steps:
-      - name: Check out
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
-
-      - name: Use node LTS 24.20.0
-        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
-          node-version: '24.20.0'
-
-      - name: Use npm 11.18.0
-        run: npm install --global npm@11.18.0
-
-      - name: Cache NPM dir
-        uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-            ${{ runner.os }}-
-
-      - name: Install clean packages
+          node-version: ${{ env.NODE_VERSION }}
+      - run: npm install --global npm@${{ env.NPM_VERSION }}
+      - run: sudo snap install snapcraft --classic --revision=18514
+      - run: npm clean-install
+      - name: Build Snap packages
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
         run: |
-          sudo snap install snapcraft --classic
-          npm clean-install
-
-      # Build the snap, but do not use inbuilt publish
-      # Snaps do not publish, even with snapcraft installed, so use Snap Store
-      - name: Build Linux snap
-        shell: bash
-        run: npm run build:desktop -- --linux snap --publish never
-
-      - name: Upload to Snap Store
-        shell: bash
+          npm run build:desktop -- --linux snap --x64 --publish never
+          npm run build:desktop -- --linux snap --arm64 --publish never
+      - name: Collect outputs
+        env:
+          VERSION: ${{ needs.validate.outputs.version }}
         run: |
-          ls -l dist-desktop/threat-dragon*.snap
-          snapcraft upload --release=stable dist-desktop/threat-dragon*.snap
-
-      - name: Print logs on error
-        if: ${{ failure() }}
-        run: find . -name "*.log" -exec cat '{}' \; -print
-
-      - name: Save SBOM artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+          mkdir -p ../release/snap
+          cp "dist-desktop/threat-dragon_${VERSION}_amd64.snap" ../release/snap/
+          cp "dist-desktop/threat-dragon_${VERSION}_arm64.snap" ../release/snap/
+      - uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-path: release/snap/*
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: release-snap
+          path: release/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: sboms-desktop-linux-snap-site
-          path: './td.vue/dist-desktop/bundled/.sbom/*'
+          path: td.vue/dist-desktop/bundled/.sbom/*
           include-hidden-files: true
           if-no-files-found: error
-
-  dockerhub_release:
-    name: Publish to dockerhub
-    needs: [server_unit_tests, site_unit_tests]
-    uses: ./.github/workflows/docker-build.yaml
-    with:
-      image-tags: threatdragon/owasp-threat-dragon:${{ github.ref_name }},threatdragon/owasp-threat-dragon:stable
-      push-image: ${{ startsWith(github.ref, 'refs/tags/v') }}
-      generate-sbom: true
-      use-qemu: true
-    secrets:
-      dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
-      dockerhub-token: ${{ secrets.DOCKERHUB_TOKEN }}
-
-  sbom_combiner:
-    name: SBOM combiner
-    runs-on: ubuntu-24.04
-    needs:
-      - server_unit_tests
-      - desktop_macos
-      - desktop_linux
-      - desktop_linux_snap
-      - desktop_windows
-      - dockerhub_release
-
-    steps:
-      - name: Fetch prepared SBOM artifacts
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
-        with:
-          pattern: 'sboms-*'
-          merge-multiple: false
-          path: 'raw/'
-      - name: Fetch SBOMs
+      - name: Publish to Snap stable
+        if: needs.validate.outputs.release == 'true'
+        env:
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
         run: |
-          set -eux
-          mkdir -p sboms/threat-dragon-container-image/app/
-          cp raw/sboms-server/sbom.json                 sboms/threat-dragon-server-bom.json
-          cp raw/sboms-server/sbom.xml                  sboms/threat-dragon-server-bom.xml
-          cp raw/sboms-desktop-windows-site/bom.json    sboms/threat-dragon-desktop-windows-site-bom.json
-          cp raw/sboms-desktop-windows-site/bom.xml     sboms/threat-dragon-desktop-windows-site-bom.xml
-          cp raw/sboms-desktop-macos-site/bom.json      sboms/threat-dragon-desktop-macos-site-bom.json
-          cp raw/sboms-desktop-macos-site/bom.xml       sboms/threat-dragon-desktop-macos-site-bom.xml
-          cp raw/sboms-desktop-linux-site/bom.json      sboms/threat-dragon-desktop-linux-site-bom.json
-          cp raw/sboms-desktop-linux-site/bom.xml       sboms/threat-dragon-desktop-linux-site-bom.xml
-          cp raw/sboms-desktop-linux-snap-site/bom.json sboms/threat-dragon-desktop-linux-snap-site-bom.json
-          cp raw/sboms-desktop-linux-snap-site/bom.xml  sboms/threat-dragon-desktop-linux-snap-site-bom.xml
-          cp raw/sboms-container-image-app/*            sboms/threat-dragon-container-image/app/
-      - name: Save SBOM artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: sboms
-          path: 'sboms/'
-          include-hidden-files: true
+          for package in ../release/snap/*.snap; do
+            snapcraft upload --release=stable "$package"
+          done
 
-  webapp_release:
-    name: Publish web application
+  docker:
+    name: Build container image
+    needs: [validate, quality]
     runs-on: ubuntu-24.04
-    needs:
-      - desktop_macos
-      - desktop_linux
-      - desktop_windows
-      - sbom_combiner
+    timeout-minutes: 60
     permissions:
-      contents: write
-
+      contents: read
+      id-token: write
+      attestations: write
+      artifact-metadata: write
     steps:
-      - name: Check out
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
-
-      - name: Fetch prepared SBOM artifacts
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
         with:
-          name: 'sboms'
-          path: 'sboms/'
-
-      - name: Prepare release notes
+          persist-credentials: false
+      - uses: docker/setup-qemu-action@96fe6ef7f33517b61c61be40b68a1882f3264fb8 # v4.2.0
+      - uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e # v4.3.0
+      - name: Generate OCI image metadata
+        id: metadata
+        uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6.2.0
+        with:
+          images: ${{ env.IMAGE_NAME }}
+          tags: type=semver,pattern={{version}}
+          labels: |
+            org.opencontainers.image.title=OWASP Threat Dragon
+            org.opencontainers.image.description=OWASP Threat Dragon - a free, open source threat modeling tool
+            org.opencontainers.image.url=https://owasp.org/www-project-threat-dragon/
+            org.opencontainers.image.documentation=https://www.threatdragon.com/docs/
+            org.opencontainers.image.source=https://github.com/OWASP/threat-dragon
+            org.opencontainers.image.vendor=OWASP
+            org.opencontainers.image.licenses=Apache-2.0
+      - name: Log in to Docker Hub for tag builds
+        if: needs.validate.outputs.release == 'true'
+        uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - id: image
+        uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7.3.0
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: ${{ needs.validate.outputs.release == 'true' }}
+          tags: |
+            ${{ env.IMAGE_NAME }}:v${{ needs.validate.outputs.version }}
+            ${{ env.IMAGE_NAME }}:stable
+          labels: ${{ steps.metadata.outputs.labels }}
+          outputs: ${{ needs.validate.outputs.release != 'true' && 'type=oci,dest=/tmp/threat-dragon.oci.tar' || '' }}
+          provenance: mode=max,version=v1
+          sbom: true
+      - name: Collect rehearsal image
+        if: needs.validate.outputs.release != 'true'
         run: |
-          releaseVersion=${{ github.ref_name }}
-          sed -e s/2.x.x/${releaseVersion:1}/g .release-note-template.md > ./release-notes.txt
-          tar -czvf threat-dragon-sboms.zip sboms
+          mkdir -p release/docker
+          mv /tmp/threat-dragon.oci.tar release/docker/
+      - name: Retain container application SBOMs
+        if: needs.validate.outputs.release == 'true'
+        env:
+          IMAGE: ${{ env.IMAGE_NAME }}@${{ steps.image.outputs.digest }}
+        run: |
+          mkdir -p release/docker
+          container="$(docker create --platform linux/amd64 "$IMAGE")"
+          docker cp "$container:/app/boms" release/docker/boms
+          docker rm "$container"
+      - name: Identify platform images
+        id: platforms
+        if: needs.validate.outputs.release == 'true'
+        env:
+          IMAGE: ${{ env.IMAGE_NAME }}@${{ steps.image.outputs.digest }}
+        run: |
+          docker buildx imagetools inspect --raw "$IMAGE" > platforms.json
 
-      - name: Create release notes
+          # Each platform image needs its own digest for provenance and tagging.
+          for architecture in amd64 arm64; do
+            digest=$(jq --exit-status --raw-output --arg architecture "$architecture" '
+              .manifests[]
+              | select(.platform.os == "linux")
+              | select(.platform.architecture == $architecture)
+              | .digest
+            ' platforms.json)
+
+            echo "$architecture=$digest" >> "$GITHUB_OUTPUT"
+          done
+      - name: Attest AMD64 build provenance
+        if: needs.validate.outputs.release == 'true'
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-name: index.docker.io/${{ env.IMAGE_NAME }}
+          subject-digest: ${{ steps.platforms.outputs.amd64 }}
+          push-to-registry: true
+      - name: Attest ARM64 build provenance
+        if: needs.validate.outputs.release == 'true'
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-name: index.docker.io/${{ env.IMAGE_NAME }}
+          subject-digest: ${{ steps.platforms.outputs.arm64 }}
+          push-to-registry: true
+      - name: Attest container index provenance
+        if: needs.validate.outputs.release == 'true'
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-name: index.docker.io/${{ env.IMAGE_NAME }}
+          subject-digest: ${{ steps.image.outputs.digest }}
+          push-to-registry: true
+      - name: Attest rehearsal image archive
+        if: needs.validate.outputs.release != 'true'
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-path: release/docker/threat-dragon.oci.tar
+      - name: Publish ARM64 tag
+        if: needs.validate.outputs.release == 'true'
+        env:
+          ARM64_IMAGE: ${{ env.IMAGE_NAME }}@${{ steps.platforms.outputs.arm64 }}
+          ARM64_TAG: ${{ env.IMAGE_NAME }}:v${{ needs.validate.outputs.version }}-arm64
+        run: docker buildx imagetools create --prefer-index=false --tag "$ARM64_TAG" "$ARM64_IMAGE"
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: release-docker
+          path: release/docker/
+          if-no-files-found: error
+
+
+  stage:
+    name: Create release draft
+    if: needs.validate.outputs.release == 'true'
+    needs: [validate, windows, macos, linux, snap, docker]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      actions: read
+      contents: write
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: release-linux
+          path: staged/linux
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: release-snap
+          path: staged/snap
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          pattern: sboms-desktop-*
+          path: raw
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: release-server-sbom
+          path: raw/server
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: release-docker
+          path: raw/docker
+      - name: Collect application SBOMs
+        run: |
+          mkdir -p sboms/threat-dragon-container-image/app
+          for platform in windows macos linux linux-snap; do
+            cp "raw/sboms-desktop-$platform-site/bom.json" "sboms/threat-dragon-desktop-$platform-site-bom.json"
+            cp "raw/sboms-desktop-$platform-site/bom.xml" "sboms/threat-dragon-desktop-$platform-site-bom.xml"
+          done
+          cp raw/server/sbom.json sboms/threat-dragon-server-bom.json
+          cp raw/server/sbom.xml sboms/threat-dragon-server-bom.xml
+          cp raw/docker/boms/* sboms/threat-dragon-container-image/app/
+      - name: Package SBOMs
+        run: |
+          zip -q -j sboms-server.zip raw/server/sbom.*
+          zip -q -j sboms-container-image-app.zip raw/docker/boms/*
+          tar -czf threat-dragon-sboms.zip sboms
+          cd sboms
+          zip -q -r ../sboms.zip .
+      - name: Prepare release notes
+        env:
+          VERSION: ${{ needs.validate.outputs.version }}
+        run: sed "s/2.x.x/$VERSION/g" .release-note-template.md > release-notes.md
+      - name: Create draft release
         uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2.6.2
         with:
           draft: true
-          name: "${releaseVersion:1}"
-          append_body: true
-          body_path: ./release-notes.txt
+          tag_name: ${{ needs.validate.outputs.tag }}
+          target_commitish: ${{ github.sha }}
+          name: ${{ needs.validate.outputs.version }}
+          body_path: release-notes.md
           generate_release_notes: true
+          overwrite_files: false
+          fail_on_unmatched_files: true
           files: |
+            staged/linux/linux/*
+            staged/snap/snap/*
+            sboms.zip
+            sboms-server.zip
+            sboms-container-image-app.zip
             threat-dragon-sboms.zip
