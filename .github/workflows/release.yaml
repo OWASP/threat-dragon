@@ -16,7 +16,8 @@ concurrency:
 env:
   NODE_VERSION: '24.20.0'
   NPM_VERSION: '11.18.0'
-  IMAGE_NAME: threatdragon/owasp-threat-dragon
+  STAGING_IMAGE_NAME: threatdragon/owasp-threat-dragon
+  PRODUCTION_IMAGE_NAME: owasp/threat-dragon
 
 jobs:
   validate:
@@ -277,7 +278,7 @@ jobs:
         run: snapcraft upload --release=stable ../release/snap/*.snap
 
   docker:
-    name: Build container image
+    name: Build staging image
     needs: [validate, quality]
     runs-on: ubuntu-24.04
     timeout-minutes: 60
@@ -296,7 +297,7 @@ jobs:
         id: metadata
         uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6.2.0
         with:
-          images: ${{ env.IMAGE_NAME }}
+          images: ${{ env.STAGING_IMAGE_NAME }}
           tags: |
             type=raw,value=v${{ needs.validate.outputs.version }}
             type=raw,value=stable,enable=${{ needs.validate.outputs.release == 'true' }}
@@ -308,7 +309,7 @@ jobs:
             org.opencontainers.image.source=https://github.com/OWASP/threat-dragon
             org.opencontainers.image.vendor=OWASP
             org.opencontainers.image.licenses=Apache-2.0
-      - name: Log in to Docker Hub for tag builds
+      - name: Log in to staging Docker repository
         if: github.event_name == 'push'
         uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
         with:
@@ -336,7 +337,7 @@ jobs:
       - name: Retain container application SBOMs
         if: needs.validate.outputs.release == 'true'
         env:
-          IMAGE: ${{ env.IMAGE_NAME }}@${{ steps.image.outputs.digest }}
+          IMAGE: ${{ env.STAGING_IMAGE_NAME }}@${{ steps.image.outputs.digest }}
         run: |
           mkdir -p release/docker
           container="$(docker create --platform linux/amd64 "$IMAGE")"
@@ -351,7 +352,7 @@ jobs:
         id: platforms
         if: github.event_name == 'push'
         env:
-          IMAGE: ${{ env.IMAGE_NAME }}@${{ steps.image.outputs.digest }}
+          IMAGE: ${{ env.STAGING_IMAGE_NAME }}@${{ steps.image.outputs.digest }}
         run: |
           docker buildx imagetools inspect --raw "$IMAGE" > platforms.json
 
@@ -366,25 +367,25 @@ jobs:
 
             echo "$architecture=$digest" >> "$GITHUB_OUTPUT"
           done
-      - name: Attest AMD64 build provenance
+      - name: Attest staging AMD64 build provenance
         if: github.event_name == 'push'
         uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
         with:
-          subject-name: index.docker.io/${{ env.IMAGE_NAME }}
+          subject-name: index.docker.io/${{ env.STAGING_IMAGE_NAME }}
           subject-digest: ${{ steps.platforms.outputs.amd64 }}
           push-to-registry: true
-      - name: Attest ARM64 build provenance
+      - name: Attest staging ARM64 build provenance
         if: github.event_name == 'push'
         uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
         with:
-          subject-name: index.docker.io/${{ env.IMAGE_NAME }}
+          subject-name: index.docker.io/${{ env.STAGING_IMAGE_NAME }}
           subject-digest: ${{ steps.platforms.outputs.arm64 }}
           push-to-registry: true
-      - name: Attest container index provenance
+      - name: Attest staging image index provenance
         if: github.event_name == 'push'
         uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
         with:
-          subject-name: index.docker.io/${{ env.IMAGE_NAME }}
+          subject-name: index.docker.io/${{ env.STAGING_IMAGE_NAME }}
           subject-digest: ${{ steps.image.outputs.digest }}
           push-to-registry: true
       - name: Attest rehearsal image archive
@@ -392,12 +393,50 @@ jobs:
         uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
         with:
           subject-path: release/docker/threat-dragon.oci.tar
-      - name: Publish ARM64 tag
+      - name: Publish staging ARM64 tag
         if: needs.validate.outputs.release == 'true'
         env:
-          ARM64_IMAGE: ${{ env.IMAGE_NAME }}@${{ steps.platforms.outputs.arm64 }}
-          ARM64_TAG: ${{ env.IMAGE_NAME }}:v${{ needs.validate.outputs.version }}-arm64
+          ARM64_IMAGE: ${{ env.STAGING_IMAGE_NAME }}@${{ steps.platforms.outputs.arm64 }}
+          ARM64_TAG: ${{ env.STAGING_IMAGE_NAME }}:v${{ needs.validate.outputs.version }}-arm64
         run: docker buildx imagetools create --prefer-index=false --tag "$ARM64_TAG" "$ARM64_IMAGE"
+      - name: Log in to production Docker repository
+        if: needs.validate.outputs.release == 'true'
+        uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
+        with:
+          username: ${{ secrets.DOCKERHUB_OWASP_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_OWASP_TOKEN }}
+      - name: Publish production image tags
+        if: needs.validate.outputs.release == 'true'
+        env:
+          INDEX_IMAGE: ${{ env.STAGING_IMAGE_NAME }}@${{ steps.image.outputs.digest }}
+          VERSION_TAG: ${{ env.PRODUCTION_IMAGE_NAME }}:v${{ needs.validate.outputs.version }}
+          STABLE_TAG: ${{ env.PRODUCTION_IMAGE_NAME }}:stable
+          ARM64_IMAGE: ${{ env.STAGING_IMAGE_NAME }}@${{ steps.platforms.outputs.arm64 }}
+          ARM64_TAG: ${{ env.PRODUCTION_IMAGE_NAME }}:v${{ needs.validate.outputs.version }}-arm64
+        run: |
+          docker buildx imagetools create --tag "$VERSION_TAG" --tag "$STABLE_TAG" "$INDEX_IMAGE"
+          docker buildx imagetools create --prefer-index=false --tag "$ARM64_TAG" "$ARM64_IMAGE"
+      - name: Attest production image index provenance
+        if: needs.validate.outputs.release == 'true'
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-name: docker.io/${{ env.PRODUCTION_IMAGE_NAME }}
+          subject-digest: ${{ steps.image.outputs.digest }}
+          push-to-registry: true
+      - name: Attest production AMD64 build provenance
+        if: needs.validate.outputs.release == 'true'
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-name: docker.io/${{ env.PRODUCTION_IMAGE_NAME }}
+          subject-digest: ${{ steps.platforms.outputs.amd64 }}
+          push-to-registry: true
+      - name: Attest production ARM64 build provenance
+        if: needs.validate.outputs.release == 'true'
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-name: docker.io/${{ env.PRODUCTION_IMAGE_NAME }}
+          subject-digest: ${{ steps.platforms.outputs.arm64 }}
+          push-to-registry: true
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: release-docker

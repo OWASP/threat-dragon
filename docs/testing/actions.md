@@ -45,7 +45,7 @@ The deploy action is run on any "push" to the main branch (this includes merged 
 and serves as Threat Dragon's continuous delivery pipeline.
 
 * Build:
-    This workflow builds and pushes the Docker image with the `latest` tag.
+    This workflow builds and pushes the staging image with the `latest` tag.
     The `latest` tag is not consider stable, and may be broken at times.
     While we do our best to maintain a fully functioning main branch, mistakes will happen.
     Additionally, the full end to end test suite is only run once per day, so errors may not be immediately available.
@@ -56,7 +56,8 @@ and serves as Threat Dragon's continuous delivery pipeline.
 ## Release Pipeline
 
 This action is performed when a tag is created with a v2.x.x format.
-It will perform all tests and then build and publish the install images and the Docker image.
+It runs all tests, builds the install images, and publishes the staging image.
+For a final release tag, it also publishes the production image.
 
 ## Debugging
 

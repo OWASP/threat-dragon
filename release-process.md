@@ -74,45 +74,40 @@ After the releases candidate has been agreed by the Threat Dragon community, a r
 
 The github release workflow automatically creates the draft release and the install images
 
-### Publish docker image
+### Verify Docker images
 
-Ensure the tag now exists within the [Threat Dragon Docker hub][td-dock].
-Do this after logging into an active Docker account using `docker login` from the CLI and running Docker Desktop.
+The release workflow publishes the same multi-platform version and `stable` tags to the
+[staging Docker repository][td-dock] and the [production Docker repository][owasp-dock].
+It also publishes an ARM64-only version tag with the `-arm64` suffix for backward compatibility.
 
-1. once tagged, the github workflow pushes the docker image to docker hub
-2. pull image for an X86 platform using `docker pull --platform linux/x86_64 threatdragon/owasp-threat-dragon:v2.6.1`
-3. pull image for an ARM platform using `docker pull --platform linux/arm64 threatdragon/owasp-threat-dragon:v2.6.1-arm64`
-4. Test using the command to run a detached container:
-    `docker run -d -p 8080:3000 -v $(pwd)/.env:/app/.env threatdragon/owasp-threat-dragon:v2.6.1`
-5. Test the ARM container as well:
-    `docker run -d -p 8080:3000 -v $(pwd)/.env:/app/.env threatdragon/owasp-threat-dragon:v2.6.1-arm64`
-6. Ideally test these releases on Windows, linux and MacOS using `http://localhost:8080/#/`
-
-If the image tests correctly, promote the docker image from dockerhub `threatdragon/`
-to dockerhub `OWASP/threat-dragon/v2.6.1` and `OWASP/threat-dragon/v2.6.1-arm64`.
-Note that the docker account (eg `threatdragon`) must have write permissions to the OWASP area of docker hub.
-
-There is _no going back_ on these steps, so they are deliberately left as manual tasks:
+Inspect the published images:
 
 ```text
-docker pull --platform linux/x86_64 threatdragon/owasp-threat-dragon:v2.6.1
-docker tag threatdragon/owasp-threat-dragon:v2.6.1 owasp/threat-dragon:stable
-docker push owasp/threat-dragon:stable
-docker pull owasp/threat-dragon:stable
-
-docker pull --platform linux/arm64 threatdragon/owasp-threat-dragon:v2.6.1-arm64
-docker tag threatdragon/owasp-threat-dragon:v2.6.1-arm64 owasp/threat-dragon:v2.6.1-arm64
-docker push owasp/threat-dragon:v2.6.1-arm64
-docker pull owasp/threat-dragon:v2.6.1-arm64
-
-docker pull --platform linux/x86_64 threatdragon/owasp-threat-dragon:v2.6.1
-docker tag threatdragon/owasp-threat-dragon:v2.6.1 owasp/threat-dragon:v2.6.1
-docker push owasp/threat-dragon:v2.6.1
-docker pull owasp/threat-dragon:v2.6.1
+docker buildx imagetools inspect threatdragon/owasp-threat-dragon:v2.6.3
+docker buildx imagetools inspect threatdragon/owasp-threat-dragon:stable
+docker buildx imagetools inspect owasp/threat-dragon:v2.6.3
+docker buildx imagetools inspect owasp/threat-dragon:stable
+docker buildx imagetools inspect owasp/threat-dragon:v2.6.3-arm64
 ```
 
-Ensure the tag now exists within the [OWASP Docker hub][owasp-dock].
-Do the (x86_64) `v2.6.1` last so that is shown as the latest one
+The version and `stable` tags must list `linux/amd64` and `linux/arm64`.
+Test both platforms with the normal version tag:
+
+```text
+docker pull --platform linux/amd64 owasp/threat-dragon:v2.6.3
+docker pull --platform linux/arm64 owasp/threat-dragon:v2.6.3
+```
+
+Verify the production provenance attestations:
+
+```text
+gh attestation verify oci://docker.io/owasp/threat-dragon:v2.6.3 \
+  --repo OWASP/threat-dragon --bundle-from-oci
+gh attestation verify oci://docker.io/owasp/threat-dragon:v2.6.3-arm64 \
+  --repo OWASP/threat-dragon --bundle-from-oci
+```
+
+Ideally, test the release on Windows, Linux, and macOS using `http://localhost:8080/#/`.
 
 ### Check demo site
 

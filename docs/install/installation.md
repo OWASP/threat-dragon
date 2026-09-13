@@ -17,7 +17,7 @@ The web application can be run locally or from a server, and is downloaded from 
 There is some configuration necessary, so see the
 [install instructions]({{ '/install/web.html' | relative_url }}) for configuring the application.
 
-The web application is also provided in a Docker image, and this is provided by [dockerhub][docker].
+The web application is also available from the [production Docker repository][docker].
 Follow the Docker [instructions]({{ '/install/docker.html' | relative_url }})
 to download, configure and run a Docker container.
 
