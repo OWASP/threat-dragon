@@ -323,7 +323,9 @@ jobs:
             ${{ env.IMAGE_NAME }}:v${{ needs.validate.outputs.version }}
             ${{ env.IMAGE_NAME }}:stable
           labels: ${{ steps.metadata.outputs.labels }}
-          outputs: ${{ needs.validate.outputs.release != 'true' && 'type=oci,dest=/tmp/threat-dragon.oci.tar' || '' }}
+          outputs: |
+            ${{ needs.validate.outputs.release != 'true' && 'type=oci,dest=/tmp/threat-dragon.oci.tar' || '' }}
+            ${{ github.event_name == 'push' && needs.validate.outputs.release != 'true' && 'type=local,dest=/tmp/image-rootfs' || '' }}
           provenance: mode=max,version=v1
           sbom: true
       - name: Collect rehearsal image
@@ -340,6 +342,11 @@ jobs:
           container="$(docker create --platform linux/amd64 "$IMAGE")"
           docker cp "$container:/app/boms" release/docker/boms
           docker rm "$container"
+      - name: Retain RC container application SBOMs
+        if: github.event_name == 'push' && needs.validate.outputs.release != 'true'
+        run: |
+          mkdir -p release/docker
+          cp -R /tmp/image-rootfs/linux_amd64/app/boms release/docker/boms
       - name: Identify platform images
         id: platforms
         if: needs.validate.outputs.release == 'true'
@@ -400,7 +407,7 @@ jobs:
 
   stage:
     name: Create release draft
-    if: needs.validate.outputs.release == 'true'
+    if: github.event_name == 'push'
     needs: [validate, windows, macos, linux, snap, docker]
     runs-on: ubuntu-24.04
     timeout-minutes: 20
@@ -415,6 +422,14 @@ jobs:
         with:
           name: release-linux
           path: staged/linux
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: release-windows-unsigned
+          path: staged/windows
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: release-macos-unsigned
+          path: staged/macos
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           pattern: sboms-desktop-*
@@ -452,6 +467,7 @@ jobs:
         uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2.6.2
         with:
           draft: true
+          prerelease: ${{ needs.validate.outputs.release != 'true' }}
           tag_name: ${{ needs.validate.outputs.tag }}
           target_commitish: ${{ github.sha }}
           name: ${{ needs.validate.outputs.version }}
@@ -460,6 +476,10 @@ jobs:
           overwrite_files: false
           fail_on_unmatched_files: true
           files: |
+            staged/windows/windows/Threat-Dragon-ng-Setup-*.exe
+            staged/windows/windows/latest.yml
+            staged/macos/macos/Threat-Dragon-ng-*
+            staged/macos/macos/latest-mac.yml
             staged/linux/linux/*
             sboms.zip
             sboms-server.zip
