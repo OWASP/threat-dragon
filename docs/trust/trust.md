@@ -14,6 +14,11 @@ Some examples of this are:
 * the code repository enforces signed commits which helps filter out malicious activity
 * the supply chain actions are identified using a full-length SHA
 * the desktop installer releases are signed and notarized where possible
+* the Linux packages, Snap package and Docker images have SLSA Build Level 2 provenance
+* published GitHub releases are immutable and attest their final assets
+
+The signed Windows and MacOS packages are excluded from the SLSA Build Level 2 claim
+because maintainers sign them offline with Certum certificates.
 
 ### Continual testing
 

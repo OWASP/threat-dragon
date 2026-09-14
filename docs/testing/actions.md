@@ -55,9 +55,11 @@ and serves as Threat Dragon's continuous delivery pipeline.
 
 ## Release Pipeline
 
-This action is performed when a tag is created with a v2.x.x format.
-It runs all tests, builds the install images, and publishes the staging image.
-For a final release tag, it also publishes the production image.
+This action runs for release tags in `vX.Y.Z` or `vX.Y.Z-RC<number>` format.
+It tests, builds, and attests the release artifacts, publishes the versioned staging image,
+and creates a draft GitHub release.
+A final release also publishes the versioned and `stable` production images and the Snap package.
+Release candidates do not update production or `stable` tags.
 
 ## Debugging
 

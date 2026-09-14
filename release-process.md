@@ -13,11 +13,11 @@ GitHub Actions creates all files.
 | Output | Purpose | Created by | SLSA Build L2 |
 | --- | --- | --- | --- |
 | GitHub source `.zip` and `.tar.gz` | Source archive | GitHub | Not claimed |
-| `Threat-Dragon-ng-Setup-<version>.exe` | Windows installer | Actions, then offline signing | No for the final signed file |
+| `Threat-Dragon-ng-Setup-<version>.exe` | Windows installer | Actions, then offline Certum signing | No for the final signed file |
 | Windows `.exe.blockmap`, `latest.yml`, and `checksum.yml` | Windows updates and checksum | Maintainer after signing | No |
-| `Threat-Dragon-ng-<version>.dmg` | macOS AMD64 installer | Actions, then offline signing and notarization | No for the final signed file |
-| `Threat-Dragon-ng-<version>-arm64.dmg` | macOS ARM64 installer | Actions, then offline signing and notarization | No for the final signed file |
-| macOS `*-mac.zip` files | macOS automatic updates | Actions, then offline signing and notarization | No for the final signed files |
+| `Threat-Dragon-ng-<version>.dmg` | macOS AMD64 installer | Actions, then offline Certum signing and notarization | No for the final signed file |
+| `Threat-Dragon-ng-<version>-arm64.dmg` | macOS ARM64 installer | Actions, then offline Certum signing and notarization | No for the final signed file |
+| macOS `*-mac.zip` files | macOS automatic updates | Actions, then offline Certum signing and notarization | No for the final signed files |
 | macOS `.blockmap`, `latest-mac.yml`, and `checksum-mac*.yml` | macOS updates and checksums | Maintainer after signing | No |
 | `Threat-Dragon-ng-<version>.AppImage` | Linux portable application | Actions | Yes |
 | `threat-dragon_<version>_amd64.deb` | Debian and Ubuntu package | Actions | Yes |
@@ -102,7 +102,7 @@ Create the final release after the community accepts a release candidate.
    ```bash
    ./scripts/td-prepare-release.sh v2.6.3
    ```
-   
+
 2. Commit and push all release preparation changes.
 3. Wait for the push workflows to pass.
 4. Create and push the signed final tag:
@@ -191,7 +191,8 @@ Perform these steps on the offline Windows signing system.
 
 Perform these steps on the offline macOS signing system.
 
-1. Install the Apple Developer ID Application certificate and its private key in the default keychain.
+1. Install SimplySign Desktop and connect the Certum code-signing certificate.
+   Use `security find-identity -v -p codesigning` to find the exact signing identity.
 2. Create a `notarytool` keychain profile if the signing system does not already have one.
    This command prompts for the Apple credentials:
 
@@ -212,7 +213,7 @@ Perform these steps on the offline macOS signing system.
    TAG=v2.6.3
    VERSION="${TAG#v}"
    SIGNING_DIR="/path/to/release-macos-unsigned/macos"
-   MACOS_SIGNING_IDENTITY="Developer ID Application: Name (TEAMID)"
+   MACOS_SIGNING_IDENTITY="<Certum code-signing identity>"
    NOTARY_PROFILE="threat-dragon-notary"
    ```
 
