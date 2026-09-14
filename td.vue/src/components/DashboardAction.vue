@@ -8,7 +8,7 @@
                 class="action-icon"
                 ></font-awesome-icon>
             <br />
-            {{ $t(`dashboard.actions.${description}`) }}
+            {{ translatedDescription }}
         </td-hero>
             </router-link>
     </b-col>
@@ -34,11 +34,17 @@ box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 
 <script>
 import TdHero from '@/components/Hero.vue';
+import { translateKnownKey } from '@/service/i18n/translation.js';
 
 export default {
     name: 'TdDashboardAction',
     components: {
         TdHero
+    },
+    computed: {
+        translatedDescription() {
+            return translateKnownKey(this.$t, `dashboard.actions.${this.description}`);
+        }
     },
     props: {
         to: {

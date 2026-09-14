@@ -10,7 +10,7 @@
         :showBackItem="!!parentId"
         isGoogleProvider
         :emptyStateText="`${$t('folder.noneFound')}`">
-        {{ $t('folder.select') }} {{ $t(`providers.${provider}.displayName`) }} {{ $t('folder.from') }}
+        {{ $t('folder.select') }} {{ providerDisplayName() }} {{ $t('folder.from') }}
         {{ $t('threatmodelSelect.or') }}
         <a href="#" id="new-threat-model" @click.prevent="newThreatModel(selected)">{{ $t('threatmodelSelect.newThreatModel') }}</a>
     </td-selection-page>
@@ -24,6 +24,7 @@ import providerActions from '@/store/actions/provider.js';
 import folderActions from '@/store/actions/folder.js';
 import TdSelectionPage from '@/components/SelectionPage.vue';
 import tmActions from '@/store/actions/threatmodel.js';
+import { translateProviderDisplayName } from '@/service/i18n/translation.js';
 
 export default {
     name: 'DriveAccess',
@@ -53,6 +54,7 @@ export default {
         this.$store.dispatch(folderActions.fetch, { page });
     },
     methods: {
+        providerDisplayName() { return translateProviderDisplayName(this.$t, this.provider); },
         async onFolderClick(folder) {
             const prevfolder = this.selected;
             this.$store.dispatch(folderActions.selected, folder);

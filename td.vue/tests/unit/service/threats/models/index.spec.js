@@ -145,6 +145,12 @@ describe('service/threats/models/index.js', () => {
             console.error = jest.fn();
             expect(Object.keys(models.getThreatTypesByElement('fake', 'tm.Actor'))).toHaveLength(35);
         });
+
+        it('uses the CIADIE header translation key for an unknown model type', () => {
+            const threatTypes = models.getThreatTypesByElement('fake', 'tm.Actor');
+
+            expect(threatTypes['threats.model.ciadie.header']).toBe('ciaDieHeader');
+        });
     });
 
     describe('getFrequencyMapByElement', () => {

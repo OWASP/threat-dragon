@@ -56,7 +56,7 @@
                                 v-if="item.icon"
                                 :icon="item.icon"
                                 v-b-tooltip.hover
-                                :title="$t(item.iconTooltip) || ''"
+                                :title="translateTooltip(item.iconTooltip) || ''"
                             ></font-awesome-icon>
                         </span>
                     </b-list-group-item>
@@ -78,6 +78,7 @@
 
 <script>
 import TdHero from '@/components/Hero.vue';
+import { translateKnownKey } from '@/service/i18n/translation.js';
 
 export default {
     name: 'TdSelectionPage',
@@ -179,6 +180,11 @@ export default {
                 console.log(this.items);
                 return this.items.filter(x => (x.value || x).toLowerCase().includes(this.filter.toLowerCase()));
             }
+        }
+    },
+    methods: {
+        translateTooltip(key) {
+            return translateKnownKey(this.$t, key);
         }
     }
 };

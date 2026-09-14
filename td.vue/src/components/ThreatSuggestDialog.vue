@@ -99,6 +99,7 @@ import TdThreatStatusSelector from '@/components/ThreatStatusSelector.vue';
 import { GetContextSuggestions } from '@/service/threats/oats/context-generator.js';
 import { v4 as uuidv4 } from 'uuid';
 import analytics from '@/service/analytics.js';
+import { translateKnownKey } from '@/service/i18n/translation.js';
 export default {
     name: 'TdThreatSuggest',
     components: {
@@ -118,7 +119,7 @@ export default {
             const res = [];
             const threattypes = threatModels.getThreatTypesByElement(this.modelType, this.cellRef.data.type);
             Object.keys(threattypes).forEach((type) => {
-                res.push(this.$t(type));
+                res.push(translateKnownKey(this.$t, type));
             }, this);
             return res;
         },
@@ -157,7 +158,7 @@ export default {
             } else {
                 this.suggestions = GetContextSuggestions(this.cellRef.data, this.modelType).map((suggestion) => {
                     tmpThreat.title = suggestion.title;
-                    tmpThreat.type = this.$t(suggestion.type);
+                    tmpThreat.type = translateKnownKey(this.$t, suggestion.type);
                     if (!this.types.includes(tmpThreat.type) && tmpThreat.type !== '')
                         this.types.push(tmpThreat.type);
                     tmpThreat.description = suggestion.description;
@@ -198,7 +199,7 @@ export default {
             }
             if (objRef.threatFrequency) {
                 Object.keys(objRef.threatFrequency).forEach((k) => {
-                    if (this.$t(`threats.model.${this.modelType.toLowerCase()}.${k}`) === this.threat.type && this.threatTypes.includes(this.threat.type))
+                    if (translateKnownKey(this.$t, `threats.model.${this.modelType.toLowerCase()}.${k}`) === this.threat.type && this.threatTypes.includes(this.threat.type))
                         objRef.threatFrequency[k]++;
                 });
             }

@@ -270,6 +270,7 @@ import TdFormSelect from '@/components/FormSelect.vue';
 import TdThreatStatusSelector from '@/components/ThreatStatusSelector.vue';
 import { getGame, getAllGames } from '../service/threats/models/eop';
 import analytics from '@/service/analytics.js';
+import { translateKnownKey } from '@/service/i18n/translation.js';
 
 export default {
     name: 'TdThreatEditDialog',
@@ -294,7 +295,7 @@ export default {
                 this.cellRef.data.type
             );
             Object.keys(threatTypes).forEach((type) => {
-                res.push(this.$t(type));
+                res.push(translateKnownKey(this.$t, type));
             }, this);
             if (!res.includes(this.threat.type)) res.push(this.threat.type);
             return res;
@@ -444,7 +445,7 @@ export default {
                 if (objRef.threatFrequency) {
                     Object.keys(objRef.threatFrequency).forEach((k) => {
                         if (
-                            this.$t(
+                            translateKnownKey(this.$t,
                                 `threats.model.${this.threat.modelType.toLowerCase()}.${k}`
                             ) === this.threat.type
                         )
@@ -485,7 +486,7 @@ export default {
                 const threatMap = this.cellRef.data.threatFrequency;
                 Object.keys(threatMap).forEach((k) => {
                     if (
-                        this.$t(
+                        translateKnownKey(this.$t,
                             `threats.model.${this.threat.modelType.toLowerCase()}.${k}`
                         ) === this.threat.type
                     )

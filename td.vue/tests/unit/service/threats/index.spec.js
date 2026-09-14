@@ -273,17 +273,17 @@ describe('service/threats/index.js', () => {
 
         it('converts Distributed to the translation string', () => {
             expect(threats.convertToTranslationString('Distributed'))
-                .toEqual('threats.model.die.distributed');
+                .toEqual('threats.model.ciadie.distributed');
         });
 
         it('converts Immutable to the translation string', () => {
             expect(threats.convertToTranslationString('Immutable'))
-                .toEqual('threats.model.die.immutable');
+                .toEqual('threats.model.ciadie.immutable');
         });
 
         it('converts Ephemeral to the translation string', () => {
             expect(threats.convertToTranslationString('Ephemeral'))
-                .toEqual('threats.model.die.ephemeral');
+                .toEqual('threats.model.ciadie.ephemeral');
         });
 
         it('converts Linkability to the translation string', () => {

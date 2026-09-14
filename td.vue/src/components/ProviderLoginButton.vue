@@ -13,7 +13,7 @@
             ></font-awesome-icon>
         </span>
         <span>
-            {{ $t('providers.' + provider.key + '.loginWith') }} {{ $t('providers.' + provider.key + '.displayName') }}
+            {{ providerLogin }} {{ providerDisplayName }}
         </span>
     </b-btn>
 </template>
@@ -29,11 +29,16 @@ import { providerNames } from '@/service/provider/providers.js';
 import { authSetLocal } from '@/store/actions/auth.js';
 import loginApi from '@/service/api/loginApi.js';
 import { providerSelected } from '@/store/actions/provider.js';
+import { translateProviderDisplayName, translateProviderLogin } from '@/service/i18n/translation.js';
 
 export default {
     name: 'TdProviderLoginButton',
     props: {
         provider: Object
+    },
+    computed: {
+        providerDisplayName() { return translateProviderDisplayName(this.$t, this.provider.key); },
+        providerLogin() { return translateProviderLogin(this.$t, this.provider.key); }
     },
     methods: {
         async onProviderClick() {
