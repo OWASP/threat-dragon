@@ -42,6 +42,7 @@
 !package-lock.json
 !scripts/
 !scripts/README.md
+!scripts/*.ps1
 !scripts/*.sh
 
 # documentation site

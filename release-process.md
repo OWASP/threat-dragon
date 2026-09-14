@@ -1,308 +1,323 @@
-The steps used during the release process, including release candidates
-
-Note that the build process will not run if the version is only Major.Minor, for example 2.6,
-and it needs to be in form Major.Minor.Patch, for example 2.6.1
-
-## Create release candidate
-
-Before a release it is required that a release candidate version is created.
-This allows the Threat Dragon community to review and feedback on the proposed release.
-Changes that are agreed for the release should then be made available with a further release candidate.
-
-For example if RC1, but change for RC2 and so on :
-
-1. `git clone git@github.com:OWASP/threat-dragon.git`
-2. `cd threat-dragon`
-3. update version, for example `"version": "2.6.1-RC1",`, in `td.vue/package.json`
-4. ensure `buildState` in `td.vue/package.json` is "" (empty)
-5. update version, for example `"version": "2.6.1-RC1",`, in `package.json` and `td.server/package.json`
-6. update package lock files: `npm install`
-7. `npm run build`
-8. `npm test`
-9. `npm run test:vue`
-10. ensure that the package-lock files are up to date using `npm install`
-11. `git add --all; git status`
-12. sign the commit: `git commit -S -m"release candidate 2.6.1-RC1"; git status`
-13. check for a good 'git' commit: `git verify-commit <sha from commit>`
-14. `git push`
-15. tag and sign the release `git tag -s v2.6.1-RC1`
-16. check for a good 'git' signature : `git verify-tag v2.6.1-RC1`
-17. `git push origin v2.6.1-RC1` && `git status`
-
-repeat as necessary for further release candidates.
-
-The github release workflow will then create the release candidate along with the install images
-
-Ensure the release candidate is announced on the [OWASP Threat Dragon][td-slack] slack channel
-and any other relevant channels
-
-Reset the build state to 'latest'; this is displayed on the demo site:
-
-1. revert `buildState` in `td.vue/package.json` back to `-latest`
-2. revert version, for example `"version": "2.6.1",`, in `td.vue/package.json`,
-    in `package.json` and `td.server/package.json`
-3. ensure that the package-lock files are up to date using `npm install`
-4. `git add --all; git status`
-5. sign the commit: `git commit -S -m"set build version back to latest"`
-6. check for a good 'git' commit: `git verify-commit <sha from commit>`
-7. `git push`
-
-## Create the release
-
-### Tag the release
+# Release process
+
+This process covers release candidates and final releases.
+A release version must use the full `v<major>.<minor>.<patch>` format.
+A release candidate adds `-RC<number>`, such as `v2.6.3-RC1`.
+
+## Expected outputs
+
+The release workflow creates a ***draft*** GitHub release.
+Except for the signed macOS and Windows packages and their updater metadata,
+GitHub Actions creates all files.
+
+| Output | Purpose | Created by | SLSA Build L2 |
+| --- | --- | --- | --- |
+| GitHub source `.zip` and `.tar.gz` | Source archive | GitHub | Not claimed |
+| `Threat-Dragon-ng-Setup-<version>.exe` | Windows installer | Actions, then offline signing | No for the final signed file |
+| Windows `.exe.blockmap`, `latest.yml`, and `checksum.yml` | Windows updates and checksum | Maintainer after signing | No |
+| `Threat-Dragon-ng-<version>.dmg` | macOS AMD64 installer | Actions, then offline signing and notarization | No for the final signed file |
+| `Threat-Dragon-ng-<version>-arm64.dmg` | macOS ARM64 installer | Actions, then offline signing and notarization | No for the final signed file |
+| macOS `*-mac.zip` files | macOS automatic updates | Actions, then offline signing and notarization | No for the final signed files |
+| macOS `.blockmap`, `latest-mac.yml`, and `checksum-mac*.yml` | macOS updates and checksums | Maintainer after signing | No |
+| `Threat-Dragon-ng-<version>.AppImage` | Linux portable application | Actions | Yes |
+| `threat-dragon_<version>_amd64.deb` | Debian and Ubuntu package | Actions | Yes |
+| `threat-dragon-<version>.x86_64.rpm` | RPM package | Actions | Yes |
+| `latest-linux.yml` and `checksum-linux.yml` | Linux updates and checksum | Actions | Yes |
+| `threat-dragon_<version>_amd64.snap` | Snap Store package | Actions | Yes |
+| `threatdragon/owasp-threat-dragon:v<version>` and `stable` | Staging AMD64 and ARM64 container image | Actions | Yes |
+| `owasp/threat-dragon:v<version>` and `stable` | Production AMD64 and ARM64 container image | Actions | Yes |
+| `owasp/threat-dragon:v<version>-arm64` | ARM64 compatibility container tag | Actions | Yes |
+| `sboms.zip` | Combined desktop, server, and container application SBOMs | Actions | Not applicable |
+| `sboms-server.zip` | Server SBOM in CycloneDX JSON and XML | Actions | Not applicable |
+| `sboms-container-image-app.zip` | Container application SBOMs | Actions | Not applicable |
+
+The ***unsigned*** Windows and macOS files in the Actions run have SLSA Build Level 2 provenance.
+Offline signing changes their digests, so that provenance does not apply to the signed release files.
+The manually generated blockmaps, checksums, and updater metadata also do not have SLSA provenance.
+Blockmaps must be generated *after* code signing so they match the files that Electron Updater downloads.
+
+An immutable release attestation is separate from SLSA provenance.
+It binds the final release tag, commit, and published assets after a maintainer publishes the draft.
+
+Snap and Docker Hub distributions are pushed while the release is still in draft. The files are not attached
+to the release.
+
+## Workflow behavior
+
+- A manual workflow run builds and attests the artifacts. It does not create a release or publish to Docker Hub or Snapcraft.
+- A release candidate tag creates a draft prerelease and publishes its versioned image to
+  `threatdragon/owasp-threat-dragon`. It does not change `stable` or publish to any production targets.
+- A final release tag creates a normal draft release. It publishes the versioned and `stable` container tags to both
+  Docker repositories. It also publishes the Snap package to the stable channel.
+- A maintainer signs the Windows and macOS files offline, updates their release files, and publishes the GitHub draft.
+
+## Create a release candidate
+
+Under normal circumstances, we should create at least one release candidate for community review.
+
+1. Start from a clean branch and choose an unused release candidate version.
+2. Prepare the package files:
+
+   ```bash
+   ./scripts/td-prepare-release.sh v2.6.3-RC1
+   ```
+
+3. Commit and push the package changes:
+
+   ```bash
+   git add package.json package-lock.json td.vue/package.json td.vue/package-lock.json \
+     td.server/package.json td.server/package-lock.json
+   git commit -S -m "Prepare v2.6.3-RC1"
+   git push
+   ```
+
+4. Create and push the signed tag:
+
+   ```bash
+   git tag -s v2.6.3-RC1 -m v2.6.3-RC1
+   git push origin refs/tags/v2.6.3-RC1
+   ```
+
+5. Wait for the release workflow to create the draft prerelease.
+6. Complete the draft as described below.
+7. Announce the release candidate in the [OWASP Threat Dragon Slack channel][td-slack] and other channels.
+8. Restore the development versions, using the final release version as its base:
+
+   ```bash
+   ./scripts/td-post-release.sh v2.6.3
+   git add package.json package-lock.json td.vue/package.json td.vue/package-lock.json \
+     td.server/package.json td.server/package-lock.json
+   git commit -S -m "Restore development version after v2.6.3-RC1"
+   git push
+   ```
 
-After the releases candidate has been agreed by the Threat Dragon community, a release version can be prepared:
+Repeat this process for each additional release candidate.
 
-1. `git clone git@github.com:OWASP/threat-dragon.git`
-2. `cd threat-dragon`
-3. update version eg `"version": "2.6.1",` in `package.json`, `td.vue/package.json` and `td.server/package.json`
-4. update `buildState` in `td.vue/package.json` away from `"-latest"` to `""` (empty)
-5. update package lock files: `npm install`
-6. `npm run build`
-7. `npm test`
-8. `npm run test:vue`
-9. ensure documentation is clean: `pyspelling --config .spellcheck.yaml` and `markdownlint-cli2  docs/**/*.md`
-10. update the version in `title:` for the docs in file `docs/_config.yml`
-11. ensure all package-lock files are up to date using `npm install`
-12. `git add --all; git status`
-13. sign the commit: `git commit -S -m"release version 2.6.1"`
-14. check for a good 'git' commit: `git verify-commit <sha from commit>`
-15. `git push` and wait for commit pipeline actions to complete
-16. tag and sign the release `git tag -s v2.6.1`
-17. check for a good 'git' signature : `git verify-tag v2.6.1`
-18. `git push origin v2.6.1` && `git status`
-
-The github release workflow automatically creates the draft release and the install images
-
-### Verify Docker images
-
-The release workflow publishes the same multi-platform version and `stable` tags to the
-[staging Docker repository][td-dock] and the [production Docker repository][owasp-dock].
-It also publishes an ARM64-only version tag with the `-arm64` suffix for backward compatibility.
-
-Inspect the published images:
-
-```text
-docker buildx imagetools inspect threatdragon/owasp-threat-dragon:v2.6.3
-docker buildx imagetools inspect threatdragon/owasp-threat-dragon:stable
-docker buildx imagetools inspect owasp/threat-dragon:v2.6.3
-docker buildx imagetools inspect owasp/threat-dragon:stable
-docker buildx imagetools inspect owasp/threat-dragon:v2.6.3-arm64
-```
-
-The version and `stable` tags must list `linux/amd64` and `linux/arm64`.
-Test both platforms with the normal version tag:
-
-```text
-docker pull --platform linux/amd64 owasp/threat-dragon:v2.6.3
-docker pull --platform linux/arm64 owasp/threat-dragon:v2.6.3
-```
-
-Verify the production provenance attestations:
-
-```text
-gh attestation verify oci://docker.io/owasp/threat-dragon:v2.6.3 \
-  --repo OWASP/threat-dragon --bundle-from-oci
-gh attestation verify oci://docker.io/owasp/threat-dragon:v2.6.3-arm64 \
-  --repo OWASP/threat-dragon --bundle-from-oci
-```
+## Create a final release
 
-Ideally, test the release on Windows, Linux, and macOS using `http://localhost:8080/#/`.
-
-### Check demo site
-
-1. Install [Heroku CLI tools][herokucli] if necessary
-2. Login to [Heroku][heroku]
-3. Inspect logs using `heroku logs --app=threatdragon-v2 --tail`
-4. Ensure no rollback shown in [dashboard][herokudash]
-5. Observe correct version running for the [Heroku app][herokuapp]
-6. Check correct version for the [demo site][demo]
-
-### Checksum for Linux desktop AppImage
-
-Download desktop AppImage for Linux `Threat-Dragon-ng-2.6.1.AppImage` and the `latest-linux.yml` auto-update checksum file.
+Create the final release after the community accepts a release candidate.
 
-Create SHA512 `checksum-linux.yml` file:
-
- ```bash
-grep sha512 latest-linux.yml | tail -n 1 | cut -d " " -f 2 | base64 -d |  \
-    hexdump -ve '1/1 "%.2x"' > checksum-linux.yml
-echo -n " Threat-Dragon-ng-2.6.1.AppImage" >> checksum-linux.yml
-```
+1. Prepare the package files and documentation version:
 
-Check correct using: `sha512sum --check checksum-linux.yml`
-and upload `checksum-linux.yml` file to the release area.
+   ```bash
+   ./scripts/td-prepare-release.sh v2.6.3
+   ```
+   
+2. Commit and push all release preparation changes.
+3. Wait for the push workflows to pass.
+4. Create and push the signed final tag:
 
-### Check Snap images
+   ```bash
+   git tag -s v2.6.3 -m v2.6.3
+   git push origin refs/tags/v2.6.3
+   ```
 
-Ensure that Threat Dragon is updated on [Snapcraft][snapcraft],
-also accessible using [Ubuntu One][ubuntu].
-
-Check the release is current on the [dashboard][snapdash],
-if necessary use the dashboard to promote the latest release to 'stable'.
-
-The token used in the Threat Dragon release pipeline is 'SNAPCRAFT_TOKEN' and this has to be refreshed annually.
-Use commands to refresh creds:
+5. Wait for the release workflow to create the draft release.
+6. Restore the desktop build state:
 
-- `snapcraft login`
-- `snapcraft export-login --snaps threat-dragon --channels edge,latest,stable -` (note the dash for print to stdout)
+   ```bash
+   ./scripts/td-post-release.sh v2.6.3
+   ```
 
-The snapcraft username is 'threat-dragon' and uses an Ubuntu One password.
+7. Commit and push the post-release package changes.
+8. Complete the draft as described below.
 
-### Manually notarize / staple for MacOS images
+## Verify the workflow output
 
-It used to be that [altool][altool] could be used to notarize the MacOS `.dmg` files in the pipeline.
-As of early 2024 this is no longer available and notarytool must be used in a secure environment.
-The secrets for both signing and notarization can be checked by running it manually from the command line:
+1. Confirm the GitHub Actions run succeeded
+2. Confirm that the GitHub Release is still a draft
+3. Compare the assets with the expected outputs table.
+4. For a final release, confirm that Snapcraft lists the new release in the stable channel.
+5. For a final release, inspect the Docker images:
 
-- provide the [code signing certs for MacOS][certs]
-- Download both x86 and arm64 files for the MacOS installer (`*.dmg` and `*.zip`)
-- ensure that the apple developer [environment is set up][notarize]
-- notarize and staple the `Threat-Dragon-ng-2.x.x-arm64.dmg` file for arm64, using version 2.6.1 as an example:
-  - `xcrun notarytool submit --apple-id <apple-account-email> --team-id <teamid> \`
-    `--password <password> --verbose --wait Threat-Dragon-ng-2.6.1-arm64.dmg`
-  - `xcrun stapler staple --verbose Threat-Dragon-ng-2.6.1-arm64.dmg`
-- similarly for the x86 image `Threat-Dragon-ng-2.x.x.dmg` :
-  - `xcrun notarytool submit --apple-id <apple-account-email> --team-id <teamid> \`
-    `--password <password> --verbose --wait Threat-Dragon-ng-2.6.1.dmg`
-  - `xcrun stapler staple --verbose Threat-Dragon-ng-2.6.1.dmg`
-- notarize the application in both`.zip` files, for example using version 2.6.1:
-  - `xcrun notarytool submit --apple-id <apple-account-email> --team-id <teamid> \`
-    `--password <password> --verbose --wait Threat-Dragon-ng-2.6.1-arm64-mac.zip`
-  - unzip the file to obtain the application directory `Threat-Dragon-ng.app`
-  - check notarization worked: `spctl -a -v Threat-Dragon-ng.app`
-  - staple the application: `xcrun stapler staple --verbose Threat-Dragon-ng.app`
-  - zip the application directory to get: `Threat-Dragon-ng.zip`
-  - rename `Threat-Dragon-ng.zip` to update `Threat-Dragon-ng-2.6.1-arm64-mac.zip`
-- similarly for the x86 application `zip` file :
-  - `xcrun notarytool submit --apple-id <apple-account-email> --team-id <teamid> \`
-    `--password <password> --verbose --wait Threat-Dragon-ng-2.6.1-mac.zip`
-  - unzip the file to obtain the application directory `Threat-Dragon-ng.app`
-  - check notarization worked: `spctl -a -v Threat-Dragon-ng.app`
-  - staple the application: `xcrun stapler staple --verbose Threat-Dragon-ng.app`
-  - zip the application directory to get: `Threat-Dragon-ng.zip`
-  - rename `Threat-Dragon-ng.zip` to update `Threat-Dragon-ng-2.6.1-mac.zip`
+   ```bash
+   docker buildx imagetools inspect threatdragon/owasp-threat-dragon:v2.6.3
+   docker buildx imagetools inspect threatdragon/owasp-threat-dragon:stable
+   docker buildx imagetools inspect owasp/threat-dragon:v2.6.3
+   docker buildx imagetools inspect owasp/threat-dragon:stable
+   docker buildx imagetools inspect owasp/threat-dragon:v2.6.3-arm64
+   ```
 
-Fix up the checksums in `latest-mac.yml` values using script:
+   The normal version and `stable` tags must list `linux/amd64` and `linux/arm64`.
 
-```bash
-openssl dgst -binary -sha512 Threat-Dragon-ng-2.6.1-mac.zip | openssl base64 -A
-ls -l Threat-Dragon-ng-2.6.1-mac.zip
+6. Verify the production container provenance:
 
-openssl dgst -binary -sha512 Threat-Dragon-ng-2.6.1-arm64-mac.zip | openssl base64 -A
-ls -l Threat-Dragon-ng-2.6.1-arm64-mac.zip
+   ```bash
+   gh attestation verify oci://docker.io/owasp/threat-dragon:v2.6.3 --repo OWASP/threat-dragon --bundle-from-oci
+   gh attestation verify oci://docker.io/owasp/threat-dragon:v2.6.3-arm64 --repo OWASP/threat-dragon --bundle-from-oci
+   ```
 
-openssl dgst -binary -sha512 Threat-Dragon-ng-2.6.1.dmg | openssl base64 -A
-ls -l Threat-Dragon-ng-2.6.1.dmg
+## Sign the Windows installer
 
-openssl dgst -binary -sha512 Threat-Dragon-ng-2.6.1-arm64.dmg | openssl base64 -A
-ls -l Threat-Dragon-ng-2.6.1-arm64.dmg
-```
+Perform these steps on the offline Windows signing system.
 
-Create the checksum files:
+1. Install Certum proCertum SmartSign, SimplySign Desktop, and the Windows SDK `signtool` utility.
+2. Connect to SimplySign and find the certificate thumbprint.
+3. From `td.vue`, install the locked packages needed to generate the blockmap:
 
-- `sha512sum Threat-Dragon-ng-2.6.1.dmg > checksum-mac.yml`
-- `sha512sum Threat-Dragon-ng-2.6.1-arm64.dmg > checksum-mac-arm64.yml`
+   ```powershell
+   npm clean-install
+   ```
 
-Upload files into the new release:
+4. From the draft release page, download the unsigned installer into one directory. Set these values:
 
-- `Threat-Dragon-ng-2.6.1-mac.zip`
-- `Threat-Dragon-ng-2.6.1-arm64-mac.zip`
-- `Threat-Dragon-ng-2.6.1.dmg`
-- `Threat-Dragon-ng-2.6.1-arm64.dmg`
-- `checksum-mac.yml`
-- `checksum-mac-arm64.yml`
-- `latest-mac.yml`
+   ```powershell
+   $Tag = "v2.6.3"
+   $SigningDir = "C:\path\to\release-windows"
+   $Installer = Join-Path $SigningDir "Threat-Dragon-ng-Setup-2.6.3.exe"
+   ```
+
+5. Verify the unsigned installer provenance before signing:
+
+   ```powershell
+   gh attestation verify $Installer --repo OWASP/threat-dragon
+   ```
+
+6. Sign and verify the installer:
+
+   ```powershell
+   signtool sign /sha1 "<thumbprint>" /tr http://time.certum.pl /td sha256 /fd sha256 /v $Installer
+   signtool verify /pa /all /v $Installer
+   ```
+
+7. From the repository root, generate the blockmap, updater metadata, and checksum.
+   The script verifies the signature and target draft before it uploads the files:
+
+   ```powershell
+   .\scripts\td-finish-windows-release.ps1 -Tag $Tag -ArtifactDirectory $SigningDir
+   ```
+
+## Sign and notarize the macOS packages
+
+Perform these steps on the offline macOS signing system.
+
+1. Install the Apple Developer ID Application certificate and its private key in the default keychain.
+2. Create a `notarytool` keychain profile if the signing system does not already have one.
+   This command prompts for the Apple credentials:
 
-Note that the original files of the same name need to be removed first.
+   ```bash
+   xcrun notarytool store-credentials "threat-dragon-notary"
+   ```
+
+3. From `td.vue`, install the locked packages needed for signing and blockmap generation:
+
+   ```bash
+   npm clean-install
+   ```
+
+4. Open the release workflow run in GitHub. Download and extract the `release-macos-unsigned` artifact.
+5. From the repository root, set the release values. `SIGNING_DIR` must be the extracted `macos` directory:
+
+   ```bash
+   TAG=v2.6.3
+   VERSION="${TAG#v}"
+   SIGNING_DIR="/path/to/release-macos-unsigned/macos"
+   MACOS_SIGNING_IDENTITY="Developer ID Application: Name (TEAMID)"
+   NOTARY_PROFILE="threat-dragon-notary"
+   ```
+
+6. Verify the provenance of all four unsigned packages before signing:
+
+   ```bash
+   gh attestation verify "$SIGNING_DIR/Threat-Dragon-ng-$VERSION-mac.zip" \
+     --repo OWASP/threat-dragon
+   gh attestation verify "$SIGNING_DIR/Threat-Dragon-ng-$VERSION-arm64-mac.zip" \
+     --repo OWASP/threat-dragon
+   gh attestation verify "$SIGNING_DIR/Threat-Dragon-ng-$VERSION.dmg" --repo OWASP/threat-dragon
+   gh attestation verify "$SIGNING_DIR/Threat-Dragon-ng-$VERSION-arm64.dmg" --repo OWASP/threat-dragon
+   ```
+
+7. Sign the AMD64 package first. Set its ZIP, DMG, and temporary work directory:
+
+   ```bash
+   ZIP="$SIGNING_DIR/Threat-Dragon-ng-$VERSION-mac.zip"
+   DMG="$SIGNING_DIR/Threat-Dragon-ng-$VERSION.dmg"
+   WORK_DIR="$(mktemp -d "${TMPDIR:-/tmp}/threat-dragon-signing-x64.XXXXXX")"
+   ```
+
+8. Extract and sign the application. This uses the Electron signing tool from the locked desktop dependencies:
+
+   ```bash
+   ditto -x -k "$ZIP" "$WORK_DIR"
+   APP="$WORK_DIR/Threat-Dragon-ng.app"
+   td.vue/node_modules/.bin/electron-osx-sign "$APP" --identity="$MACOS_SIGNING_IDENTITY"
+   codesign --verify --deep --strict --verbose=2 "$APP"
+   ```
+
+9. Notarize the signed application, staple its ticket, and recreate the ZIP:
+
+   ```bash
+   ditto -c -k --sequesterRsrc --keepParent "$APP" "$WORK_DIR/notarization.zip"
+   xcrun notarytool submit --keychain-profile "$NOTARY_PROFILE" --wait "$WORK_DIR/notarization.zip"
+   xcrun stapler staple --verbose "$APP"
+   xcrun stapler validate "$APP"
+   mv "$ZIP" "$ZIP.unsigned"
+   ditto -c -k --sequesterRsrc --keepParent "$APP" "$ZIP"
+   ```
+
+10. Replace the unsigned application in the DMG with the signed and stapled application:
+
+    ```bash
+    mv "$DMG" "$DMG.unsigned"
+    hdiutil convert "$DMG.unsigned" -format UDRW -o "$WORK_DIR/read-write"
+    mkdir "$WORK_DIR/volume"
+    hdiutil attach "$WORK_DIR/read-write.dmg" -readwrite -noautoopen -mountpoint "$WORK_DIR/volume"
+    rm -rf "$WORK_DIR/volume/Threat-Dragon-ng.app"
+    ditto "$APP" "$WORK_DIR/volume/Threat-Dragon-ng.app"
+    hdiutil detach "$WORK_DIR/volume"
+    hdiutil convert "$WORK_DIR/read-write.dmg" -format UDZO -o "$DMG"
+    ```
+
+11. Notarize, staple, and verify the final DMG:
+
+    ```bash
+    xcrun notarytool submit --keychain-profile "$NOTARY_PROFILE" --wait "$DMG"
+    xcrun stapler staple --verbose "$DMG"
+    xcrun stapler validate "$DMG"
+    spctl --assess --type open --context context:primary-signature --verbose=2 "$DMG"
+    ```
+
+12. Repeat steps 7 through 11 for ARM64 with these values:
+
+    ```bash
+    ZIP="$SIGNING_DIR/Threat-Dragon-ng-$VERSION-arm64-mac.zip"
+    DMG="$SIGNING_DIR/Threat-Dragon-ng-$VERSION-arm64.dmg"
+    WORK_DIR="$(mktemp -d "${TMPDIR:-/tmp}/threat-dragon-signing-arm64.XXXXXX")"
+    ```
+
+13. From the repository root, generate the four blockmaps, updater metadata, and checksums.
+    The script verifies the signed packages and target draft before it uploads the files:
+
+    ```bash
+    ./scripts/td-finish-macos-release.sh "$TAG" "$SIGNING_DIR"
+    ```
+
+## Complete the draft release
+
+1. Confirm that every expected GitHub asset is present.
+2. Confirm the Windows and macOS signatures.
+3. Confirm that each signed Windows and macOS file has its final blockmap and updater metadata.
+4. Verify the Linux provenance. For example:
+
+   ```bash
+   gh attestation verify Threat-Dragon-ng-2.6.3.AppImage --repo OWASP/threat-dragon
+   ```
+
+5. Update the draft body from `.release-note-template.md`.
+   Remove irrelevant generated entries from the change list, such as chores.
+6. Publish the draft. ***Releases are immutable*** - you cannot change assets after publishing.
+
+## Check the deployed release
+
+1. Check the [Heroku dashboard][herokudash] for a rollback.
+2. Check the version on the [Heroku app][herokuapp] and [demo site][demo].
+3. Test the desktop installers on Windows, Linux, and macOS.
+4. Test the Docker image.
+5. Confirm the release in the [Snapcraft dashboard][snapdash].
+6. Announce the release in the [OWASP Threat Dragon Slack channel][td-slack] and other relevant channels.
 
-### Code sign Windows installer
-
-If the certificate needs to be provided in Base64 :
-
-```text
-openssl pkcs12 -export -in WINDOWS_OSS_CERT.pem -nokeys -out WINDOWS_OSS_CERT.p12 -passout pass:<password>
-openssl pkcs12 -info -in  WINDOWS_OSS_CERT.p12 -passin pass:<password>
-base64 -i WINDOWS_OSS_CERT.p12 -o WINDOWS_OSS_CERT.p12.b64
-```
-
-The use of the pipeline for code signing is not practical for this open source project
-because of the need for a private key in the keychain, so use the certificate issuer's utilities.
-
-The latest certificate is provided using Certum's Open Source certificate:
-
-1. install [proCertum SmartSign + SimplySign Desktop for personal computers][smartsign]
-2. use as a general reference Certum’s [Code Signing in the Cloud][certum]
-3. download the unsigned windows installer file
-4. ensure Powershell has the `signtool` utility installed from Windows SDK
-5. right click the icon in the desktop tray to select ‘Connect to SimplySign’
-6. gain a thumbprint from desktop tray icon, Manage certificates → Certificate list → Details → Thumbprint
-7. `signtool sign /sha1 "<thumbprint>" /tr http://time.certum.pl /td sha256 /fd sha256 /v "Threat-Dragon-ng-Setup-2.6.1.exe"`
-
-Once signed create the checksum file: `sha512sum Threat-Dragon-ng-Setup-2.6.1.exe > checksum.yml`
-
-Fix up the file `latest.yml` with the correct size and the SHA256 value given by:
-
-- `openssl dgst -binary -sha512 Threat-Dragon-ng-Setup-2.6.1.exe | openssl base64 -A`
-
-Upload files `Threat-Dragon-ng-Setup-2.6.1.exe`, `checksum.yml` and `latest.yml` into the new release.
-Note that the original files of the same name need to be removed first.
-
-### Confirm desktop checksums
-
-Confirm SHA512 with:
-
-```text
-sha512sum --check checksum-linux.yml
-sha512sum --check checksum.yml
-sha512sum --check checksum-mac.yml
-sha512sum --check checksum-mac-arm64.yml
-```
-
-Upload `checksum*.yml` files to the draft release.
-
-### Update release notes
-
-Before adding text to the draft release, click on 'Generate Release Notes' button from the edit window.
-If this is done after text is added it does not work.
-Edit the 'What's Changed' to filter out any chores.
-
-Then update the release notes for the draft in the [Threat Dragon release area][area]
-using the release notes using markdown provided by `.release-note-template.md` as a template,
-making sure to revise `2.x.x` to the correct version number such as `2.6.1`
-
-Once everything is in place promote the release from 'draft' to 'public' and 'latest'
-
-### Announce
-
-Announce (as Threat Dragon) the new release on the [OWASP Threat Dragon][td-slack] slack channel
-and any other relevant channels such as [Blue Sky](https://bsky.app/profile/threatdragon.bsky.social)
-
-### Tidy up
-
-Revert the build state back to 'latest'; this build state is displayed on the demo site:
-
-1. update `buildState` in `td.vue/package.json` from "" to `-latest`
-2. ensure that the package-lock files are up to date using `npm install`
-3. `git add --all; git status`
-4. sign the commit: `git commit -S -m"set build version to latest"`
-5. check for a good 'git' commit: `git verify-commit <sha from commit>`
-6. `git push`
-
-[altool]: https://successfulsoftware.net/2023/04/28/moving-from-altool-to-notarytool-for-mac-notarization/
-[area]: https://github.com/OWASP/threat-dragon/releases
-[certs]: https://federicoterzi.com/blog/automatic-code-signing-and-notarization-for-macos-apps-using-github-actions/
-[certum]: https://files.certum.eu/documents/manual_en/CS-Code_Signing_in_the_Cloud_Signtool_jarsigner_signing.pdf
 [demo]: https://www.threatdragon.com/#/
-[heroku]: https://id.heroku.com/login
 [herokuapp]: https://threatdragon-v2.herokuapp.com/#/
-[herokucli]: https://devcenter.heroku.com/articles/heroku-cli#install-the-heroku-cli
 [herokudash]: https://dashboard.heroku.com/apps
-[notarize]: https://developer.apple.com/documentation/security/resolving-common-notarization-issues
-[owasp-dock]: https://hub.docker.com/r/owasp/threat-dragon/tags
-[smartsign]: https://support.certum.eu/en/software/procertum-smartsign/
-[snapcraft]: https://snapcraft.io/install/threat-dragon/arch
 [snapdash]: https://snapcraft.io/threat-dragon/releases
-[td-dock]: https://hub.docker.com/r/threatdragon/owasp-threat-dragon/tags
 [td-slack]: https://owasp.slack.com/messages/CURE8PQ68
-[ubuntu]: https://login.ubuntu.com/
