@@ -64,7 +64,7 @@ stores the threat model files on the local filesystem and do not access external
 You can [download installers](https://github.com/OWASP/threat-dragon/releases) for Windows, MacOS and Linux.
 
 End user help is available for both the latest [version 2.x][docs]
-and the previous [version 1.x](https://owasp.org/www-project-threat-dragon/docs-1/).
+and the previous [version 1.x](https://threatdragon.github.io/).
 
 ### Version 1.x maintenance mode
 
