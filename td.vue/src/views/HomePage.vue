@@ -26,7 +26,7 @@
                             </p>
                         </b-row>
                         <b-row>
-                            <b-col class="mt-5 ml-5 text-center">
+                            <b-col class="mt-5 ml-md-5 text-center">
                                 <td-provider-login-button
                                     v-for="(provider, idx) in providers"
                                     :key="idx"
@@ -49,14 +49,20 @@
 .td-description {
     font-size: 20px;
     margin-right: 20px;
-    margin-left: 170px;
+    margin-left: 20px;
+    overflow-wrap: break-word;
+}
+
+// The logo sits beside the description only once the md columns stop stacking.
+@media (min-width: 768px) {
+    .td-description {
+        margin-left: 170px;
+    }
 }
 
 .td-cupcake {
     margin-top: 10px;
     margin-bottom: 20px;
-    margin-right: 20px;
-    margin-left: 20px;
 }
 
 .td-home-loading {

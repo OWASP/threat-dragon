@@ -52,6 +52,18 @@ const verifyExternalUrl = (selector, url) => {
 };
 
 
+const rightEdge = ($el) => Math.round($el[0].getBoundingClientRect().right);
+
+const expectWithinHero = (selector) => {
+    cy.get('.td-hero').then(($hero) => {
+        const heroRight = rightEdge($hero);
+        cy.get(selector).then(($el) => {
+            expect(rightEdge($el)).to.be.at.most(heroRight);
+        });
+    });
+};
+
+
 describe('home', () => {
 
     describe('navbar', () => {
@@ -260,6 +272,32 @@ describe('home', () => {
             cy.wait('@failConfig');
 
             cy.get('.td-spinner').should('not.exist');
+        });
+    });
+
+    describe('mobile layout', () => {
+        beforeEach(() => {
+            cy.viewport('iphone-x');
+            cy.launchThreatDragon();
+        });
+
+        it('does not scroll horizontally', () => {
+            cy.document().then((doc) => {
+                expect(doc.documentElement.scrollWidth)
+                    .to.be.at.most(doc.documentElement.clientWidth);
+            });
+        });
+
+        it('keeps the description inside the hero', () => {
+            expectWithinHero('p.td-description');
+        });
+
+        it('keeps the logo inside the hero', () => {
+            expectWithinHero('#home-td-logo');
+        });
+
+        it('keeps the login buttons inside the hero', () => {
+            expectWithinHero('#local-login-btn');
         });
     });
 

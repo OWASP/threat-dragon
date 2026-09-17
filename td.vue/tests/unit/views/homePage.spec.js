@@ -236,4 +236,13 @@ describe('HomePage.vue', () => {
         });
     });
 
+    describe('responsive layout', () => {
+        it('indents the login buttons only from the md breakpoint up', async () => {
+            const store = createStore({ githubEnabled: true });
+            const { wrapper: w, resolve } = createControlledMount(store);
+            await finishMount(w, resolve);
+
+            expect(w.find('.ml-md-5').exists()).toBe(true);
+        });
+    });
 });
