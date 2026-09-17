@@ -35,3 +35,24 @@ describe('print', () => {
     });
 });
 
+describe('demo model list — mobile layout', () => {
+    beforeEach(() => {
+        cy.viewport('iphone-x');
+        cy.launchThreatDragon();
+        cy.get('#local-login-btn').click();
+        cy.get('a[href="#/demo/select"]').click();
+    });
+
+    it('does not scroll horizontally', () => {
+        cy.document().then((doc) => {
+            expect(doc.documentElement.scrollWidth)
+                .to.be.at.most(doc.documentElement.clientWidth);
+        });
+    });
+
+    it('uses the full width for the model list', () => {
+        cy.get('.list-group').then(($list) => {
+            expect(Math.round($list[0].getBoundingClientRect().left)).to.be.at.most(30);
+        });
+    });
+});

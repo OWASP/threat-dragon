@@ -10,7 +10,7 @@
             </b-col>
         </b-row>
         <b-row>
-            <b-col md=8 offset=2>
+            <b-col md=8 offset-md=2>
                 <b-form>
                     <b-form-row>
                         <b-col @drop.prevent="onDropFile" @dragenter.prevent @dragover.prevent>
@@ -30,7 +30,7 @@
             </b-col>
         </b-row>
         <b-row>
-            <b-col md=4 offset=2  class="text-left">
+            <b-col md=4 offset-md=2  class="text-left">
                 <b-btn-group>
                     <td-form-button
                         id="td-open-btn"

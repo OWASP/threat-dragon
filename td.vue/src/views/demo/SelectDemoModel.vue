@@ -10,7 +10,7 @@
             </b-col>
         </b-row>
         <b-row>
-            <b-col md=6 offset=3>
+            <b-col md=6 offset-md=3>
                 <b-list-group>
                     <b-list-group-item
                         v-for="(model, idx) in models"

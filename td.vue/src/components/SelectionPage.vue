@@ -10,7 +10,7 @@
             </b-col>
         </b-row>
         <b-row>
-            <b-col md=6 offset=3>
+            <b-col md=6 offset-md=3>
                 <b-form>
                     <b-form-row>
                         <b-col>
@@ -28,7 +28,7 @@
         </b-row>
 
         <b-row>
-            <b-col md=6 offset=3>
+            <b-col md=6 offset-md=3>
                 <b-list-group>
                     <b-list-group-item
                         v-if="showBackItem"
@@ -65,7 +65,7 @@
         </b-row>
 
         <b-row>
-            <b-col md=6 offset=3>
+            <b-col md=6 offset-md=3>
                 <div class="pagination">
                     <button @click="paginate(--pageRef)" :disabled="!pagePrev">Previous</button>
                     <button class="btn" data-toggle="buttons" :disabled="true">{{ pageRef }}</button>

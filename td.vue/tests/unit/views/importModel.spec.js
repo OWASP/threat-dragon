@@ -256,4 +256,17 @@ describe('views/ImportModel.vue', () => {
             expect(analytics.track).not.toHaveBeenCalled();
         });
     });
+    describe('responsive layout', () => {
+        it('offsets the columns only from the md breakpoint up', () => {
+            const columns = wrapper.findAll('b-col[offset-md="2"]');
+
+            expect(columns).toHaveLength(2);
+        });
+
+        it('does not offset the columns on stacked (mobile) grids', () => {
+            const columns = wrapper.findAll('b-col[offset]');
+
+            expect(columns).toHaveLength(0);
+        });
+    });
 });

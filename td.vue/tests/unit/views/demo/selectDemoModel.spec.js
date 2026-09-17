@@ -427,4 +427,17 @@ describe('views/demo/SelectDemoModel.vue', () => {
         });
     });
 
+    describe('responsive layout', () => {
+        it('offsets the model list only from the md breakpoint up', () => {
+            const column = wrapper.find('b-col[md="6"]');
+
+            expect(column.attributes('offset-md')).toBe('3');
+        });
+
+        it('does not offset the model list on stacked (mobile) grids', () => {
+            const column = wrapper.find('b-col[md="6"]');
+
+            expect(column.attributes('offset')).toBeUndefined();
+        });
+    });
 });

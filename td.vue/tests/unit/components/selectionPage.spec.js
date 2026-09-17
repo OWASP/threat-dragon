@@ -292,4 +292,19 @@ describe('components/SelectionPage.vue', () => {
             expect(wrapper.vm.displayedItems).toHaveLength(0);
         });
     });
+    describe('responsive layout', () => {
+        const contentColumns = (wrapper) => wrapper.findAll('b-col-stub[md="6"]');
+
+        it('does not offset the content columns on stacked (mobile) grids', () => {
+            const columns = contentColumns(createWrapper());
+
+            columns.forEach((col) => expect(col.attributes('offset')).toBeUndefined());
+        });
+
+        it('offsets the content columns only from the md breakpoint up', () => {
+            const columns = contentColumns(createWrapper());
+
+            columns.forEach((col) => expect(col.attributes('offsetmd')).toBe('3'));
+        });
+    });
 });
