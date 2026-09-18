@@ -267,7 +267,10 @@ describe('home', () => {
         const phoneWidth = 375;
         const phoneHeight = 812;
         const mdWidth = 768;
+        const belowMdWidth = mdWidth - 1;
         const logoWidth = 400;
+        const logoSideMargin = '20px';
+        const noSideMargin = '0px';
 
         const rightEdge = ($el) => $el[0].getBoundingClientRect().right;
 
@@ -277,6 +280,12 @@ describe('home', () => {
                     expect(rightEdge($el)).to.be.at.most(rightEdge($hero));
                 });
             });
+        };
+
+        const expectLogoSideMargins = (expected) => {
+            cy.get('#home-td-logo')
+                .should('have.css', 'margin-left', expected)
+                .and('have.css', 'margin-right', expected);
         };
 
         beforeEach(() => {
@@ -295,6 +304,16 @@ describe('home', () => {
         it('keeps the logo at full size from md up', () => {
             cy.viewport(mdWidth, phoneHeight);
             cy.get('#home-td-logo').invoke('outerWidth').should('equal', logoWidth);
+        });
+
+        it('keeps the logo side margins at 768px', () => {
+            cy.viewport(mdWidth, phoneHeight);
+            expectLogoSideMargins(logoSideMargin);
+        });
+
+        it('drops the logo side margins at 767px', () => {
+            cy.viewport(belowMdWidth, phoneHeight);
+            expectLogoSideMargins(noSideMargin);
         });
     });
 
