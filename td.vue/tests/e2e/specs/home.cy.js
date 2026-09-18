@@ -276,10 +276,17 @@ describe('home', () => {
 
         const rightEdge = ($el) => $el[0].getBoundingClientRect().right;
 
+        // The hero pads its content by 1rem, so its border-box edge would leave
+        // an element 16px of slack to overflow the column and still pass.
+        const contentRightEdge = ($el) => {
+            const el = $el[0];
+            return rightEdge($el) - parseFloat(getComputedStyle(el).paddingRight);
+        };
+
         const expectWithinHero = (selector) => {
             cy.get('.td-hero').then(($hero) => {
                 cy.get(selector).then(($el) => {
-                    expect(rightEdge($el)).to.be.at.most(rightEdge($hero));
+                    expect(rightEdge($el)).to.be.at.most(contentRightEdge($hero));
                 });
             });
         };
