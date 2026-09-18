@@ -263,4 +263,17 @@ describe('home', () => {
         });
     });
 
+    describe('mobile layout', () => {
+        const phoneWidth = 375;
+
+        beforeEach(() => {
+            cy.viewport(phoneWidth, 812);
+            cy.launchThreatDragon();
+        });
+
+        it('shrinks the logo to fit the screen', () => {
+            cy.get('#home-td-logo').invoke('outerWidth').should('be.lessThan', phoneWidth);
+        });
+    });
+
 });
