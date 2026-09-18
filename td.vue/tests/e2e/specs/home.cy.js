@@ -349,6 +349,27 @@ describe('home', () => {
             cy.viewport(belowMdWidth, phoneHeight);
             cy.get('p.td-description').should('have.css', 'margin-left', descriptionIndentBelowMd);
         });
+
+        // de and fi hold the longest unbroken words on the page (22 characters).
+        describe('per locale', () => {
+            afterEach(() => {
+                cy.window().then((win) => win.sessionStorage.clear());
+            });
+
+            ['en', 'de', 'fi'].forEach((locale) => {
+                it(`does not scroll sideways in ${locale}`, () => {
+                    loadWithConfig({
+                        allowedLocales: locale === 'en' ? [] : [locale],
+                        defaultLocale: locale
+                    });
+
+                    cy.document().then((doc) => {
+                        expect(doc.documentElement.scrollWidth)
+                            .to.be.at.most(doc.documentElement.clientWidth);
+                    });
+                });
+            });
+        });
     });
 
 });
