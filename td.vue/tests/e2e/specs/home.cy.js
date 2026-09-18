@@ -274,6 +274,13 @@ describe('home', () => {
         it('shrinks the logo to fit the screen', () => {
             cy.get('#home-td-logo').invoke('outerWidth').should('be.lessThan', phoneWidth);
         });
+
+        it('keeps the logo at full size from md up', () => {
+            const mdWidth = 768;
+            const logoWidth = 400;
+            cy.viewport(mdWidth, 812);
+            cy.get('#home-td-logo').invoke('outerWidth').should('equal', logoWidth);
+        });
     });
 
 });

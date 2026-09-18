@@ -59,6 +59,12 @@
     margin-left: 20px;
 }
 
+@media (min-width: 768px) {
+    .td-cupcake {
+        max-width: none;
+    }
+}
+
 .td-home-loading {
     align-items: center;
     display: flex;
