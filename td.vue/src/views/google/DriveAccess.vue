@@ -8,7 +8,6 @@
         :onBackClick="navigateBack"
         :paginate="paginate"
         :showBackItem="!!parentId"
-        isGoogleProvider
         :emptyStateText="`${$t('folder.noneFound')}`">
         {{ $t('folder.select') }} {{ providerDisplayName() }} {{ $t('folder.from') }}
         {{ $t('threatmodelSelect.or') }}
@@ -60,7 +59,7 @@ export default {
             this.$store.dispatch(folderActions.selected, folder);
             if (folder.mimeType == 'application/json') {
                 await this.$store.dispatch(tmActions.fetch, folder.id);
-                const params = Object.assign({}, this.$route.params, { folder: prevfolder, threatmodel: folder.name });
+                const params = Object.assign({}, this.$route.params, { folder: prevfolder, threatmodel: folder.value });
                 this.$store.dispatch(tmActions.selected, this.selectedModel);
                 this.$router.push({ name: `${this.providerType}ThreatModel`, params });
             }

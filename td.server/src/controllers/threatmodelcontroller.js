@@ -176,15 +176,14 @@ const deleteModel = async (req, res) => {
 };
 
 const getPagination = (headers, pageLinks, page) => {
-
     if(headers === undefined || headers === null || (Object.keys(headers).length === 0) || headers?.link === null){
         if (pageLinks === undefined || pageLinks === null || (Object.keys(pageLinks).length === 0)) {
             return {page, next: false, prev: false};
         }
         return getPaginationFromPageLinks(pageLinks, page);
-    } 
+    }
+
     return getPaginationFromHeaders(headers, page);
-    
 };
 
 const getPaginationFromPageLinks = (pageLinks, page) => {
@@ -225,6 +224,9 @@ const organisation = (req, res) => {
         break;
     case 'bitbucket':
         fullUrl = provider.getBitbucketUrl();
+        break;
+    case 'google':
+        fullUrl = provider.getGoogleUrl();
         break;
     default:
         return notFound(`Unknown provider`, res, logger);
