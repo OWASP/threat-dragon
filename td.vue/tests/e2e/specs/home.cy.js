@@ -271,6 +271,8 @@ describe('home', () => {
         const logoWidth = 400;
         const logoSideMargin = '20px';
         const noSideMargin = '0px';
+        const descriptionIndentFromMd = '170px';
+        const descriptionIndentBelowMd = '20px';
 
         const rightEdge = ($el) => $el[0].getBoundingClientRect().right;
 
@@ -318,6 +320,16 @@ describe('home', () => {
         it('drops the logo side margins at 767px', () => {
             cy.viewport(belowMdWidth, phoneHeight);
             expectLogoSideMargins(noSideMargin);
+        });
+
+        it('indents the description 170px at 768px', () => {
+            cy.viewport(mdWidth, phoneHeight);
+            cy.get('p.td-description').should('have.css', 'margin-left', descriptionIndentFromMd);
+        });
+
+        it('indents the description 20px at 767px', () => {
+            cy.viewport(belowMdWidth, phoneHeight);
+            cy.get('p.td-description').should('have.css', 'margin-left', descriptionIndentBelowMd);
         });
     });
 
