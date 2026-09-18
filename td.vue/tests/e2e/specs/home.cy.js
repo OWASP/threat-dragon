@@ -23,6 +23,9 @@ const defaultConfig = {
     defaultLocale: 'en'
 };
 
+const phoneWidth = 375;
+const phoneHeight = 812;
+
 const loadWithConfig = (overrides = {}, alias = 'getConfig') => {
     cy.intercept('GET', '/api/config', {
         statusCode: 200,
@@ -264,8 +267,6 @@ describe('home', () => {
     });
 
     describe('mobile layout', () => {
-        const phoneWidth = 375;
-        const phoneHeight = 812;
         const mdWidth = 768;
         const belowMdWidth = mdWidth - 1;
         const logoWidth = 400;
@@ -349,24 +350,33 @@ describe('home', () => {
             cy.viewport(belowMdWidth, phoneHeight);
             cy.get('p.td-description').should('have.css', 'margin-left', descriptionIndentBelowMd);
         });
+    });
 
-        // de and fi hold the longest unbroken words on the page (22 characters).
-        describe('per locale', () => {
-            afterEach(() => {
-                cy.window().then((win) => win.sessionStorage.clear());
-            });
+    // de and fi hold the longest unbroken words on the page (22 characters).
+    describe('mobile layout per locale', () => {
+        ['en', 'de', 'fi'].forEach((locale) => {
+            it(`does not scroll sideways in ${locale}`, () => {
+                cy.viewport(phoneWidth, phoneHeight);
 
-            ['en', 'de', 'fi'].forEach((locale) => {
-                it(`does not scroll sideways in ${locale}`, () => {
-                    loadWithConfig({
-                        allowedLocales: locale === 'en' ? [] : [locale],
-                        defaultLocale: locale
-                    });
+                // Every provider enabled, so the login button row is at its widest.
+                // allowedLocales must name the locale: an empty list means "no
+                // restriction", and the resolver then prefers the browser language
+                // over defaultLocale.
+                loadWithConfig({
+                    githubEnabled: true,
+                    bitbucketEnabled: true,
+                    gitlabEnabled: true,
+                    googleEnabled: true,
+                    allowedLocales: [locale],
+                    defaultLocale: locale
+                });
 
-                    cy.document().then((doc) => {
-                        expect(doc.documentElement.scrollWidth)
-                            .to.be.at.most(doc.documentElement.clientWidth);
-                    });
+                cy.get('p.td-description')
+                    .should('contain.text', homepageStrings[locale].description);
+
+                cy.document().should((doc) => {
+                    expect(doc.documentElement.scrollWidth)
+                        .to.be.at.most(doc.documentElement.clientWidth);
                 });
             });
         });
