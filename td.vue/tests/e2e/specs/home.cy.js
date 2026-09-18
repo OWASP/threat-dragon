@@ -265,20 +265,35 @@ describe('home', () => {
 
     describe('mobile layout', () => {
         const phoneWidth = 375;
+        const phoneHeight = 812;
+        const mdWidth = 768;
+        const logoWidth = 400;
+
+        const rightEdge = ($el) => $el[0].getBoundingClientRect().right;
+
+        const expectWithinHero = (selector) => {
+            cy.get('.td-hero').then(($hero) => {
+                cy.get(selector).then(($el) => {
+                    expect(rightEdge($el)).to.be.at.most(rightEdge($hero));
+                });
+            });
+        };
 
         beforeEach(() => {
-            cy.viewport(phoneWidth, 812);
+            cy.viewport(phoneWidth, phoneHeight);
             cy.launchThreatDragon();
         });
 
         it('shrinks the logo to fit the screen', () => {
-            cy.get('#home-td-logo').invoke('outerWidth').should('be.lessThan', phoneWidth);
+            cy.get('#home-td-logo').invoke('outerWidth', true).should('be.lessThan', phoneWidth);
+        });
+
+        it('keeps the logo inside the hero', () => {
+            expectWithinHero('#home-td-logo');
         });
 
         it('keeps the logo at full size from md up', () => {
-            const mdWidth = 768;
-            const logoWidth = 400;
-            cy.viewport(mdWidth, 812);
+            cy.viewport(mdWidth, phoneHeight);
             cy.get('#home-td-logo').invoke('outerWidth').should('equal', logoWidth);
         });
     });
