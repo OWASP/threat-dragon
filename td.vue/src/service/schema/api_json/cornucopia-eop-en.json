@@ -1,0 +1,1180 @@
+{
+  "meta": {
+    "edition": "Elevation of Privilege Edition",
+    "component": "cards",
+    "language": "en",
+    "version": "5.0"
+  },
+  "standards": [
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/SP2/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Spoofing",
+      "description": "An attacker could take over the port or socket that the server normally uses",
+      "sectionID": "SP2",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/SP2/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/SP3/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Spoofing",
+      "description": "An attacker could try one credential after another and there's nothing to slow them down (online or offline)",
+      "sectionID": "SP3",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/SP3/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/SP4/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Spoofing",
+      "description": "An attacker can anonymously connect, because we expect authentication to be done at a higher level",
+      "sectionID": "SP4",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/SP4/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/SP5/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Spoofing",
+      "description": "An attacker can confuse a client because there are too many ways to identify a server",
+      "sectionID": "SP5",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/SP5/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/SP6/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Spoofing",
+      "description": "An attacker can spoof a server because identifiers aren't stored on the client and checked for consistency on re-connection (that is, there's no key persistence)",
+      "sectionID": "SP6",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/SP6/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/SP7/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Spoofing",
+      "description": "An attacker can connect to a server or peer over a link that isn't authenticated (and encrypted)",
+      "sectionID": "SP7",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/SP7/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/SP8/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Spoofing",
+      "description": "An attacker could steal credentials stored on the server and reuse them (for example, a key is stored in a world readable file)",
+      "sectionID": "SP8",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/SP8/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/SP9/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Spoofing",
+      "description": "An attacker who gets a password can reuse it (Use stronger authenticators)",
+      "sectionID": "SP9",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/SP9/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/SPX/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Spoofing",
+      "description": "An attacker can choose to use weaker or no authentication",
+      "sectionID": "SPX",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/SPX/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/SPJ/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Spoofing",
+      "description": "An attacker could steal credentials stored on the client and reuse them",
+      "sectionID": "SPJ",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/SPJ/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/SPQ/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Spoofing",
+      "description": "An attacker could go after the way credentials are updated or recovered (account recovery doesn't require disclosing the old password)",
+      "sectionID": "SPQ",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/SPQ/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/SPK/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Spoofing",
+      "description": "Your system ships with a default admin password, and doesn't force a change",
+      "sectionID": "SPK",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/SPK/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/SPA/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Spoofing",
+      "description": "You've invented a new Spoofing attack",
+      "sectionID": "SPA",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/SPA/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/TA2/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Tampering",
+      "description": "An attacker can take advantage of your custom key exchange or integrity control which you built instead of using standard crypto",
+      "sectionID": "TA2",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/TA2/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/TA3/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Tampering",
+      "description": "An attacker can modify your build system and produce signed builds of your software",
+      "sectionID": "TA3",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/TA3/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/TA4/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Tampering",
+      "description": "Your code makes access control decisions all over the place, rather than with a security kernel",
+      "sectionID": "TA4",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/TA4/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/TA5/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Tampering",
+      "description": "An attacker can replay data without detection because your code doesn't provide timestamps or sequence numbers",
+      "sectionID": "TA5",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/TA5/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/TA6/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Tampering",
+      "description": "An attacker can write to a data store your code relies on",
+      "sectionID": "TA6",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/TA6/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/TA7/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Tampering",
+      "description": "An attacker can bypass permissions because you don't make names canonical before checking access permissions",
+      "sectionID": "TA7",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/TA7/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/TA8/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Tampering",
+      "description": "An attacker can manipulate data because there's no integrity protection for data on the network",
+      "sectionID": "TA8",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/TA8/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/TA9/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Tampering",
+      "description": "An attacker can provide or control state information",
+      "sectionID": "TA9",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/TA9/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/TAX/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Tampering",
+      "description": "An attacker can alter information in a data store because it has weak/open permissions or includes a group which is equivalent to everyone (\"anyone with a Facebook account\")",
+      "sectionID": "TAX",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/TAX/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/TAJ/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Tampering",
+      "description": "An attacker can write to some resource because permissions are granted to the world or there are no ACLs",
+      "sectionID": "TAJ",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/TAJ/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/TAQ/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Tampering",
+      "description": "An attacker can change parameters over a trust boundary and after validation (for example, important parameters in a hidden field in HTML, or passing a pointer to critical memory)",
+      "sectionID": "TAQ",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/TAQ/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/TAK/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Tampering",
+      "description": "An attacker can load code inside your process via an extension point",
+      "sectionID": "TAK",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/TAK/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/TAA/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Tampering",
+      "description": "You've invented a new Tampering attack",
+      "sectionID": "TAA",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/TAA/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/RE2/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Repudiation",
+      "description": "An attacker can pass data through the log to attack a log reader, and there's no documentation of what sorts of validation are done",
+      "sectionID": "RE2",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/RE2/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/RE3/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Repudiation",
+      "description": "A low privilege attacker can read interesting security information in the logs",
+      "sectionID": "RE3",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/RE3/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/RE4/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Repudiation",
+      "description": "An attacker can alter digital signatures because the digital signature system you're implementing is weak, or uses MACs where it should use a signature",
+      "sectionID": "RE4",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/RE4/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/RE5/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Repudiation",
+      "description": "An attacker can alter log messages on a network because they lack strong integrity controls",
+      "sectionID": "RE5",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/RE5/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/RE6/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Repudiation",
+      "description": "An attacker can create a log entry without a timestamp (or no log entry is timestamped)",
+      "sectionID": "RE6",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/RE6/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/RE7/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Repudiation",
+      "description": "An attacker can make the logs wrap around and lose data",
+      "sectionID": "RE7",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/RE7/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/RE8/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Repudiation",
+      "description": "An attacker can make a log lose or confuse security information",
+      "sectionID": "RE8",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/RE8/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/RE9/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Repudiation",
+      "description": "An attacker can use a shared key to authenticate as different principals, confusing the information in the logs",
+      "sectionID": "RE9",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/RE9/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/REX/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Repudiation",
+      "description": "An attacker can get arbitrary data into logs from unauthenticated (or weakly authenticated) outsiders without validation",
+      "sectionID": "REX",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/REX/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/REJ/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Repudiation",
+      "description": "An attacker can edit logs and there's no way to tell (perhaps because there's no heartbeat option for the logging system)",
+      "sectionID": "REJ",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/REJ/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/REQ/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Repudiation",
+      "description": "An attacker can say \"I didn't do that,\" and you'd have no way to prove them wrong",
+      "sectionID": "REQ",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/REQ/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/REK/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Repudiation",
+      "description": "The system has no logs",
+      "sectionID": "REK",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/REK/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/REA/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Repudiation",
+      "description": "You've invented a new Repudiation attack",
+      "sectionID": "REA",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/REA/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/ID2/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Information Disclosure",
+      "description": "An attacker can brute-force file encryption because there's no defense in place (example defense, password stretching)",
+      "sectionID": "ID2",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/ID2/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/ID3/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Information Disclosure",
+      "description": "An attacker can see error messages with security sensitive content",
+      "sectionID": "ID3",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/ID3/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/ID4/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Information Disclosure",
+      "description": "An attacker can read content because messages (say, an email or HTTP cookie) aren't encrypted even if the channel is encrypted",
+      "sectionID": "ID4",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/ID4/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/ID5/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Information Disclosure",
+      "description": "An attacker may be able to read a document or data because it's encrypted with a non-standard algorithm",
+      "sectionID": "ID5",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/ID5/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/ID6/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Information Disclosure",
+      "description": "An attacker can read data because it's hidden or occluded (for undo or change tracking) and the user might forget that it's there",
+      "sectionID": "ID6",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/ID6/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/ID7/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Information Disclosure",
+      "description": "An attacker can act as a 'man in the middle' because you don't authenticate endpoints of a network connection",
+      "sectionID": "ID7",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/ID7/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/ID8/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Information Disclosure",
+      "description": "An attacker can access information through a search indexer, logger, or other such mechanism",
+      "sectionID": "ID8",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/ID8/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/ID9/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Information Disclosure",
+      "description": "An attacker can read sensitive information in a file with permissive permissions",
+      "sectionID": "ID9",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/ID9/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/IDX/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Information Disclosure",
+      "description": "An attacker can read information in files or databases with no access controls",
+      "sectionID": "IDX",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/IDX/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/IDJ/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Information Disclosure",
+      "description": "An attacker can discover the fixed key being used to encrypt",
+      "sectionID": "IDJ",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/IDJ/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/IDQ/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Information Disclosure",
+      "description": "An attacker can read the entire channel because the channel (say, HTTP or SMTP) isn't encrypted",
+      "sectionID": "IDQ",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/IDQ/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/IDK/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Information Disclosure",
+      "description": "An attacker can read network information because there's no cryptography used",
+      "sectionID": "IDK",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/IDK/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/IDA/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Information Disclosure",
+      "description": "You've invented a new Information Disclosure attack",
+      "sectionID": "IDA",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/IDA/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/DS2/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Denial of Service",
+      "description": "An attacker can make your authentication system unusable or unavailable",
+      "sectionID": "DS2",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/DS2/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/DS3/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Denial of Service",
+      "description": "An attacker can drain our easily replacable battery ",
+      "sectionID": "DS3",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/DS3/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/DS4/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Denial of Service",
+      "description": "An attacker can drain a battery that's hard to replace (sealed in a phone, an implanted medical device, or in a hard to reach location) ",
+      "sectionID": "DS4",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/DS4/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/DS5/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Denial of Service",
+      "description": "An attacker can spend our cloud budget ",
+      "sectionID": "DS5",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/DS5/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/DS6/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Denial of Service",
+      "description": "An attacker can make a server unavailable or unusable without ever authenticating but the problem goes away when the attacker stops ",
+      "sectionID": "DS6",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/DS6/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/DS7/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Denial of Service",
+      "description": "An attacker can make a client unavailable or unusable and the problem persists after the attacker goes away ",
+      "sectionID": "DS7",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/DS7/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/DS8/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Denial of Service",
+      "description": "An attacker can make a server unavailable or unusable and the problem persists after the attacker goes away ",
+      "sectionID": "DS8",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/DS8/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/DS9/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Denial of Service",
+      "description": "An attacker can make a client unavailable or unusable without ever authenticating and the problem persists after the attacker goes away ",
+      "sectionID": "DS9",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/DS9/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/DSX/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Denial of Service",
+      "description": "An attacker can make a server unavailable or unusable without ever authenticating and the problem persists after the attacker goes away ",
+      "sectionID": "DSX",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/DSX/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/DSJ/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Denial of Service",
+      "description": "An attacker can cause the logging subsystem to stop working",
+      "sectionID": "DSJ",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/DSJ/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/DSQ/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Denial of Service",
+      "description": "An attacker can amplify a Denial of Service attack through this component with amplification on the order of 10 to 1",
+      "sectionID": "DSQ",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/DSQ/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/DSK/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Denial of Service",
+      "description": "An attacker can amplify a Denial of Service attack through this component with amplification on the order of 100 to 1",
+      "sectionID": "DSK",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/DSK/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/DSA/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Denial of Service",
+      "description": "You've invented a new Denial of Service attack",
+      "sectionID": "DSA",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/DSA/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/EP2/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Elevation of Privilege",
+      "description": "An attacker has compromised a key technology supplier",
+      "sectionID": "EP2",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/EP2/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/EP3/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Elevation of Privilege",
+      "description": "An attacker can access the cloud service which manages your devices",
+      "sectionID": "EP3",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/EP3/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/EP4/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Elevation of Privilege",
+      "description": "An attacker can escape from a container or other sandbox",
+      "sectionID": "EP4",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/EP4/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/EP5/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Elevation of Privilege",
+      "description": "An attacker can force data through different validation paths which give different results",
+      "sectionID": "EP5",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/EP5/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/EP6/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Elevation of Privilege",
+      "description": "An attacker could take advantage of permissions you set, but don't use",
+      "sectionID": "EP6",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/EP6/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/EP7/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Elevation of Privilege",
+      "description": "An attacker can provide a pointer across a trust boundary, rather than data which can be validated",
+      "sectionID": "EP7",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/EP7/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/EP8/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Elevation of Privilege",
+      "description": "An attacker can enter data that is checked while still under their control and used later on the other side of a trust boundary",
+      "sectionID": "EP8",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/EP8/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/EP9/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Elevation of Privilege",
+      "description": "There's no reasonable way for a caller to figure out what validation of tainted data you perform before passing it to them",
+      "sectionID": "EP9",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/EP9/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/EPX/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Elevation of Privilege",
+      "description": "There's no reasonable way for a caller to figure out what security assumptions you make",
+      "sectionID": "EPX",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/EPX/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/EPJ/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Elevation of Privilege",
+      "description": "An attacker can reflect input back to a user, like cross site scripting",
+      "sectionID": "EPJ",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/EPJ/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/EPQ/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Elevation of Privilege",
+      "description": "You include user-generated content within your page, possibly including the content of random URLs",
+      "sectionID": "EPQ",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/EPQ/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/EPK/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Elevation of Privilege",
+      "description": "An attacker can inject a command that the system will run at a higher privilege level",
+      "sectionID": "EPK",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/EPK/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    },
+    {
+      "doctype": "Tool",
+      "id": "https://cornucopia.owasp.org/edition/eop/EPA/5.0/en",
+      "name": "Elevation of Privilege Edition",
+      "section": "Elevation of Privilege",
+      "description": "You've invented a new Elevation of Privilege attack",
+      "sectionID": "EPA",
+      "hyperlink": "https://cornucopia.owasp.org/edition/eop/EPA/5.0/en",
+      "links": [],
+      "tags": [
+        "Threat modeling",
+        "Elevation of Privilege"
+      ],
+      "tooltype": "Defensive"
+    }
+  ]
+}

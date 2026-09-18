@@ -13,7 +13,10 @@ const apiLangs = [
     { lang: 'en', type: 'mobileapp' },
 
     // companion currently only supports english
-    { lang: 'en', type: 'companion' }
+    { lang: 'en', type: 'companion' },
+
+    // eop currently only supports english
+    { lang: 'en', type: 'eop' }
 ];
 
 const outDir = path.resolve(__dirname, '..', 'assets', 'downloads');
