@@ -306,6 +306,10 @@ describe('home', () => {
             cy.get('#home-td-logo').invoke('outerWidth').should('equal', logoWidth);
         });
 
+        it('keeps the description inside the hero', () => {
+            expectWithinHero('p.td-description');
+        });
+
         it('keeps the logo side margins at 768px', () => {
             cy.viewport(mdWidth, phoneHeight);
             expectLogoSideMargins(logoSideMargin);

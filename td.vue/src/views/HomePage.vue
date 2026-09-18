@@ -49,7 +49,7 @@
 .td-description {
     font-size: 20px;
     margin-right: 20px;
-    margin-left: 170px;
+    margin-left: 20px;
 }
 
 .td-cupcake {
@@ -58,6 +58,10 @@
 }
 
 @media (min-width: 768px) {
+    .td-description {
+        margin-left: 170px;
+    }
+
     .td-cupcake {
         max-width: none;
         margin-right: 20px;
