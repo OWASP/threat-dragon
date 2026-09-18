@@ -26,7 +26,7 @@
                             </p>
                         </b-row>
                         <b-row>
-                            <b-col class="mt-5 ml-5 text-center">
+                            <b-col class="mt-5 ml-md-5 text-center">
                                 <td-provider-login-button
                                     v-for="(provider, idx) in providers"
                                     :key="idx"

@@ -225,6 +225,23 @@ describe('HomePage.vue', () => {
         });
     });
 
+    describe('responsive layout', () => {
+        beforeEach(async () => {
+            const store = createStore({ githubEnabled: true });
+            const { wrapper: w, resolve } = createControlledMount(store);
+            await finishMount(w, resolve);
+            wrapper = w;
+        });
+
+        it('indents the login buttons from md up', () => {
+            expect(wrapper.find('.ml-md-5').exists()).toBe(true);
+        });
+
+        it('does not indent the login buttons on phones', () => {
+            expect(wrapper.find('.ml-5').exists()).toBe(false);
+        });
+    });
+
     describe('providers', () => {
         it('renders a login button per enabled provider', async () => {
             const store = createStore({ githubEnabled: true, localEnabled: true });
