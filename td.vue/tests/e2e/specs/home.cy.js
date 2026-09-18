@@ -273,6 +273,7 @@ describe('home', () => {
         const noSideMargin = '0px';
         const descriptionIndentFromMd = '170px';
         const descriptionIndentBelowMd = '20px';
+        const loginIndentFromMd = '48px';
 
         const rightEdge = ($el) => $el[0].getBoundingClientRect().right;
 
@@ -319,8 +320,14 @@ describe('home', () => {
             expectWithinHero('p.td-description');
         });
 
-        it('keeps the login buttons inside the hero', () => {
-            expectWithinHero('#local-login-btn');
+        it('indents the login buttons at 768px', () => {
+            cy.viewport(mdWidth, phoneHeight);
+            cy.get('#home-login-buttons').should('have.css', 'margin-left', loginIndentFromMd);
+        });
+
+        it('drops the login button indent at 767px', () => {
+            cy.viewport(belowMdWidth, phoneHeight);
+            cy.get('#home-login-buttons').should('have.css', 'margin-left', noSideMargin);
         });
 
         it('keeps the logo side margins at 768px', () => {
