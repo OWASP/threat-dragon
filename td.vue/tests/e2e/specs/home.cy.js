@@ -319,6 +319,10 @@ describe('home', () => {
             expectWithinHero('p.td-description');
         });
 
+        it('keeps the login buttons inside the hero', () => {
+            expectWithinHero('#local-login-btn');
+        });
+
         it('keeps the logo side margins at 768px', () => {
             cy.viewport(mdWidth, phoneHeight);
             expectLogoSideMargins(logoSideMargin);
