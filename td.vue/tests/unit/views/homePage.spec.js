@@ -233,12 +233,12 @@ describe('HomePage.vue', () => {
             wrapper = w;
         });
 
-        it('indents the login buttons from md up', () => {
-            expect(wrapper.find('.ml-md-5').exists()).toBe(true);
+        it('gives the login buttons the md-scoped indent class', () => {
+            expect(wrapper.find('#home-login-buttons').classes()).toContain('ml-md-5');
         });
 
-        it('does not indent the login buttons on phones', () => {
-            expect(wrapper.find('.ml-5').exists()).toBe(false);
+        it('does not give the login buttons the breakpoint-agnostic indent class', () => {
+            expect(wrapper.find('#home-login-buttons').classes()).not.toContain('ml-5');
         });
     });
 
