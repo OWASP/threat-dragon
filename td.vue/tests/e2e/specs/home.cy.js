@@ -384,7 +384,8 @@ describe('home', () => {
         });
     });
 
-    // de and fi hold the longest unbroken words on the page (22 characters).
+    // de holds the longest unbroken word on the page (22 characters), fi the
+    // next longest (17); en stands in for the short-word case.
     describe('mobile layout per locale', () => {
         ['en', 'de', 'fi'].forEach((locale) => {
             it(`does not scroll sideways in ${locale}`, () => {
