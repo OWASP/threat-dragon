@@ -26,6 +26,25 @@ const defaultConfig = {
 const phoneWidth = 375;
 const phoneHeight = 812;
 
+// The narrowest viewport this suite guards: 320px is the floor for phones still
+// in use. Wider phones sit in the same class as the 375px cases below.
+const narrowPhoneWidth = 320;
+const narrowPhoneHeight = 568;
+
+const allProvidersEnabled = {
+    githubEnabled: true,
+    bitbucketEnabled: true,
+    gitlabEnabled: true,
+    googleEnabled: true
+};
+
+const expectNoSidewaysScroll = () => {
+    cy.document().should((doc) => {
+        expect(doc.documentElement.scrollWidth)
+            .to.be.at.most(doc.documentElement.clientWidth);
+    });
+};
+
 const loadWithConfig = (overrides = {}, alias = 'getConfig') => {
     cy.intercept('GET', '/api/config', {
         statusCode: 200,
@@ -352,6 +371,19 @@ describe('home', () => {
         });
     });
 
+    describe('mobile layout on the narrowest phone', () => {
+        it('does not scroll sideways at 320px', () => {
+            cy.viewport(narrowPhoneWidth, narrowPhoneHeight);
+            loadWithConfig({
+                ...allProvidersEnabled,
+                allowedLocales: ['en'],
+                defaultLocale: 'en'
+            });
+
+            expectNoSidewaysScroll();
+        });
+    });
+
     // de and fi hold the longest unbroken words on the page (22 characters).
     describe('mobile layout per locale', () => {
         ['en', 'de', 'fi'].forEach((locale) => {
@@ -363,10 +395,7 @@ describe('home', () => {
                 // restriction", and the resolver then prefers the browser language
                 // over defaultLocale.
                 loadWithConfig({
-                    githubEnabled: true,
-                    bitbucketEnabled: true,
-                    gitlabEnabled: true,
-                    googleEnabled: true,
+                    ...allProvidersEnabled,
                     allowedLocales: [locale],
                     defaultLocale: locale
                 });
@@ -374,10 +403,7 @@ describe('home', () => {
                 cy.get('p.td-description')
                     .should('contain.text', homepageStrings[locale].description);
 
-                cy.document().should((doc) => {
-                    expect(doc.documentElement.scrollWidth)
-                        .to.be.at.most(doc.documentElement.clientWidth);
-                });
+                expectNoSidewaysScroll();
             });
         });
     });
