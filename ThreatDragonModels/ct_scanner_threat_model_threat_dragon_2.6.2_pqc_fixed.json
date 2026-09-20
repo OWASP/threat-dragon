@@ -1,0 +1,1985 @@
+{
+  "version": "2.6.2",
+  "summary": {
+    "title": "Educational STRIDE Threat Model — Network-Connected CT Scanner",
+    "owner": "Security / Clinical Engineering",
+    "description": "Educational threat model for a network-connected CT scanner and its connected clinical ecosystem. Purpose: demonstrate STRIDE-based threat identification using an OWASP Threat Dragon DFD. This is not a product security certification, regulatory submission, clinical safety assessment, penetration-test report, or formal manufacturer cybersecurity risk assessment. Product-specific evidence is limited to the Siemens Healthineers DICOM Conformance Statement, syngo CT VB20A, Revision 4.2, dated 07/01/2026. Product documentation identifies documented capabilities; deployment configuration and observed behaviour are separate evidence states. Optional or conditional features are not treated as deployed unless confirmed. Clinical consequences are not inferred without device, deployment, workflow, and safety evidence."
+  },
+  "detail": {
+    "contributors": [
+      {
+        "name": "Threat Modeling Team"
+      }
+    ],
+    "diagrams": [
+      {
+        "title": "Educational STRIDE Model — Network-Connected CT Scanner — Synchronized",
+        "thumbnail": "./public/content/images/thumbnail.stride.jpg",
+        "diagramType": "STRIDE",
+        "id": 0,
+        "version": "2.6.2",
+        "diagramJson": {
+          "cells": [
+            {
+              "type": "tm.Boundary",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "x": 300,
+                "y": 120
+              },
+              "target": {
+                "x": 560,
+                "y": 480
+              },
+              "vertices": [],
+              "id": "849e31c5-fb60-4fb4-b2b4-90233de94499",
+              "z": 1,
+              "attrs": {},
+              "hasOpenThreats": false,
+              "description": "Trust boundary around the CT device and its local storage/admin functions."
+            },
+            {
+              "type": "tm.Boundary",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "x": 520,
+                "y": 80
+              },
+              "target": {
+                "x": 1020,
+                "y": 560
+              },
+              "vertices": [],
+              "id": "2c53bfb5-368e-4099-9af2-17eb637431ba",
+              "z": 2,
+              "attrs": {},
+              "hasOpenThreats": false,
+              "description": "Trust boundary between CT-connected clinical systems and other hospital network assets."
+            },
+            {
+              "type": "tm.Boundary",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "x": 830,
+                "y": 250
+              },
+              "target": {
+                "x": 1080,
+                "y": 480
+              },
+              "vertices": [],
+              "id": "eeb4d092-a64b-43a7-b589-121ace7e1a46",
+              "z": 3,
+              "attrs": {},
+              "hasOpenThreats": false,
+              "description": "Trust boundary around clinical workstation/user interaction."
+            },
+            {
+              "type": "tm.Boundary",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "x": 40,
+                "y": 120
+              },
+              "target": {
+                "x": 250,
+                "y": 550
+              },
+              "vertices": [],
+              "id": "3f6630f4-6b41-42c6-b9f9-d8500fa0a9b7",
+              "z": 4,
+              "attrs": {},
+              "hasOpenThreats": false,
+              "description": "Trust boundary for vendor/service personnel and any external maintenance path; deployment-dependent."
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 120,
+                "height": 90
+              },
+              "position": {
+                "x": 350,
+                "y": 220
+              },
+              "angle": 0,
+              "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc",
+              "z": 10,
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "P01 CT Scanner"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                },
+                ".undefined": {
+                  "class": "undefinedhasOpenThreats isInScope"
+                }
+              },
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T21 Insufficient audit attribution",
+                  "type": "Repudiation",
+                  "description": "[Impact: High; Exploitability: Medium; Evidence: V-P/D; Priority: Medium] Security-relevant actions cannot be reliably attributed to the initiating user, service identity or system.",
+                  "mitigation": "Define required audit events and identity sources; verify that relevant events contain sufficient attribution and timestamps.",
+                  "number": 21,
+                  "modelType": "STRIDE",
+                  "threatId": "4b78fabc-7436-40ff-916c-5926af3940c4"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T22 Audit record modification, deletion or loss",
+                  "type": "Tampering",
+                  "description": "[Impact: High; Exploitability: Medium; Evidence: V-P/D; Priority: Medium] Audit records are modified, deleted, redirected or unavailable when needed for investigation.",
+                  "mitigation": "Restrict audit access, protect audit storage/transmission and verify retention and integrity controls for the deployment.",
+                  "number": 22,
+                  "modelType": "STRIDE",
+                  "threatId": "f99914af-9b8d-4556-8a61-8419e5182367"
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T34 Unauthorized DICOM autorouting change",
+                  "type": "Tampering",
+                  "description": "[Impact: High; Exploitability: Medium; Evidence: V-P/D; Priority: High] Autorouting rules or destinations are changed so that DICOM instances are sent to an unauthorized or unintended destination.",
+                  "mitigation": "Restrict autorouting configuration, review destinations and rules, authorize changes and audit configuration activity.",
+                  "number": 34,
+                  "modelType": "STRIDE",
+                  "threatId": "b501b071-ed1f-416b-9c75-4c8e6854f7e5"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T37 Long-term cryptographic obsolescence / PQC migration risk",
+                  "type": "Information disclosure",
+                  "description": "[Impact: High; Exploitability: Low; Evidence: U; Priority: Medium] Cryptographic mechanisms used by the CT or its connected deployment may become deprecated, unsupported or unsuitable during an approximately 10-year lifecycle. If applicable cryptographic functions cannot be migrated or replaced, long-lived sensitive information may face future confidentiality risk, including a potential harvest-now-decrypt-later scenario. Public-key cryptography used for authentication, certificates, key establishment or software/firmware signing may also require future migration. This threat does not establish that the particular CT product is currently vulnerable to a quantum attack.",
+                  "mitigation": "Maintain an inventory of security-relevant cryptographic mechanisms; assess cryptographic agility, certificate/key replacement, authorized software/firmware update capability and vendor migration support; define a lifecycle migration plan when applicable standards or security requirements change.",
+                  "number": 37,
+                  "modelType": "STRIDE",
+                  "threatId": "8c3f3d87-0f9a-4b7a-9d36-37f8d1a2c6e4"
+                }
+              ]
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 120,
+                "height": 90
+              },
+              "position": {
+                "x": 650,
+                "y": 170
+              },
+              "angle": 0,
+              "id": "2b29dbce-3fdb-49f8-b1af-b53e3db201c7",
+              "z": 11,
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "P02 PACS"
+                },
+                ".element-text": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                ".undefined": {
+                  "class": "undefinedhasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 120,
+                "height": 90
+              },
+              "position": {
+                "x": 650,
+                "y": 330
+              },
+              "angle": 0,
+              "id": "87b88bdc-ecd0-47d9-a54f-107727c70b31",
+              "z": 12,
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "P03 RIS/HIS"
+                },
+                ".element-text": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                ".undefined": {
+                  "class": "undefinedhasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 120,
+                "height": 90
+              },
+              "position": {
+                "x": 900,
+                "y": 330
+              },
+              "angle": 0,
+              "id": "0a669472-850d-44e8-b159-ed8f8d8e9115",
+              "z": 13,
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "P04 Radiology Workstation"
+                },
+                ".element-text": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                ".undefined": {
+                  "class": "undefinedhasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Actor",
+              "size": {
+                "width": 150,
+                "height": 80
+              },
+              "position": {
+                "x": 900,
+                "y": 180
+              },
+              "angle": 0,
+              "id": "0eadd248-95a7-48c6-8bb3-46c4d791ec34",
+              "z": 14,
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "E01 Clinical User"
+                },
+                ".element-text": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                ".undefined": {
+                  "class": "undefinedhasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Actor",
+              "size": {
+                "width": 150,
+                "height": 80
+              },
+              "position": {
+                "x": 90,
+                "y": 220
+              },
+              "angle": 0,
+              "id": "4bea1514-bdb3-4346-a611-2cd990d09160",
+              "z": 15,
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "E02 Vendor/Service Personnel (where applicable)"
+                },
+                ".element-text": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                ".undefined": {
+                  "class": "undefinedhasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Actor",
+              "size": {
+                "width": 150,
+                "height": 80
+              },
+              "position": {
+                "x": 90,
+                "y": 420
+              },
+              "angle": 0,
+              "id": "77e7ef5c-06e9-4122-a78c-0b10c1269986",
+              "z": 16,
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "E03 Supporting Network Services"
+                },
+                ".element-text": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                ".undefined": {
+                  "class": "undefinedhasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Store",
+              "size": {
+                "width": 150,
+                "height": 80
+              },
+              "position": {
+                "x": 330,
+                "y": 380
+              },
+              "angle": 0,
+              "id": "43a7a71b-0bbc-44e4-b9a8-a2e50a0fcb56",
+              "z": 17,
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "DS01 CT Local Storage"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                },
+                ".undefined": {
+                  "class": "undefinedhasOpenThreats isInScope"
+                }
+              },
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T32 Unauthorized access to CT local storage",
+                  "type": "Information disclosure",
+                  "description": "[Impact: High; Exploitability: Medium; Evidence: D/U; Priority: High] Patient or imaging data stored locally on the CT is accessed by an unauthorized user, process or maintenance path.",
+                  "mitigation": "Restrict local and administrative access, protect stored data as supported and verify access controls in deployment testing.",
+                  "number": 32,
+                  "modelType": "STRIDE",
+                  "threatId": "0828a41c-ac82-4392-93fc-d7039579588a"
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T33 Unauthorized modification of CT local storage",
+                  "type": "Tampering",
+                  "description": "[Impact: High; Exploitability: Low; Evidence: D/U; Priority: High] Stored patient or imaging data is modified or deleted without authorization.",
+                  "mitigation": "Restrict storage access, protect administrative paths and verify integrity and recovery behavior using approved test data.",
+                  "number": 33,
+                  "modelType": "STRIDE",
+                  "threatId": "06d63ded-1c07-4cae-85ca-17ff72f58e69"
+                }
+              ]
+            },
+            {
+              "type": "tm.Store",
+              "size": {
+                "width": 150,
+                "height": 80
+              },
+              "position": {
+                "x": 650,
+                "y": 40
+              },
+              "angle": 0,
+              "id": "260688e1-cfe4-44f6-9b65-3cd472d3a484",
+              "z": 18,
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "DS02 PACS Archive"
+                },
+                ".element-text": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                ".undefined": {
+                  "class": "undefinedhasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Store",
+              "size": {
+                "width": 150,
+                "height": 80
+              },
+              "position": {
+                "x": 650,
+                "y": 470
+              },
+              "angle": 0,
+              "id": "d4e58933-0454-4085-96a1-85a22c3cf12c",
+              "z": 19,
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "DS03 RIS/HIS Database"
+                },
+                ".element-text": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                ".undefined": {
+                  "class": "undefinedhasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
+              },
+              "target": {
+                "id": "2b29dbce-3fdb-49f8-b1af-b53e3db201c7"
+              },
+              "vertices": [],
+              "id": "5a7a12de-ceb7-4f20-b0d1-085e42e80dc2",
+              "z": 5,
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "F01a\\nDICOM Storage — CT → PACS",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              },
+              "protocol": "DICOM DIMSE",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T01 Unauthorized DICOM peer impersonation",
+                  "type": "Spoofing",
+                  "description": "[Impact: High; Exploitability: Medium; Evidence: D/U; Priority: High] An unauthorized endpoint presents itself as an approved DICOM peer for CT-to-PACS communication.",
+                  "mitigation": "Restrict DICOM peers using approved AE/IP configuration and network ACLs; use TLS with appropriate peer authentication where supported and configured.",
+                  "number": 1,
+                  "modelType": "STRIDE",
+                  "threatId": "2f4c9c79-f07e-4855-8518-56832ec89808"
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T02 DICOM object or metadata tampering in transit",
+                  "type": "Tampering",
+                  "description": "[Impact: High; Exploitability: Medium; Evidence: D/U; Priority: High] DICOM objects or metadata are modified in transit before reaching the intended destination.",
+                  "mitigation": "Protect sensitive DICOM links with configured secure transport where supported; restrict network paths and validate received data in the receiving workflow.",
+                  "number": 2,
+                  "modelType": "STRIDE",
+                  "threatId": "42306c6a-712e-424c-be91-e41dd3b7e23c"
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T03 DICOM information disclosure",
+                  "type": "Information disclosure",
+                  "description": "[Impact: High; Exploitability: Medium; Evidence: D/U; Priority: High] Patient and imaging information in DICOM traffic may be exposed to an unauthorized network observer.",
+                  "mitigation": "Use protected DICOM transport where supported and configured and restrict the network path to authorized systems.",
+                  "number": 3,
+                  "modelType": "STRIDE",
+                  "threatId": "72ab2088-f08a-474e-94fb-97d79efd2406"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T04 DICOM service disruption",
+                  "type": "Denial of service",
+                  "description": "[Impact: High; Exploitability: Low; Evidence: D/U; Priority: Medium] An unauthorized host or network condition disrupts CT-to-PACS DICOM communication.",
+                  "mitigation": "Use network segmentation, ACLs and monitoring; validate resilience with controlled non-production methods rather than flooding a clinical CT.",
+                  "number": 4,
+                  "modelType": "STRIDE",
+                  "threatId": "436d21f3-e21d-42d7-8ad2-273745bde3cd"
+                }
+              ],
+              "flowGroupId": "F01a",
+              "primaryFlowGroup": "F01"
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "2b29dbce-3fdb-49f8-b1af-b53e3db201c7"
+              },
+              "target": {
+                "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
+              },
+              "vertices": [],
+              "id": "f2c323b1-ccc9-4068-ab2b-dd60c88ea532",
+              "z": 5,
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "F01b\\nDICOM Storage — PACS → CT",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              },
+              "protocol": "DICOM DIMSE",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T05 Unauthorized DICOM sender impersonation",
+                  "type": "Spoofing",
+                  "description": "[Impact: High; Exploitability: Medium; Evidence: D/U; Priority: High] An unauthorized endpoint presents itself as an approved sender of DICOM objects to the CT.",
+                  "mitigation": "Restrict inbound DICOM peers and ports; use approved AE/IP configuration and secure peer authentication where supported.",
+                  "number": 5,
+                  "modelType": "STRIDE",
+                  "threatId": "1e8eeb30-b45e-4d6c-ab7f-c8cac3d22ca7"
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T06 Malicious or altered DICOM object accepted by CT",
+                  "type": "Tampering",
+                  "description": "[Impact: High; Exploitability: Medium; Evidence: D/U; Priority: High] A connected system sends an altered or malicious DICOM object to the CT and the object is accepted or processed unexpectedly.",
+                  "mitigation": "Restrict inbound DICOM associations to approved peers and validate object handling; assess input validation and negative cases in controlled testing.",
+                  "number": 6,
+                  "modelType": "STRIDE",
+                  "threatId": "dc92b0b2-8e30-46b4-8022-00ce9f5dde07"
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T07 Unauthorized DICOM retrieval or receipt",
+                  "type": "Information disclosure",
+                  "description": "[Impact: High; Exploitability: Medium; Evidence: D/U; Priority: High] An unauthorized peer obtains or causes delivery of patient or imaging data from the CT.",
+                  "mitigation": "Restrict Query/Retrieve and Storage peers; authorize destinations and retrieve operations; monitor relevant audit records where available.",
+                  "number": 7,
+                  "modelType": "STRIDE",
+                  "threatId": "462507b0-0a57-4ee8-8cc1-df5e231d8bb8"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T08 DICOM resource exhaustion",
+                  "type": "Denial of service",
+                  "description": "[Impact: High; Exploitability: Low; Evidence: D/U; Priority: Medium] Excessive or malformed DICOM requests consume resources and reduce service availability.",
+                  "mitigation": "Use network access controls, rate/resource controls where available, monitoring and safe non-production testing; do not intentionally exhaust resources on a clinical scanner.",
+                  "number": 8,
+                  "modelType": "STRIDE",
+                  "threatId": "55c12bbf-d611-404c-bfb1-631459ca80b6"
+                }
+              ],
+              "flowGroupId": "F01b",
+              "primaryFlowGroup": "F01"
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
+              },
+              "target": {
+                "id": "2b29dbce-3fdb-49f8-b1af-b53e3db201c7"
+              },
+              "vertices": [],
+              "id": "2782402d-35a8-4f0b-9d30-0af9043fbeae",
+              "z": 5,
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "F02a\\nStorage Commitment — N-ACTION CT → PACS",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              },
+              "protocol": "DICOM DIMSE",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T09 Storage Commitment peer impersonation",
+                  "type": "Spoofing",
+                  "description": "[Impact: Medium; Exploitability: Medium; Evidence: V-P/D; Priority: Medium] An unauthorized endpoint impersonates a configured Storage Commitment peer.",
+                  "mitigation": "Restrict Storage Commitment associations to approved peers and verify the configured destination and transport protection.",
+                  "number": 9,
+                  "modelType": "STRIDE",
+                  "threatId": "35a20607-093a-4c28-be1b-2ecaf3cda500"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T10 Storage Commitment status manipulation",
+                  "type": "Tampering",
+                  "description": "[Impact: High; Exploitability: Low; Evidence: D/U; Priority: Medium] A false or altered Storage Commitment interaction causes the workflow to treat data as committed when the intended storage state is not established.",
+                  "mitigation": "Restrict peers and validate Storage Commitment state transitions and failure handling in controlled testing.",
+                  "number": 10,
+                  "modelType": "STRIDE",
+                  "threatId": "0752031f-58c9-48a0-992c-2f6dec5a22e9"
+                }
+              ],
+              "flowGroupId": "F02a",
+              "primaryFlowGroup": "F02"
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "2b29dbce-3fdb-49f8-b1af-b53e3db201c7"
+              },
+              "target": {
+                "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
+              },
+              "vertices": [],
+              "id": "6ece06ba-2be5-4e55-b4cf-8b0d94639526",
+              "z": 5,
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "F02b\\nStorage Commitment — N-EVENT-REPORT PACS → CT",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              },
+              "protocol": "DICOM DIMSE",
+              "threats": [],
+              "flowGroupId": "F02b",
+              "primaryFlowGroup": "F02"
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
+              },
+              "target": {
+                "id": "2b29dbce-3fdb-49f8-b1af-b53e3db201c7"
+              },
+              "vertices": [],
+              "id": "7efdc4ce-989b-4cf7-a859-1ea40b5b3c63",
+              "z": 5,
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "F03a\\nQuery/Retrieve — C-FIND CT → PACS",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              },
+              "protocol": "DICOM DIMSE",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T11 Query/Retrieve peer impersonation",
+                  "type": "Spoofing",
+                  "description": "[Impact: High; Exploitability: Medium; Evidence: D/U; Priority: High] An unauthorized endpoint impersonates a configured Query/Retrieve peer.",
+                  "mitigation": "Restrict Query/Retrieve peers and verify AE/IP configuration and transport protection.",
+                  "number": 11,
+                  "modelType": "STRIDE",
+                  "threatId": "b4780ff1-3e0a-49be-b210-b5937f0d4f28"
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T12 Unauthorized Query/Retrieve access",
+                  "type": "Information disclosure",
+                  "description": "[Impact: High; Exploitability: Medium; Evidence: D/U; Priority: High] An unauthorized peer queries or retrieves patient or imaging information.",
+                  "mitigation": "Authorize Query/Retrieve peers and operations, restrict network reachability and audit relevant activity where supported.",
+                  "number": 12,
+                  "modelType": "STRIDE",
+                  "threatId": "191eb637-5e4d-4523-98b5-8ee931e92a35"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T13 Query/Retrieve service disruption",
+                  "type": "Denial of service",
+                  "description": "[Impact: High; Exploitability: Low; Evidence: D/U; Priority: Medium] Query/Retrieve requests or network conditions make the service unavailable to authorized clinical workflows.",
+                  "mitigation": "Use ACLs, segmentation and monitoring; use controlled non-production tests for resource exhaustion.",
+                  "number": 13,
+                  "modelType": "STRIDE",
+                  "threatId": "34ae1aae-73e3-4af6-88a6-0f42e9959168"
+                }
+              ],
+              "flowGroupId": "F03a",
+              "primaryFlowGroup": "F03"
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "2b29dbce-3fdb-49f8-b1af-b53e3db201c7"
+              },
+              "target": {
+                "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
+              },
+              "vertices": [],
+              "id": "fa97d328-267a-4fe5-89fd-4654372c37a1",
+              "z": 5,
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "F03b\\nQuery/Retrieve — C-FIND response PACS → CT",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              },
+              "protocol": "DICOM DIMSE",
+              "threats": [],
+              "flowGroupId": "F03b",
+              "primaryFlowGroup": "F03"
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "2b29dbce-3fdb-49f8-b1af-b53e3db201c7"
+              },
+              "target": {
+                "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
+              },
+              "vertices": [],
+              "id": "d9c0e0ab-c040-4be9-9083-78f59948a51d",
+              "z": 5,
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "F03c\\nQuery/Retrieve — C-MOVE CT → PACS",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              },
+              "protocol": "DICOM DIMSE",
+              "threats": [],
+              "flowGroupId": "F03c",
+              "primaryFlowGroup": "F03"
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
+              },
+              "target": {
+                "id": "2b29dbce-3fdb-49f8-b1af-b53e3db201c7"
+              },
+              "vertices": [],
+              "id": "5a5c4663-b66b-40db-96a7-0d19913d0383",
+              "z": 5,
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "F03d\\nQuery/Retrieve — C-STORE PACS → CT",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              },
+              "protocol": "DICOM DIMSE",
+              "threats": [],
+              "flowGroupId": "F03d",
+              "primaryFlowGroup": "F03"
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
+              },
+              "target": {
+                "id": "87b88bdc-ecd0-47d9-a54f-107727c70b31"
+              },
+              "vertices": [],
+              "id": "a2304f50-e53b-44ea-8642-8f120c8b92b3",
+              "z": 5,
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "F04a\\nModality Worklist — C-FIND CT → RIS/HIS",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              },
+              "protocol": "DICOM DIMSE",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T14 Modality Worklist provider impersonation",
+                  "type": "Spoofing",
+                  "description": "[Impact: High; Exploitability: Medium; Evidence: V-P/D; Priority: High] An unauthorized system presents itself as the configured Worklist provider.",
+                  "mitigation": "Restrict Worklist associations to approved peers and verify AE/IP configuration and transport protection.",
+                  "number": 14,
+                  "modelType": "STRIDE",
+                  "threatId": "4ac63957-04d8-424f-8b43-8ba80e26d89f"
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T15 Modality Worklist tampering",
+                  "type": "Tampering",
+                  "description": "[Impact: High; Exploitability: Medium; Evidence: D/U; Priority: High] Patient or procedure information returned by the Worklist service is altered or replaced before use.",
+                  "mitigation": "Protect the Worklist connection and peer identity; validate patient/procedure association and investigate unexpected Worklist values.",
+                  "number": 15,
+                  "modelType": "STRIDE",
+                  "threatId": "a397fcd5-6f32-4fd1-8ea0-711aaaa01910"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T16 Modality Worklist information disclosure",
+                  "type": "Information disclosure",
+                  "description": "[Impact: High; Exploitability: Medium; Evidence: D/U; Priority: Medium] Worklist responses expose patient or procedure information to an unauthorized observer.",
+                  "mitigation": "Use protected transport where supported and configured and restrict the Worklist network path.",
+                  "number": 16,
+                  "modelType": "STRIDE",
+                  "threatId": "c1b2caa4-dbfd-4046-b690-9e9a380c2548"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T17 Modality Worklist availability failure",
+                  "type": "Denial of service",
+                  "description": "[Impact: Medium; Exploitability: Low; Evidence: D/U; Priority: Medium] Loss or disruption of the Worklist service prevents or degrades the expected registration workflow.",
+                  "mitigation": "Define and test approved degraded-workflow behavior and monitor Worklist service availability.",
+                  "number": 17,
+                  "modelType": "STRIDE",
+                  "threatId": "b61b32de-e575-4c77-8753-162fc23d0c94"
+                }
+              ],
+              "flowGroupId": "F04a",
+              "primaryFlowGroup": "F04"
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "87b88bdc-ecd0-47d9-a54f-107727c70b31"
+              },
+              "target": {
+                "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
+              },
+              "vertices": [],
+              "id": "58080a77-387d-4df2-8aa0-b64d553f6444",
+              "z": 5,
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "F04b\\nModality Worklist — response RIS/HIS → CT",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              },
+              "protocol": "DICOM DIMSE",
+              "threats": [],
+              "flowGroupId": "F04b",
+              "primaryFlowGroup": "F04"
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
+              },
+              "target": {
+                "id": "87b88bdc-ecd0-47d9-a54f-107727c70b31"
+              },
+              "vertices": [],
+              "id": "b4236c21-7ce9-4ba7-a793-47628bdc3477",
+              "z": 5,
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "F05\\nMPPS — N-CREATE/N-SET CT → RIS/HIS",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              },
+              "protocol": "DICOM DIMSE",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T18 MPPS peer impersonation",
+                  "type": "Spoofing",
+                  "description": "[Impact: Medium; Exploitability: Medium; Evidence: V-P/D; Priority: Medium] An unauthorized endpoint impersonates the configured MPPS destination.",
+                  "mitigation": "Restrict MPPS associations to approved peers and verify configuration and transport protection.",
+                  "number": 18,
+                  "modelType": "STRIDE",
+                  "threatId": "b55c196c-b247-4bc9-b97b-8be1e3f1c059"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T19 MPPS status tampering",
+                  "type": "Tampering",
+                  "description": "[Impact: High; Exploitability: Medium; Evidence: D/U; Priority: Medium] MPPS status information is altered or accepted from an unauthorized source, affecting workflow state.",
+                  "mitigation": "Restrict MPPS peers, protect transport where supported and validate state handling.",
+                  "number": 19,
+                  "modelType": "STRIDE",
+                  "threatId": "4de395c1-a743-4829-9e32-eb4e7ee19ade"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T20 MPPS information disclosure",
+                  "type": "Information disclosure",
+                  "description": "[Impact: Medium; Exploitability: Medium; Evidence: D/U; Priority: Medium] MPPS traffic exposes patient or procedure information to an unauthorized observer.",
+                  "mitigation": "Use protected transport where supported and configured and restrict the MPPS network path.",
+                  "number": 20,
+                  "modelType": "STRIDE",
+                  "threatId": "06c1288d-7e08-45b4-8093-5b1778c0ccfd"
+                }
+              ],
+              "flowGroupId": "F05",
+              "primaryFlowGroup": "F05"
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "0eadd248-95a7-48c6-8bb3-46c4d791ec34"
+              },
+              "target": {
+                "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
+              },
+              "vertices": [],
+              "id": "00ba19b3-8125-4048-bd89-76c088ad4235",
+              "z": 5,
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "F07\\nClinical User Interaction",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              },
+              "description": "Local clinical interaction with the CT; authentication and privilege controls are deployment-dependent.",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T25 Unauthorized CT administrative privilege",
+                  "type": "Elevation of privilege",
+                  "description": "[Impact: High; Exploitability: Medium; Evidence: D/U; Priority: High] A user or connected system gains administrative capability beyond its authorized role.",
+                  "mitigation": "Apply least privilege, strong administrative authentication and controlled service access; review administrative paths and permissions.",
+                  "number": 25,
+                  "modelType": "STRIDE",
+                  "threatId": "dece55ce-065a-4f14-951c-ec30233f1a68"
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T26 Unauthorized CT configuration change",
+                  "type": "Tampering",
+                  "description": "[Impact: High; Exploitability: Medium; Evidence: D/U; Priority: High] Security, DICOM, network or workflow configuration is changed without authorization.",
+                  "mitigation": "Restrict configuration access, authorize changes, maintain change records and review configuration after maintenance.",
+                  "number": 26,
+                  "modelType": "STRIDE",
+                  "threatId": "1f58390b-8d0d-4153-a027-eab97b7cf565"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T27 Configuration information disclosure",
+                  "type": "Information disclosure",
+                  "description": "[Impact: Medium; Exploitability: Medium; Evidence: D/U; Priority: Medium] Configuration information such as peer definitions, network settings or service parameters is disclosed to an unauthorized party.",
+                  "mitigation": "Restrict configuration access and protect exported configuration data and administrative interfaces.",
+                  "number": 27,
+                  "modelType": "STRIDE",
+                  "threatId": "2217c223-85d4-4f75-b05f-810939e1716a"
+                }
+              ],
+              "flowGroupId": "F07",
+              "primaryFlowGroup": "F07"
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "4bea1514-bdb3-4346-a611-2cd990d09160"
+              },
+              "target": {
+                "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
+              },
+              "vertices": [],
+              "id": "50664a55-057d-4bc1-ae18-3aadbd8b748c",
+              "z": 5,
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "F08\\nVendor/Service Access (where deployed)",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              },
+              "description": "Maintenance path exists only where the deployment enables or permits such access.",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T28 Unauthorized software or firmware change",
+                  "type": "Tampering",
+                  "description": "[Impact: High; Exploitability: Low; Evidence: D/U; Priority: High] Software or firmware is modified or installed without an authorized update process.",
+                  "mitigation": "Require authenticated/authorized update mechanisms, verify update provenance and integrity, restrict update privileges and retain update records.",
+                  "number": 28,
+                  "modelType": "STRIDE",
+                  "threatId": "49ad3e45-e2e9-479d-a45f-643804d6c114"
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T29 Unauthorized maintenance access",
+                  "type": "Elevation of privilege",
+                  "description": "[Impact: High; Exploitability: Medium; Evidence: D/U; Priority: High] A maintenance path is used by an unauthorized person or system to gain privileged access to the CT.",
+                  "mitigation": "Control maintenance access by role, approval and time; use authenticated channels and audit maintenance activity.",
+                  "number": 29,
+                  "modelType": "STRIDE",
+                  "threatId": "1dd80778-b282-43a4-b518-03e6be338552"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T30 Maintenance data disclosure",
+                  "type": "Information disclosure",
+                  "description": "[Impact: Medium; Exploitability: Medium; Evidence: D/U; Priority: Medium] Patient, configuration or security information is exposed through a maintenance or service path.",
+                  "mitigation": "Limit maintenance data access and transfer, use secure channels and avoid unnecessary patient data exposure during service.",
+                  "number": 30,
+                  "modelType": "STRIDE",
+                  "threatId": "acf012c6-1519-4774-aeb9-2249e575e040"
+                }
+              ],
+              "flowGroupId": "F08",
+              "primaryFlowGroup": "F08"
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
+              },
+              "target": {
+                "id": "77e7ef5c-06e9-4122-a78c-0b10c1269986"
+              },
+              "vertices": [],
+              "id": "226bb215-0d35-4591-a3fc-0bfdea03bdcd",
+              "z": 5,
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "F09a\\nSupporting Network Services — CT ↔ services",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              },
+              "description": "Examples documented by the product include NTP/SNTP, DHCP, DNS and LDAP; the actual services used by a deployment must be confirmed.",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T23 Supporting service impersonation or manipulation",
+                  "type": "Spoofing",
+                  "description": "[Impact: Medium; Exploitability: Medium; Evidence: V-P/D; Priority: Medium] A supporting network service used by the deployment is impersonated or manipulated, affecting name resolution, time, addressing or directory-related functions.",
+                  "mitigation": "Document which supporting services are actually used; restrict trusted service endpoints and use appropriate secure mechanisms for each deployed service.",
+                  "number": 23,
+                  "modelType": "STRIDE",
+                  "threatId": "edf7af5d-df69-4940-a5ca-bce294b0116e"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T24 Supporting service disruption",
+                  "type": "Denial of service",
+                  "description": "[Impact: Medium; Exploitability: Low; Evidence: D/U; Priority: Medium] Loss or disruption of a supporting network service affects an operational workflow.",
+                  "mitigation": "Identify required dependencies, define degraded behavior and monitor service availability.",
+                  "number": 24,
+                  "modelType": "STRIDE",
+                  "threatId": "41b34c94-7463-4aef-bc6b-e9f01a76a9d4"
+                }
+              ],
+              "flowGroupId": "F09a",
+              "primaryFlowGroup": "F09"
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "77e7ef5c-06e9-4122-a78c-0b10c1269986"
+              },
+              "target": {
+                "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
+              },
+              "vertices": [],
+              "id": "57ab7f76-ff57-45c7-a8a3-c02c053e4558",
+              "z": 5,
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "F09b\\nClinical Network Reachability",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              },
+              "description": "Represents network reachability to CT services from other connected systems; exact allowed sources and ports are deployment-dependent.",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T31 Compromised connected system used as a trusted pathway",
+                  "type": "Elevation of privilege",
+                  "description": "[Impact: High; Exploitability: Medium; Evidence: D/U; Priority: High] A compromised connected system with legitimate network reachability is used to reach CT services or act through an implicitly trusted relationship.",
+                  "mitigation": "Segment the CT, restrict allowed peers and ports, minimize trust relationships and monitor unexpected connections.",
+                  "number": 31,
+                  "modelType": "STRIDE",
+                  "threatId": "3dbc2abb-214f-4192-9632-d653969ca8ff"
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T35 Unauthorized host reaches CT services",
+                  "type": "Spoofing",
+                  "description": "[Impact: High; Exploitability: Medium; Evidence: D/U; Priority: High] A host that is not an approved CT peer can reach exposed CT network services.",
+                  "mitigation": "Enforce network ACLs/firewall rules and approved-peer allow-lists; verify reachability from authorized and unauthorized test hosts.",
+                  "number": 35,
+                  "modelType": "STRIDE",
+                  "threatId": "8143e1da-c942-4482-99f8-da7ab02b8462"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T36 Network flooding or service disruption",
+                  "type": "Denial of service",
+                  "description": "[Impact: High; Exploitability: Low; Evidence: D/U; Priority: Medium] Excessive network traffic or an upstream failure disrupts communication needed by the CT workflow.",
+                  "mitigation": "Use segmentation, ACLs, capacity monitoring and defined degraded operation; do not perform destructive flooding on a clinical device.",
+                  "number": 36,
+                  "modelType": "STRIDE",
+                  "threatId": "35a1f044-0778-4707-8003-b5fc3b8d6772"
+                }
+              ],
+              "flowGroupId": "F09b",
+              "primaryFlowGroup": "F09"
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
+              },
+              "target": {
+                "id": "43a7a71b-0bbc-44e4-b9a8-a2e50a0fcb56"
+              },
+              "vertices": [],
+              "id": "8861ae3a-c48b-4ea2-925a-d7ed45c48ad1",
+              "z": 5,
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "S01\\nCT Local Storage",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              },
+              "threats": [],
+              "flowGroupId": "S01"
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "2b29dbce-3fdb-49f8-b1af-b53e3db201c7"
+              },
+              "target": {
+                "id": "260688e1-cfe4-44f6-9b65-3cd472d3a484"
+              },
+              "vertices": [],
+              "id": "c9365303-de05-472c-b0a8-fc4b0a986136",
+              "z": 5,
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "S02\\nPACS Archive",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              },
+              "threats": [],
+              "flowGroupId": "S02"
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "87b88bdc-ecd0-47d9-a54f-107727c70b31"
+              },
+              "target": {
+                "id": "d4e58933-0454-4085-96a1-85a22c3cf12c"
+              },
+              "vertices": [],
+              "id": "d9cf9e98-e861-44c6-8952-c88cdf787329",
+              "z": 5,
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "S03\\nRIS/HIS Database",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              },
+              "threats": [],
+              "flowGroupId": "S03"
+            },
+            {
+              "type": "tm.Actor",
+              "size": {
+                "width": 170,
+                "height": 80
+              },
+              "position": {
+                "x": 1000,
+                "y": 80
+              },
+              "angle": 0,
+              "id": "8047795a-7b3e-4494-b3e5-8d0a8d792154",
+              "z": 23,
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Conditional DICOM Print Destination"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                },
+                ".undefined": {
+                  "class": "undefinedhasNoOpenThreats isInScope"
+                }
+              },
+              "description": "Included only if DICOM Print is actually deployed.",
+              "conditional": true
+            },
+            {
+              "type": "tm.Actor",
+              "size": {
+                "width": 170,
+                "height": 80
+              },
+              "position": {
+                "x": 1000,
+                "y": 520
+              },
+              "angle": 0,
+              "id": "1ee0b2ef-30c6-4e58-8f57-cda995c45ff2",
+              "z": 24,
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Conditional Audit Destination"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                },
+                ".undefined": {
+                  "class": "undefinedhasNoOpenThreats isInScope"
+                }
+              },
+              "description": "Included only where audit information is remotely transmitted.",
+              "conditional": true
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
+              },
+              "target": {
+                "id": "8047795a-7b3e-4494-b3e5-8d0a8d792154"
+              },
+              "vertices": [],
+              "id": "81e4c7e2-7527-469e-bedb-6b1add2ec826",
+              "z": 5,
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "F06\\nDICOM Print",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "description": "Conditional DICOM Print interaction; deployment must confirm whether a print destination exists.",
+              "threats": [],
+              "protocol": "DICOM DIMSE",
+              "conditional": true,
+              "attrs": {}
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
+              },
+              "target": {
+                "id": "1ee0b2ef-30c6-4e58-8f57-cda995c45ff2"
+              },
+              "vertices": [],
+              "id": "f80a65bf-5851-4aeb-a2dd-a00ee1c411bd",
+              "z": 5,
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "F10\\nAudit Information",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "description": "Conditional audit information transmission; destination and direction depend on deployment configuration.",
+              "threats": [],
+              "protocol": "Audit / transport",
+              "conditional": true,
+              "attrs": {}
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
+              },
+              "target": {
+                "id": "2b29dbce-3fdb-49f8-b1af-b53e3db201c7"
+              },
+              "vertices": [],
+              "id": "2e4c6f90-b941-4292-ab18-ff914242e0ad",
+              "z": 5,
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "F11\\nAutorouting — configured DICOM node(s)",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "description": "Conditional DICOM forwarding/autorouting; destination and rules require deployment review.",
+              "threats": [],
+              "protocol": "DICOM DIMSE",
+              "conditional": true,
+              "attrs": {}
+            }
+          ]
+        },
+        "size": {
+          "height": 700,
+          "width": 1200
+        }
+      }
+    ]
+  },
+  "modelMetadata": {
+    "status": "Educational model",
+    "purpose": [
+      "Learning",
+      "Architecture discussion",
+      "Threat identification",
+      "Security-control planning",
+      "Validation planning"
+    ],
+    "not": [
+      "Product security certification",
+      "Regulatory submission",
+      "Clinical safety assessment",
+      "Penetration-test report",
+      "Formal manufacturer cybersecurity risk assessment",
+      "Evidence of a particular hospital deployment configuration"
+    ],
+    "method": {
+      "framework": "OWASP Threat Modeling",
+      "dfd": "Primary architecture view",
+      "threat_identification": "STRIDE",
+      "medical_device_context": "MITRE Playbook for Threat Modeling Medical Devices",
+      "technical_interoperability_reference": "DICOM",
+      "regulatory_context": "FDA February 2026 cybersecurity final guidance; guidance context only"
+    },
+    "scope": {
+      "in_scope": [
+        "CT scanner",
+        "CT local storage",
+        "PACS",
+        "RIS/HIS",
+        "Radiology workstation",
+        "Clinical users",
+        "Supporting network services where deployed",
+        "Vendor/service access where applicable",
+        "DICOM communication",
+        "Security-relevant configuration",
+        "Audit logging",
+        "Maintenance and software/firmware update paths",
+        "Autorouting where configured",
+        "Trust boundaries"
+      ],
+      "out_of_scope": [
+        "Complete radiation/mechanical/electrical safety analysis",
+        "Clinical-use error analysis",
+        "Unrelated software defects",
+        "General hospital IT asset inventory",
+        "Detailed clinical hazard analysis"
+      ]
+    },
+    "evidence_status": {
+      "A": "Assumption made for the educational model",
+      "D": "Deployment-dependent; confirm in the actual installation",
+      "U": "Unknown; available evidence is insufficient",
+      "V-P": "Product documented by manufacturer",
+      "V-T": "Verified through controlled testing or observation",
+      "rule": "V-P is not V-T"
+    },
+    "product_evidence": {
+      "source": "Siemens Healthineers DICOM Conformance Statement, syngo CT VB20A, Revision 4.2, 07/01/2026",
+      "documented_capabilities": [
+        "DICOM Storage",
+        "Storage Commitment",
+        "Query/Retrieve",
+        "Modality Worklist",
+        "MPPS",
+        "DICOM Web Services documented as N/A",
+        "Configurable DICOM ports",
+        "Secure communication options",
+        "Supporting network services",
+        "Audit-trail capabilities",
+        "Autorouting"
+      ],
+      "boundary": "Product documentation establishes documented capability, not deployment use or observed behaviour."
+    },
+    "primary_flow_groups": {
+      "F01": "DICOM Storage",
+      "F02": "Storage Commitment",
+      "F03": "Query/Retrieve",
+      "F04": "Modality Worklist",
+      "F05": "MPPS",
+      "F06": "DICOM Print — conditional",
+      "F07": "Clinical User Interaction",
+      "F08": "Vendor/Service Access — conditional",
+      "F09": "Supporting Network Services / Clinical Network Reachability",
+      "F10": "Audit Information — conditional",
+      "F11": "Autorouting — conditional"
+    },
+    "requirements": {
+      "R01": "DICOM peers shall be authorized and restricted to approved communication partners.",
+      "R02": "Sensitive DICOM communication shall use appropriate protection where required by the deployment.",
+      "R03": "Security-relevant actions shall be sufficiently auditable for the intended environment.",
+      "R04": "Patient, imaging, configuration, and security-relevant information shall be protected from unauthorized disclosure.",
+      "R05": "Supporting network services shall be restricted to approved infrastructure and maintained for required availability.",
+      "R06": "Administrative and service privileges shall be limited to authorized personnel and functions.",
+      "R07": "Software and firmware update mechanisms shall protect authenticity and integrity.",
+      "R08": "Maintenance and vendor access shall be controlled and auditable.",
+      "R09": "Security, DICOM, network, and autorouting configuration shall be protected against unauthorized change.",
+      "R10": "Patient, procedure, and workflow information shall be protected against unauthorized modification or substitution.",
+      "R11": "Network-degraded behaviour shall be defined and assessed for the deployment.",
+      "R12": "Trust boundaries shall restrict unauthorized communication paths into the CT environment.",
+      "R13": "Autorouting destinations and forwarding rules shall be authorized, reviewed, and protected against unauthorized change.",
+      "R14": "Cybersecurity threats that could affect device safety or essential performance shall be evaluated for their potential to contribute to an uncontrolled clinical hazard.",
+      "R15": "Where a cybersecurity threat can contribute to a clinical safety hazard, the cybersecurity mitigation shall be traceable to the corresponding product safety risk control and verification/validation evidence.",
+      "R16": "Cybersecurity risk evaluation shall distinguish controlled residual risk from uncontrolled risk requiring appropriate remediation.",
+      "R17": "Security mitigations shall be reviewed for their effect on existing safety controls and shall not introduce an unacceptable new safety risk.",
+      "R18": "The threat-model record shall maintain bidirectional traceability between relevant cybersecurity threats, safety hazards, controls, applicable risk-management records, and verification/validation evidence where a clinical-safety relationship exists.",
+      "R19": "Cryptographic agility and lifecycle migration should be assessed for security-relevant communications, authentication, certificates, key establishment, software/firmware protection and maintenance functions so that applicable cryptographic mechanisms can be replaced or upgraded as standards and security requirements evolve."
+    },
+    "validation": {
+      "V01": "CT→PACS DICOM Storage observation",
+      "V02": "PACS→CT DICOM Storage observation",
+      "V03": "Storage Commitment observation",
+      "V04": "Modality Worklist observation",
+      "V05": "Query/Retrieve observation",
+      "V06": "MPPS observation",
+      "V07": "TLS configuration/traffic validation",
+      "V08": "Controlled HTTP/HTTPS observation",
+      "V09": "Unauthorized test-host access-control review",
+      "V10": "Supporting network-service review",
+      "V11": "Software/firmware update-process review",
+      "V12": "Maintenance/vendor-access review",
+      "V13": "Audit-trail validation",
+      "V14": "Autorouting configuration review",
+      "V15": "Network resilience/access-control review",
+      "V16": "Cybersecurity-to-safety traceability review",
+      "V17": "Controlled/uncontrolled risk review",
+      "V18": "Clinical safety control impact review",
+      "V19": "DICOM integrity clinical-impact assessment",
+      "V20": "CT configuration/radiation-parameter safety linkage review",
+      "V21": "Long-term cryptographic migration review: inventory deployed cryptographic protocols, algorithms, certificates and key-establishment/signature functions; review cryptographic agility, certificate/key replacement, authorized software/firmware update capability and vendor migration support; document whether a practical PQC migration path exists."
+    },
+    "risk_fields": {
+      "Impact": [
+        "Low",
+        "Medium",
+        "High"
+      ],
+      "Exploitability": [
+        "Low",
+        "Medium",
+        "High"
+      ],
+      "Evidence": [
+        "A",
+        "D",
+        "U",
+        "V-P",
+        "V-T"
+      ],
+      "Priority": [
+        "Low",
+        "Medium",
+        "High"
+      ],
+      "note": "Qualitative discussion/prioritization fields; not an objective numerical calculation and not an FDA-mandated scoring method."
+    },
+    "assumptions": [
+      "The DFD represents a representative connected CT deployment.",
+      "PACS and RIS/HIS are external systems to the CT threat boundary.",
+      "Supporting network services are represented separately.",
+      "Vendor/service access is conditional.",
+      "DICOM Print is conditional.",
+      "Actual enabled services, peers, ports, TLS settings, routing rules, audit destinations, and maintenance paths require deployment confirmation.",
+      "Network attack does not automatically imply manipulation of CT acquisition parameters or patient harm.",
+      "Network outage does not automatically imply patient harm.",
+      "The educational model considers an approximately 10-year operational lifecycle for future-oriented analysis only; actual device service life is deployment/manufacturer dependent."
+    ],
+    "post_quantum_cryptography": {
+      "lifecycle_context": "This model considers an expected operational lifecycle of approximately 10 years as a future-oriented threat-modeling assumption. This does not establish the actual service life of a particular CT deployment.",
+      "threat_modeling_boundary": "PQC is treated as a long-term cryptographic lifecycle and migration risk, not as evidence that a cryptographically relevant quantum computer currently exists or that the particular CT product is presently vulnerable.",
+      "risk_scenario": "Cryptographic mechanisms used for CT communications, authentication, certificates, software or firmware protection, maintenance connections, or other security functions may become deprecated, unsupported, or unsuitable during the device lifecycle. If the device or deployment cannot migrate or replace applicable cryptographic mechanisms, long-lived sensitive information may face future confidentiality risk and security functions relying on public-key cryptography may face future integrity or authentication risk.",
+      "harvest_now_decrypt_later": "Encrypted network traffic containing information with a long confidentiality lifetime may be captured now and potentially decrypted later if currently used quantum-vulnerable public-key cryptography becomes breakable. This is a lifecycle consideration, not evidence of current compromise.",
+      "crypto_agility": [
+        "Identify cryptographic protocols and algorithms used by the device and deployment.",
+        "Identify where public-key cryptography is used for confidentiality, authentication, certificates, key establishment, digital signatures, software or firmware protection, and maintenance.",
+        "Determine whether certificates and keys can be replaced without inappropriate hardware replacement.",
+        "Determine whether firmware/software and cryptographic components can be updated through an authorized and integrity-protected process.",
+        "Assess whether the product and deployment have a practical migration path when approved cryptographic standards or protocol requirements change.",
+        "Record vendor information about planned post-quantum migration support where available."
+      ],
+      "current_evidence_boundary": "The Siemens DICOM Conformance Statement documents TLS 1.2 and secure transport configuration, but that documentation alone does not establish the exact deployed cryptographic algorithms, certificates, key exchange configuration, cryptographic agility, or PQC capability.",
+      "pqc_algorithm_boundary": "This model does not require a particular PQC algorithm for the CT. NIST has finalized ML-KEM, ML-DSA, and SLH-DSA standards, but applicability to the CT product, DICOM/TLS implementation, certificate infrastructure, and medical-device lifecycle must be assessed before specifying a particular implementation.",
+      "external_reference": "NIST Post-Quantum Cryptography guidance and standards are used as technical lifecycle context.",
+      "traceability": {
+        "threat": "T37",
+        "requirement": "R19",
+        "validation": "V21",
+        "related_existing_threats": [
+          "T02",
+          "T03",
+          "T28"
+        ],
+        "related_existing_requirement": "R07",
+        "related_existing_validation": "V07"
+      },
+      "reference": {
+        "organization": "NIST",
+        "title": "Post-Quantum Cryptography",
+        "url": "https://www.nist.gov/pqc",
+        "note": "Used as technical lifecycle context; this model does not claim that NIST requires Threat Dragon, STRIDE, or a particular CT implementation."
+      }
+    }
+  }
+}
