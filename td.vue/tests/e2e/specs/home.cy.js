@@ -38,10 +38,12 @@ const allProvidersEnabled = {
     googleEnabled: true
 };
 
+// innerWidth includes the vertical scrollbar: CI Chromium draws a classic one that
+// clientWidth excludes, while phones overlay theirs on the content.
 const expectNoSidewaysScroll = () => {
-    cy.document().should((doc) => {
-        expect(doc.documentElement.scrollWidth)
-            .to.be.at.most(doc.documentElement.clientWidth);
+    cy.window().should((win) => {
+        expect(win.document.documentElement.scrollWidth)
+            .to.be.at.most(win.innerWidth);
     });
 };
 
