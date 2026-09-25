@@ -21,7 +21,23 @@ const openNewModel = () => {
 
 describe('visual regression - local provider routes', () => {
     it('captures the public home route', () => {
+        cy.intercept('GET', '/api/config', {
+            statusCode: 200,
+            body: {
+                status: 200,
+                data: {
+                    githubEnabled: true,
+                    bitbucketEnabled: false,
+                    gitlabEnabled: false,
+                    googleEnabled: false,
+                    localEnabled: true,
+                    allowedLocales: [],
+                    defaultLocale: 'en'
+                }
+            }
+        }).as('getConfig');
         cy.visit('/');
+        cy.wait('@getConfig');
         cy.get('#local-login-btn');
         cy.matchVisualSnapshot('home');
     });

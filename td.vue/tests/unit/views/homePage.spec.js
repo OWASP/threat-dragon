@@ -225,6 +225,23 @@ describe('HomePage.vue', () => {
         });
     });
 
+    describe('responsive layout', () => {
+        beforeEach(async () => {
+            const store = createStore({ githubEnabled: true });
+            const { wrapper: w, resolve } = createControlledMount(store);
+            await finishMount(w, resolve);
+            wrapper = w;
+        });
+
+        it('gives the login buttons the md-scoped indent class', () => {
+            expect(wrapper.find('#home-login-buttons').classes()).toContain('ml-md-5');
+        });
+
+        it('does not give the login buttons the breakpoint-agnostic indent class', () => {
+            expect(wrapper.find('#home-login-buttons').classes()).not.toContain('ml-5');
+        });
+    });
+
     describe('providers', () => {
         it('renders a login button per enabled provider', async () => {
             const store = createStore({ githubEnabled: true, localEnabled: true });

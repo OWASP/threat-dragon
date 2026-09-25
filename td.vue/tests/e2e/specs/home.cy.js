@@ -23,6 +23,30 @@ const defaultConfig = {
     defaultLocale: 'en'
 };
 
+const phoneWidth = 375;
+const phoneHeight = 812;
+
+// The narrowest viewport this suite guards: 320px is the floor for phones still
+// in use. Wider phones sit in the same class as the 375px cases below.
+const narrowPhoneWidth = 320;
+const narrowPhoneHeight = 568;
+
+const allProvidersEnabled = {
+    githubEnabled: true,
+    bitbucketEnabled: true,
+    gitlabEnabled: true,
+    googleEnabled: true
+};
+
+// innerWidth includes the vertical scrollbar: CI Chromium draws a classic one that
+// clientWidth excludes, while phones overlay theirs on the content.
+const expectNoSidewaysScroll = () => {
+    cy.window().should((win) => {
+        expect(win.document.documentElement.scrollWidth)
+            .to.be.at.most(win.innerWidth);
+    });
+};
+
 const loadWithConfig = (overrides = {}, alias = 'getConfig') => {
     cy.intercept('GET', '/api/config', {
         statusCode: 200,
@@ -260,6 +284,130 @@ describe('home', () => {
             cy.wait('@failConfig');
 
             cy.get('.td-spinner').should('not.exist');
+        });
+    });
+
+    describe('mobile layout', () => {
+        const mdWidth = 768;
+        const belowMdWidth = mdWidth - 1;
+        const logoWidth = 400;
+        const logoSideMargin = '20px';
+        const noSideMargin = '0px';
+        const descriptionIndentFromMd = '170px';
+        const descriptionIndentBelowMd = '20px';
+        const loginIndentFromMd = '48px';
+
+        const rightEdge = ($el) => $el[0].getBoundingClientRect().right;
+
+        // The hero pads its content by 1rem, so its border-box edge would leave
+        // an element 16px of slack to overflow the column and still pass.
+        const contentRightEdge = ($el) => {
+            const el = $el[0];
+            return rightEdge($el) - parseFloat(getComputedStyle(el).paddingRight);
+        };
+
+        const expectWithinHero = (selector) => {
+            cy.get('.td-hero').then(($hero) => {
+                cy.get(selector).then(($el) => {
+                    expect(rightEdge($el)).to.be.at.most(contentRightEdge($hero));
+                });
+            });
+        };
+
+        const expectLogoSideMargins = (expected) => {
+            cy.get('#home-td-logo')
+                .should('have.css', 'margin-left', expected)
+                .and('have.css', 'margin-right', expected);
+        };
+
+        beforeEach(() => {
+            cy.viewport(phoneWidth, phoneHeight);
+            cy.launchThreatDragon();
+        });
+
+        it('shrinks the logo to fit the screen', () => {
+            cy.get('#home-td-logo').invoke('outerWidth', true).should('be.lessThan', phoneWidth);
+        });
+
+        it('keeps the logo inside the hero', () => {
+            expectWithinHero('#home-td-logo');
+        });
+
+        it('keeps the logo at full size from md up', () => {
+            cy.viewport(mdWidth, phoneHeight);
+            cy.get('#home-td-logo').invoke('outerWidth').should('equal', logoWidth);
+        });
+
+        it('keeps the description inside the hero', () => {
+            expectWithinHero('p.td-description');
+        });
+
+        it('indents the login buttons at 768px', () => {
+            cy.viewport(mdWidth, phoneHeight);
+            cy.get('#home-login-buttons').should('have.css', 'margin-left', loginIndentFromMd);
+        });
+
+        it('drops the login button indent at 767px', () => {
+            cy.viewport(belowMdWidth, phoneHeight);
+            cy.get('#home-login-buttons').should('have.css', 'margin-left', noSideMargin);
+        });
+
+        it('keeps the logo side margins at 768px', () => {
+            cy.viewport(mdWidth, phoneHeight);
+            expectLogoSideMargins(logoSideMargin);
+        });
+
+        it('drops the logo side margins at 767px', () => {
+            cy.viewport(belowMdWidth, phoneHeight);
+            expectLogoSideMargins(noSideMargin);
+        });
+
+        it('indents the description 170px at 768px', () => {
+            cy.viewport(mdWidth, phoneHeight);
+            cy.get('p.td-description').should('have.css', 'margin-left', descriptionIndentFromMd);
+        });
+
+        it('indents the description 20px at 767px', () => {
+            cy.viewport(belowMdWidth, phoneHeight);
+            cy.get('p.td-description').should('have.css', 'margin-left', descriptionIndentBelowMd);
+        });
+    });
+
+    describe('mobile layout on the narrowest phone', () => {
+        it('does not scroll sideways at 320px', () => {
+            cy.viewport(narrowPhoneWidth, narrowPhoneHeight);
+            loadWithConfig({
+                ...allProvidersEnabled,
+                allowedLocales: ['en'],
+                defaultLocale: 'en'
+            });
+
+            expectNoSidewaysScroll();
+        });
+    });
+
+    // de holds the longest unbroken word on the page (22 characters), fi the
+    // next longest (17); en stands in for the short-word case.
+    describe('mobile layout per locale', () => {
+        ['en', 'de', 'fi'].forEach((locale) => {
+            it(`does not scroll sideways in ${locale}`, () => {
+                cy.viewport(phoneWidth, phoneHeight);
+
+                // Every provider enabled, so the login button row is at its widest.
+                // allowedLocales must name the locale: an empty list means "no
+                // restriction", and the resolver then prefers the browser language
+                // over defaultLocale.
+                loadWithConfig({
+                    ...allProvidersEnabled,
+                    allowedLocales: [locale],
+                    defaultLocale: locale
+                });
+
+                cy.get('p.td-description')
+                    .should('contain.text', homepageStrings[locale].description);
+
+                expectNoSidewaysScroll();
+            });
         });
     });
 

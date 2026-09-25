@@ -26,7 +26,7 @@
                             </p>
                         </b-row>
                         <b-row>
-                            <b-col class="mt-5 ml-5 text-center">
+                            <b-col id="home-login-buttons" class="mt-5 ml-md-5 text-center">
                                 <td-provider-login-button
                                     v-for="(provider, idx) in providers"
                                     :key="idx"
@@ -49,14 +49,24 @@
 .td-description {
     font-size: 20px;
     margin-right: 20px;
-    margin-left: 170px;
+    margin-left: 20px;
 }
 
 .td-cupcake {
     margin-top: 10px;
     margin-bottom: 20px;
-    margin-right: 20px;
-    margin-left: 20px;
+}
+
+@media (min-width: 768px) {
+    .td-description {
+        margin-left: 170px;
+    }
+
+    .td-cupcake {
+        max-width: none;
+        margin-right: 20px;
+        margin-left: 20px;
+    }
 }
 
 .td-home-loading {
