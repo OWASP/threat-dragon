@@ -165,6 +165,13 @@ module.exports = {
     },
     configureWebpack: {
         devtool: 'source-map',
+        module: {
+            rules: [{
+                test: /linddun\.json$/,
+                // Preserve JSON data keys used by default imports in production builds.
+                parser: { exportsDepth: 0 }
+            }]
+        },
         plugins: [
             new CycloneDxWebpackPlugin(
                 {

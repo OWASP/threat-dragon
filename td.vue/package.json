@@ -166,6 +166,9 @@
     "dmg-license": "^1.0.11"
   },
   "overrides": {
+    "http-proxy-agent@4.0.1": {
+      "@tootallnate/once": "2.0.1"
+    },
     "braces": ">=3.0.3",
     "cross-spawn@<7.0.0": "6.0.6",
     "electron-builder": "$electron-builder",
@@ -194,12 +197,8 @@
     "@vue/shared": ">=3.5.42",
     "@one-ini/wasm": ">=0.2.1",
     "abbrev": ">=5.0.0",
-    "commander": ">=14.0.3",
     "editorconfig": ">=3.0.2",
-    "glob": ">=13.0.6",
     "js-beautify": ">=2.0.3",
-    "lru-cache": ">=11.5.2",
-    "minipass": ">=7.1.3",
     "nopt": ">=10.0.1",
     "path-scurry": ">=2.0.2",
     "semver": ">=7.8.5",
@@ -212,8 +211,7 @@
     "js-yaml": ">=4.3.2",
     "argparse": ">=2.0.1",
     "minimizer-webpack-plugin": ">=5.10.1",
-    "schema-utils": ">=4.5.0",
-    "terser": ">=5.51.2",
+    "micromatch@<4.0.8": "4.0.8",
     "webdriver": ">=9.31.7",
     "undici": ">=6.28.1"
   },
