@@ -213,7 +213,8 @@
     "minimizer-webpack-plugin": ">=5.10.1",
     "micromatch@<4.0.8": "4.0.8",
     "webdriver": ">=9.31.7",
-    "undici": ">=6.28.1"
+    "undici": ">=6.28.1",
+    "ip-address": ">=10.7.2"
   },
   "main": "background.js",
   "allowScripts": {
