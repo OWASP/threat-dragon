@@ -10,13 +10,13 @@ group: Install
 
 The [Threat Dragon](https://owasp.org/www-project-threat-dragon/) web application can be run as a Docker container.
 
-The web application can be run from a Docker container which can either be pulled from [dockerhub][docker] or built locally.
+The web application can be pulled from the [production Docker repository][docker] or built locally.
 
 ### Pulling/Downloading
 
-The released docker images are provided by the [OWASP dockerhub[docker]
+The released Docker images are available from the [production Docker repository][docker]
 and can be accessed using `docker pull`.
-For example to download the latest stable release from the OWASP dockerhub :
+For example, download the latest stable release:
 
 `docker pull owasp/threat-dragon:stable`
 
@@ -24,14 +24,13 @@ There are step-by-step instructions for [Bitbucket]({{ '/configure/bitbucket.htm
 [GitLab]({{ '/configure/gitlab.html' | relative_url }}) and [github]({{ '/configure/github.html' | relative_url }})
 access which explain the configuration needed to provide the environment variables for the docker container.
 
-'Stable' is built for OS linux and architectures amd64 (X86) and arm64 (Apple silicon).
+Starting with v2.6.3, the release and `stable` tags support Linux on AMD64 and ARM64.
 
-The very latest builds are available from the [Threat Dragon dockerhub][td-docker]:
+The latest development builds are available from the [staging Docker repository][td-docker]:
 
-* `docker pull threatdragon/owasp-threat-dragon:latest-arm64` for arm64
-* `docker pull threatdragon/owasp-threat-dragon:latest` for amd64 (X86)
+* `docker pull threatdragon/owasp-threat-dragon:latest`
 
-Note that these 'latest' builds are not guaranteed to be stable.
+The `latest` tag supports AMD64 and ARM64. These builds are not guaranteed to be stable.
 
 ### Building
 

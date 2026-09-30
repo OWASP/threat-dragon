@@ -22,6 +22,7 @@ Brasil
 BrowserStack
 bundler
 CentOS
+Certum
 chai
 chruby
 ci
@@ -147,6 +148,7 @@ semver
 Sinon
 schemas
 snapcraft
+SLSA
 sudo
 Suomi
 SHA
