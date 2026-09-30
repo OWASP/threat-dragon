@@ -35,6 +35,9 @@ export default {
                     id: 0
                 },
                 detail: {
+                    configuration: {
+                        renderMarkdown: true
+                    },
                     contributors: [],
                     diagrams: [],
                     diagramTop: 0,
