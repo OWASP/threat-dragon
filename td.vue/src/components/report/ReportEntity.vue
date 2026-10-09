@@ -10,22 +10,39 @@
         </b-row>
         <b-row v-if="outOfScope">
             <b-col>
-                <p class="entity-description"><b>{{ $t('threatmodel.properties.reasonOutOfScope') }}:</b> {{ entity.data.reasonOutOfScope }}</p>
+                <div class="entity-description" >
+                    <p class="compact"><b>{{ $t('threatmodel.properties.reasonOutOfScope') }}:</b></p>
+                    <div class="compact" v-html="reasonOutOfScopeMarkdown" v-if="renderMarkdown"></div>
+                    <p class="plain-text" v-else>{{ reasonOutOfScopePlain }}</p>
+                </div>
             </b-col>
         </b-row>
-        <b-row v-if="entity.data.description || showProperties">
+        <b-row v-if="hasDescription || showProperties">
             <b-col>
-                <p class="entity-description" v-if="entity.data.description">{{ $t('threatmodel.properties.description') }}: {{ entity.data.description }}</p>
+                <div v-if="hasDescription" class="entity-description">
+                    <p class="compact">{{ $t('threatmodel.properties.description') }}:</p>
+                    <div class="compact" v-html="descriptionMarkdown" v-if="renderMarkdown"></div>
+                    <p class="plain-text" v-else>{{ descriptionPlain }}</p>
+                </div>
                 <p class="entity-description" v-if="showProperties">{{ properties }}</p>
             </b-col>
         </b-row>
-        <b-row>
+        <b-row v-if="tableData.length > 0">
             <b-col md="12">
                 <b-table
                     :data-test-id="entity.data.name.replace(' ', '_')"
                     :items="tableData"
+                    :fields="fields"
                     striped
                     responsive>
+                    <template #cell(description)="data">
+                        <div class="compact" v-html="markdownToHTML(data.value)" v-if="renderMarkdown"></div>
+                        <span class="plain-text" v-else>{{ data.value }}</span>
+                    </template>
+                    <template #cell(mitigation)="data">
+                        <div class="compact" v-html="markdownToHTML(data.value)" v-if="renderMarkdown"></div>
+                        <span class="plain-text" v-else>{{ data.value }}</span>
+                    </template>
                 </b-table>
             </b-col>
         </b-row>
@@ -35,7 +52,6 @@
 <style lang="scss" scoped>
 .td-threat-data {
     width: 99%;
-    white-space: pre-wrap;
 }
 
 .entity-title {
@@ -47,11 +63,19 @@
 
 .entity-description {
     padding: 15px;
+}
+
+.plain-text {
     white-space: pre-wrap;
+}
+
+.compact, .compact :deep(p), .compact :deep(ul) {
+    margin-bottom: 0.4rem;
 }
 </style>
 
 <script>
+import { markdownToHTML } from '@/service/formatting-utils.js';
 import threatService from '@/service/threats/index.js';
 import { translateKnownKey } from '@/service/i18n/translation.js';
 
@@ -59,6 +83,10 @@ export default {
     name: 'TdReportEntity',
     props: {
         entity: Object,
+        renderMarkdown: {
+            type: Boolean,
+            default: true
+        },
         outOfScope: {
             type: Boolean,
             default: false
@@ -77,6 +105,21 @@ export default {
         }
     },
     computed: {
+        reasonOutOfScopePlain() {
+            return this.entity.data.reasonOutOfScope || '';
+        },
+        reasonOutOfScopeMarkdown() {
+            return markdownToHTML(this.reasonOutOfScopePlain);
+        },
+        hasDescription() {
+            return Boolean(this.entity.data.description);
+        },
+        descriptionPlain() {
+            return this.entity.data.description || '';
+        },
+        descriptionMarkdown() {
+            return markdownToHTML(this.descriptionPlain);
+        },
         dataType: function () {
             return translateKnownKey(this.$t, this.entity.data.type);
         },
@@ -86,17 +129,28 @@ export default {
                 showOutOfScope: this.showOutOfScope
             }).map((threat) => {
                 return {
-                    [this.$t('threats.properties.number')]: threat.number,
-                    [this.$t('threats.properties.title')]: threat.title,
-                    [this.$t('threats.properties.type')]: threat.type,
-                    [this.$t('threats.properties.severity')]: this.translateSeverity(threat.severity),
-                    [this.$t('threats.properties.status')]: this.translateStatus(threat.status),
-                    [this.$t('threats.properties.score')]: threat.score,
-                    [this.$t('threats.properties.description')]: threat.description,
-                    [this.$t('threats.properties.mitigation')]: threat.mitigation
-
+                    number: threat.number,
+                    title: threat.title,
+                    type: threat.type,
+                    severity: this.translateSeverity(threat.severity),
+                    status: this.translateStatus(threat.status),
+                    score: threat.score,
+                    description: threat.description,
+                    mitigation: threat.mitigation
                 };
             });
+        },
+        fields: function () {
+            return [
+                { key: 'number', label: this.$t('threats.properties.number') },
+                { key: 'title', label: this.$t('threats.properties.title') },
+                { key: 'type', label: this.$t('threats.properties.type') },
+                { key: 'severity', label: this.$t('threats.properties.severity') },
+                { key: 'status', label: this.$t('threats.properties.status') },
+                { key: 'score', label: this.$t('threats.properties.score') },
+                { key: 'description', label: this.$t('threats.properties.description') },
+                { key: 'mitigation', label: this.$t('threats.properties.mitigation') }
+            ];
         },
         properties: function () {
             let properties = '';
@@ -146,6 +200,7 @@ export default {
         }
     },
     methods: {
+        markdownToHTML,
         toCamelCase(str) {
             return str.replace(/(?:^\w|[A-Z]|\b\w)/g, (ltr, idx) => idx === 0 ? ltr.toLowerCase() : ltr.toUpperCase()).replace(/\s+/g, '');
         },

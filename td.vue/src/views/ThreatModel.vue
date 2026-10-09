@@ -12,7 +12,8 @@
                 <b-card :header="$t('threatmodel.description')">
                     <b-row class="tm-card">
                         <b-col>
-                            <p id="tm_description">{{ model.summary.description }}</p>
+                            <div id="tm_description" class="compact" v-html="descriptionMarkdown" v-if="shouldRenderMarkdown"></div>
+                            <p id="tm_description" class="plain-text" v-else>{{ descriptionPlain }}</p>
                         </b-col>
                     </b-row>
                 </b-card>
@@ -75,7 +76,14 @@
 <style lang="scss" scoped>
 .tm-card {
     font-size: 14px;
+}
+
+.plain-text {
     white-space: pre-wrap;
+}
+
+.compact, .compact :deep(p), .compact :deep(ul) {
+    margin-bottom: 0.4rem;
 }
 
 .diagram-header-text a {
@@ -97,6 +105,7 @@
 <script>
 import { mapState } from 'vuex';
 
+import { markdownToHTML } from '@/service/formatting-utils.js';
 import { getProviderType } from '@/service/provider/providers.js';
 import { writeFile } from '@/service/save.js';
 import TdDropdown from '@/components/Dropdown.vue';
@@ -120,12 +129,24 @@ export default {
         TdImage,
         TdThreatModelSummaryCard
     },
-    computed: mapState({
-        model: (state) => state.threatmodel.data,
-        providerType: (state) => getProviderType(state.provider.selected),
-        version: (state) => state.packageBuildVersion
-    }),
+    computed: {
+        ...mapState({
+            model: (state) => state.threatmodel.data,
+            providerType: (state) => getProviderType(state.provider.selected),
+            version: (state) => state.packageBuildVersion
+        }),
+        descriptionPlain() {
+            return this.model?.summary?.description || '';
+        },
+        shouldRenderMarkdown() {
+            return Boolean(this.model?.detail?.configuration?.renderMarkdown);
+        },
+        descriptionMarkdown() {
+            return this.markdownToHTML(this.descriptionPlain);
+        }
+    },
     methods: {
+        markdownToHTML,
         onEditClick(evt) {
             evt.preventDefault();
             this.$router.push({ name: `${this.providerType}ThreatModelEdit`, params: this.$route.params });
