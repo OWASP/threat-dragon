@@ -237,33 +237,48 @@ describe('components/ThreatEditDialog.vue', () => {
 
     describe('cornucopia link', () => {
         it('renders link for EOP with suit and number', async () => {
-            const store=new Vuex.Store({state:{cell:{ref:{getData:jest.fn(), data:{threatFrequency:{availability:0, confidentiality:0, integrity:0}, threats:[{...getThreatData(), modelType:'EOP'}]}}}}, actions:{cellDataUpdated:() => {}}});
-            wrapper=shallowMount(TdThreatEditDialog, {localVue, mocks:{$t:k => k}, store});
-            wrapper.vm.$refs.editModal={show:jest.fn(), hide:jest.fn()};
+            const store = new Vuex.Store({state:{cell:{ref:{getData:jest.fn(), data:{threatFrequency:{availability:0, confidentiality:0, integrity:0}, threats:[{...getThreatData(), modelType:'EOP'}]}}}}, actions:{CELL_DATA_UPDATED:() => {}}});
+            wrapper = shallowMount(TdThreatEditDialog, {localVue, mocks:{$t:k => k}, store});
+            wrapper.vm.$refs.editModal = {show:jest.fn(), hide:jest.fn()};
             wrapper.vm.editThreat(threatId);
-            wrapper.vm.selectedGameId='cornucopia';
-            wrapper.vm.card.suit='DATA VALIDATION & ENCODING';
-            wrapper.vm.card.number='VE2';
+            wrapper.vm.selectedGameId = 'cornucopia';
+            wrapper.vm.card.suit = 'DATA VALIDATION & ENCODING';
+            wrapper.vm.card.number = 'VE2';
             await wrapper.vm.$nextTick();
-            const link=wrapper.find('a');
+            const link = wrapper.find('a');
             expect(link.exists()).toBe(true);
             expect(link.attributes('href')).toContain('https://cornucopia.owasp.org/edition/webapp/');
             expect(link.text()).toContain('VE2');
         });
 
         it('renders link for EOP companion with suit and number', async () => {
-            const store=new Vuex.Store({state:{cell:{ref:{getData:jest.fn(), data:{threatFrequency:{availability:0, confidentiality:0, integrity:0}, threats:[{...getThreatData(), modelType:'EOP'}]}}}}, actions:{cellDataUpdated:() => {}}});
-            wrapper=shallowMount(TdThreatEditDialog, {localVue, mocks:{$t:k => k}, store});
-            wrapper.vm.$refs.editModal={show:jest.fn(), hide:jest.fn()};
+            const store = new Vuex.Store({state:{cell:{ref:{getData:jest.fn(), data:{threatFrequency:{availability:0, confidentiality:0, integrity:0}, threats:[{...getThreatData(), modelType:'EOP'}]}}}}, actions:{CELL_DATA_UPDATED:() => {}}});
+            wrapper = shallowMount(TdThreatEditDialog, {localVue, mocks:{$t:k => k}, store});
+            wrapper.vm.$refs.editModal = {show:jest.fn(), hide:jest.fn()};
             wrapper.vm.editThreat(threatId);
-            wrapper.vm.selectedGameId='cornucopia-companion';
-            wrapper.vm.card.suit='Large Language Models';
-            wrapper.vm.card.number='LLM2';
+            wrapper.vm.selectedGameId = 'cornucopia-companion';
+            wrapper.vm.card.suit = 'Large Language Models';
+            wrapper.vm.card.number = 'LLM2';
             await wrapper.vm.$nextTick();
-            const link=wrapper.find('a');
+            const link = wrapper.find('a');
             expect(link.exists()).toBe(true);
             expect(link.attributes('href')).toContain('https://cornucopia.owasp.org/');
             expect(link.text()).toContain('LLM2');
+        });
+
+        it('renders link for EOP elevation of privilege with suit and number', async () => {
+            const store = new Vuex.Store({state:{cell:{ref:{getData:jest.fn(), data:{threatFrequency:{availability:0, confidentiality:0, integrity:0}, threats:[{...getThreatData(), modelType:'EOP'}]}}}}, actions:{CELL_DATA_UPDATED:() => {}}});
+            wrapper = shallowMount(TdThreatEditDialog, {localVue, mocks:{$t:k => k}, store});
+            wrapper.vm.$refs.editModal = {show:jest.fn(), hide:jest.fn()};
+            wrapper.vm.editThreat(threatId);
+            wrapper.vm.selectedGameId = 'cornucopia-eop';
+            wrapper.vm.card.suit = 'Spoofing';
+            wrapper.vm.card.number = 'SP2';
+            await wrapper.vm.$nextTick();
+            const link = wrapper.find('a');
+            expect(link.exists()).toBe(true);
+            expect(link.attributes('href')).toContain('https://cornucopia.owasp.org/');
+            expect(link.text()).toContain('SP2');
         });
 
         it('hides link when model is not EOP', () => {
