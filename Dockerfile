@@ -74,7 +74,7 @@ RUN cd td.server && \
 
 
 # Build Docs
-FROM --platform=$BUILDPLATFORM docker.io/library/ruby:4.0.7@sha256:080c2f7eb143e91f36e1a5c9ad183283f9ac51239eaaeaffde95ddf124a0b2f6 AS build-docs
+FROM --platform=$BUILDPLATFORM docker.io/library/ruby:4.0.7@sha256:a078dd7cfb1c9e3d27068374d399a4e099b2bfb65e93358d0a649eeed94c9bb1 AS build-docs
 RUN --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
     --mount=type=tmpfs,target=/var/lib/dpkg \
     --mount=type=tmpfs,target=/var/cache \
