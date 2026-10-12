@@ -97,6 +97,9 @@ module.exports = {
                         }
                     ]
                 },
+                nsis: {
+                    artifactName: '${productName}-Setup-${version}.${ext}'
+                },
                 win: {
                     icon: './src/icons/icon.ico',
                     target: [

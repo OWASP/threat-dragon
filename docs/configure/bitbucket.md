@@ -109,11 +109,6 @@ With a minimal set of configuration now available, download the docker image fro
 
 - `docker pull owasp/threat-dragon:stable`
 
-or if you are running on a MacOS M1 and get "no matching manifest for linux/arm64/v8 in the manifest list entries"
-then try:
-
-- `docker pull --platform linux/x86_64  owasp/threat-dragon:stable`
-
 All the information is now ready to try running the server from the command line.
 Defining the environment variables on the command line is handy for development and debugging,
 but using the dotenv file configuration is easier (which will be discussed later on).

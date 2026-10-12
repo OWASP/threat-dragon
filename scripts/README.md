@@ -15,7 +15,11 @@ Dependencies:
 | Script | Purpose |
 | ------ | ------- |
 | [`td-build-desktop-linux-appimage.sh`](./td-build-desktop-linux-appimage.sh) | Build Linux AppImage (amd64) |
+| [`td-finish-macos-release.sh`](./td-finish-macos-release.sh) | Generate and upload macOS release files after offline signing |
+| [`td-finish-windows-release.ps1`](./td-finish-windows-release.ps1) | Generate and upload Windows release files after offline signing |
+| [`td-post-release.sh`](./td-post-release.sh) | Restore package versions and the desktop build state after a release |
 | [`td-pr-check.sh`](./td-pr-check.sh) | Run local checks that emulate the PR workflow |
+| [`td-prepare-release.sh`](./td-prepare-release.sh) | Set release versions and clear the desktop build state |
 | [`td-repo-access-review.sh`](./td-repo-access-review.sh) | Create an editable review of collaborators with elevated repository access |
 | [`td-repo-access-demote.sh`](./td-repo-access-demote.sh) | Change selected reviewed collaborators to Read access |
 | [`td-trivy-check.sh`](./td-trivy-check.sh) | Run local Trivy scan (requires docker) |

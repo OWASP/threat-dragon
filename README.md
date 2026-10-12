@@ -111,21 +111,28 @@ from the top directory with command `npm stop`. Otherwise break out of both the 
 
 ## Docker (from dockerhub)
 
-Threat Dragon maintains docker images within the OWASP organisation area on Dockerhub.
-Each release is tagged as `v{major}.{minor}.{patch}`, eg `v2.2.0`:
+Rolling development builds from `main` are published to staging at `threatdragon/owasp-threat-dragon` and are unsupported.
+Versioned releases and `stable` are published to both repositories.
+`owasp/threat-dragon` is the production (official) repository.
+The `stable` tag always identifies the latest release.
+Starting with `v2.6.3`, the `vX.Y.Z` and `stable` tags support AMD64 and ARM64.
+The `vX.Y.Z-arm64` tag remains for backward compatibility.
+To avoid mistakes, we recommend using `owasp/threat-dragon` for production deployments.
 
-- `docker pull owasp/threat-dragon:v2.2.0`
+- `docker pull owasp/threat-dragon:v2.6.3`
+- `docker pull owasp/threat-dragon:stable`
 
-The latest tag (which is the default) may well be a development version
-so use the `stable` tag, which will always be the latest official release:
+Create a [dotenv](#environment-variables-for-web-application) file before running the Docker image locally.
+In the commands below, verify your `.env` file location, repository, and tag.
+This will start the container and expose the web interface on `http://localhost:8080/`
 
-- `docker pull threatdragon/owasp-threat-dragon:stable`
-- For MacOS and Linux:
-- `docker run -it --rm -p 8080:3000 -v $(pwd)/.env:/app/.env threatdragon/owasp-threat-dragon:v2.2.0`
-- For Windows:
-- `docker run -it --rm -p 8080:3000 -v %CD%/.env:/app/.env threatdragon/owasp-threat-dragon:v2.2.0`
+```bash
+# MacOS and Linux
+docker run -it --rm -p 8080:3000 -v $(pwd)/.env:/app/.env owasp/threat-dragon:stable
 
-Assuming that you are using http port 8080 and accessing Threat Dragon on `http://localhost:8080/`.
+# Windows
+docker run -it --rm -p 8080:3000 -v %CD%/.env:/app/.env owasp/threat-dragon:stable
+```
 
 ### Docker (local build)
 
