@@ -1,381 +1,381 @@
 {
   "auth": {
-    "sessionExpired": "Your session has expired. Please log in again to continue."
+    "sessionExpired": "Время сеанса истекло. Войдите снова, чтобы продолжить."
   },
   "nav": {
-    "loggedInAs": "Logged in as",
-    "logOut": "Log out",
-    "contentManagement": "Content Management"
+    "loggedInAs": "Вы вошли как",
+    "logOut": "Выйти",
+    "contentManagement": "Управление контентом"
   },
   "home": {
     "title": "OWASP Threat Dragon",
-    "imgAlt": "Threat Dragon Logo",
-    "description": "OWASP Threat Dragon is a free, open-source, cross-platform application for creating threat models. Use it to draw threat modeling diagrams and to identify threats for your system. With an emphasis on flexibility and simplicity it is easily accessible for all types of users.",
+    "imgAlt": "Логотип Threat Dragon",
+    "description": "OWASP Threat Dragon является бесплатным кроссплатформенным приложением для моделирования угроз. С его помощью вы можете составлять диаграммы угроз и заранее определять угрозы для вашей системы. Доступен для всех пользователей с учетом удобства и простоты пользования.",
     "errors": {
-      "configLoadFailed": "Failed to load server configuration. Only local login is available."
+      "configLoadFailed": "Не удалось загрузить конфигурацию сервера. Доступен только локальный вход в систему."
     }
   },
   "providers": {
     "desktop": {
       "displayName": "Threat Dragon",
-      "loginWith": "Start"
+      "loginWith": "Начать"
     },
     "github": {
       "displayName": "GitHub",
-      "loginWith": "Login with"
+      "loginWith": "Войти с помощью"
     },
     "gitlab": {
       "displayName": "GitLab",
-      "loginWith": "Login with"
+      "loginWith": "Войти с помощью"
     },
     "bitbucket": {
       "displayName": "Bitbucket",
-      "loginWith": "Login with"
+      "loginWith": "Войти с помощью"
     },
     "google": {
       "displayName": "Google",
-      "loginWith": "Login with"
+      "loginWith": "Войти с помощью"
     },
     "local": {
-      "displayName": "Local Session",
-      "loginWith": "Login to"
+      "displayName": "локальную сессию",
+      "loginWith": "Войти в"
     }
   },
   "dashboard": {
     "welcome": {
-      "title": "Welcome!",
-      "description": "You're ready to start making your application designs more secure. You can open an existing threat model or create a new one by choosing one of the options below. "
+      "title": "Добро пожаловать!",
+      "description": "Вы готовы приступить к повышению безопасности проектов вашего приложения. Вы можете открыть существующую модель угроз или создать новую, выбрав один из вариантов ниже. "
     },
     "actions": {
-      "openExisting": "Open an existing threat model",
-      "createNew": "Create a new, empty threat model",
-      "readDemo": "Explore a sample threat model",
-      "importExisting": "Import a threat model via JSON",
-      "createFromTemplate": "Create model from a Template"
+      "openExisting": "Открыть существующую модель угроз",
+      "createNew": "Создать новую, пустую модель угроз",
+      "readDemo": "Изучить пример модели угроз",
+      "importExisting": "Импортировать модель угроз из файла JSON",
+      "createFromTemplate": "Создать модель на основе шаблона"
     }
   },
   "demo": {
-    "select": "Select a demo threat model from the list below"
+    "select": "Выбрать демонстрационную модель угроз из списка ниже"
   },
   "desktop": {
     "file": {
-      "heading": "File",
-      "clearRecentDocs": "Clear Menu",
-      "close": "Close Model",
-      "closeWindow": "Close Window",
-      "new": "New Model",
-      "open": "Open Model",
-      "recentDocs": "Open Recent",
-      "save": "Save Model",
-      "saveAs": "Save Model As"
+      "heading": "Файл",
+      "clearRecentDocs": "Очистить меню",
+      "close": "Закрыть модель",
+      "closeWindow": "Закрыть окно",
+      "new": "Новая модель",
+      "open": "Открыть модель",
+      "recentDocs": "Открыть недавние",
+      "save": "Сохранить модель",
+      "saveAs": "Сохранить модель как"
     },
     "help": {
-      "heading": "Help",
-      "docs": "Documentation",
-      "visit": "Visit us at OWASP",
-      "sheets": "OWASP Cheat Sheets",
-      "github": "Visit us on GitHub",
-      "submit": "Submit an Issue",
-      "check": "Check for updates ...",
+      "heading": "Помощь",
+      "docs": "Документация",
+      "visit": "Посетите сайт OWASP",
+      "sheets": "Шпаргалки OWASP",
+      "github": "Посетите нас на GitHub",
+      "submit": "Сообщить о проблеме",
+      "check": "Проверить обновления ...",
       "about": {
-        "about": "About",
-        "version": "Version"
+        "about": "О",
+        "version": "Версии"
       }
     }
   },
   "repository": {
-    "select": "Select a",
-    "from": "repository from the list below",
-    "noneFound": "No repositories found. To get started, create a new repository on"
+    "select": "Выбрать",
+    "from": "репозиторий из списка ниже",
+    "noneFound": "Репозитории не найдены. Чтобы начать, создайте новый репозиторий на"
   },
   "branch": {
-    "select": "Select a branch from",
-    "from": "from the list below or",
-    "chooseRepo": "choose another repo",
-    "or": "or",
-    "addNew": "add a new branch",
-    "protectedBranch": "Protected branch",
-    "nameRequired": "Branch name is required",
-    "nameExists": "Branch name already exists",
-    "refBranch": "Reference branch",
-    "add": "add branch",
-    "cancel": "Cancel",
-    "name": "branch name"
+    "select": "Выберите ветку из",
+    "from": "из списка ниже или",
+    "chooseRepo": "выберите другой репозиторий",
+    "or": "или",
+    "addNew": "добавьте новую ветку",
+    "protectedBranch": "Защищённая ветка",
+    "nameRequired": "Укажите название ветки",
+    "nameExists": "Ветка с таким названием уже существует",
+    "refBranch": "Исходная ветка",
+    "add": "добавить ветку",
+    "cancel": "Отмена",
+    "name": "Название ветки"
   },
   "folder": {
-    "select": "Select a",
-    "from": "folder from the list below",
-    "noneFound": "This folder is empty, You can create a new threat model here."
+    "select": "Выберите",
+    "from": "из списка ниже",
+    "noneFound": "Эта папка пуста, Вы можете создать новую модель угроз здесь."
   },
   "threatmodelSelect": {
-    "select": "Select a Threat Model from",
-    "from": "from the list below, or choose another",
-    "branch": "branch",
-    "or": "or",
-    "repo": "repo",
-    "newThreatModel": "Create a New Threat Model"
+    "select": "Выберите модель угроз",
+    "from": "из списка ниже или выберите другую",
+    "branch": "ветка",
+    "or": "или",
+    "repo": "репозиторий",
+    "newThreatModel": "Создать новую модель угроз"
   },
   "template": {
-    "startFromLocalTemplate": "Start from a Local Template",
-    "select": "Select a Template from the list below",
-    "selectDescription": "Templates provide a starting point for new threat models, pre-populated with relevant components and threats.",
-    "noTemplates": "No templates found",
-    "templatesLocalSession": "Remote templates are not available for local sessions.",
-    "search": "Search templates...",
-    "exportTemplate": "Export as Template",
-    "tags": "Tags",
-    "name": "Template Name",
-    "description": "Template Description",
-    "saveTemplate": "Save Template",
-    "addNew": "Add New Template",
-    "manage": "Manage Templates",
-    "manageDescription": "Import, export, and manage your threat model templates here.",
-    "editTemplate": "Edit Template",
-    "addTagsPlaceholder": "Add tags...",
-    "updateSuccess": "Template updated successfully",
-    "importSuccess": "Template imported successfully",
-    "deleteSuccess": "Template deleted successfully",
-    "deleteTitle": "Confirm Delete",
-    "deleteConfirm": "Are you sure you want to delete \"{name}\"?",
+    "startFromLocalTemplate": "Начать с локального шаблона",
+    "select": "Выберите шаблон из списка ниже",
+    "selectDescription": "Шаблоны помогают создать основу для новой модели угроз: они уже содержат соответствующие компоненты и угрозы.",
+    "noTemplates": "Шаблоны не найдены",
+    "templatesLocalSession": "Удалённые шаблоны недоступны в локальных сеансах.",
+    "search": "Искать шаблоны...",
+    "exportTemplate": "Экспортировать как шаблон",
+    "tags": "Теги",
+    "name": "Название шаблона",
+    "description": "Описание шаблона",
+    "saveTemplate": "Сохранить шаблон",
+    "addNew": "Добавить новый шаблон",
+    "manage": "Управление шаблонами",
+    "manageDescription": "Импорт, экпорт, и управление шаблонами для моделей угроз.",
+    "editTemplate": "Редактировать шаблон",
+    "addTagsPlaceholder": "Добавить теги...",
+    "updateSuccess": "Шаблон успешно обновлён",
+    "importSuccess": "Шаблон успешно импортирован",
+    "deleteSuccess": "Шаблон успешно удалён",
+    "deleteTitle": "Подтверждение удаления",
+    "deleteConfirm": "Вы уверены, что хотите удалить \"{name}\"?",
     "errors": {
-      "invalidJson": "Invalid JSON. Please check your template file and try again",
-      "invalidTemplate": "Invalid template format. Please check your template file and try again",
-      "loadFailed": "Failed to load templates. Please try again",
-      "duplicateTemplate": "A template with this name already exists. Please use a different name",
-      "updateFailed": "Failed to update template",
-      "deleteFailed": "Failed to delete template"
+      "invalidJson": "Некорректный JSON. Проверьте файл шаблона и попробуйте ещё раз",
+      "invalidTemplate": "Некорректный формат шаблона. Проверьте файл шаблона и попробуйте ещё раз",
+      "loadFailed": "Не удалось загрузить шаблоны. Попробуйте ещё раз",
+      "duplicateTemplate": "Шаблон с таким названием уже существует. Укажите другое название",
+      "updateFailed": "Не удалось обновить шаблон",
+      "deleteFailed": "Не удалось удалить шаблон"
     },
     "warnings": {
-      "templateSave": "Could not save the template. Check the developer console for more information",
-      "invalidSchema": "Template does not strictly match schema. Details in the developer console"
+      "templateSave": "Не удалось сохранить шаблон. Подробности смотрите в консоли разработчика",
+      "invalidSchema": "Шаблон не соответствует схеме. Подробности смотрите в консоли разработчика"
     },
     "prompts": {
-      "templateSaved": "Template successfully saved",
-      "templateDownloading": "Downloading template"
+      "templateSaved": "Шаблон успешно сохранён",
+      "templateDownloading": "Загрузка шаблона"
     },
     "repo": {
       "notInitialized": {
-        "title": "Template Repository Not Initialized",
-        "userMessage": "The template repository has not been initialized. Please contact your administrator.",
-        "adminMessage": "Please go to the Manage Templates page to initialize the template repository."
+        "title": "Репозиторий шаблонов не инициализирован",
+        "userMessage": "Репозиторий шаблонов не инициализирован. Обратитесь к администратору.",
+        "adminMessage": "Перейдите на страницу управления шаблонами, чтобы инициализировать репозиторий."
       },
       "notConfigured": {
-        "title": "Template Repository Not Configured",
-        "userMessage": "The template repository is not configured. Please set up the repository to access templates."
+        "title": "Репозиторий шаблонов не настроен",
+        "userMessage": "Репозиторий шаблонов не настроен. Настройте его, чтобы получить доступ к шаблонам."
       },
       "notFound": {
-        "title": "Template Repository Not Found",
-        "userMessage": "The repository {repoName} is not a valid repository. Please check your configuration."
+        "title": "Репозиторий шаблонов не найден",
+        "userMessage": "Репозиторий {repoName} недействителен. Проверьте настройки."
       },
       "bootstrap": {
-        "bootstrapping": "Initializing..",
-        "title": "Initialize Template Repository",
-        "description": "This will create the necessary folder structure within the repository if it does not already exist.",
-        "action": "Initialize",
-        "success": "Template repository successfully initialized.",
-        "error": "Could not initialize the template repository. Check the developer console for more information."
+        "bootstrapping": "Инициализация..",
+        "title": "Инициализация репозитория шаблонов",
+        "description": "Будет создана необходимая структура папок в репозитории, если её ещё нет.",
+        "action": "Инициализировать",
+        "success": "Репозиторий шаблонов успешно инициализирован.",
+        "error": "Не удалось инициализировать репозиторий шаблонов. Подробности смотрите в консоли разработчика."
       }
     }
   },
   "threatmodel": {
-    "contributors": "Contributors",
-    "contributorsPlaceholder": "Start typing to add a contributor",
-    "description": "High level system description",
-    "dragAndDrop": "Drag and drop or ",
-    "editing": "Editing",
-    "jsonPaste": "Drop a threat model JSON file or paste its content here:",
-    "owner": "Owner",
-    "reviewer": "Reviewer",
-    "title": "Title",
-    "releaseVersion": "Release version",
-    "releasedAt": "Release date",
+    "contributors": "Участники",
+    "contributorsPlaceholder": "Начните вводить имя, чтобы добавить участника",
+    "description": "Общее описание системы",
+    "dragAndDrop": "Перетащите файл или ",
+    "editing": "Редактирование",
+    "jsonPaste": "Перетащите сюда JSON-файл модели угроз или вставьте его содержимое:",
+    "owner": "Владелец",
+    "reviewer": "Рецензент",
+    "title": "Название",
+    "releaseVersion": "Версия релиза",
+    "releasedAt": "Дата релиза",
     "diagram": {
-      "diagrams": "Diagrams",
-      "addNewDiagram": "Add a new diagram...",
+      "diagrams": "Диаграммы",
+      "addNewDiagram": "Добавить диаграмму...",
       "generic": {
-        "defaultTitle": "New generic diagram",
-        "defaultDescription": "New generic diagram description",
+        "defaultTitle": "Новая универсальная диаграмма",
+        "defaultDescription": "Описание новой универсальной диаграммы",
         "select": "Generic"
       },
       "stride": {
-        "defaultTitle": "New STRIDE diagram",
-        "defaultDescription": "New STRIDE diagram description",
+        "defaultTitle": "Новая диаграмма STRIDE",
+        "defaultDescription": "Описание новой диаграммы STRIDE",
         "select": "STRIDE"
       },
       "linddun": {
-        "defaultTitle": "New LINDDUN diagram",
-        "defaultDescription": "New LINDDUN diagram description",
+        "defaultTitle": "Новая диаграмма LINDDUN",
+        "defaultDescription": "Описание новой диаграммы LINDDUN",
         "select": "LINDDUN"
       },
       "plot4ai": {
-        "defaultTitle": "New PLOT4ai diagram",
-        "defaultDescription": "New PLOT4ai diagram description",
+        "defaultTitle": "Новая диаграмма PLOT4ai",
+        "defaultDescription": "Описание новой диаграммы PLOT4ai",
         "select": "PLOT4ai"
       },
       "die": {
-        "defaultTitle": "New CIA-DIE diagram",
-        "defaultDescription": "New CIA-DIE diagram description",
+        "defaultTitle": "Новая диаграмма CIA-DIE",
+        "defaultDescription": "Описание новой диаграммы CIA-DIE",
         "select": "CIADIE"
       },
       "cia": {
-        "defaultTitle": "New CIA diagram",
-        "defaultDescription": "New CIA diagram description",
+        "defaultTitle": "Новая диаграмма CIA",
+        "defaultDescription": "Описание новой диаграммы CIA",
         "select": "CIA"
       },
       "eop": {
-        "defaultTitle": "New EoP diagram",
-        "defaultDescription": "New EoP diagram description",
+        "defaultTitle": "Новая диаграмма EoP",
+        "defaultDescription": "Описание новой диаграммы EoP",
         "select": "EoP"
       }
     },
-    "threats": "Threats",
+    "threats": "Угрозы",
     "errors": {
-      "create": "Could not create the threat model file.  Check the developer console for more information",
-      "dropSingleFileOnly": "Drag and drop requires a single file.",
-      "invalidJson": "Invalid JSON. Please check your model and try again",
-      "invalidModel": "The threat model file does not validate correctly. Please check your model and try again",
-      "onlyJsonAllowed": "Only files that end with .json are supported.",
-      "open": "Error opening this Threat Model. Check the developer console for more information",
-      "save": "Error saving the Threat Model. Check the developer console for more information",
-      "createConflict": "A threat model with this name already exists. Please use a different name."
+      "create": "Не удалось создать файл модели угроз. Подробности смотрите в консоли разработчика",
+      "dropSingleFileOnly": "Для перетаскивания выберите только один файл.",
+      "invalidJson": "Некорректный JSON. Проверьте модель и попробуйте ещё раз",
+      "invalidModel": "Файл модели угроз не прошёл проверку. Проверьте модель и попробуйте ещё раз",
+      "onlyJsonAllowed": "Поддерживаются только файлы с расширением .json.",
+      "open": "Не удалось открыть Модель Угроз. Подробности смотрите в консоли разработчика",
+      "save": "Не удалось сохранить модель угроз. Подробности смотрите в консоли разработчика",
+      "createConflict": "Модель угроз с таким названием уже существует. Укажите другое название."
     },
     "warnings": {
-      "export": "Could not export the Threat Model. Check the developer console for more information",
-      "jsonSchema": "Model does not strictly match schema. Details from the developer console",
-      "noModelOpen": "No model open",
-      "otmImported": "Import of Open Threat Model converts the file to Threat Dragon",
-      "save": "Could not save the Threat Model. Check the developer console for more information",
-      "tmBomImported": "Import of TM-BOM converts the file format to Threat Dragon",
-      "v1Translate": "Imported version 1.x model has been upgraded to the version 2.x format"
+      "export": "Не удалось экспортировать модель угроз. Подробности смотрите в консоли разработчика",
+      "jsonSchema": "Модель не полностью соответствует схеме. Подробности смотрите в консоли разработчика",
+      "noModelOpen": "Модель не открыта",
+      "otmImported": "При импорте открытой модели угроз файл преобразуется в формат Threat Dragon",
+      "save": "Не удалось сохранить модель угроз. Подробности смотрите в консоли разработчика",
+      "tmBomImported": "При импорте TM-BOM формат файла преобразуется в формат Threat Dragon",
+      "v1Translate": "Импортированная модель версии 1.x обновлена до формата версии 2.x"
     },
     "prompts": {
-      "created": "Threat model successfully created",
-      "exported": "Threat model exported",
-      "opened": "Threat model successfully opened",
-      "downloading": "Downloading threat model",
-      "saved": "Threat model successfully saved"
+      "created": "Модель угроз успешно создана",
+      "exported": "Модель угроз экспортирована",
+      "opened": "Модель угроз успешно открыта",
+      "downloading": "Загрузка модели угроз",
+      "saved": "Модель угроз успешно сохранена"
     },
     "properties": {
-      "title": "Properties",
-      "emptyState": "Select an element on the graph to edit",
-      "name": "Name",
-      "text": "Text",
-      "description": "Description",
-      "outOfScope": "Out of Scope",
-      "bidirection": "Bidirectional",
-      "reasonOutOfScope": "Reason for out of scope",
-      "handlesCardPayment": "Card payment",
-      "handlesGoodsOrServices": "Goods or Services",
-      "isALog": "Is a Log",
-      "isEncrypted": "Encrypted",
-      "isSigned": "Signed",
-      "isWebApplication": "Web Application",
-      "privilegeLevel": "Privilege Level",
-      "providesAuthentication": "Provides Authentication",
-      "protocol": "Protocol",
-      "publicNetwork": "Public Network",
-      "storesCredentials": "Stores Credentials",
-      "storesInventory": "Stores Inventory"
+      "title": "Свойства",
+      "emptyState": "Выберите элемент на диаграмме для редактирования",
+      "name": "Название",
+      "text": "Текст",
+      "description": "Описание",
+      "outOfScope": "Вне области рассмотрения",
+      "bidirection": "Двунаправленный",
+      "reasonOutOfScope": "Причина исключения из области рассмотрения",
+      "handlesCardPayment": "Обрабатывает платежи по картам",
+      "handlesGoodsOrServices": "Товары или услуги",
+      "isALog": "Является журналом",
+      "isEncrypted": "Зашифрован",
+      "isSigned": "Назначен",
+      "isWebApplication": "Веб-приложение",
+      "privilegeLevel": "Уровень привилегий",
+      "providesAuthentication": "Обеспечивает аутентификацию",
+      "protocol": "Протокол",
+      "publicNetwork": "Публичная сеть",
+      "storesCredentials": "Хранит учётные данные",
+      "storesInventory": "Хранит сведения о запасах"
     },
     "buttons": {
-      "delete": "Delete selected",
-      "redo": "Redo edit",
-      "shortcuts": "Keyboard shortcuts",
-      "toggleGrid": "Toggle grid",
-      "undo": "Undo edit",
-      "zoomIn": "Zoom in",
-      "zoomOut": "Zoom out"
+      "delete": "Удалить выбранное",
+      "redo": "Повторить действие",
+      "shortcuts": "Горячие клавиши",
+      "toggleGrid": "Показать или скрыть сетку",
+      "undo": "Отменить действие",
+      "zoomIn": "Увеличить",
+      "zoomOut": "Уменьшить"
     },
     "shortcuts": {
-      "title": "Shortcuts",
+      "title": "Горячие клавиши",
       "copy": {
         "shortcut": "(ctrl/cmd) + c",
-        "action": "Copy"
+        "action": "Копировать"
       },
       "paste": {
         "shortcut": "(ctrl/cmd) + v",
-        "action": "Paste"
+        "action": "Вставить"
       },
       "undo": {
         "shortcut": "(ctrl/cmd) + z",
-        "action": "Undo"
+        "action": "Отменить"
       },
       "redo": {
         "shortcut": "(ctrl/cmd) + y",
-        "action": "Redo"
+        "action": "Повторить"
       },
       "delete": {
         "shortcut": "del",
-        "action": "Delete"
+        "action": "Удалить"
       },
       "pan": {
-        "shortcut": "shift + left-click (hold/drag)",
-        "action": "Pan"
+        "shortcut": "shift + щелчок левой кнопкой мыши (удерживать и перетаскивать)",
+        "action": "Переместить"
       },
       "multiSelect": {
-        "shortcut": "left-click on empty space and drag",
-        "action": "Multi-select"
+        "shortcut": "щелчок левой кнопкой мыши по пустому месту и перетаскивание",
+        "action": "Выбрать несколько элементов"
       },
       "zoom": {
-        "shortcut": "(ctrl/cmd) + mousewheel",
-        "action": "Zoom"
+        "shortcut": "(ctrl/cmd) + колесо мыши",
+        "action": "Увеличить/уменьшить"
       },
       "save": {
         "shortcut": "(ctrl/cmd) + s",
-        "action": "Save"
+        "action": "Сохранить"
       }
     },
     "stencil": {
-      "boundaries": "Boundaries",
-      "components": "Components",
-      "entities": "Entities",
-      "metadata": "Metadata",
-      "search": "Search",
-      "notFound": "We don't have that yet, want to open an issue? :)"
+      "boundaries": "Границы",
+      "components": "Компоненты",
+      "entities": "Сущности",
+      "metadata": "Метаданные",
+      "search": "Поиск",
+      "notFound": "Пока этого нет. Хотите создать запрос на добавление? :)"
     },
     "shapes": {
-      "actor": "Actor",
-      "flow": "Data Flow",
-      "flowStencil": "Data Flow",
-      "process": "Process",
-      "store": "Store",
-      "text": "Descriptive text",
-      "trustBoundary": "Trust Boundary"
+      "actor": "Участник",
+      "flow": "Поток данных",
+      "flowStencil": "Поток данных",
+      "process": "Процесс",
+      "store": "Хранилище",
+      "text": "Пояснительный текст",
+      "trustBoundary": "Граница доверия"
     }
   },
   "forms": {
-    "apply": "Apply",
-    "cancel": "Cancel",
-    "close": "Close",
-    "closeModel": "Close Model",
-    "delete": "Delete",
-    "discardTitle": "Discard Changes?",
-    "discardMessage": "Are you sure you want to discard your changes?",
+    "apply": "Применить",
+    "cancel": "Отменить",
+    "close": "Закрыть",
+    "closeModel": "Закрыть модель",
+    "delete": "Удалить",
+    "discardTitle": "Отменить изменения?",
+    "discardMessage": "Вы уверены, что хотите отменить изменения?",
     "duplicate": "Дублировать",
-    "edit": "Edit",
+    "edit": "Редактировать",
     "export": "Экспортировать",
-    "exportAs": "Export Model As",
-    "exportHtml": "HTML Report",
-    "exportPdf": "PDF Report",
-    "exportTd": "Original (Threat Dragon)",
-    "exportTemplate": "As Template",
-    "exportTmBom": "As TM-BOM",
+    "exportAs": "Экспортировать модель как",
+    "exportHtml": "Отчёт в формате HTML",
+    "exportPdf": "Отчёт в формате PDF",
+    "exportTd": "Исходный формат (Threat Dragon)",
+    "exportTemplate": "Как шаблон",
+    "exportTmBom": "Как TM-BOM",
     "exportOtm": "Open Threat Model (OTM)",
-    "import": "Import",
+    "import": "Импортировать",
     "ok": "OK",
-    "open": "Open",
-    "openModel": "Open Model",
-    "print": "Print",
-    "reload": "Reload",
-    "remove": "Remove",
-    "report": "Report",
-    "save": "Save",
-    "saveAs": "Save As",
-    "saveModel": "Save Model",
-    "saveModelAs": "Save Model As",
-    "search": "Search",
-    "next": "Next",
-    "previous": "Previous"
+    "open": "Открыть",
+    "openModel": "Открыть модель",
+    "print": "Печать",
+    "reload": "Перезагрузить",
+    "remove": "Убрать",
+    "report": "Отчёт",
+    "save": "Сохранить",
+    "saveAs": "Сохранить как",
+    "saveModel": "Сохранить модель",
+    "saveModelAs": "Сохранить модель как",
+    "search": "Поиск",
+    "next": "Далее",
+    "previous": "Назад"
   },
   "cards": {
     "details": "Данные карты",
@@ -390,151 +390,151 @@
     "model": {
       "cia": {
         "header": "--- CIA ---",
-        "confidentiality": "Confidentiality",
-        "integrity": "Integrity",
-        "availability": "Availability"
+        "confidentiality": "Конфиденциальность",
+        "integrity": "Целостность",
+        "availability": "Доступность"
       },
       "ciadie": {
         "header": "--- CIA-DIE ---",
-        "confidentiality": "Confidentiality",
-        "integrity": "Integrity",
-        "availability": "Availability",
-        "distributed": "Distributed",
-        "immutable": "Immutable",
-        "ephemeral": "Ephemeral"
+        "confidentiality": "Конфиденциальность",
+        "integrity": "Целостность",
+        "availability": "Доступность",
+        "distributed": "Распределённость",
+        "immutable": "Неизменяемость",
+        "ephemeral": "Кратковременность"
       },
       "linddun": {
         "header": "--- LINDDUN ---",
-        "linkability": "Linkability",
-        "identifiability": "Identifiability",
-        "nonRepudiation": "Non-repudiation",
-        "detectability": "Detectability",
-        "disclosureOfInformation": "Disclosure of information",
-        "unawareness": "Unawareness",
-        "nonCompliance": "Non-compliance"
+        "linkability": "Связываемость",
+        "identifiability": "Идентифицируемость",
+        "nonRepudiation": "Неотказуемость",
+        "detectability": "Обнаруживаемость",
+        "disclosureOfInformation": "Раскрытие информации",
+        "unawareness": "Неосведомлённость",
+        "nonCompliance": "Несоответствие требованиям"
       },
       "plot4ai": {
         "header": "--- PLOT4ai ---",
-        "techniqueProcesses": "Technique & Processes",
-        "accessibility": "Accessibility",
-        "identifiabilityLinkability": "Identifiability & Linkability",
-        "security": "Security",
-        "safety": "Safety",
-        "unawareness": "Unawareness",
-        "ethicsHumanRights": "Ethics & Human Rights",
-        "nonCompliance": "Non-compliance"
+        "techniqueProcesses": "Методы и процессы",
+        "accessibility": "Доступность",
+        "identifiabilityLinkability": "Идентифицируемость и связываемость",
+        "security": "Защищённость",
+        "safety": "Безопасность",
+        "unawareness": "Неосведомлённость",
+        "ethicsHumanRights": "Этика и права человека",
+        "nonCompliance": "Несоответствие требованиям"
       },
       "stride": {
         "header": "--- STRIDE ---",
-        "spoofing": "Spoofing",
-        "tampering": "Tampering",
-        "repudiation": "Repudiation",
-        "informationDisclosure": "Information disclosure",
-        "denialOfService": "Denial of service",
-        "elevationOfPrivilege": "Elevation of privilege"
+        "spoofing": "Подмена личности",
+        "tampering": "Подмена данных",
+        "repudiation": "Отказ от совершённых действий",
+        "informationDisclosure": "Раскрытие информации",
+        "denialOfService": "Отказ в обслуживании",
+        "elevationOfPrivilege": "Эскалация привилегий"
       },
       "eop": {
         "header": "--- EoP ---",
-        "dataValidationAndEncoding": "Data Validation & Encoding",
-        "authentication": "Authentication",
-        "sessionManagement": "Session Management",
-        "authorization": "Authorization",
-        "cryptography": "Cryptography",
+        "dataValidationAndEncoding": "Проверка и кодирование данных",
+        "authentication": "Аутентификация",
+        "sessionManagement": "Управление сеансами",
+        "authorization": "Авторизация",
+        "cryptography": "Криптография",
         "cornucopia": "Cornucopia",
-        "wildCard": "Wild Card"
+        "wildCard": "Другое"
       }
     },
     "generic": {
-      "default": "New generic threat",
-      "cia": "New CIA threat",
-      "ciadie": "New CIA-DIE threat",
-      "linddun": "New LINDDUN threat",
-      "plot4ai": "New PLOT4ai threat",
-      "stride": "New STRIDE threat",
-      "eop": "New EoP threat"
+      "default": "Новая универсальная угроза",
+      "cia": "Новая угроза CIA",
+      "ciadie": "Новая угроза CIA-DIE",
+      "linddun": "Новая угроза LINDDUN",
+      "plot4ai": "Новая угроза PLOT4ai",
+      "stride": "Новая угроза STRIDE",
+      "eop": "Новая угроза EoP"
     },
-    "edit": "Edit Threat",
-    "confirmDeleteTitle": "Confirm Delete",
-    "confirmDeleteMessage": "Are you sure you really want to delete this threat?",
-    "description": "Provide a description for this threat",
-    "emptyThreat": "Select an element on the graph to add a threat",
-    "mitigation": "Provide remediation for this threat or a reason if status is N/A",
-    "newThreat": "New Threat",
-    "newThreatByType": "New Threat by Type",
-    "newThreatByContext": "New Threat by Context",
+    "edit": "Редактировать угрозу",
+    "confirmDeleteTitle": "Подтверждение удаления",
+    "confirmDeleteMessage": "Вы действительно хотите удалить эту угрозу?",
+    "description": "Опишите эту угрозу",
+    "emptyThreat": "Выберите элемент на диаграмме, чтобы добавить угрозу",
+    "mitigation": "Укажите способ устранения угрозы или причину, если её статус — N/A",
+    "newThreat": "Новая угроза",
+    "newThreatByType": "Новая угроза по типу",
+    "newThreatByContext": "Новая угроза по контексту",
     "properties": {
-      "description": "Description",
-      "mitigation": "Mitigations",
-      "modelType": "Model Type",
-      "number": "Number",
-      "severity": "Severity",
-      "score": "Score",
-      "status": "Status",
-      "title": "Title",
-      "type": "Type"
+      "description": "Описание",
+      "mitigation": "Меры по устранению",
+      "modelType": "Тип модели",
+      "number": "Номер",
+      "severity": "Критичность",
+      "score": "Оценка",
+      "status": "Статус",
+      "title": "Название",
+      "type": "Тип"
     },
     "status": {
-      "accepted": "Accepted",
-      "avoided": "Avoided",
-      "eliminated": "Eliminated",
-      "transferred": "Transferred",
+      "accepted": "Принята",
+      "avoided": "Предотвращена",
+      "eliminated": "Устранена",
+      "transferred": "Передана",
       "notApplicable": "N/A",
-      "open": "Open",
-      "mitigated": "Mitigated"
+      "open": "Открыта",
+      "mitigated": "Меры приняты"
     },
     "severity": {
-      "tbd": "TBD",
-      "low": "Low",
-      "medium": "Medium",
-      "high": "High",
-      "critical": "Critical"
+      "tbd": "Не определена",
+      "low": "Низкая",
+      "medium": "Средняя",
+      "high": "Высокая",
+      "critical": "Критическая"
     },
     "validation": {
-      "error": "Card number is required",
-      "cardNumberRequired": "You must select a card number before saving."
+      "error": "Необходимо указать номер карты",
+      "cardNumberRequired": "Перед сохранением необходимо выбрать номер карты."
     }
   },
   "report": {
     "options": {
-      "showOutOfScope": "Show out of scope elements",
-      "showMitigatedThreats": "Show mitigated threats",
-      "showModelDiagrams": "Show model diagrams",
-      "showEmpty": "Show empty elements",
-      "showProperties": "Show element properties",
-      "showBranding": "Threat Dragon logo"
+      "showOutOfScope": "Показывать элементы вне области рассмотрения",
+      "showMitigatedThreats": "Показывать угрозы, для которых приняты меры",
+      "showModelDiagrams": "Показывать диаграммы модели",
+      "showEmpty": "Показывать пустые элементы",
+      "showProperties": "Показывать свойства элементов",
+      "showBranding": "Логотип Threat Dragon"
     },
-    "title": "Threat model report for",
-    "dateGenerated": "Date Generated",
-    "executiveSummary": "Executive Summary",
-    "notProvided": "Not provided",
-    "summary": "Summary",
-    "releaseVersion": "Release Version",
-    "releasedAt": "Release Date",
+    "title": "Отчёт по модели угроз",
+    "dateGenerated": "Дата создания",
+    "executiveSummary": "Краткое изложение",
+    "notProvided": "Не предоставлено",
+    "summary": "Сводка",
+    "releaseVersion": "Версия релиза",
+    "releasedAt": "Дата выпуска",
     "threatStats": {
-      "accepted": "Total Accepted",
-      "avoided": "Total Avoided",
-      "eliminated": "Total Eliminated",
-      "transferred": "Total Transferred",
-      "total": "Total Threats",
-      "mitigated": "Total Mitigated",
-      "notApplicable": "Total Not Applicable",
-      "notMitigated": "Total Open",
-      "openCritical": "Open / Critical Severity",
-      "openHigh": "Open / High Severity",
-      "openMedium": "Open / Medium Severity",
-      "openLow": "Open / Low Severity",
-      "openTbd": "Open / TBD Severity",
-      "openUnknown": "Open / Unknown Severity"
+      "accepted": "Всего принятых",
+      "avoided": "Всего предотвращённых",
+      "eliminated": "Всего устранённых",
+      "transferred": "Всего переданных",
+      "total": "Всего угроз",
+      "mitigated": "Всего угроз, для которых приняты меры",
+      "notApplicable": "Всего неприменимых",
+      "notMitigated": "Всего открытых",
+      "openCritical": "Открытые / критическая критичность",
+      "openHigh": "Открытые / высокая критичность",
+      "openMedium": "Открытые / средняя критичность",
+      "openLow": "Открытые / низкая критичность",
+      "openTbd": "Открытые / критичность не определена",
+      "openUnknown": "Открытые / неизвестная критичность"
     }
   },
   "upgrade": {
     "modal": {
-      "header": "Threatmodel Update",
-      "welcome": "Welcome to version 2 of OWASP Threat Dragon!",
-      "p1": "Version 2 uses a different drawing library, which will change the way parts of your threat models are saved. While most diagrams will look the same as they did in previous versions of Threat Dragon, there are cases where they may need to be adjusted slightly.",
-      "p2": "After closing this modal, you will see how each diagram in this model renders in the version 2 format. Please make note of any diagrams you may need to adjust. This is a one-time upgrade, and you should not see this message again after saving this model."
+      "header": "Обновление модели угроз",
+      "welcome": "Добро пожаловать во вторую версию OWASP Threat Dragon!",
+      "p1": "В версии 2 используется другая библиотека для создания диаграмм, поэтому изменится способ сохранения некоторых частей моделей угроз. Большинство диаграмм будут выглядеть так же, как и в предыдущих версиях Threat Dragon, но в некоторых случаях может потребоваться небольшая корректировка.",
+      "p2": "Закрыв эту модель, вы увидите, как отображается каждая диаграмма этой модели в формате второй версии. Обратите внимание на диаграммы, которые, возможно, потребуется скорректировать. Обновление выполняется один раз: после сохранения модели это сообщение больше не появится."
     },
-    "instructions": "Great! Let's get you to your model.",
-    "continue": "Continue to Threat Model"
+    "instructions": "Отлично! Перейдём к вашей модели.",
+    "continue": "Перейти к модели угроз"
   }
 }
