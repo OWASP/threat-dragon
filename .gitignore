@@ -225,6 +225,8 @@
 !td.vue/src/views/demo/*.vue
 !td.vue/src/views/git/
 !td.vue/src/views/git/*.vue
+!td.vue/src/views/google/
+!td.vue/src/views/google/*.vue
 !td.vue/tests/
 !td.vue/tests/e2e/
 !td.vue/tests/e2e/*.js
@@ -340,6 +342,10 @@
 !td.vue/tests/unit/views/*.spec.js
 !td.vue/tests/unit/views/demo/
 !td.vue/tests/unit/views/demo/*.spec.js
+!td.vue/tests/unit/views/git/
+!td.vue/tests/unit/views/git/*.spec.js
+!td.vue/tests/unit/views/google/
+!td.vue/tests/unit/views/google/*.spec.js
 !td.vue/package.json
 !td.vue/package-lock.json
 !td.vue/e2e.visual.config.js

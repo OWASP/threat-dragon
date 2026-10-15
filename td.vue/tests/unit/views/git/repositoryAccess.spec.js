@@ -6,7 +6,7 @@ import { repositoryClear, repositorySelected, repositoryFetch } from '@/store/ac
 import RepositoryAccess from '@/views/git/RepositoryAccess.vue';
 import TdSelectionPage from '@/components/SelectionPage.vue';
 
-import { artificialDelay } from '../helpers/utils';
+import { artificialDelay } from '../../helpers/utils';
 
 const provider = 'github';
 

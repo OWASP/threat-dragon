@@ -7,7 +7,7 @@ import { repositoryClear, repositorySelected } from '@/store/actions/repository.
 import { threatmodelFetchAll } from '@/store/actions/threatmodel.js';
 import TdSelectionPage from '@/components/SelectionPage.vue';
 import ThreatModelSelect from '@/views/git/ThreatModelSelect.vue';
-import { threatmodelClear, threatmodelCreate, threatmodelFetch, threatmodelSelected } from '../../../src/store/actions/threatmodel';
+import { threatmodelClear, threatmodelCreate, threatmodelFetch, threatmodelSelected } from '@/store/actions/threatmodel';
 
 
 describe('views/ThreatModelSelect.vue', () => {
