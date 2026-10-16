@@ -8,7 +8,7 @@ group: Modeling
 
 ## Getting started
 
-Getting started with [Threat Dragon](https://owasp.org/www-project-threat-dragon/) models.
+Getting started with [Threat Dragon](https://owasp.org/projects/threat-dragon) models.
 
 ## Create a new model
 
@@ -183,4 +183,4 @@ Most browsers will also allow you to save the report as a PDF from this print di
 Threat Dragon: _making threat modeling less threatening_
 
 [tmc]: https://github.com/OWASP/threat-model-cookbook
-[tml]: https://owasp.org/www-project-threat-model-library/
+[tml]: https://owasp.org/projects/threat-model-library

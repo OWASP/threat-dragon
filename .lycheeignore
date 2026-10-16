@@ -42,3 +42,6 @@ certum.eu
 # slack needs to be logged in
 owasp.slack.com/
 
+# github reject automated requests to blob
+github.com/OWASP/threat-dragon/blob/
+github.com/iriusrisk/OpenThreatModel/blob/

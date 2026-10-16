@@ -180,7 +180,7 @@ describe('desktop/menu.js', () => {
         it('opens OWASP project external link', async () => {
             const visitItem = helpItems.submenu.find((item) => item.label === 'Visit us at OWASP');
             await visitItem.click();
-            expect(electron.shell.openExternal).toHaveBeenCalledWith('https://owasp.org/www-project-threat-dragon/');
+            expect(electron.shell.openExternal).toHaveBeenCalledWith('https://owasp.org/projects/threat-dragon');
         });
 
         it('opens OWASP Cheet Sheet external link', async () => {

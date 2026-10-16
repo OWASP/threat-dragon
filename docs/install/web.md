@@ -8,7 +8,7 @@ group: Install
 
 ## Web application installation
 
-[Threat Dragon](https://owasp.org/www-project-threat-dragon/) comes in two variants,
+[Threat Dragon](https://owasp.org/projects/threat-dragon) comes in two variants,
 a desktop application and a web application.
 
 The web application can be run locally or from a server.

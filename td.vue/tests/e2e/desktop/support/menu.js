@@ -94,7 +94,7 @@ helpMenu.expectedItems = [
 
 helpMenu.links = [
     { label: helpMenu.labels.docs, url: 'https://www.threatdragon.com/docs/' },
-    { label: helpMenu.labels.visit, url: 'https://owasp.org/www-project-threat-dragon/' },
+    { label: helpMenu.labels.visit, url: 'https://owasp.org/projects/threat-dragon' },
     {
         label: helpMenu.labels.sheets,
         url: 'https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html'

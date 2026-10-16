@@ -48,7 +48,7 @@
           </a>
         </li>
         <li class="nav-item" id="nav-owasp-td">
-          <a class="nav-link" href="https://owasp.org/www-project-threat-dragon/" target="_blank"
+          <a class="nav-link" href="https://owasp.org/projects/threat-dragon" target="_blank"
             rel="noopener noreferrer">
             <img :src="owaspLogo" class="td-fa-nav td-owasp-logo" :title="$t('desktop.help.visit')"
               alt="OWASP Threat Dragon" />

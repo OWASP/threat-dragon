@@ -156,11 +156,11 @@ Threat Dragon: _making threat modeling less threatening_
 [dev]: https://www.threatdragon.com/docs/development/development.html
 [docs]: https://www.threatdragon.com/docs/
 [e2e]: https://www.threatdragon.com/docs/testing/e2e.html
-[faqs]: https://owasp.org/www-project-threat-dragon/#div-faqs
+[faqs]: https://owasp.org/projects/threat-dragon#div-faqs
 [issues]: https://github.com/OWASP/threat-dragon/issues
 [leaders]: https://github.com/OWASP/www-project-threat-dragon/blob/main/leaders.md
 [pr-script]: ./scripts/td-pr-check.sh
-[project]: https://owasp.org/www-project-threat-dragon/
+[project]: https://owasp.org/projects/threat-dragon
 [raise]: https://github.com/OWASP/threat-dragon/issues/new?assignees=&labels=bug&template=bug_report.md&title=
 [request]: https://github.com/OWASP/threat-dragon/issues/new/choose
 [signed-commits]: https://docs.github.com/en/authentication/managing-commit-signature-verification/about-commit-signature-verification

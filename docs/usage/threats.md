@@ -124,5 +124,5 @@ If there is no suggestion available, usually when no properties have been select
 Threat Dragon: _making threat modeling less threatening_
 
 [issue#197]: https://github.com/OWASP/threat-dragon/issues/197
-[oats]: https://owasp.org/www-project-automated-threats-to-web-applications/
+[oats]: https://owasp.org/projects/automated-threats-to-web-applications
 [severity]: https://nvd.nist.gov/vuln-metrics/cvss

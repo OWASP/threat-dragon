@@ -50,7 +50,7 @@ The application comes in two variants:
 ### Internationalization
 
 The following translations are built into the Threat Dragon application (locale codes follow
-[IETF BCP 47](https://tools.ietf.org/html/bcp47)):
+[IETF BCP 47](https://www.rfc-editor.org/info/bcp47/)):
 
 * العربية (`ar`)
 * Deutsch (`de`)
@@ -101,14 +101,14 @@ We strongly recommend using a self-hosted instance or the desktop application as
 
 Threat Dragon: _making threat modeling less threatening_
 
-[Threat Dragon]: https://owasp.org/www-project-threat-dragon/
-[threat modeling]: https://owasp.org/www-community/Threat_Modeling
+[Threat Dragon]: https://owasp.org/projects/threat-dragon
+[threat modeling]: https://community.owasp.org/Threat_Modeling
 [OWASP Production Project]: https://owasp.org/projects/
 [manifesto]: https://www.threatmodelingmanifesto.org/
 [introduction]: https://www.youtube.com/watch?v=hUOAoc6QGJo
 [OWASP Spotlight]: https://www.youtube.com/playlist?list=PLUKo5k_oSrfOTl27gUmk2o-NBKvkTGw0T
 [Threat Modeling Gamification]: https://www.youtube.com/watch?v=u2tmLrwv-nc
-[threat modeling and risk assessment]: https://owasp.org/www-community/Application_Threat_Modeling
+[threat modeling and risk assessment]: https://community.owasp.org/Application_Threat_Modeling
 [releases]: https://github.com/owasp/threat-dragon/releases
 [docker]: https://hub.docker.com/r/owasp/threat-dragon/tags
 [Demo Instance]: https://www.threatdragon.com/

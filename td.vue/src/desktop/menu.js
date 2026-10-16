@@ -122,7 +122,7 @@ export function getMenuTemplate () {
                 {
                     label: messages[language].desktop.help.visit,
                     click: async () => {
-                        await shell.openExternal('https://owasp.org/www-project-threat-dragon/');
+                        await shell.openExternal('https://owasp.org/projects/threat-dragon');
                     }
                 },
                 {

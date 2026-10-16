@@ -89,7 +89,7 @@ Threat Dragon: _making threat modeling less threatening_
 
 [json-schema]: https://json-schema.org/
 [otm-schema]: https://github.com/iriusrisk/OpenThreatModel/blob/main/otm_schema.json
-[td-v1-schema]: https://github.com/OWASP/threat-dragon/tree/main/td.vue/src/assets/schema/threat-dragon-v1.schema.json
-[td-v2-schema]: https://github.com/OWASP/threat-dragon/tree/main/td.vue/src/assets/schema/threat-dragon-v2.schema.json
+[td-v1-schema]: https://github.com/OWASP/threat-dragon/blob/main/td.vue/src/assets/schema/threat-dragon-v1.schema.json
+[td-v2-schema]: https://github.com/OWASP/threat-dragon/blob/main/td.vue/src/assets/schema/threat-dragon-v2.schema.json
 [tm-library]: https://github.com/OWASP/www-project-threat-model-library
 [tm-library-schema]: https://github.com/OWASP/www-project-threat-model-library/tree/main/threat-model.schema.json

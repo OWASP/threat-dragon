@@ -75,7 +75,7 @@ jobs:
           labels: |
             org.opencontainers.image.title=OWASP Threat Dragon
             org.opencontainers.image.description=OWASP Threat Dragon - a free, open source threat modeling tool
-            org.opencontainers.image.url=https://owasp.org/www-project-threat-dragon/
+            org.opencontainers.image.url=https://owasp.org/projects/threat-dragon
             org.opencontainers.image.documentation=https://www.threatdragon.com/docs/
             org.opencontainers.image.source=https://github.com/OWASP/threat-dragon
             org.opencontainers.image.vendor=OWASP

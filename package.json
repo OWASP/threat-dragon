@@ -53,13 +53,13 @@
   "author": {
     "name": "OWASP Threat Dragon",
     "email": "threat-dragon-project@owasp.org",
-    "url": "https://owasp.org/www-project-threat-dragon/"
+    "url": "https://owasp.org/projects/threat-dragon"
   },
   "license": "Apache-2.0",
   "engines": {
     "npm": ">=11.10.0"
   },
-  "homepage": "https://owasp.org/www-project-threat-dragon/",
+  "homepage": "https://owasp.org/projects/threat-dragon",
   "repository": {
     "type": "git",
     "url": "git://github.com/OWASP/threat-dragon.git"

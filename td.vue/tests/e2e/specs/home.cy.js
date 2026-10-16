@@ -106,7 +106,7 @@ describe('home', () => {
         it('links to OWASP page', () => {
             verifyExternalUrl(
                 '#nav-owasp-td',
-                'https://owasp.org/www-project-threat-dragon/'
+                'https://owasp.org/projects/threat-dragon'
             );
         });
     });

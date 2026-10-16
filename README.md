@@ -38,7 +38,7 @@ Previous releases are from Mike Goodwin's
 ## About Threat Dragon
 
 There is a good overview of
-[threat modeling and risk assessment](https://owasp.org/www-community/Application_Threat_Modeling)
+[threat modeling and risk assessment](https://community.owasp.org/Application_Threat_Modeling)
 from OWASP, and this expands on what the Threat Dragon project aims for:
 
 - ease of use and accessible
@@ -73,7 +73,7 @@ This means that versions 1.x of Threat Dragon are no longer actively maintained
 and versions 2.x have been re-written to use Vue.js.
 
 For more information on building/running version 1.x,
-please see the [legacy-v1.x branch](https://github.com/OWASP/threat-dragon/tree/archive-legacy-v1.x).
+please see the [legacy-v1.x branch](https://github.com/OWASP/threat-dragon/blob/archive-legacy-v1.x).
 
 ### Building version 2.x
 
@@ -189,7 +189,7 @@ Threat Dragon: _making threat modeling less threatening_
 [notes]: https://www.threatdragon.com/docs/development/development.html
 [owasp]: https://owasp.org/
 [practices]: https://www.bestpractices.dev/en/projects/9266
-[project]: https://owasp.org/www-project-threat-dragon/
+[project]: https://owasp.org/projects/threat-dragon
 [releases]: https://github.com/OWASP/threat-dragon/releases
 [subscribe]: https://owasp.org/slack/invite
 [td-slack]: https://owasp.slack.com/messages/CURE8PQ68

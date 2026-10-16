@@ -1,5 +1,5 @@
 {
-  "$id": "https://github.com/OWASP/threat-dragon/tree/main/td.vue/src/assets/schema/threat-dragon-v1.schema.json",
+  "$id": "https://github.com/OWASP/threat-dragon/blob/main/td.vue/src/assets/schema/threat-dragon-v1.schema.json",
   "title": "Threat Dragon model schema",
   "description": "The threat models used by OWASP Threat Dragon",
   "type": "object",
