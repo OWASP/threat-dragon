@@ -83,6 +83,9 @@ const read = (model) => {
             id: 0
         },
         detail: {
+            configuration: {
+                renderMarkdown: true
+            },
             contributors: [],
             diagrams: [],
             diagramTop: 0,

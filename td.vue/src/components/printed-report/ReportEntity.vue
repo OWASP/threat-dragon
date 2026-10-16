@@ -4,8 +4,16 @@
             {{ `${entity.data.name.replaceAll('\n', ' ')} (${dataType})` }}
             <em v-if="outOfScope">- {{ $t('threatmodel.properties.outOfScope') }}</em>
         </div>
-        <p class="entity-description" v-if="outOfScope"><b>{{ $t('threatmodel.properties.reasonOutOfScope') }}:</b> {{ entity.data.reasonOutOfScope }}</p>
-        <p class="entity-description" v-if="entity.data.description">{{ $t('threatmodel.properties.description') }}: {{ entity.data.description }}</p>
+        <div class="entity-description" v-if="outOfScope" >
+            <p class="compact"><b>{{ $t('threatmodel.properties.reasonOutOfScope') }}:</b></p>
+            <div class="compact" v-html="reasonOutOfScopeMarkdown" v-if="renderMarkdown"></div>
+            <p class="plain-text" v-else>{{ reasonOutOfScopePlain }}</p>
+        </div>
+        <div class="entity-description" v-if="hasDescription" >
+            <p class="compact"><b>{{ $t('threatmodel.properties.description') }}:</b></p>
+            <div class="compact" v-html="descriptionMarkdown" v-if="renderMarkdown"></div>
+            <p class="plain-text" v-else>{{ descriptionPlain }}</p>
+        </div>
         <p class="entity-description" v-if="showProperties">{{ properties }}</p>
         <table class="table">
             <thead>
@@ -31,8 +39,10 @@
                     <td>{{ translateSeverity(threat.severity) }}</td>
                     <td>{{ translateStatus(threat.status) }}</td>
                     <td>{{ threat.score }}</td>
-                    <td>{{ threat.description }}</td>
-                    <td>{{ threat.mitigation }}</td>
+                    <td class="compact" v-html="markdownToHTML(threat.description)" v-if="renderMarkdown"></td>
+                    <td class="plain-text" v-else>{{ threat.description }}</td>
+                    <td class="compact" v-html="markdownToHTML(threat.mitigation)" v-if="renderMarkdown"></td>
+                    <td class="plain-text" v-else>{{ threat.mitigation }}</td>
                 </tr>
             </tbody>
         </table>
@@ -43,7 +53,6 @@
 .report-box {
     display: flex;
     flex-direction: column;
-    white-space: pre-wrap;
 }
 
 .entity-title {
@@ -55,11 +64,19 @@
 
 .entity-description {
     padding: 15px;
+}
+
+.plain-text {
     white-space: pre-wrap;
+}
+
+.compact, .compact :deep(p), .compact :deep(ul) {
+    margin-bottom: 0.4rem;
 }
 </style>
 
 <script>
+import { markdownToHTML } from '@/service/formatting-utils.js';
 import threatService from '@/service/threats/index.js';
 import { translateKnownKey } from '@/service/i18n/translation.js';
 
@@ -67,6 +84,10 @@ export default {
     name: 'TdPrintReportEntity',
     props: {
         entity: Object,
+        renderMarkdown: {
+            type: Boolean,
+            default: true
+        },
         outOfScope: {
             type: Boolean,
             default: false
@@ -85,6 +106,21 @@ export default {
         }
     },
     computed: {
+        reasonOutOfScopePlain() {
+            return this.entity.data.reasonOutOfScope || '';
+        },
+        reasonOutOfScopeMarkdown() {
+            return markdownToHTML(this.reasonOutOfScopePlain);
+        },
+        hasDescription() {
+            return Boolean(this.entity.data.description);
+        },
+        descriptionPlain() {
+            return this.entity.data.description || '';
+        },
+        descriptionMarkdown() {
+            return markdownToHTML(this.descriptionPlain);
+        },
         dataType: function () {
             return translateKnownKey(this.$t, this.entity.data.type);
         },
@@ -142,6 +178,7 @@ export default {
         }
     },
     methods: {
+        markdownToHTML,
         toCamelCase(str) {
             return str.replace(/(?:^\w|[A-Z]|\b\w)/g, (ltr, idx) => idx === 0 ? ltr.toLowerCase() : ltr.toUpperCase()).replace(/\s+/g, '');
         },
