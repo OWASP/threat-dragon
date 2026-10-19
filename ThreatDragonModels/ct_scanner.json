@@ -13,7 +13,7 @@
     ],
     "diagrams": [
       {
-        "title": "Educational STRIDE Model — Network-Connected CT Scanner — Synchronized",
+        "title": "Educational CT Scanner — Grouped DICOM DFD (37 threats)",
         "thumbnail": "./public/content/images/thumbnail.stride.jpg",
         "diagramType": "STRIDE",
         "id": 0,
@@ -28,27 +28,14 @@
               },
               "smooth": true,
               "source": {
-                "x": 595,
-                "y": 485
+                "x": 680,
+                "y": 540
               },
               "target": {
-                "x": 595,
-                "y": 485
+                "x": 1030,
+                "y": 1290
               },
-              "vertices": [
-                {
-                  "x": 830,
-                  "y": 485
-                },
-                {
-                  "x": 830,
-                  "y": 980
-                },
-                {
-                  "x": 595,
-                  "y": 980
-                }
-              ],
+              "vertices": [],
               "id": "849e31c5-fb60-4fb4-b2b4-90233de94499",
               "z": 1,
               "attrs": {},
@@ -63,27 +50,14 @@
               },
               "smooth": true,
               "source": {
-                "x": 1325,
-                "y": 225
+                "x": 1370,
+                "y": 530
               },
               "target": {
-                "x": 1325,
-                "y": 225
+                "x": 1840,
+                "y": 1580
               },
-              "vertices": [
-                {
-                  "x": 1870,
-                  "y": 225
-                },
-                {
-                  "x": 1870,
-                  "y": 1030
-                },
-                {
-                  "x": 1325,
-                  "y": 1030
-                }
-              ],
+              "vertices": [],
               "id": "2c53bfb5-368e-4099-9af2-17eb637431ba",
               "z": 2,
               "attrs": {},
@@ -98,27 +72,14 @@
               },
               "smooth": true,
               "source": {
-                "x": 45,
-                "y": 60
+                "x": 40,
+                "y": 380
               },
               "target": {
-                "x": 45,
-                "y": 60
+                "x": 420,
+                "y": 1060
               },
-              "vertices": [
-                {
-                  "x": 555,
-                  "y": 60
-                },
-                {
-                  "x": 555,
-                  "y": 275
-                },
-                {
-                  "x": 45,
-                  "y": 275
-                }
-              ],
+              "vertices": [],
               "id": "eeb4d092-a64b-43a7-b589-121ace7e1a46",
               "z": 3,
               "attrs": {},
@@ -133,27 +94,14 @@
               },
               "smooth": true,
               "source": {
-                "x": 45,
-                "y": 475
+                "x": 1950,
+                "y": 1080
               },
               "target": {
-                "x": 45,
-                "y": 475
+                "x": 2220,
+                "y": 1390
               },
-              "vertices": [
-                {
-                  "x": 300,
-                  "y": 475
-                },
-                {
-                  "x": 300,
-                  "y": 700
-                },
-                {
-                  "x": 45,
-                  "y": 700
-                }
-              ],
+              "vertices": [],
               "id": "3f6630f4-6b41-42c6-b9f9-d8500fa0a9b7",
               "z": 4,
               "attrs": {},
@@ -167,8 +115,8 @@
                 "height": 90
               },
               "position": {
-                "x": 650,
-                "y": 530
+                "x": 780,
+                "y": 650
               },
               "angle": 0,
               "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc",
@@ -243,8 +191,8 @@
                 "height": 90
               },
               "position": {
-                "x": 1390,
-                "y": 290
+                "x": 1500,
+                "y": 650
               },
               "angle": 0,
               "id": "2b29dbce-3fdb-49f8-b1af-b53e3db201c7",
@@ -273,8 +221,8 @@
                 "height": 90
               },
               "position": {
-                "x": 1390,
-                "y": 880
+                "x": 1450,
+                "y": 1210
               },
               "angle": 0,
               "id": "87b88bdc-ecd0-47d9-a54f-107727c70b31",
@@ -303,8 +251,8 @@
                 "height": 90
               },
               "position": {
-                "x": 370,
-                "y": 110
+                "x": 2050,
+                "y": 1200
               },
               "angle": 0,
               "id": "0a669472-850d-44e8-b159-ed8f8d8e9115",
@@ -333,8 +281,8 @@
                 "height": 80
               },
               "position": {
-                "x": 80,
-                "y": 110
+                "x": 790,
+                "y": 100
               },
               "angle": 0,
               "id": "0eadd248-95a7-48c6-8bb3-46c4d791ec34",
@@ -363,8 +311,8 @@
                 "height": 80
               },
               "position": {
-                "x": 80,
-                "y": 550
+                "x": 110,
+                "y": 490
               },
               "angle": 0,
               "id": "4bea1514-bdb3-4346-a611-2cd990d09160",
@@ -393,8 +341,8 @@
                 "height": 80
               },
               "position": {
-                "x": 80,
-                "y": 1080
+                "x": 110,
+                "y": 920
               },
               "angle": 0,
               "id": "77e7ef5c-06e9-4122-a78c-0b10c1269986",
@@ -423,8 +371,8 @@
                 "height": 80
               },
               "position": {
-                "x": 640,
-                "y": 850
+                "x": 760,
+                "y": 1140
               },
               "angle": 0,
               "id": "43a7a71b-0bbc-44e4-b9a8-a2e50a0fcb56",
@@ -477,8 +425,8 @@
                 "height": 80
               },
               "position": {
-                "x": 1660,
-                "y": 290
+                "x": 1940,
+                "y": 650
               },
               "angle": 0,
               "id": "260688e1-cfe4-44f6-9b65-3cd472d3a484",
@@ -507,8 +455,8 @@
                 "height": 80
               },
               "position": {
-                "x": 1660,
-                "y": 880
+                "x": 1750,
+                "y": 1500
               },
               "angle": 0,
               "id": "d4e58933-0454-4085-96a1-85a22c3cf12c",
@@ -531,12 +479,76 @@
               }
             },
             {
+              "type": "tm.Actor",
+              "size": {
+                "width": 170,
+                "height": 80
+              },
+              "position": {
+                "x": 1510,
+                "y": 100
+              },
+              "angle": 0,
+              "id": "8047795a-7b3e-4494-b3e5-8d0a8d792154",
+              "z": 23,
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Conditional DICOM Print Destination"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                },
+                ".undefined": {
+                  "class": "undefinedhasNoOpenThreats isInScope"
+                }
+              },
+              "description": "Included only if DICOM Print is actually deployed.",
+              "conditional": true
+            },
+            {
+              "type": "tm.Actor",
+              "size": {
+                "width": 170,
+                "height": 80
+              },
+              "position": {
+                "x": 380,
+                "y": 1450
+              },
+              "angle": 0,
+              "id": "1ee0b2ef-30c6-4e58-8f57-cda995c45ff2",
+              "z": 24,
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Conditional Audit Destination"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                },
+                ".undefined": {
+                  "class": "undefinedhasNoOpenThreats isInScope"
+                }
+              },
+              "description": "Included only where audit information is remotely transmitted.",
+              "conditional": true
+            },
+            {
               "type": "tm.Flow",
               "size": {
                 "width": 10,
                 "height": 10
               },
-              "smooth": true,
+              "smooth": false,
               "source": {
                 "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
               },
@@ -545,12 +557,12 @@
               },
               "vertices": [
                 {
-                  "x": 900,
-                  "y": 165
+                  "x": 1120,
+                  "y": 480
                 },
                 {
-                  "x": 1190,
-                  "y": 165
+                  "x": 1370,
+                  "y": 480
                 }
               ],
               "id": "5a7a12de-ceb7-4f20-b0d1-085e42e80dc2",
@@ -560,7 +572,7 @@
                   "position": 0.5,
                   "attrs": {
                     "text": {
-                      "text": "F01a",
+                      "text": "CT → PACS | DICOM services",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -622,10 +634,66 @@
                   "number": 4,
                   "modelType": "STRIDE",
                   "threatId": "436d21f3-e21d-42d7-8ad2-273745bde3cd"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T09 Storage Commitment peer impersonation",
+                  "type": "Spoofing",
+                  "description": "[Impact: Medium; Exploitability: Medium; Evidence: V-P/D; Priority: Medium] An unauthorized endpoint impersonates a configured Storage Commitment peer.",
+                  "mitigation": "Restrict Storage Commitment associations to approved peers and verify the configured destination and transport protection.",
+                  "number": 9,
+                  "modelType": "STRIDE",
+                  "threatId": "35a20607-093a-4c28-be1b-2ecaf3cda500"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T10 Storage Commitment status manipulation",
+                  "type": "Tampering",
+                  "description": "[Impact: High; Exploitability: Low; Evidence: D/U; Priority: Medium] A false or altered Storage Commitment interaction causes the workflow to treat data as committed when the intended storage state is not established.",
+                  "mitigation": "Restrict peers and validate Storage Commitment state transitions and failure handling in controlled testing.",
+                  "number": 10,
+                  "modelType": "STRIDE",
+                  "threatId": "0752031f-58c9-48a0-992c-2f6dec5a22e9"
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T11 Query/Retrieve peer impersonation",
+                  "type": "Spoofing",
+                  "description": "[Impact: High; Exploitability: Medium; Evidence: D/U; Priority: High] An unauthorized endpoint impersonates a configured Query/Retrieve peer.",
+                  "mitigation": "Restrict Query/Retrieve peers and verify AE/IP configuration and transport protection.",
+                  "number": 11,
+                  "modelType": "STRIDE",
+                  "threatId": "b4780ff1-3e0a-49be-b210-b5937f0d4f28"
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "T12 Unauthorized Query/Retrieve access",
+                  "type": "Information disclosure",
+                  "description": "[Impact: High; Exploitability: Medium; Evidence: D/U; Priority: High] An unauthorized peer queries or retrieves patient or imaging information.",
+                  "mitigation": "Authorize Query/Retrieve peers and operations, restrict network reachability and audit relevant activity where supported.",
+                  "number": 12,
+                  "modelType": "STRIDE",
+                  "threatId": "191eb637-5e4d-4523-98b5-8ee931e92a35"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "T13 Query/Retrieve service disruption",
+                  "type": "Denial of service",
+                  "description": "[Impact: High; Exploitability: Low; Evidence: D/U; Priority: Medium] Query/Retrieve requests or network conditions make the service unavailable to authorized clinical workflows.",
+                  "mitigation": "Use ACLs, segmentation and monitoring; use controlled non-production tests for resource exhaustion.",
+                  "number": 13,
+                  "modelType": "STRIDE",
+                  "threatId": "34ae1aae-73e3-4af6-88a6-0f42e9959168"
                 }
               ],
-              "flowGroupId": "F01a",
-              "primaryFlowGroup": "F01"
+              "flowGroupId": "GROUP_F01a",
+              "primaryFlowGroup": "GROUP_F01a",
+              "description": "Educational grouped flow. Original transactions: F01a: F01a — DICOM Storage — CT → PACS | F02a: F02a — Storage Commitment — N-ACTION CT → PACS | F03a: F03a — Query/Retrieve — C-FIND CT → PACS | F03d: F03d — Query/Retrieve — C-STORE PACS → CT | F11: F11 — Autorouting — configured DICOM node(s). This grouping is for readability only; see the accompanying mapping for original per-flow threat assignments. Flow direction follows original endpoint IDs; some original Query/Retrieve labels conflict with endpoint direction and need review."
             },
             {
               "type": "tm.Flow",
@@ -633,7 +701,7 @@
                 "width": 10,
                 "height": 10
               },
-              "smooth": true,
+              "smooth": false,
               "source": {
                 "id": "2b29dbce-3fdb-49f8-b1af-b53e3db201c7"
               },
@@ -642,12 +710,12 @@
               },
               "vertices": [
                 {
-                  "x": 900,
-                  "y": 215
+                  "x": 1370,
+                  "y": 830
                 },
                 {
-                  "x": 1190,
-                  "y": 215
+                  "x": 1120,
+                  "y": 830
                 }
               ],
               "id": "f2c323b1-ccc9-4068-ab2b-dd60c88ea532",
@@ -657,7 +725,7 @@
                   "position": 0.5,
                   "attrs": {
                     "text": {
-                      "text": "F01b",
+                      "text": "PACS → CT | DICOM services",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -721,8 +789,9 @@
                   "threatId": "55c12bbf-d611-404c-bfb1-631459ca80b6"
                 }
               ],
-              "flowGroupId": "F01b",
-              "primaryFlowGroup": "F01"
+              "flowGroupId": "GROUP_F01b",
+              "primaryFlowGroup": "GROUP_F01b",
+              "description": "Educational grouped flow. Original transactions: F01b: F01b — DICOM Storage — PACS → CT | F02b: F02b — Storage Commitment — N-EVENT-REPORT PACS → CT | F03b: F03b — Query/Retrieve — C-FIND response PACS → CT | F03c: F03c — Query/Retrieve — C-MOVE CT → PACS. This grouping is for readability only; see the accompanying mapping for original per-flow threat assignments. Flow direction follows original endpoint IDs; some original Query/Retrieve labels conflict with endpoint direction and need review."
             },
             {
               "type": "tm.Flow",
@@ -730,376 +799,7 @@
                 "width": 10,
                 "height": 10
               },
-              "smooth": true,
-              "source": {
-                "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
-              },
-              "target": {
-                "id": "2b29dbce-3fdb-49f8-b1af-b53e3db201c7"
-              },
-              "vertices": [
-                {
-                  "x": 900,
-                  "y": 265
-                },
-                {
-                  "x": 1190,
-                  "y": 265
-                }
-              ],
-              "id": "2782402d-35a8-4f0b-9d30-0af9043fbeae",
-              "z": 5,
-              "labels": [
-                {
-                  "position": 0.5,
-                  "attrs": {
-                    "text": {
-                      "text": "F02a",
-                      "font-weight": "400",
-                      "font-size": "small"
-                    }
-                  }
-                }
-              ],
-              "outOfScope": false,
-              "hasOpenThreats": true,
-              "attrs": {
-                ".marker-target": {
-                  "class": "marker-target hasOpenThreats isInScope"
-                },
-                ".connection": {
-                  "class": "connection hasOpenThreats isInScope"
-                }
-              },
-              "protocol": "DICOM DIMSE",
-              "threats": [
-                {
-                  "status": "Open",
-                  "severity": "Medium",
-                  "title": "T09 Storage Commitment peer impersonation",
-                  "type": "Spoofing",
-                  "description": "[Impact: Medium; Exploitability: Medium; Evidence: V-P/D; Priority: Medium] An unauthorized endpoint impersonates a configured Storage Commitment peer.",
-                  "mitigation": "Restrict Storage Commitment associations to approved peers and verify the configured destination and transport protection.",
-                  "number": 9,
-                  "modelType": "STRIDE",
-                  "threatId": "35a20607-093a-4c28-be1b-2ecaf3cda500"
-                },
-                {
-                  "status": "Open",
-                  "severity": "Medium",
-                  "title": "T10 Storage Commitment status manipulation",
-                  "type": "Tampering",
-                  "description": "[Impact: High; Exploitability: Low; Evidence: D/U; Priority: Medium] A false or altered Storage Commitment interaction causes the workflow to treat data as committed when the intended storage state is not established.",
-                  "mitigation": "Restrict peers and validate Storage Commitment state transitions and failure handling in controlled testing.",
-                  "number": 10,
-                  "modelType": "STRIDE",
-                  "threatId": "0752031f-58c9-48a0-992c-2f6dec5a22e9"
-                }
-              ],
-              "flowGroupId": "F02a",
-              "primaryFlowGroup": "F02"
-            },
-            {
-              "type": "tm.Flow",
-              "size": {
-                "width": 10,
-                "height": 10
-              },
-              "smooth": true,
-              "source": {
-                "id": "2b29dbce-3fdb-49f8-b1af-b53e3db201c7"
-              },
-              "target": {
-                "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
-              },
-              "vertices": [
-                {
-                  "x": 900,
-                  "y": 315
-                },
-                {
-                  "x": 1190,
-                  "y": 315
-                }
-              ],
-              "id": "6ece06ba-2be5-4e55-b4cf-8b0d94639526",
-              "z": 5,
-              "labels": [
-                {
-                  "position": 0.5,
-                  "attrs": {
-                    "text": {
-                      "text": "F02b",
-                      "font-weight": "400",
-                      "font-size": "small"
-                    }
-                  }
-                }
-              ],
-              "outOfScope": false,
-              "hasOpenThreats": false,
-              "attrs": {
-                ".marker-target": {
-                  "class": "marker-target hasNoOpenThreats isInScope"
-                },
-                ".connection": {
-                  "class": "connection hasNoOpenThreats isInScope"
-                }
-              },
-              "protocol": "DICOM DIMSE",
-              "threats": [],
-              "flowGroupId": "F02b",
-              "primaryFlowGroup": "F02"
-            },
-            {
-              "type": "tm.Flow",
-              "size": {
-                "width": 10,
-                "height": 10
-              },
-              "smooth": true,
-              "source": {
-                "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
-              },
-              "target": {
-                "id": "2b29dbce-3fdb-49f8-b1af-b53e3db201c7"
-              },
-              "vertices": [
-                {
-                  "x": 900,
-                  "y": 365
-                },
-                {
-                  "x": 1190,
-                  "y": 365
-                }
-              ],
-              "id": "7efdc4ce-989b-4cf7-a859-1ea40b5b3c63",
-              "z": 5,
-              "labels": [
-                {
-                  "position": 0.5,
-                  "attrs": {
-                    "text": {
-                      "text": "F03a",
-                      "font-weight": "400",
-                      "font-size": "small"
-                    }
-                  }
-                }
-              ],
-              "outOfScope": false,
-              "hasOpenThreats": true,
-              "attrs": {
-                ".marker-target": {
-                  "class": "marker-target hasOpenThreats isInScope"
-                },
-                ".connection": {
-                  "class": "connection hasOpenThreats isInScope"
-                }
-              },
-              "protocol": "DICOM DIMSE",
-              "threats": [
-                {
-                  "status": "Open",
-                  "severity": "High",
-                  "title": "T11 Query/Retrieve peer impersonation",
-                  "type": "Spoofing",
-                  "description": "[Impact: High; Exploitability: Medium; Evidence: D/U; Priority: High] An unauthorized endpoint impersonates a configured Query/Retrieve peer.",
-                  "mitigation": "Restrict Query/Retrieve peers and verify AE/IP configuration and transport protection.",
-                  "number": 11,
-                  "modelType": "STRIDE",
-                  "threatId": "b4780ff1-3e0a-49be-b210-b5937f0d4f28"
-                },
-                {
-                  "status": "Open",
-                  "severity": "High",
-                  "title": "T12 Unauthorized Query/Retrieve access",
-                  "type": "Information disclosure",
-                  "description": "[Impact: High; Exploitability: Medium; Evidence: D/U; Priority: High] An unauthorized peer queries or retrieves patient or imaging information.",
-                  "mitigation": "Authorize Query/Retrieve peers and operations, restrict network reachability and audit relevant activity where supported.",
-                  "number": 12,
-                  "modelType": "STRIDE",
-                  "threatId": "191eb637-5e4d-4523-98b5-8ee931e92a35"
-                },
-                {
-                  "status": "Open",
-                  "severity": "Medium",
-                  "title": "T13 Query/Retrieve service disruption",
-                  "type": "Denial of service",
-                  "description": "[Impact: High; Exploitability: Low; Evidence: D/U; Priority: Medium] Query/Retrieve requests or network conditions make the service unavailable to authorized clinical workflows.",
-                  "mitigation": "Use ACLs, segmentation and monitoring; use controlled non-production tests for resource exhaustion.",
-                  "number": 13,
-                  "modelType": "STRIDE",
-                  "threatId": "34ae1aae-73e3-4af6-88a6-0f42e9959168"
-                }
-              ],
-              "flowGroupId": "F03a",
-              "primaryFlowGroup": "F03"
-            },
-            {
-              "type": "tm.Flow",
-              "size": {
-                "width": 10,
-                "height": 10
-              },
-              "smooth": true,
-              "source": {
-                "id": "2b29dbce-3fdb-49f8-b1af-b53e3db201c7"
-              },
-              "target": {
-                "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
-              },
-              "vertices": [
-                {
-                  "x": 900,
-                  "y": 415
-                },
-                {
-                  "x": 1190,
-                  "y": 415
-                }
-              ],
-              "id": "fa97d328-267a-4fe5-89fd-4654372c37a1",
-              "z": 5,
-              "labels": [
-                {
-                  "position": 0.5,
-                  "attrs": {
-                    "text": {
-                      "text": "F03b",
-                      "font-weight": "400",
-                      "font-size": "small"
-                    }
-                  }
-                }
-              ],
-              "outOfScope": false,
-              "hasOpenThreats": false,
-              "attrs": {
-                ".marker-target": {
-                  "class": "marker-target hasNoOpenThreats isInScope"
-                },
-                ".connection": {
-                  "class": "connection hasNoOpenThreats isInScope"
-                }
-              },
-              "protocol": "DICOM DIMSE",
-              "threats": [],
-              "flowGroupId": "F03b",
-              "primaryFlowGroup": "F03"
-            },
-            {
-              "type": "tm.Flow",
-              "size": {
-                "width": 10,
-                "height": 10
-              },
-              "smooth": true,
-              "source": {
-                "id": "2b29dbce-3fdb-49f8-b1af-b53e3db201c7"
-              },
-              "target": {
-                "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
-              },
-              "vertices": [
-                {
-                  "x": 900,
-                  "y": 465
-                },
-                {
-                  "x": 1190,
-                  "y": 465
-                }
-              ],
-              "id": "d9c0e0ab-c040-4be9-9083-78f59948a51d",
-              "z": 5,
-              "labels": [
-                {
-                  "position": 0.5,
-                  "attrs": {
-                    "text": {
-                      "text": "F03c",
-                      "font-weight": "400",
-                      "font-size": "small"
-                    }
-                  }
-                }
-              ],
-              "outOfScope": false,
-              "hasOpenThreats": false,
-              "attrs": {
-                ".marker-target": {
-                  "class": "marker-target hasNoOpenThreats isInScope"
-                },
-                ".connection": {
-                  "class": "connection hasNoOpenThreats isInScope"
-                }
-              },
-              "protocol": "DICOM DIMSE",
-              "threats": [],
-              "flowGroupId": "F03c",
-              "primaryFlowGroup": "F03"
-            },
-            {
-              "type": "tm.Flow",
-              "size": {
-                "width": 10,
-                "height": 10
-              },
-              "smooth": true,
-              "source": {
-                "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
-              },
-              "target": {
-                "id": "2b29dbce-3fdb-49f8-b1af-b53e3db201c7"
-              },
-              "vertices": [
-                {
-                  "x": 900,
-                  "y": 515
-                },
-                {
-                  "x": 1190,
-                  "y": 515
-                }
-              ],
-              "id": "5a5c4663-b66b-40db-96a7-0d19913d0383",
-              "z": 5,
-              "labels": [
-                {
-                  "position": 0.5,
-                  "attrs": {
-                    "text": {
-                      "text": "F03d",
-                      "font-weight": "400",
-                      "font-size": "small"
-                    }
-                  }
-                }
-              ],
-              "outOfScope": false,
-              "hasOpenThreats": false,
-              "attrs": {
-                ".marker-target": {
-                  "class": "marker-target hasNoOpenThreats isInScope"
-                },
-                ".connection": {
-                  "class": "connection hasNoOpenThreats isInScope"
-                }
-              },
-              "protocol": "DICOM DIMSE",
-              "threats": [],
-              "flowGroupId": "F03d",
-              "primaryFlowGroup": "F03"
-            },
-            {
-              "type": "tm.Flow",
-              "size": {
-                "width": 10,
-                "height": 10
-              },
-              "smooth": true,
+              "smooth": false,
               "source": {
                 "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
               },
@@ -1108,12 +808,12 @@
               },
               "vertices": [
                 {
-                  "x": 910,
-                  "y": 710
+                  "x": 1080,
+                  "y": 1010
                 },
                 {
-                  "x": 1190,
-                  "y": 710
+                  "x": 1320,
+                  "y": 1010
                 }
               ],
               "id": "a2304f50-e53b-44ea-8642-8f120c8b92b3",
@@ -1123,7 +823,7 @@
                   "position": 0.5,
                   "attrs": {
                     "text": {
-                      "text": "F04a",
+                      "text": "CT → RIS/HIS | MWL & MPPS",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -1185,112 +885,7 @@
                   "number": 17,
                   "modelType": "STRIDE",
                   "threatId": "b61b32de-e575-4c77-8753-162fc23d0c94"
-                }
-              ],
-              "flowGroupId": "F04a",
-              "primaryFlowGroup": "F04"
-            },
-            {
-              "type": "tm.Flow",
-              "size": {
-                "width": 10,
-                "height": 10
-              },
-              "smooth": true,
-              "source": {
-                "id": "87b88bdc-ecd0-47d9-a54f-107727c70b31"
-              },
-              "target": {
-                "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
-              },
-              "vertices": [
-                {
-                  "x": 910,
-                  "y": 770
                 },
-                {
-                  "x": 1190,
-                  "y": 770
-                }
-              ],
-              "id": "58080a77-387d-4df2-8aa0-b64d553f6444",
-              "z": 5,
-              "labels": [
-                {
-                  "position": 0.5,
-                  "attrs": {
-                    "text": {
-                      "text": "F04b",
-                      "font-weight": "400",
-                      "font-size": "small"
-                    }
-                  }
-                }
-              ],
-              "outOfScope": false,
-              "hasOpenThreats": false,
-              "attrs": {
-                ".marker-target": {
-                  "class": "marker-target hasNoOpenThreats isInScope"
-                },
-                ".connection": {
-                  "class": "connection hasNoOpenThreats isInScope"
-                }
-              },
-              "protocol": "DICOM DIMSE",
-              "threats": [],
-              "flowGroupId": "F04b",
-              "primaryFlowGroup": "F04"
-            },
-            {
-              "type": "tm.Flow",
-              "size": {
-                "width": 10,
-                "height": 10
-              },
-              "smooth": true,
-              "source": {
-                "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
-              },
-              "target": {
-                "id": "87b88bdc-ecd0-47d9-a54f-107727c70b31"
-              },
-              "vertices": [
-                {
-                  "x": 910,
-                  "y": 830
-                },
-                {
-                  "x": 1190,
-                  "y": 830
-                }
-              ],
-              "id": "b4236c21-7ce9-4ba7-a793-47628bdc3477",
-              "z": 5,
-              "labels": [
-                {
-                  "position": 0.5,
-                  "attrs": {
-                    "text": {
-                      "text": "F05",
-                      "font-weight": "400",
-                      "font-size": "small"
-                    }
-                  }
-                }
-              ],
-              "outOfScope": false,
-              "hasOpenThreats": true,
-              "attrs": {
-                ".marker-target": {
-                  "class": "marker-target hasOpenThreats isInScope"
-                },
-                ".connection": {
-                  "class": "connection hasOpenThreats isInScope"
-                }
-              },
-              "protocol": "DICOM DIMSE",
-              "threats": [
                 {
                   "status": "Open",
                   "severity": "Medium",
@@ -1325,8 +920,9 @@
                   "threatId": "06c1288d-7e08-45b4-8093-5b1778c0ccfd"
                 }
               ],
-              "flowGroupId": "F05",
-              "primaryFlowGroup": "F05"
+              "flowGroupId": "GROUP_F04a",
+              "primaryFlowGroup": "GROUP_F04a",
+              "description": "Educational grouped flow. Original transactions: F04a: F04a — Modality Worklist — C-FIND CT → RIS/HIS | F05: F05 — MPPS — N-CREATE/N-SET CT → RIS/HIS. This grouping is for readability only; see the accompanying mapping for original per-flow threat assignments. Flow direction follows original endpoint IDs; some original Query/Retrieve labels conflict with endpoint direction and need review."
             },
             {
               "type": "tm.Flow",
@@ -1334,23 +930,67 @@
                 "width": 10,
                 "height": 10
               },
-              "smooth": true,
+              "smooth": false,
               "source": {
-                "id": "0eadd248-95a7-48c6-8bb3-46c4d791ec34"
+                "id": "87b88bdc-ecd0-47d9-a54f-107727c70b31"
               },
               "target": {
                 "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
               },
               "vertices": [
                 {
-                  "x": 470,
-                  "y": 370
+                  "x": 1260,
+                  "y": 1350
                 },
                 {
-                  "x": 580,
-                  "y": 370
+                  "x": 1010,
+                  "y": 1350
                 }
               ],
+              "id": "58080a77-387d-4df2-8aa0-b64d553f6444",
+              "z": 5,
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "RIS/HIS → CT | MWL response",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              },
+              "protocol": "DICOM DIMSE",
+              "threats": [],
+              "flowGroupId": "GROUP_F04b",
+              "primaryFlowGroup": "GROUP_F04b",
+              "description": "Educational grouped flow. Original transactions: F04b: F04b — Modality Worklist — response RIS/HIS → CT. This grouping is for readability only; see the accompanying mapping for original per-flow threat assignments. Flow direction follows original endpoint IDs; some original Query/Retrieve labels conflict with endpoint direction and need review."
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": false,
+              "source": {
+                "id": "0eadd248-95a7-48c6-8bb3-46c4d791ec34"
+              },
+              "target": {
+                "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
+              },
+              "vertices": [],
               "id": "00ba19b3-8125-4048-bd89-76c088ad4235",
               "z": 5,
               "labels": [
@@ -1358,7 +998,7 @@
                   "position": 0.5,
                   "attrs": {
                     "text": {
-                      "text": "F07",
+                      "text": "F07 | Clinical User Interaction",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -1420,23 +1060,14 @@
                 "width": 10,
                 "height": 10
               },
-              "smooth": true,
+              "smooth": false,
               "source": {
                 "id": "4bea1514-bdb3-4346-a611-2cd990d09160"
               },
               "target": {
                 "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
               },
-              "vertices": [
-                {
-                  "x": 390,
-                  "y": 600
-                },
-                {
-                  "x": 540,
-                  "y": 600
-                }
-              ],
+              "vertices": [],
               "id": "50664a55-057d-4bc1-ae18-3aadbd8b748c",
               "z": 5,
               "labels": [
@@ -1444,7 +1075,7 @@
                   "position": 0.5,
                   "attrs": {
                     "text": {
-                      "text": "F08",
+                      "text": "F08 | Vendor/Service Access (where d",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -1506,23 +1137,14 @@
                 "width": 10,
                 "height": 10
               },
-              "smooth": true,
+              "smooth": false,
               "source": {
                 "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
               },
               "target": {
                 "id": "77e7ef5c-06e9-4122-a78c-0b10c1269986"
               },
-              "vertices": [
-                {
-                  "x": 440,
-                  "y": 1050
-                },
-                {
-                  "x": 570,
-                  "y": 1050
-                }
-              ],
+              "vertices": [],
               "id": "226bb215-0d35-4591-a3fc-0bfdea03bdcd",
               "z": 5,
               "labels": [
@@ -1530,7 +1152,7 @@
                   "position": 0.5,
                   "attrs": {
                     "text": {
-                      "text": "F09a",
+                      "text": "F09a | Supporting Network Services",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -1581,23 +1203,14 @@
                 "width": 10,
                 "height": 10
               },
-              "smooth": true,
+              "smooth": false,
               "source": {
                 "id": "77e7ef5c-06e9-4122-a78c-0b10c1269986"
               },
               "target": {
                 "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
               },
-              "vertices": [
-                {
-                  "x": 380,
-                  "y": 955
-                },
-                {
-                  "x": 560,
-                  "y": 955
-                }
-              ],
+              "vertices": [],
               "id": "57ab7f76-ff57-45c7-a8a3-c02c053e4558",
               "z": 5,
               "labels": [
@@ -1605,7 +1218,7 @@
                   "position": 0.5,
                   "attrs": {
                     "text": {
-                      "text": "F09b",
+                      "text": "F09b | Clinical Network Reachability",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -1667,19 +1280,14 @@
                 "width": 10,
                 "height": 10
               },
-              "smooth": true,
+              "smooth": false,
               "source": {
                 "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
               },
               "target": {
                 "id": "43a7a71b-0bbc-44e4-b9a8-a2e50a0fcb56"
               },
-              "vertices": [
-                {
-                  "x": 720,
-                  "y": 780
-                }
-              ],
+              "vertices": [],
               "id": "8861ae3a-c48b-4ea2-925a-d7ed45c48ad1",
               "z": 5,
               "labels": [
@@ -1687,7 +1295,7 @@
                   "position": 0.5,
                   "attrs": {
                     "text": {
-                      "text": "S01",
+                      "text": "S01 | CT Local Storage",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -1713,19 +1321,14 @@
                 "width": 10,
                 "height": 10
               },
-              "smooth": true,
+              "smooth": false,
               "source": {
                 "id": "2b29dbce-3fdb-49f8-b1af-b53e3db201c7"
               },
               "target": {
                 "id": "260688e1-cfe4-44f6-9b65-3cd472d3a484"
               },
-              "vertices": [
-                {
-                  "x": 1590,
-                  "y": 335
-                }
-              ],
+              "vertices": [],
               "id": "c9365303-de05-472c-b0a8-fc4b0a986136",
               "z": 5,
               "labels": [
@@ -1733,7 +1336,7 @@
                   "position": 0.5,
                   "attrs": {
                     "text": {
-                      "text": "S02",
+                      "text": "S02 | PACS Archive",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -1759,19 +1362,14 @@
                 "width": 10,
                 "height": 10
               },
-              "smooth": true,
+              "smooth": false,
               "source": {
                 "id": "87b88bdc-ecd0-47d9-a54f-107727c70b31"
               },
               "target": {
                 "id": "d4e58933-0454-4085-96a1-85a22c3cf12c"
               },
-              "vertices": [
-                {
-                  "x": 1590,
-                  "y": 925
-                }
-              ],
+              "vertices": [],
               "id": "d9cf9e98-e861-44c6-8952-c88cdf787329",
               "z": 5,
               "labels": [
@@ -1779,7 +1377,7 @@
                   "position": 0.5,
                   "attrs": {
                     "text": {
-                      "text": "S03",
+                      "text": "S03 | RIS/HIS Database",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -1800,92 +1398,19 @@
               "flowGroupId": "S03"
             },
             {
-              "type": "tm.Actor",
-              "size": {
-                "width": 170,
-                "height": 80
-              },
-              "position": {
-                "x": 1650,
-                "y": 55
-              },
-              "angle": 0,
-              "id": "8047795a-7b3e-4494-b3e5-8d0a8d792154",
-              "z": 23,
-              "outOfScope": false,
-              "hasOpenThreats": false,
-              "attrs": {
-                ".element-shape": {
-                  "class": "element-shape hasNoOpenThreats isInScope"
-                },
-                "text": {
-                  "text": "Conditional DICOM Print Destination"
-                },
-                ".element-text": {
-                  "class": "element-text hasNoOpenThreats isInScope"
-                },
-                ".undefined": {
-                  "class": "undefinedhasNoOpenThreats isInScope"
-                }
-              },
-              "description": "Included only if DICOM Print is actually deployed.",
-              "conditional": true
-            },
-            {
-              "type": "tm.Actor",
-              "size": {
-                "width": 170,
-                "height": 80
-              },
-              "position": {
-                "x": 1650,
-                "y": 1160
-              },
-              "angle": 0,
-              "id": "1ee0b2ef-30c6-4e58-8f57-cda995c45ff2",
-              "z": 24,
-              "outOfScope": false,
-              "hasOpenThreats": false,
-              "attrs": {
-                ".element-shape": {
-                  "class": "element-shape hasNoOpenThreats isInScope"
-                },
-                "text": {
-                  "text": "Conditional Audit Destination"
-                },
-                ".element-text": {
-                  "class": "element-text hasNoOpenThreats isInScope"
-                },
-                ".undefined": {
-                  "class": "undefinedhasNoOpenThreats isInScope"
-                }
-              },
-              "description": "Included only where audit information is remotely transmitted.",
-              "conditional": true
-            },
-            {
               "type": "tm.Flow",
               "size": {
                 "width": 10,
                 "height": 10
               },
-              "smooth": true,
+              "smooth": false,
               "source": {
                 "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
               },
               "target": {
                 "id": "8047795a-7b3e-4494-b3e5-8d0a8d792154"
               },
-              "vertices": [
-                {
-                  "x": 1080,
-                  "y": 95
-                },
-                {
-                  "x": 1450,
-                  "y": 95
-                }
-              ],
+              "vertices": [],
               "id": "81e4c7e2-7527-469e-bedb-6b1add2ec826",
               "z": 5,
               "labels": [
@@ -1893,7 +1418,7 @@
                   "position": 0.5,
                   "attrs": {
                     "text": {
-                      "text": "F06",
+                      "text": "F06 | DICOM Print",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -1914,23 +1439,14 @@
                 "width": 10,
                 "height": 10
               },
-              "smooth": true,
+              "smooth": false,
               "source": {
                 "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
               },
               "target": {
                 "id": "1ee0b2ef-30c6-4e58-8f57-cda995c45ff2"
               },
-              "vertices": [
-                {
-                  "x": 1080,
-                  "y": 1190
-                },
-                {
-                  "x": 1450,
-                  "y": 1190
-                }
-              ],
+              "vertices": [],
               "id": "f80a65bf-5851-4aeb-a2dd-a00ee1c411bd",
               "z": 5,
               "labels": [
@@ -1938,7 +1454,7 @@
                   "position": 0.5,
                   "attrs": {
                     "text": {
-                      "text": "F10",
+                      "text": "F10 | Audit Information",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -1952,61 +1468,12 @@
               "protocol": "Audit / transport",
               "conditional": true,
               "attrs": {}
-            },
-            {
-              "type": "tm.Flow",
-              "size": {
-                "width": 10,
-                "height": 10
-              },
-              "smooth": true,
-              "source": {
-                "id": "fccb4554-e458-4ea2-b088-edd0ed870cfc"
-              },
-              "target": {
-                "id": "2b29dbce-3fdb-49f8-b1af-b53e3db201c7"
-              },
-              "vertices": [
-                {
-                  "x": 940,
-                  "y": 575
-                },
-                {
-                  "x": 1210,
-                  "y": 575
-                }
-              ],
-              "id": "2e4c6f90-b941-4292-ab18-ff914242e0ad",
-              "z": 5,
-              "labels": [
-                {
-                  "position": 0.5,
-                  "attrs": {
-                    "text": {
-                      "text": "F11",
-                      "font-weight": "400",
-                      "font-size": "small"
-                    }
-                  }
-                }
-              ],
-              "outOfScope": false,
-              "hasOpenThreats": false,
-              "description": "Conditional DICOM forwarding/autorouting; destination and rules require deployment review.",
-              "threats": [],
-              "protocol": "DICOM DIMSE",
-              "conditional": true,
-              "attrs": {}
             }
-          ],
-          "size": {
-            "width": 1950,
-            "height": 1370
-          }
+          ]
         },
         "size": {
-          "height": 700,
-          "width": 1200
+          "width": 2400,
+          "height": 1800
         }
       }
     ]
