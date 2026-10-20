@@ -9,9 +9,11 @@ import cryptoWallet from './cryptocurrency-wallet';
 import huskyAi from './huskyai.tmbom';
 import mobileCloud from './mobile-cloud.otm';
 import v2DemoThreatModel from './v2-threat-model';
+import ctScanner from './ct_scanner.json';
 
 const models = [
     { name: 'Demo Threat Model', model: v2DemoThreatModel },
+    { name: 'CT Scanner', model: ctScanner },
     { name: 'Cryptocurrency Wallet', model: cryptoWallet },
     { name: 'Generic CMS', model: genericCms },
     { name: 'Husky AI', model: huskyAi },
