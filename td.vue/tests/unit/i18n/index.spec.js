@@ -11,7 +11,7 @@ describe('i18n/index.js', () => {
         it('is a frozen array of all expected locales', () => {
             const expected = [
                 'ar', 'az', 'de', 'el', 'en', 'es', 'fi', 'fr',
-                'hi', 'id', 'ja', 'ms', 'pt', 'pt-BR', 'zh'
+                'hi', 'id', 'ja', 'ms', 'pt', 'pt-BR', 'ru', 'zh'
             ];
 
             expect(Array.isArray(supportedLocales)).toBe(true);
@@ -20,8 +20,7 @@ describe('i18n/index.js', () => {
             expect(supportedLocales).toHaveLength(expected.length);
         });
 
-        it('excludes ru and uk (hidden locales)', () => {
-            expect(supportedLocales).not.toContain('ru');
+        it('excludes ukranian (hidden locale)', () => {
             expect(supportedLocales).not.toContain('uk');
         });
 

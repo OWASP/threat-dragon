@@ -97,6 +97,13 @@
         "dropdownLabel": "Português (Brasil)",
         "configLoadFailed": "Falha ao carregar configuração do servidor. Apenas login local disponível."
     },
+    "ru": {
+        "title": "OWASP Threat Dragon",
+        "description": "OWASP Threat Dragon является бесплатным кроссплатформенным приложением для моделирования угроз.",
+        "loginButton": "Войти в локальную сессию",
+        "dropdownLabel": "Русский",
+        "configLoadFailed": "Не удалось загрузить конфигурацию сервера. Доступен только локальный вход в систему."
+    },
     "zh": {
         "title": "OWASP Threat Dragon",
         "description": "Threat Dragon 是来自 OWASP 的免费开源威胁建模工具",

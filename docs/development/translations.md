@@ -46,7 +46,7 @@ structure as `en.js`.
 | Bahasa Malaysia (Malay)       | `ms`    | `ms.json` | Some values are in English (untranslated) |
 | Português (European)          | `pt`    | `pt.json` | All keys present, very few English values (untranslated)    |
 | Português do Brasil (Brazil)  | `pt-br` | `pt-br.json`  | Some values are in English (untranslated) |
-| Русский (Russian)             | `ru`    | `ru.json` | Some values are in English (untranslated) |
+| Русский (Russian)             | `ru`    | `ru.json` | |
 | Українська (Ukrainian)        | `uk`    | `uk.json` | Some values are in English (untranslated) |
 | 中文 (Chinese)                 | `zh`    | `zh.json` | Some values are in English (untranslated) |
 
