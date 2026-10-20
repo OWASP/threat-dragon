@@ -19,7 +19,7 @@ import ms from './ms';
 import pt from './pt';
 import ptBr from './pt-br';
 import ru from './ru';
-// hide RUS & UKR for now: import ukr from './uk';
+// hide Ukranian for now: import uk from './uk';
 import zh from './zh';
 
 

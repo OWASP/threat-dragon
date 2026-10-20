@@ -103,7 +103,7 @@ Threat Dragon: _making threat modeling less threatening_
 
 [Threat Dragon]: https://owasp.org/projects/threat-dragon
 [threat modeling]: https://community.owasp.org/Threat_Modeling
-[OWASP Production Project]: https://owasp.org/projects/
+[OWASP Production Project]: https://owasp.org/projects
 [manifesto]: https://www.threatmodelingmanifesto.org/
 [introduction]: https://www.youtube.com/watch?v=hUOAoc6QGJo
 [OWASP Spotlight]: https://www.youtube.com/playlist?list=PLUKo5k_oSrfOTl27gUmk2o-NBKvkTGw0T

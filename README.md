@@ -6,7 +6,7 @@
 [![GitHub license](https://img.shields.io/github/license/owasp/threat-dragon.svg)](license.txt)
 [![Build status](https://img.shields.io/github/check-runs/OWASP/threat-dragon/main?label=CI)][build]
 [![GitHub release](https://img.shields.io/github/v/release/owasp/threat-dragon?sort=semver)][latest]
-[![OWASP Production](https://img.shields.io/badge/owasp-production%20project-brightgreen)](https://owasp.org/projects/)
+[![OWASP Production](https://img.shields.io/badge/owasp-production%20project-brightgreen)](https://owasp.org/projects)
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/9266/badge)][practices]
 [![analytics: Plausible](https://img.shields.io/badge/analytics-Plausible-5850EC?logo=plausibleanalytics&logoColor=white)](https://analytics.threatdragon.com/share/threatdragon.com?auth=aCV0lHHVgvub06ga4z9by)
 

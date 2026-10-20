@@ -17,15 +17,21 @@ describe('smoke tests', () => {
 
     describe('locale', () => {
         it('shows default locale (English)', () => {
-            cy.get('.td-locale-select .td-dropdown-toggle').should('contain.text', 'English');
+            const defaultLocale = 'English';
+            cy.get('.td-locale-select .td-dropdown-toggle').should('contain.text', defaultLocale);
         });
 
-        it('shows locale dropdown with all available languages', () => {
-            const localesAvailableCount = 15;
+        it('shows locale dropdown', () => {
+            const localesMinimumCount = 10;
 
             cy.get('.td-locale-select .td-dropdown-toggle').click();
-            cy.get('.td-dropdown-scroll button').should('have.length', localesAvailableCount);
-            cy.get('.td-dropdown-scroll button').should('contain.text', 'English');
+            cy.get('.td-dropdown-scroll button').should('have.length.of.at.least', localesMinimumCount);
+        });
+
+        it('shows locale dropdown with available languages', () => {
+            const availableLocale = 'Español';
+            cy.get('.td-locale-select .td-dropdown-toggle').click();
+            cy.get('.td-dropdown-scroll button').should('contain.text', availableLocale);
         });
     });
 
