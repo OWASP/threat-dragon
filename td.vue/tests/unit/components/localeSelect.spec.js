@@ -24,6 +24,7 @@ const allLocaleLabels = {
     ms: 'Malay',
     pt: 'Português',
     'pt-BR': 'Português (Brasil)',
+    ru: 'Русский',
     zh: '中文'
 };
 

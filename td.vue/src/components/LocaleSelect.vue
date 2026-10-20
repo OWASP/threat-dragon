@@ -26,7 +26,7 @@
         </template>
     </td-dropdown>
 </template>
-  
+
 <script>
 import { mapState } from 'vuex';
 import { localeSelected } from '@/store/actions/locale.js';
@@ -143,6 +143,8 @@ export default {
                 return 'Português'; // Portuguese
             case 'pt-BR':
                 return 'Português (Brasil)'; // Brazilian Portuguese
+            case 'ru':
+                return 'Русский'; // Russian
             case 'zh':
                 return '中文'; // Chinese
             default:

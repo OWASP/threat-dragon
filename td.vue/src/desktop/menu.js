@@ -27,9 +27,10 @@ import ja from '@/i18n/ja';
 import ms from '@/i18n/ms';
 import pt from '@/i18n/pt';
 import ptBr from '@/i18n/pt-br';
+import ru from '@/i18n/ru';
 import zh from '@/i18n/zh';
 
-const messages = { ar, az, de, el, en, es, fi, fr, hi, id, ja, ms, pt, 'pt-BR': ptBr, zh };
+const messages = { ar, az, de, el, en, es, fi, fr, hi, id, ja, ms, pt, 'pt-BR': ptBr, ru, zh };
 const defaultLanguage = 'en';
 let language = defaultLanguage;
 
@@ -464,7 +465,7 @@ export const modelSave = (modelData, fileName) => {
 
 // the renderer has changed the language
 export const setLocale = (locale) => {
-    const languages = [ 'ar', 'az', 'de', 'el', 'en', 'es', 'fi', 'fr', 'hi', 'id', 'ja', 'ms', 'pt', 'pt-BR', 'zh' ];
+    const languages = [ 'ar', 'az', 'de', 'el', 'en', 'es', 'fi', 'fr', 'hi', 'id', 'ja', 'ms', 'pt', 'pt-BR', 'ru', 'zh' ];
     language = languages.includes(locale) ? locale : defaultLanguage;
 };
 

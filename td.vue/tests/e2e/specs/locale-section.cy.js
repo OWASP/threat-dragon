@@ -2,7 +2,7 @@ import homepageStrings from '../fixtures/homepage-strings.json';
 
 const allSupported = [
     'ar', 'az', 'de', 'el', 'en', 'es', 'fi', 'fr',
-    'hi', 'id', 'ja', 'ms', 'pt', 'pt-BR', 'zh'
+    'hi', 'id', 'ja', 'ms', 'pt', 'pt-BR', 'ru', 'zh'
 ];
 
 const defaultConfig = {
