@@ -159,6 +159,20 @@ describe('components/GraphButtons.vue', () => {
         expect(wrapper.vm.stencilOffset).toEqual(80);
     });
 
+    it('applies the stencil offset after bounding the responsive starting width', async () => {
+        await wrapper.vm.resizeStencilWidth(80);
+
+        expect(wrapper.element.style.getPropertyValue('--stencil-width'))
+            .toEqual('max(160px, calc(clamp(160px, 22%, 480px) + 80px))');
+    });
+
+    it('allows the canvas height to grow beyond the responsive starting height', async () => {
+        await wrapper.vm.resizeCanvasHeight(100);
+
+        expect(wrapper.element.style.getPropertyValue('--graph-height'))
+            .toEqual('max(320px, calc(max(320px, 65vh) + 100px))');
+    });
+
     it('resizes X6 to the viewport during a height drag without waiting for release', async () => {
         Object.defineProperties(wrapper.vm.$refs.graph_viewport, {
             clientWidth: { value: 600 },

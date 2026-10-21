@@ -62,7 +62,7 @@
 .td-graph-editor {
     --resize-handle-size: 20px;
     --stencil-width: clamp(160px, 22%, 480px);
-    --graph-height: clamp(320px, 65vh, 1000px);
+    --graph-height: max(320px, 65vh);
     display: block;
 }
 
@@ -208,8 +208,8 @@ export default {
     },
     methods: {
         updateLayoutVariables() {
-            this.$el.style.setProperty('--stencil-width', `clamp(160px, calc(22% + ${this.stencilOffset}px), 480px)`);
-            this.$el.style.setProperty('--graph-height', `clamp(320px, calc(65vh + ${this.graphHeightOffset}px), 1000px)`);
+            this.$el.style.setProperty('--stencil-width', `max(160px, calc(clamp(160px, 22%, 480px) + ${this.stencilOffset}px))`);
+            this.$el.style.setProperty('--graph-height', `max(320px, calc(max(320px, 65vh) + ${this.graphHeightOffset}px))`);
         },
         async resizeStencilWidth(offset) {
             this.stencilOffset = offset;

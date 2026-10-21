@@ -116,11 +116,12 @@ const assertCanvasBackgroundCoversViewport = () => {
     cy.get('.x6-graph-scroller').should(($scroller) => {
         const scroller = $scroller[0];
         const viewport = scroller.getBoundingClientRect();
+        const viewportHost = scroller.closest('.td-graph-viewport');
         const background = scroller.querySelector('.x6-graph-scroller-background');
         const grid = scroller.querySelector('.x6-graph-grid');
         const win = scroller.ownerDocument.defaultView;
 
-        expect(win.getComputedStyle(background).backgroundColor).to.equal('rgb(255, 255, 255)');
+        expect(win.getComputedStyle(viewportHost).backgroundColor).to.equal('rgb(255, 255, 255)');
         expect(win.getComputedStyle(grid).backgroundImage).not.to.equal('none');
         [background, grid].forEach((layer) => {
             const rect = layer.getBoundingClientRect();
@@ -365,6 +366,97 @@ describe('Regressions discovered during vue3 migration', () => {
         assertCanvasScrollbarsContained();
     });
 
+    it('keeps the first touch drag active when another touch moves or ends', () => {
+        openDemoModel('Demo Threat Model');
+        openDiagramEditor('Main Request Data Flow');
+        cy.window().then((win) => {
+            cy.stub(win.HTMLElement.prototype, 'setPointerCapture').callsFake(() => {});
+            cy.stub(win.HTMLElement.prototype, 'releasePointerCapture').callsFake(() => {}).as('releaseResizePointer');
+        });
+
+        cy.get('[data-resize="graph-height"]').then(($handle) => {
+            const handle = $handle[0];
+            const rect = handle.getBoundingClientRect();
+
+            cy.window().then((win) => {
+                const pointer = (type, pointerId, delta = 0) => handle.dispatchEvent(new win.PointerEvent(type, {
+                    bubbles: true,
+                    button: 0,
+                    pointerType: 'touch',
+                    pointerId,
+                    clientX: rect.x + rect.width / 2,
+                    clientY: rect.y + rect.height / 2 + delta
+                }));
+                const nextFrame = () => new Cypress.Promise((resolve) => win.requestAnimationFrame(resolve));
+
+                pointer('pointerdown', 1);
+                pointer('pointerdown', 2, 60);
+                pointer('pointermove', 2, 160);
+                return nextFrame().then(() => {
+                    expect(handle.getAttribute('aria-valuenow')).to.equal('0');
+                    pointer('pointerup', 2);
+                    pointer('pointercancel', 2);
+                    pointer('pointermove', 1, 80);
+                    return nextFrame().then(() => {
+                        expect(handle.getAttribute('aria-valuenow')).to.equal('80');
+                        pointer('pointerup', 1, 80);
+                    });
+                });
+            });
+        });
+        cy.get('@releaseResizePointer').should('have.been.calledOnceWithExactly', 1);
+        assertCanvasScrollbarsContained();
+    });
+
+    it('resizes stencil width in both directions on a large display', () => {
+        cy.viewport(3600, 2000);
+        openDemoModel('Demo Threat Model');
+        openDiagramEditor('Main Request Data Flow');
+
+        cy.get('.td-graph-editor').should(($editor) => {
+            expect($editor[0].clientWidth).to.be.greaterThan(3500);
+        });
+        cy.get('.td-graph-stencil').should('have.css', 'width', '480px');
+        cy.window().then((win) => {
+            cy.stub(win.HTMLElement.prototype, 'setPointerCapture').callsFake(() => {});
+            cy.stub(win.HTMLElement.prototype, 'releasePointerCapture').callsFake(() => {});
+        });
+
+        resizeCanvas(-80, 'width');
+        cy.get('.td-graph-stencil').should('have.css', 'width', '400px');
+        resizeCanvas(160, 'width');
+        cy.get('.td-graph-stencil').should('have.css', 'width', '560px');
+
+        cy.get('[data-resize="stencil"]').trigger('keydown', { key: 'Home' });
+        cy.get('.td-graph-stencil').should('have.css', 'width', '320px');
+        cy.get('[data-resize="stencil"]').trigger('keydown', { key: 'End' });
+        cy.get('.td-graph-stencil').should('have.css', 'width', '740px');
+        assertCanvasScrollbarsContained();
+    });
+
+    it('resizes a canvas taller than 1000px in both directions', () => {
+        cy.viewport(3600, 2000);
+        openDemoModel('Demo Threat Model');
+        openDiagramEditor('Main Request Data Flow');
+
+        cy.get('.td-graph-viewport').should('have.css', 'height', '1300px');
+        cy.window().then((win) => {
+            cy.stub(win.HTMLElement.prototype, 'setPointerCapture').callsFake(() => {});
+            cy.stub(win.HTMLElement.prototype, 'releasePointerCapture').callsFake(() => {});
+        });
+
+        resizeCanvas(-80);
+        cy.get('.td-graph-viewport').should('have.css', 'height', '1220px');
+        resizeCanvas(160);
+        cy.get('.td-graph-viewport').should('have.css', 'height', '1380px');
+
+        cy.get('[data-resize="graph-height"]').trigger('keydown', { key: 'Home' });
+        cy.get('.td-graph-viewport').should('have.css', 'height', '1060px');
+        cy.get('[data-resize="graph-height"]').trigger('keydown', { key: 'End' });
+        cy.get('.td-graph-viewport').should('have.css', 'height', '1800px');
+        assertCanvasScrollbarsContained();
+    });
+
     it('provides visible resize targets sized for the available pointer', () => {
         openDemoModel('Demo Threat Model');
         openDiagramEditor('Main Request Data Flow');
@@ -478,7 +570,7 @@ describe('Regressions discovered during vue3 migration', () => {
         assertCanvasBackgroundCoversViewport();
 
         cy.get('button[title="Toggle grid"]').click();
-        cy.get('.x6-graph-scroller-background').should('have.css', 'background-color', 'rgb(255, 255, 255)');
+        cy.get('.td-graph-viewport').should('have.css', 'background-color', 'rgb(255, 255, 255)');
     });
 
     it('shows the full background for an empty diagram', () => {

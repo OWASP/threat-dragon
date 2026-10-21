@@ -108,6 +108,7 @@ export default {
     data() {
         return {
             dragging: false,
+            activePointerId: null,
             startPosition: 0,
             startValue: 0
         };
@@ -125,12 +126,13 @@ export default {
         },
 
         onPointerDown(event) {
-            if (event.button !== 0) {
+            if (this.dragging || event.button !== 0) {
                 return;
             }
 
             event.preventDefault();
             this.dragging = true;
+            this.activePointerId = event.pointerId;
             this.startPosition = this.getPosition(event);
             this.startValue = this.value;
             event.currentTarget?.setPointerCapture?.(event.pointerId);
@@ -138,7 +140,7 @@ export default {
         },
 
         onPointerMove(event) {
-            if (!this.dragging) {
+            if (!this.dragging || event.pointerId !== this.activePointerId) {
                 return;
             }
 
@@ -147,12 +149,13 @@ export default {
         },
 
         onPointerUp(event) {
-            if (!this.dragging) {
+            if (!this.dragging || event.pointerId !== this.activePointerId) {
                 return;
             }
 
             event.currentTarget?.releasePointerCapture?.(event.pointerId);
             this.dragging = false;
+            this.activePointerId = null;
             this.$emit('end');
         },
 

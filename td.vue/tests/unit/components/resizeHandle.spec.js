@@ -133,4 +133,83 @@ describe('components/ResizeHandle.vue', () => {
 
         expect(wrapper.emitted('end')).toHaveLength(1);
     });
+
+    it('does not start another drag while one pointer is active', async () => {
+        const wrapper = mountComponent();
+
+        await triggerPointer(wrapper, 'pointerdown', { pointerId: 1 });
+        await triggerPointer(wrapper, 'pointerdown', { pointerId: 2 });
+
+        expect(wrapper.emitted('start')).toHaveLength(1);
+    });
+
+    it.each(['vertical', 'horizontal'])('preserves the first pointer origin for a %s drag', async (orientation) => {
+        const wrapper = mountComponent({ orientation });
+
+        await triggerPointer(wrapper, 'pointerdown', { pointerId: 1 });
+        await triggerPointer(wrapper, 'pointerdown', { pointerId: 2, clientX: 160, clientY: 160 });
+        await triggerPointer(wrapper, 'pointermove', { pointerId: 1, clientX: 140, clientY: 140 });
+
+        expect(wrapper.emitted('resize')).toEqual([[140]]);
+    });
+
+    it('ignores movement from a different pointer during a drag', async () => {
+        const wrapper = mountComponent();
+
+        await triggerPointer(wrapper, 'pointerdown', { pointerId: 1 });
+        await triggerPointer(wrapper, 'pointermove', { pointerId: 2, clientX: 140 });
+
+        expect(wrapper.emitted('resize')).toBeUndefined();
+    });
+
+    it.each(['pointerup', 'pointercancel'])('ignores another pointer’s %s event', async (type) => {
+        const wrapper = mountComponent();
+
+        await triggerPointer(wrapper, 'pointerdown', { pointerId: 1 });
+        await triggerPointer(wrapper, type, { pointerId: 2 });
+
+        expect(wrapper.emitted('end')).toBeUndefined();
+    });
+
+    it.each(['pointerup', 'pointercancel'])('continues the active drag after another pointer’s %s', async (type) => {
+        const wrapper = mountComponent();
+
+        await triggerPointer(wrapper, 'pointerdown', { pointerId: 1 });
+        await triggerPointer(wrapper, 'pointerdown', { pointerId: 2, clientX: 160 });
+        await triggerPointer(wrapper, type, { pointerId: 2 });
+        await triggerPointer(wrapper, 'pointermove', { pointerId: 1, clientX: 140 });
+
+        expect(wrapper.emitted('resize')).toEqual([[140]]);
+    });
+
+    it('releases pointer capture only for the active pointer', async () => {
+        const wrapper = mountComponent();
+        const handle = wrapper.find('button').element;
+        handle.releasePointerCapture = jest.fn();
+
+        await triggerPointer(wrapper, 'pointerdown', { pointerId: 1 });
+        await triggerPointer(wrapper, 'pointerup', { pointerId: 2 });
+        await triggerPointer(wrapper, 'pointerup', { pointerId: 1 });
+
+        expect(handle.releasePointerCapture.mock.calls).toEqual([[1]]);
+    });
+
+    it('accepts a new pointer after the active drag ends', async () => {
+        const wrapper = mountComponent();
+
+        await triggerPointer(wrapper, 'pointerdown', { pointerId: 1 });
+        await triggerPointer(wrapper, 'pointerup', { pointerId: 1 });
+        await triggerPointer(wrapper, 'pointerdown', { pointerId: 2, clientX: 160 });
+        await triggerPointer(wrapper, 'pointermove', { pointerId: 2, clientX: 180 });
+
+        expect(wrapper.emitted('resize')).toEqual([[120]]);
+    });
+
+    it('ignores pointer release when no drag has started', async () => {
+        const wrapper = mountComponent();
+
+        await triggerPointer(wrapper, 'pointerup');
+
+        expect(wrapper.emitted('end')).toBeUndefined();
+    });
 });
