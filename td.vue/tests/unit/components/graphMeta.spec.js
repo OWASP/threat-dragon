@@ -5,6 +5,7 @@ import Vuex from 'vuex';
 
 import TdGraphMeta from '@/components/GraphMeta.vue';
 import TdGraphThreats from '@/components/GraphThreats.vue';
+import TdResizeHandle from '@/components/ResizeHandle.vue';
 import analytics from '@/service/analytics.js';
 
 jest.mock('@/service/analytics.js', () => ({
@@ -102,6 +103,39 @@ describe('components/GraphMeta.vue', () => {
 
         it('displays the header new threat action', () => {
             expect(wrapper.find('.threats-header-action').exists()).toEqual(true);
+        });
+
+        it('updates the properties width from its handle', async () => {
+            wrapper.findComponent(TdResizeHandle).vm.$emit('resize', 80);
+            await wrapper.vm.$nextTick();
+
+            expect(wrapper.vm.propertiesOffset).toEqual(80);
+        });
+
+        it('creates a threat from the header action', async () => {
+            const newThreat = jest.spyOn(wrapper.vm, 'newThreat').mockImplementation(() => {});
+            await wrapper.find('.threats-header-action').trigger('click');
+
+            expect(newThreat).toHaveBeenCalledTimes(1);
+        });
+
+        it('creates a threat from the lower action', async () => {
+            const newThreat = jest.spyOn(wrapper.vm, 'newThreat').mockImplementation(() => {});
+            await wrapper.findAll('.new-threat-by-type').at(0).trigger('click');
+
+            expect(newThreat).toHaveBeenCalledTimes(1);
+        });
+
+        it('requests type suggestions from its link', async () => {
+            await wrapper.findAll('.new-threat-by-type').at(1).trigger('click');
+
+            expect(wrapper.emitted('threatSuggest')[0]).toEqual(['type']);
+        });
+
+        it('requests context suggestions from its link', async () => {
+            await wrapper.findAll('.new-threat-by-type').at(2).trigger('click');
+
+            expect(wrapper.emitted('threatSuggest')[0]).toEqual(['context']);
         });
     });
 

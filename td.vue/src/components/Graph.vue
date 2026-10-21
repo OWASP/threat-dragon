@@ -1,10 +1,20 @@
 <template>
-    <div>
-        <b-row>
-            <b-col md="2">
+    <div class="td-graph-editor">
+        <div class="td-graph-main">
+            <aside class="td-graph-stencil">
                 <div ref="stencil_container"></div>
-            </b-col>
-            <b-col md="10">
+            </aside>
+
+            <td-resize-handle
+                data-resize="stencil"
+                label="Resize stencil width"
+                :value="stencilOffset"
+                :min="-160"
+                :max="260"
+                @resize="resizeStencilWidth"
+            />
+
+            <main class="td-graph-canvas">
                 <b-row>
                     <b-col>
                         <h3 class="td-graph-title">{{ diagram.title }}</h3>
@@ -13,20 +23,30 @@
                         <td-graph-buttons :graph="graph" @saved="saved" @closed="closed" />
                     </b-col>
                 </b-row>
-                <b-row>
-                    <b-col style="display: flex;    width: 100vw; ">
-                        <div
-                            id="graph-container"
-                            ref="graph_container"
-                            style="height: 65vh; width: 100%; flex: 1; "
-                        ></div>
-                    </b-col>
-                </b-row>
-            </b-col>
-        </b-row>
+                <div ref="graph_viewport" class="td-graph-viewport">
+                    <div
+                        id="graph-container"
+                        ref="graph_container"
+                        class="td-graph-container"
+                    ></div>
+                </div>
+
+                <td-resize-handle
+                    class="td-graph-height-handle"
+                    data-resize="graph-height"
+                    label="Resize canvas height"
+                    orientation="horizontal"
+                    :value="graphHeightOffset"
+                    :min="-240"
+                    :max="500"
+                    @resize="resizeCanvasHeight"
+                />
+            </main>
+        </div>
+
         <td-graph-meta @threatSelected="threatSelected" @threatSuggest="threatSuggest" />
 
-        <div>
+        <div class="td-graph-dialogs">
             <td-keyboard-shortcuts />
             <td-threat-edit-dialog ref="threatEditDialog" />
             <td-threat-suggest-dialog ref="threatSuggestDialog" />
@@ -38,6 +58,97 @@
 .td-graph-title {
     margin-right: 15px;
 }
+
+.td-graph-editor {
+    --resize-handle-size: 20px;
+    --stencil-width: clamp(160px, 22%, 480px);
+    --graph-height: max(320px, 65vh);
+    display: block;
+}
+
+.td-graph-main {
+    display: grid;
+    grid-template-columns: var(--stencil-width) var(--resize-handle-size) minmax(0, 1fr);
+    min-width: 0;
+}
+
+.td-graph-stencil,
+.td-graph-canvas {
+    min-width: 0;
+}
+
+.td-graph-canvas {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto var(--graph-height) calc(var(--resize-handle-size) + 8px);
+    min-width: 0;
+}
+
+.td-graph-canvas > .row,
+.td-graph-canvas .col {
+    min-width: 0;
+}
+
+.td-graph-canvas > .row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.td-graph-canvas > .row:first-child > .col:last-child :deep(.btn-group) {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    max-width: 100%;
+}
+
+.td-graph-stencil {
+    min-height: 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.td-graph-stencil > div {
+    inset: 0;
+    position: absolute;
+}
+
+.td-graph-viewport {
+    background: $white;
+    min-height: 0;
+    min-width: 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.td-graph-container {
+    height: 100%;
+    width: 100%;
+}
+
+.td-graph-height-handle.td-resize-handle-horizontal {
+    margin-top: 8px;
+}
+
+@media (any-pointer: coarse) {
+    .td-graph-editor {
+        --resize-handle-size: 44px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .td-graph-main {
+        grid-template-columns: 1fr;
+    }
+
+    .td-graph-stencil {
+        height: 200px;
+        max-height: 200px;
+    }
+
+    .td-graph-main > .td-resize-handle-vertical {
+        display: none;
+    }
+}
 </style>
 
 <script>
@@ -46,6 +157,7 @@ import { mapState } from 'vuex';
 import TdGraphButtons from '@/components/GraphButtons.vue';
 import TdGraphMeta from '@/components/GraphMeta.vue';
 import TdKeyboardShortcuts from '@/components/KeyboardShortcuts.vue';
+import TdResizeHandle from '@/components/ResizeHandle.vue';
 import TdThreatEditDialog from '@/components/ThreatEditDialog.vue';
 import TdThreatSuggestDialog from './ThreatSuggestDialog.vue';
 
@@ -64,20 +176,26 @@ export default {
         TdGraphButtons,
         TdGraphMeta,
         TdKeyboardShortcuts,
+        TdResizeHandle,
         TdThreatEditDialog,
         TdThreatSuggestDialog
     },
-    computed: mapState({
-        diagram: (state) => state.threatmodel.selectedDiagram,
-        providerType: (state) => getProviderType(state.provider.selected)
-    }),
+    computed: {
+        ...mapState({
+            diagram: (state) => state.threatmodel.selectedDiagram,
+            providerType: (state) => getProviderType(state.provider.selected)
+        })
+    },
     data() {
         return {
             graph: null,
-            desktopSaveRequestHandler: null
+            graphHeightOffset: 0,
+            desktopSaveRequestHandler: null,
+            stencilOffset: 0
         };
     },
     async mounted() {
+        this.updateLayoutVariables();
         this.init();
         analytics.startEditing('diagram');
         analytics.track('DIAGRAM_METHODOLOGY_USED', {
@@ -89,6 +207,26 @@ export default {
         }
     },
     methods: {
+        updateLayoutVariables() {
+            this.$el.style.setProperty('--stencil-width', `max(160px, calc(clamp(160px, 22%, 480px) + ${this.stencilOffset}px))`);
+            this.$el.style.setProperty('--graph-height', `max(320px, calc(max(320px, 65vh) + ${this.graphHeightOffset}px))`);
+        },
+        async resizeStencilWidth(offset) {
+            this.stencilOffset = offset;
+            this.updateLayoutVariables();
+            await this.$nextTick();
+
+            const viewport = this.$refs.graph_viewport;
+            this.graph.resize(viewport.clientWidth, viewport.clientHeight);
+        },
+        async resizeCanvasHeight(offset) {
+            this.graphHeightOffset = offset;
+            this.updateLayoutVariables();
+            await this.$nextTick();
+
+            const viewport = this.$refs.graph_viewport;
+            this.graph.resize(viewport.clientWidth, viewport.clientHeight);
+        },
         init() {
             this.graph = diagramService.edit(this.$refs.graph_container, this.diagram);
             stencil.get(this.graph, this.$refs.stencil_container);
