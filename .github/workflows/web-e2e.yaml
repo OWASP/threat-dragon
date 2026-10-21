@@ -112,14 +112,14 @@ jobs:
 
       - name: Upload local e2e videos
         if: ${{ failure() && inputs.container == false && hashFiles('tests/e2e/videos/') != '' }}
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: e2e_vids.zip
           path: tests/e2e/videos
 
       - name: Upload container e2e videos
         if: ${{ failure() && inputs.container && hashFiles('td.vue/tests/e2e/videos/') != '' }}
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: e2e_vids.zip
           path: td.vue/tests/e2e/videos
@@ -210,14 +210,14 @@ jobs:
 
       - name: Upload local e2e videos
         if: ${{ failure() && inputs.container == false && hashFiles('tests/e2e/videos/') != '' }}
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: e2e_vids.zip
           path: tests/e2e/videos
 
       - name: Upload container e2e videos
         if: ${{ failure() && inputs.container && hashFiles('td.vue/tests/e2e/videos/') != '' }}
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: e2e_vids.zip
           path: td.vue/tests/e2e/videos
