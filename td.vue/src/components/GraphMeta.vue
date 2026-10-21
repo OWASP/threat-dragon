@@ -1,11 +1,21 @@
 <template>
-    <b-row>
-        <b-col md="6">
+    <div class="td-graph-meta" :style="layoutStyle">
+        <section class="td-graph-meta-properties">
             <b-card :header="`${$t('threatmodel.properties.title')}`">
                 <td-graph-properties />
             </b-card>
-        </b-col>
-        <b-col md="6">
+        </section>
+
+        <td-resize-handle
+            data-resize="properties"
+            label="Resize properties width"
+            :value="propertiesOffset"
+            :min="-200"
+            :max="200"
+            @resize="propertiesOffset = $event"
+        />
+
+        <section class="td-graph-meta-threats">
             <b-card header-tag="header">
                 <template #header>
                     <div class="threats-header">
@@ -67,8 +77,8 @@
                 <font-awesome-icon icon="plus"></font-awesome-icon>
                 {{ $t('threats.newThreatByContext') }}
             </a>
-        </b-col>
-    </b-row>
+        </section>
+    </div>
 </template>
 
 <style lang="scss" scoped>
@@ -121,6 +131,26 @@
 .not-collapsed > .when-closed {
   display: none;
 }
+.td-graph-meta {
+    display: grid;
+    grid-template-columns: var(--properties-width) var(--resize-handle-size, 20px) minmax(0, 1fr);
+    min-width: 0;
+}
+
+.td-graph-meta-properties,
+.td-graph-meta-threats {
+    min-width: 0;
+}
+
+@media (max-width: 767.98px) {
+    .td-graph-meta {
+        display: block;
+    }
+
+    .td-graph-meta > .td-resize-handle {
+        display: none;
+    }
+}
 </style>
 
 <script>
@@ -132,25 +162,39 @@ import dataChanged from '@/service/x6/graph/data-changed.js';
 import tmActions from '@/store/actions/threatmodel.js';
 import TdGraphProperties from '@/components/GraphProperties.vue';
 import TdGraphThreats from '@/components/GraphThreats.vue';
+import TdResizeHandle from '@/components/ResizeHandle.vue';
 import analytics from '@/service/analytics.js';
 
 export default {
     name: 'TdGraphMeta',
-    computed: mapState({
-        cellRef: (state) => state.cell.ref,
-        threats: (state) => state.cell.threats,
-        diagram: (state) => state.threatmodel.selectedDiagram,
-        threatTop: (state) => state.threatmodel.data.detail.threatTop,
-        disableNewThreat: function (state) {
-            if (!state.cell?.ref?.data) {
-                return true;
+    computed: {
+        ...mapState({
+            cellRef: (state) => state.cell.ref,
+            threats: (state) => state.cell.threats,
+            diagram: (state) => state.threatmodel.selectedDiagram,
+            threatTop: (state) => state.threatmodel.data.detail.threatTop,
+            disableNewThreat: function (state) {
+                if (!state.cell?.ref?.data) {
+                    return true;
+                }
+                return state.cell.ref.data.outOfScope || state.cell.ref.data.isTrustBoundary || state.cell.ref.data.type === 'tm.Text';
             }
-            return state.cell.ref.data.outOfScope || state.cell.ref.data.isTrustBoundary || state.cell.ref.data.type === 'tm.Text';
+        }),
+        layoutStyle() {
+            return {
+                '--properties-width': `clamp(240px, calc(50% + ${this.propertiesOffset}px), 75%)`
+            };
         }
-    }),
+    },
+    data() {
+        return {
+            propertiesOffset: 0
+        };
+    },
     components: {
         TdGraphProperties,
-        TdGraphThreats
+        TdGraphThreats,
+        TdResizeHandle
     },
     async mounted() {
         this.init();

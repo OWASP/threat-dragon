@@ -6,6 +6,7 @@ import TdGraph from '@/components/Graph.vue';
 import TdGraphButtons from '@/components/GraphButtons.vue';
 import TdGraphMeta from '@/components/GraphMeta.vue';
 import TdKeyboardShortcuts from '@/components/KeyboardShortcuts.vue';
+import TdResizeHandle from '@/components/ResizeHandle.vue';
 import TdThreatEditDialog from '@/components/ThreatEditDialog.vue';
 
 import diagramService from '@/service/diagram/diagram.js';
@@ -49,7 +50,11 @@ describe('components/GraphButtons.vue', () => {
             },
             actions: {
                 [tmActions.diagramSaved]: () => {},
+                [tmActions.diagramClosed]: () => {},
                 [tmActions.notModified]: () => {},
+            },
+            getters: {
+                modelChanged: (state) => !!state.threatmodel.modified
             }
         });
         jest.spyOn(storeMock, 'dispatch');
@@ -80,6 +85,7 @@ describe('components/GraphButtons.vue', () => {
         localVue.use(Vuex);
 
         graphMock = {
+            resize: jest.fn(),
             toJSON: jest.fn().mockReturnValue({ cells: [] }),
             history: {
                 on: jest.fn()
@@ -124,6 +130,77 @@ describe('components/GraphButtons.vue', () => {
             .toEqual(true);
     });
 
+    it('places the graph height resize handle below the canvas', () => {
+        expect(wrapper.find('.td-graph-canvas [data-resize="graph-height"]').exists())
+            .toEqual(true);
+    });
+
+    it('gives the graph its own viewport host', () => {
+        expect(wrapper.find('.td-graph-viewport #graph-container').exists()).toEqual(true);
+    });
+
+    it('labels the canvas resize handle separately from the stencil handle', () => {
+        const handles = wrapper.findAllComponents(TdResizeHandle);
+
+        expect(handles.at(1).props('label')).toEqual('Resize canvas height');
+    });
+
+    it('updates the graph height offset', async () => {
+        wrapper.findAllComponents(TdResizeHandle).at(1).vm.$emit('resize', 100);
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.vm.graphHeightOffset).toEqual(100);
+    });
+
+    it('updates the stencil width from its handle', async () => {
+        wrapper.findAllComponents(TdResizeHandle).at(0).vm.$emit('resize', 80);
+        await wrapper.vm.$nextTick();
+
+        expect(wrapper.vm.stencilOffset).toEqual(80);
+    });
+
+    it('resizes X6 to the viewport during a height drag without waiting for release', async () => {
+        Object.defineProperties(wrapper.vm.$refs.graph_viewport, {
+            clientWidth: { value: 600 },
+            clientHeight: { value: 500 }
+        });
+        wrapper.findAllComponents(TdResizeHandle).at(1).vm.$emit('resize', 100);
+        await wrapper.vm.$nextTick();
+
+        expect(graphMock.resize).toHaveBeenCalledWith(600, 500);
+    });
+
+    it('reads the updated viewport dimensions after Vue applies the height', async () => {
+        Object.defineProperties(wrapper.vm.$refs.graph_viewport, {
+            clientWidth: { value: 600 },
+            clientHeight: { get: () => 400 + wrapper.vm.graphHeightOffset }
+        });
+        await wrapper.vm.resizeCanvasHeight(-80);
+
+        expect(graphMock.resize).toHaveBeenCalledWith(600, 320);
+    });
+
+    it('resizes X6 during a width drag without waiting for release', async () => {
+        Object.defineProperties(wrapper.vm.$refs.graph_viewport, {
+            clientWidth: { value: 600 },
+            clientHeight: { value: 500 }
+        });
+        wrapper.findAllComponents(TdResizeHandle).at(0).vm.$emit('resize', 80);
+        await wrapper.vm.$nextTick();
+
+        expect(graphMock.resize).toHaveBeenCalledWith(600, 500);
+    });
+
+    it.each([80, -80])('reads the updated viewport after a width change of %i', async (offset) => {
+        Object.defineProperties(wrapper.vm.$refs.graph_viewport, {
+            clientWidth: { get: () => 600 - wrapper.findAllComponents(TdResizeHandle).at(0).props('value') },
+            clientHeight: { value: 500 }
+        });
+        await wrapper.vm.resizeStencilWidth(offset);
+
+        expect(graphMock.resize).toHaveBeenCalledWith(600 - offset, 500);
+    });
+
     it('has the keyboard shortcuts modal', () => {
         expect(wrapper.findComponent(TdKeyboardShortcuts).exists())
             .toEqual(true);
@@ -140,6 +217,55 @@ describe('components/GraphButtons.vue', () => {
 
     it('creates the diagram', () => {
         expect(diagramService.edit).toHaveBeenCalled();
+    });
+
+    it('tracks diagram modifications from history changes', () => {
+        const cells = [{ id: 'process' }];
+        graphMock.toJSON.mockReturnValue({ cells });
+        graphMock.getPlugin('history').on.mock.calls[0][1]();
+
+        expect(storeMock.dispatch).toHaveBeenCalledWith(tmActions.diagramModified, {
+            ...storeMock.state.threatmodel.selectedDiagram,
+            cells
+        });
+    });
+
+    it('opens the requested threat suggestions', () => {
+        const showModal = jest.fn();
+        TdGraph.methods.threatSuggest.call({ $refs: { threatSuggestDialog: { showModal } } }, 'type');
+
+        expect(showModal).toHaveBeenCalledWith('type');
+    });
+
+    it('closes an unmodified diagram without prompting', async () => {
+        await wrapper.vm.closed();
+
+        expect(wrapper.vm.$bvModal.msgBoxConfirm).not.toHaveBeenCalled();
+    });
+
+    it('returns to the model after confirming unsaved changes', async () => {
+        storeMock.state.threatmodel.modified = true;
+        await wrapper.vm.closed();
+
+        expect(routerMock.push).toHaveBeenCalledWith({
+            name: `${wrapper.vm.providerType}ThreatModel`,
+            params: routerMock.params
+        });
+    });
+
+    it('keeps the diagram open when discarding changes is cancelled', async () => {
+        storeMock.state.threatmodel.modified = true;
+        wrapper.vm.$bvModal.msgBoxConfirm.mockResolvedValue(false);
+        await wrapper.vm.closed();
+
+        expect(routerMock.push).not.toHaveBeenCalled();
+    });
+
+    it('ignores desktop saves when the graph is not initialized', () => {
+        wrapper.vm.graph = null;
+        wrapper.vm.handleDesktopSaveRequest();
+
+        expect(saveDiagram.save).not.toHaveBeenCalled();
     });
 
     it('starts an editing session', () => {
