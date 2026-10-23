@@ -23,7 +23,7 @@ function buildMockDeps () {
     appHandlers = {};
     ipcHandlers = {};
     const loadURL = jest.fn(() => Promise.resolve());
-    const webContents = { on: jest.fn(), send: jest.fn(), openDevTools: jest.fn() };
+    const webContents = { on: jest.fn(), send: jest.fn(), openDevTools: jest.fn(), setWindowOpenHandler: jest.fn() };
     const mainWindow = {
         webContents,
         on: jest.fn(),
@@ -43,6 +43,7 @@ function buildMockDeps () {
         BrowserWindow,
         Menu: { setApplicationMenu: jest.fn(), buildFromTemplate: jest.fn(t => t) },
         ipcMain: { on: jest.fn((ch, cb) => { ipcHandlers[ch] = cb; }) },
+        shell: { openExternal: jest.fn().mockResolvedValue() },
         menu: mockMenu,
         logger: mockLogger,
         utils: getUtilsMock(),
