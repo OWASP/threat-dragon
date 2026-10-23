@@ -4,7 +4,9 @@
             <b-col>
                 <b-card :header="$t('report.executiveSummary')">
                     <h3 class="td-description-title">{{ $t('threatmodel.description') }}</h3>
-                    <p class="td-summary">{{ summary || $t('report.notProvided') }}</p>
+                    <div class="mt-2 td-summary compact" v-if="summary && renderMarkdown" v-html="markdownToHTML(summary)"></div>
+                    <p class="mt-2 td-summary plain-text" v-else-if="summary">{{ summary }}</p>
+                    <p class="mt-2 td-summary" v-else>{{ $t('report.notProvided') }}</p>
 
                     <h3 class="td-report-summary">{{ $t('report.summary') }}</h3>
                     <b-table
@@ -21,15 +23,25 @@
 </template>
 
 <style lang="scss" scoped>
-.td-summary {
+.plain-text {
     white-space: pre-wrap;
+}
+
+.compact, .compact :deep(p), .compact :deep(ul) {
+    margin-bottom: 0.4rem;
 }
 </style>
 
 <script>
+import { markdownToHTML } from '@/service/formatting-utils.js';
+
 export default {
     name: 'TdExecutiveSummary',
     props: {
+        renderMarkdown: {
+            type: Boolean,
+            default: true
+        },
         summary: {
             type: String,
             required: false
@@ -146,6 +158,7 @@ export default {
         }
     },
     methods: {
+        markdownToHTML,
         getOpenThreats() {
             return this.threats
                 .filter(threat => threat.status && threat.status === 'Open');

@@ -1,6 +1,6 @@
 <template>
     <div>
-        
+
         <div class="page">
             <b-row class="mt-3">
                 <b-col>
@@ -24,6 +24,7 @@
             >
                 <td-report-entity
                     :entity="entity"
+                    :renderMarkdown="renderMarkdown"
                     :outOfScope="entity.data.outOfScope"
                     :showMitigated="showMitigated"
                     :showOutOfScope="showOutOfScope"
@@ -41,6 +42,7 @@
             >
                 <td-print-report-entity
                     :entity="entity"
+                    :renderMarkdown="renderMarkdown"
                     :outOfScope="entity.data.outOfScope"
                     :showMitigated="showMitigated"
                     :showOutOfScope="showOutOfScope"
@@ -69,6 +71,10 @@ export default {
     name: 'TdDiagramDetail',
     props: {
         diagram: Object,
+        renderMarkdown: {
+            type: Boolean,
+            default: true
+        },
         showDiagram: {
             type: Boolean,
             default: true

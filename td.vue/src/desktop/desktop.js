@@ -1,6 +1,6 @@
 'use strict';
 
-import { app, protocol, BrowserWindow, Menu, ipcMain } from 'electron';
+import { app, protocol, BrowserWindow, Menu, ipcMain, shell } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 import menu from './menu.js';
@@ -17,6 +17,7 @@ export function registerDesktop (deps) {
         BrowserWindow: BrowserWindowCtor,
         Menu: MenuApi,
         ipcMain: ipcMainApi,
+        shell: shellApi,
         menu: menuApi,
         logger: loggerApi,
         utils,
@@ -42,6 +43,18 @@ export function registerDesktop (deps) {
                 contextIsolation: true,
                 preload: pathModule.join(__static, 'preload.js')
             }
+        });
+
+        mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+            if (url.startsWith('http://') || url.startsWith('https://')) {
+                shellApi.openExternal(url).catch(() => {
+                    loggerApi.log.error('Failed to open link in the default browser');
+                });
+            } else {
+                loggerApi.log.warn('Blocked an unsupported external link protocol');
+            }
+
+            return { action: 'deny' };
         });
 
         // Event listeners on the window
@@ -199,6 +212,7 @@ if (!isTest) {
         BrowserWindow,
         Menu,
         ipcMain,
+        shell,
         menu,
         logger,
         utils: { electronURL, isDevelopment, isTest, isMacOS, isWin },
