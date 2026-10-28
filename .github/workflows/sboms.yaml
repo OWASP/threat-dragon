@@ -113,7 +113,7 @@ jobs:
         run: npm run make-sbom
 
       - name: Save server SBOM artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: sboms-server
           path: './td.server/sbom.*'
@@ -137,7 +137,7 @@ jobs:
           docker rm "$container_id"
 
       - name: Save container SBOM artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: sboms-container-image-app
           path: boms/*
@@ -205,7 +205,7 @@ jobs:
         run: npm run build:desktop -- ${{ matrix.build_arguments }} --publish never
 
       - name: Save desktop SBOM artifact
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: ${{ matrix.artifact }}
           path: './td.vue/dist-desktop/bundled/.sbom/*'
@@ -222,7 +222,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Fetch regenerated SBOM artifacts
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           pattern: 'sboms-*'
           merge-multiple: false
@@ -256,7 +256,7 @@ jobs:
           test -f sboms/threat-dragon-desktop-windows-site-bom.xml
 
       - name: Save SBOM archive
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: sboms-${{ needs.validate_release_tag.outputs.release_tag }}
           path: sboms.zip
