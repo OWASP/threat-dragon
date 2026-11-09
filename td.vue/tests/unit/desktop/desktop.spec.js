@@ -225,6 +225,79 @@ describe('desktop/desktop.js', () => {
         });
     });
 
+    describe('external links', () => {
+        let openWindow;
+
+        beforeEach(async () => {
+            await appHandlers.ready();
+            const win = mockDeps.BrowserWindow();
+            openWindow = win.webContents.setWindowOpenHandler.mock.calls[0][0];
+        });
+
+        it.each([
+            'https://example.com/path?query=value#section',
+            'http://example.com/path'
+        ])('opens %s through the injected shell', (url) => {
+            openWindow({ url });
+            expect(mockDeps.shell.openExternal).toHaveBeenCalledWith(url);
+        });
+
+        it('handles case sensitivity', () => {
+            openWindow({ url: 'HTTPS://exAMple.COM' });
+            expect(mockDeps.shell.openExternal).toHaveBeenCalledWith('HTTPS://exAMple.COM');
+        });
+
+        it('denies Electron windows for allowed links', () => {
+            expect(openWindow({ url: 'https://example.com/' })).toEqual({ action: 'deny' });
+        });
+
+        describe.each([
+            'file:///etc/passwd',
+            'app://./index.html',
+            'javascript:alert(1)',
+            'data:text/html,test',
+            'mailto:test@example.com',
+            'custom-protocol:launch',
+            'not a URL',
+            ''
+        ])('unsupported URL %s', (url) => {
+            it('does not launch an external application', () => {
+                openWindow({ url });
+                expect(mockDeps.shell.openExternal).not.toHaveBeenCalled();
+            });
+
+            it('denies the Electron window', () => {
+                expect(openWindow({ url })).toEqual({ action: 'deny' });
+            });
+
+            it('logs the blocked protocol without including the URL', () => {
+                openWindow({ url });
+                expect(mockLogger.log.warn).toHaveBeenCalledWith('Blocked an unsupported external link protocol');
+            });
+        });
+
+        it('logs failures to open the default browser without including the URL', async () => {
+            mockDeps.shell.openExternal.mockRejectedValueOnce(new Error('Could not open https://example.com/'));
+            openWindow({ url: 'https://example.com/' });
+            await Promise.resolve();
+            expect(mockLogger.log.error).toHaveBeenCalledWith('Failed to open link in the default browser');
+        });
+
+        it('denies Electron windows even if opening the default browser fails', async () => {
+            mockDeps.shell.openExternal.mockRejectedValueOnce(new Error('Could not open browser'));
+            const result = openWindow({ url: 'https://example.com/' });
+            await Promise.resolve();
+            expect(result).toEqual({ action: 'deny' });
+        });
+
+        it('registers the handler on recreated windows', () => {
+            const win = mockDeps.BrowserWindow();
+            win.webContents.setWindowOpenHandler.mockClear();
+            appHandlers.activate();
+            expect(win.webContents.setWindowOpenHandler).toHaveBeenCalledWith(expect.any(Function));
+        });
+    });
+
     describe('window-all-closed handler', () => {
         describe('when not macOS', () => {
             beforeEach(() => {
