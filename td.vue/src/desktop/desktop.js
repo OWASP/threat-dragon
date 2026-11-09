@@ -46,7 +46,7 @@ export function registerDesktop (deps) {
         });
 
         mainWindow.webContents.setWindowOpenHandler(({ url }) => {
-            if (url.startsWith('http://') || url.startsWith('https://')) {
+            if (url.toLowerCase().startsWith('http://') || url.toLowerCase().startsWith('https://')) {
                 shellApi.openExternal(url).catch(() => {
                     loggerApi.log.error('Failed to open link in the default browser');
                 });
