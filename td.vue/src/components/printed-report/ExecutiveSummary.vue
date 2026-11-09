@@ -87,7 +87,7 @@
     white-space: pre-wrap;
 }
 
-.compact, .compact :deep(p), .compact :deep(ul) {
+.compact :deep(p:not(:last-of-type)), .compact :deep(ul:not(:last-of-type)) {
     margin-bottom: 0.4rem;
 }
 </style>
