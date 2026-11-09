@@ -3,8 +3,11 @@
   "summary": {
     "title": "Three Tier Web Application",
     "owner": "A development team",
-    "description": "This threat model has been provided by the OWASP Threat Model Cookbook:\nthreat-model-cookbook/IriusRisk/3-Tier-Web-App",
+    "description": "This threat model has been provided by the OWASP Threat Model Cookbook:\n\n[threat-model-cookbook/IriusRisk/3-Tier-Web-App](https://github.com/OWASP/threat-model-cookbook/tree/master/IriusRisk/3-Tier-Web-App)",
     "id": 0
+  },
+  "configuration": {
+    "renderMarkdown": true
   },
   "detail": {
     "contributors": [
