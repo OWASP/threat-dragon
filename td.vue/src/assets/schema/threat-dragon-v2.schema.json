@@ -38,6 +38,16 @@
       "description": "Threat model definition",
       "type": "object",
       "properties": {
+        "configuration": {
+          "description": "Threat model behavior configuration options, extensible for future settings",
+          "type": "object",
+          "properties": {
+            "renderMarkdown": {
+              "description": "Whether free-text fields such as descriptions, mitigations and titles are rendered as Markdown",
+              "type": "boolean"
+            }
+          }
+        },
         "contributors": {
           "description": "An array of contributors to the threat model project",
           "type": "array",
