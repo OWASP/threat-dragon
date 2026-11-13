@@ -16,7 +16,11 @@ const drawGraph = (diagram, graph) => {
 };
 
 const draw = (container, diagram) => drawGraph(diagram, graphFactory.getReadonlyGraph(container));
-const edit = (container, diagram) => drawGraph(diagram, graphFactory.getEditGraph(container));
+const edit = (container, diagram) => {
+    const graph = graphFactory.getEditGraph(container);
+    graph.once('render:done', () => graph.zoomToFit({ padding: 30, maxScale: 1, useCellGeometry: false }));
+    return drawGraph(diagram, graph);
+};
 
 const dispose = (graph) => {
     events.removeListeners(graph);
