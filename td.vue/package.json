@@ -96,7 +96,7 @@
     "passive-events-support": "^1.1.0",
     "uuid": "11.1.1",
     "vue": "^3.5.42",
-    "vue-i18n": "^10.0.8",
+    "vue-i18n": "^11.4.14",
     "vue-router": "^4.6.4",
     "vue-toastification": "^2.0.0-rc.5",
     "vuex": "^4.1.0"
@@ -127,7 +127,7 @@
     "browserstack-cypress-cli": "1.36.19",
     "chromedriver": "^134.0.0",
     "cypress": "^15.21.1",
-    "electron": "^42.11.3",
+    "electron": "^42.11.16",
     "electron-builder": "^26.16.1",
     "electron-builder-notarize": "^1.5.2",
     "electron-chromedriver": "^42.11.3",
