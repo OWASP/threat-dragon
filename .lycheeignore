@@ -45,3 +45,6 @@ owasp.slack.com/
 # github reject automated requests to blob
 github.com/OWASP/threat-dragon/blob/
 github.com/iriusrisk/OpenThreatModel/blob/
+
+# no need to login to Ubuntu
+login.ubuntu.com/
