@@ -48,6 +48,7 @@ regardless of whether the contributor is carbon-based, silicon-based, or legally
 11. Agents must not commit or push unless a human explicitly asks for that exact git action.
 12. Keep PR-sized work small and reviewer-friendly: one bug, feature, or chore per change.
 13. Do not mix unrelated cleanup, dependency updates, formatting churn, or opportunistic refactors into task work.
+14. Only humans write demo models under `td.vue/src/service/demo/`. Agents must not author demo models.
 
 ## Required Tooling
 
@@ -61,6 +62,7 @@ regardless of whether the contributor is carbon-based, silicon-based, or legally
 |Directory|Ecosystem|Purpose|
 |---|---|---|
 |`td.vue`|Vue3, Electron|Front-end that can be used as a stand-alone static site, paired with the td.server, or bundled as a standalone Electron app.|
+|`td.vue/src/service/demo/`|JSON|Demo models|
 |`td.server`|Node.js, Express.js|Optional backend server for more advanced features, such as OAuth integration and multiple data stores.|
 |`docs`|Ruby/Jekyll|Public documentation site|
 |`scripts`|Bash/sh|small maintainer helper scripts for repeatable local tasks|
@@ -155,6 +157,10 @@ The following quality gates are required when changes are made in `td.server`:
   - For most features, prefer updating the Vue app.
 - Never make breaking changes that would require a semver major version bump of Threat Dragon
 - When adding a new translation, add the new key and the default (English) value to all translation files.
+
+### `td.vue/src/service/demo/`
+
+- Agents do not create, write, modify or delete the JSON files used for  demo models.
 
 ### `td.server/`
 

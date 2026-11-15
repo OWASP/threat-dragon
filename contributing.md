@@ -19,6 +19,7 @@ and actually work, you will then get a better response.
 * ensure that [unit tests][unit] have been extended or created for any code changes
 * if the contribution changes the functionality then ensure that the [functional tests][e2e] are created or modified
 * the use of generative AI is not prohibited but must be declared in the [pull request](#use-of-ai-for-coding)
+* do not use AI for documentation or demo models, this needs human thought and brevity
 * the main repository only accepts [signed commits][signed-commits], otherwise the contribution will be rejected
 
 ### Contributor etiquette
@@ -31,6 +32,8 @@ Github issues are used to coordinate contributions and keep track of progress to
 * if there is not an existing issue that describes your content then [suggest one][issues]
 * provide your contributed content as a [pull request][request]
 * you **must** be assigned the issue before submitting a pull request
+
+Only submit a pull request after being assigned the issue, otherwise it is very likely to be closed with prejudice
 
 ### Contributor Access
 
@@ -86,7 +89,7 @@ we may not be able to respond quickly nor provide support to any great extent.
 The best chance of success for a pull request to be reviewed and accepted:
 
 1. make sure there is an existing issue that the pull request is solving / fixing
-2. request that you are assigned this issue first
+2. request that you are assigned this issue **first**
 3. once the pull request is ready, provide a short but informative title
 4. provide enough description to explain how Threat Dragon worked before and works after the change
 5. extend the unit tests and functional tests to show the change working as expected
@@ -101,7 +104,7 @@ but make sure you have been **assigned the issue** before you submit any pull re
 otherwise the pull request is very likely to be discarded.
 
 Note that you **must** follow the rules for any [use of AI](#use-of-ai-for-issues) in the pull request.
-This includes using the pull request template provided, otherwise the contribution will be regarded as AI-slop and discarded.
+This includes using the pull request template provided, otherwise the contribution will be regarded as AI slop and discarded.
 
 ### Use of AI
 
@@ -109,9 +112,12 @@ Threat Dragon is a project that is used globally by many organizations;
 therefore the code base has to be coherent and functional.
 Avoid using generative AI for any issues, pull requests, comments and discussions.
 
-If it is genuinely helpful to use generative AI
-then it **must** be declared for pull requests or when creating / commenting on issues.
+If it truly is genuinely helpful to use generative AI then it **must** be declared
+for pull requests or when creating / commenting on issues.
 Failure to do this may result in the pull request or issue being closed or even deleted.
+
+It is forbidden to use AI for documentation or demo models,
+if this was allowed then the project would unravel into AI ambiguity
 
 There are various reasons why the project leaders have had to adopt this robust approach, some of them are:
 
