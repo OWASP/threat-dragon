@@ -245,7 +245,7 @@
             "noModelOpen": "Açıq model yoxdur",
             "otmImported": "Open Threat Model idxalı faylı Threat Dragon formatına çevirir",
             "save": "Təhdid modelini saxlamaq mümkün olmadı. Ətraflı məlumat üçün tərtibatçı konsolunu yoxlayın",
-            "tmBomImported": "TM-BOM idxalı fayl formatını Threat Dragon formatına çevirir",
+            "tmBomImported": "TML idxalı fayl formatını Threat Dragon formatına çevirir",
             "v1Translate": "İdxal edilmiş 1.x versiyalı model 2.x versiyasının formatına yeniləndi"
         },
         "prompts": {
@@ -359,7 +359,7 @@
         "exportPdf": "PDF hesabatı",
         "exportTd": "Orijinal (Threat Dragon)",
         "exportTemplate": "Şablon kimi",
-        "exportTmBom": "TM-BOM kimi",
+        "exportTmBom": "TML kimi",
         "exportOtm": "Open Threat Model (OTM)",
         "import": "İdxal et",
         "ok": "Oldu",

@@ -21,7 +21,7 @@ export const isValid = (jsonFile) => {
     } else if (isV1(jsonFile)) { // try the V1 schema
         console.debug('Schema validate success for V1.x model');
     } else if (isTmBom(jsonFile)) { // try other formats
-        console.debug('Schema validate success for Threat Model in TM-BOM');
+        console.debug('Schema validate success for Threat Model in TML');
     } else if (isOtm(jsonFile)) {
         console.debug('Schema validate success for Open Threat Model');
     } else {

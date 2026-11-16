@@ -1,7 +1,7 @@
 const merge = (model, id) => {
     let description = '';
 
-    // TM-BOMs must have at least one threat persona
+    // TML must have at least one threat persona
     for (const persona of model.threat_personas) {
         if (id === persona.symbolic_name) {
 	        description = persona.is_person ? persona.title : 'Automated threat ' + persona.title;

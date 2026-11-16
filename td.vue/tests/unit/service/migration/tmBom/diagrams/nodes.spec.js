@@ -4,14 +4,14 @@ import tmBomModel from '../../tmbom-test-model';
 
 describe('service/migration/tmBom/diagrams/nodes.js', () => {
 
-    describe('convert / export TM-BOM nodes', () => {
+    describe('convert / export TML nodes', () => {
         let tmbomNodes;
 
         beforeEach(() => {
             tmbomNodes = convert(tdModel);
         });
 
-        it('converts TM-BOM threats', () => {
+        it('converts TML threats', () => {
             expect(tmbomNodes.actors.length).toBeGreaterThan(4);
             expect(tmbomNodes.components.length).toBeGreaterThan(4);
             expect(tmbomNodes.data_stores.length).toBeGreaterThan(4);
@@ -40,7 +40,7 @@ describe('service/migration/tmBom/diagrams/nodes.js', () => {
 
     });
 
-    describe('merge / import TM-BOM nodes', () => {
+    describe('merge / import TML nodes', () => {
         describe('create diagram nodes', () => {
             let components;
 

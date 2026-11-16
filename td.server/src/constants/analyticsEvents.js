@@ -27,7 +27,7 @@ export const analyticsEvents = Object.freeze({
     THREAT_DELETED: 'THREAT_DELETED',
     THREAT_SUGGESTIONS_REQUESTED: 'THREAT_SUGGESTIONS_REQUESTED',
     THREAT_SUGGESTION_APPLIED: 'THREAT_SUGGESTION_APPLIED',
-    THREAT_MODEL_TMBOM_EXPORTED: 'THREAT_MODEL_TMBOM_EXPORTED',
+    THREAT_MODEL_TML_EXPORTED: 'THREAT_MODEL_TML_EXPORTED',
     DIAGRAM_EXPORTED: 'DIAGRAM_EXPORTED',
     THREAT_MODEL_REPORT_PRINT_REQUESTED: 'THREAT_MODEL_REPORT_PRINT_REQUESTED'
 });
@@ -84,7 +84,7 @@ export const analyticsEventProperties = Object.freeze({
         source: Object.freeze(['type', 'context'])
     }),
     [analyticsEvents.DIAGRAM_EXPORTED]: Object.freeze({ format: Object.freeze(['PNG', 'SVG']) }),
-    [analyticsEvents.THREAT_MODEL_TMBOM_EXPORTED]: Object.freeze({ format: Object.freeze(['TM_BOM']) }),
+    [analyticsEvents.THREAT_MODEL_TML_EXPORTED]: Object.freeze({ format: Object.freeze(['TML']) }),
     [analyticsEvents.THREAT_MODEL_REPORT_PRINT_REQUESTED]: Object.freeze({ format: Object.freeze(['PRINT']) })
 });
 

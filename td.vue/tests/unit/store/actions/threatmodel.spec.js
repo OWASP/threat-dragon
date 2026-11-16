@@ -56,7 +56,7 @@ describe('store/actions/threatmodel.js', () => {
         expect(threatmodel.diagramSelected).toBeDefined();
     });
 
-    it('defines an export as TM-BOM action', () => {
+    it('defines an export as TML action', () => {
         expect(threatmodelExportTmbom).toBeDefined();
         expect(threatmodel.exportTmBom).toBeDefined();
     });

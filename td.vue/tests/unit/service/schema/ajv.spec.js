@@ -48,12 +48,12 @@ describe('service/schema/ajv.js', () => {
     });
 
     describe('checkTmBom', () => {
-        it('reports TM-BOM schema passing', () => {
+        it('reports TML schema passing', () => {
             const report = schema.checkTmBom(tmModel);
             expect(report).toBe(null);
         });
 
-        it('reports TM-BOM schema errors', () => {
+        it('reports TML schema errors', () => {
             const report = schema.checkTmBom(invalidTmModel);
             expect(report[0].message).toBe('must be string');
         });

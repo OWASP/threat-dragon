@@ -5,10 +5,10 @@ jest.mock('@/service/migration/tmBom/diagrams/assumptions');
 
 describe('service/migration/tmBom/scope.js', () => {
 
-    describe('convert TM-BOM', () => {
+    describe('convert TML', () => {
         let testScope;
 
-	    describe('recreates TM-BOM scope', () => {
+	    describe('recreates TML scope', () => {
 	        beforeEach(() => {
 	            testScope = scope.convert(tdModel);
 	        });
@@ -26,7 +26,7 @@ describe('service/migration/tmBom/scope.js', () => {
 	        });
 	    });
 
-	    describe('provides TM-BOM scope defaults', () => {
+	    describe('provides TML scope defaults', () => {
 	        it('creates default scope values', () => {
                 const noDescription = JSON.parse(JSON.stringify(tdModel));
                 delete noDescription.summary.description;

@@ -158,7 +158,7 @@ describe('views/ImportModel.vue', () => {
         });
     });
 
-    describe('converting TM-BOM threat model', () => {
+    describe('converting TML threat model', () => {
         const newFileName = '';
         const tm = tmBomModel;
         beforeEach(() => {
@@ -168,7 +168,7 @@ describe('views/ImportModel.vue', () => {
             wrapper.vm.onImportClick();
         });
 
-        it('converts the model from TM-BOM', () => {
+        it('converts the model from TML', () => {
             expect(importTmbom).toHaveBeenCalledWith(tm);
         });
 

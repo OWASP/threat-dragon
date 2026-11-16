@@ -35,14 +35,14 @@ npx ajv validate --allow-union-types -s ~/threat-dragon-v2.schema.json  --all-er
 
 These commands use a schema file downloaded from either [version 1][td-v1-schema] or [version 2][td-v2-schema] schemas.
 
-### TM-BOM
+### TML
 
-The schema for the Threat Modeling - Bill of Materials (TM-BOM) file format is being developed as part of the
+The schema for the Threat Model Library (TML) file format is being developed as part of the
 OWASP [Threat Model Library project][tm-library].
 The long term plan for Threat Dragon is to adopt this as the primary file format
 for both read/import and write/export of threat model files.
 
-The [TM-BOM schema][tm-library-schema] defines various object that make up a TM-BOM threat model :
+The [TML schema][tm-library-schema] defines various object that make up a TML threat model :
 
 * A **Mitigation Plan** is created and
   * contains an array of Controls
@@ -80,7 +80,7 @@ The [TM-BOM schema][tm-library-schema] defines various object that make up a TM-
 
 * [Version 1 Threat Dragon][td-v1-schema] schema
 * [Version 2 Threat Dragon][td-v2-schema] schema
-* [Threat Model Bill of Materials][tm-library-schema] (TM-BOM) schema
+* [Threat Model Library][tm-library-schema] (TML) schema
 * [Open Threat Model][otm-schema] schema
 
 ----

@@ -4,7 +4,7 @@ const merge = (model, version) => {
     const allDiagrams = diagrams.merge(model, version);
     
     return {
-        contributors: [{ 'name': 'Imported from TM-BOM' }],
+        contributors: [{ 'name': 'Imported from TML' }],
         diagrams: allDiagrams,
         diagramTop: allDiagrams.length,
         reviewer: '',

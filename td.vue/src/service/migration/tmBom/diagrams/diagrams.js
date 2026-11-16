@@ -43,7 +43,7 @@ const checkEdges = (edges, nodes) => {
     });
 };
 
-// TM-BOM diagrams are external diagram definitions with no equivalent in Threat Dragon
+// TML diagrams are external diagram definitions with no equivalent in Threat Dragon
 // however it would be good to create an SVG of each Threat Dragon diagram and pass it here
 // using something like:
 //   graph = diagramService.draw(container, diagram);
@@ -74,12 +74,12 @@ const merge = (model, version) => {
         version: version,
         title: model.scope.title,
         thumbnail: thumbnail,
-        diagramType: 'TM-BOM',
+        diagramType: 'TML',
         id: diagramId++,
         cells: cells
     });
 
-    // add TM-BOM diagrams, which are supporting diagrams in arbitrary format
+    // add TML diagrams, which are supporting diagrams in arbitrary format
     model.diagrams?.forEach((diagram) => {
         diagrams.push({
             version: version,

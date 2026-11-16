@@ -109,7 +109,7 @@ Threat Dragon provides a range of sample threat models,
 many of them transcribed from the [Threat Model Cookbook][tmc] project :
 
 * Demo Threat Model, the classic web application model from the beginning of Threat Dragon
-* Husky AI, a direct import of a TM-BOM file displayed as though it was a Threat Dragon file
+* Husky AI, a direct import of a TML (Threat Model Library) file displayed as though it was a Threat Dragon file
 * Cryptocurrency Wallet, threats and diagram for a wallet system
 * Generic CMS, a diagram for a Content Management System (CMS)
 * IoT Device, one perspective on an Internet of Things device and the threats
@@ -123,7 +123,7 @@ These models can provide ideas on how to get started and have
 diagrams, model details and threats as examples.
 
 The security community is adding threat models are also being added to
-the [Threat Model Library][tml] project in TM-BOM format.
+the [Threat Model Library][tml] project in TML format.
 These models can be read directly by Threat Dragon and edited.
 
 ## Opening an existing model

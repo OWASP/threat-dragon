@@ -1,6 +1,6 @@
 const convert = (model) => {
     const scope = new Object();
-    // required keys for TM-BOM scope:
+    // required keys for TML scope:
     //    title, description, business_criticality, data_sensitivity, exposure, tier
 
     scope.title = model.summary.title;

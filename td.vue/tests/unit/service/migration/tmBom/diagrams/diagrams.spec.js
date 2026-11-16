@@ -15,7 +15,7 @@ describe('service/migration/tmBom/diagrams/diagrams.js', () => {
             testDiagrams = diagrams.merge(tmBomModel, version);
         });
 
-        it('import TM-BOM diagrams', () => {
+        it('import TML diagrams', () => {
             expect(testDiagrams).toHaveLength(tmBomModel.diagrams.length + 1);
         });
 
@@ -25,7 +25,7 @@ describe('service/migration/tmBom/diagrams/diagrams.js', () => {
 
         it('creates a default diagram', () => {
             expect(testDiagrams[0].title).toBe('Test title scope');
-            expect(testDiagrams[0].diagramType).toBe('TM-BOM');
+            expect(testDiagrams[0].diagramType).toBe('TML');
             expect(testDiagrams[0].id).toBe(0);
 
         });

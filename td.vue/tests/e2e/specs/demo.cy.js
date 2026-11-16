@@ -24,7 +24,7 @@ describe('print', () => {
         cy.url().should('contain', '/local/Demo%20Threat%20Model');
     });
 
-    it('opens a TM-BOM format threat model', () => {
+    it('opens a TML format threat model', () => {
         cy.get('a').contains('Husky AI').click();
         cy.url().should('contain', '/local/Husky%20AI');
     });

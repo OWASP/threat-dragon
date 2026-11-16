@@ -104,7 +104,7 @@ export const placeNodes = (nodes, position) => {
     return components;
 };
 
-// place the TM-BOM nodes as components in the TD diagram
+// place the TML nodes as components in the TD diagram
 export const merge = (model) => {
     const trustBoundaryBoxes = boxes.merge(model);
 

@@ -245,7 +245,7 @@
       "noModelOpen": "No model open",
       "otmImported": "Import of Open Threat Model converts the file to Threat Dragon",
       "save": "Could not save the Threat Model. Check the developer console for more information",
-      "tmBomImported": "Import of TM-BOM converts the file format to Threat Dragon",
+      "tmBomImported": "Import of TML converts the file format to Threat Dragon",
       "v1Translate": "Version 1.x mallit päivitetään automaattisesti version 2.0 uhkamalleiksi."
     },
     "prompts": {
@@ -359,7 +359,7 @@
     "exportPdf": "Raportti PDF",
     "exportTd": "Original (Threat Dragon)",
     "exportTemplate": "As Template",
-    "exportTmBom": "As TM-BOM",
+    "exportTmBom": "As TML",
     "exportOtm": "Open Threat Model (OTM)",
     "import": "Tuo",
     "ok": "OK",

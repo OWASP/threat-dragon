@@ -27,7 +27,7 @@
         "version": "2.6.1",
         "title": "Test title diagram0",
         "thumbnail": "./public/content/images/thumbnail.jpg",
-        "diagramType": "TM-BOM",
+        "diagramType": "TML",
         "id": 0,
         "cells": [
           {

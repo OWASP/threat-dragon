@@ -304,7 +304,7 @@ describe('views/demo/SelectDemoModel.vue', () => {
             });
         });
 
-        describe('selecting a TM-BOM model', () => {
+        describe('selecting a TML model', () => {
             let tmBomModelItem;
 
             beforeEach(async () => {
@@ -320,7 +320,7 @@ describe('views/demo/SelectDemoModel.vue', () => {
                 );
             });
 
-            it('converts the model from TM-BOM', () => {
+            it('converts the model from TML', () => {
                 expect(importTmbom).toHaveBeenCalledWith(tmBomModel);
             });
         });

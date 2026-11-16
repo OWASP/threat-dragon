@@ -32,7 +32,7 @@ describe('service/migration/tmBom/tmBom.importTmbom', () => {
             expect(testModel.detail.diagrams[0].version.length).toBeGreaterThanOrEqual(5);
             expect(testModel.detail.diagrams[0].title.length).toBeGreaterThanOrEqual(1);
             expect(testModel.detail.diagrams[0].thumbnail).toContain('.jpg');
-            expect(testModel.detail.diagrams[0].diagramType).toEqual('TM-BOM');
+            expect(testModel.detail.diagrams[0].diagramType).toEqual('TML');
             expect(testModel.detail.diagrams[0].id).toBe(0);
         });
 
@@ -70,7 +70,7 @@ describe('service/migration/tmBom/tmBom.importTmbom', () => {
             expect(testModel.detail.diagrams[0].version.length).toBeGreaterThanOrEqual(5);
             expect(testModel.detail.diagrams[0].title.length).toBeGreaterThanOrEqual(1);
             expect(testModel.detail.diagrams[0].thumbnail).toContain('.jpg');
-            expect(testModel.detail.diagrams[0].diagramType).toEqual('TM-BOM');
+            expect(testModel.detail.diagrams[0].diagramType).toEqual('TML');
             expect(testModel.detail.diagrams[0].id).toBe(0);
         });
 

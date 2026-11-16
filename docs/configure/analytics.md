@@ -51,7 +51,7 @@ For each event in the table:
 | `THREAT_DELETED` |
 | `THREAT_SUGGESTIONS_REQUESTED` |
 | `THREAT_SUGGESTION_APPLIED` |
-| `THREAT_MODEL_TMBOM_EXPORTED` |
+| `THREAT_MODEL_TML_EXPORTED` |
 | `DIAGRAM_EXPORTED` |
 | `THREAT_MODEL_REPORT_PRINT_REQUESTED` |
 
@@ -74,7 +74,7 @@ _Threat Dragon uses an allow-list for property values to help protect privacy._
 | `editor` | `diagram`, `threat_model` |
 | `methodology` | `CIA`, `CIADIE`, `LINDDUN`, `PLOT4AI`, `STRIDE`, `EOP`, `GENERIC` |
 | `status` | `NotApplicable`, `Open`, `Mitigated`, `Accepted`, `Transferred`, `Avoided`, `Eliminated` |
-| `format` | `PNG`, `SVG`, `TM_BOM`, `PRINT` |
+| `format` | `PNG`, `SVG`, `TML`, `PRINT` |
 
 #### Segments (optional)
 
@@ -105,7 +105,7 @@ Create each segment in the table below:
 | `Diagram workflows` | **Goal is** | `DIAGRAM_CREATED`, `DIAGRAM_METHODOLOGY_USED` | Diagram creation and methodology use. Select `DIAGRAM_METHODOLOGY_USED`, then break down the `methodology` property. |
 | `Threat workflows` | **Goal is** | `THREAT_CREATED_MANUALLY`, `THREAT_UPDATED`, `THREAT_STATUS_UPDATED`, `THREAT_DELETED` | Manual threat creation, updates, status changes, and deletion. Break down `THREAT_STATUS_UPDATED` by `status`. |
 | `Threat engine` | **Goal is** | `THREAT_SUGGESTIONS_REQUESTED`, `THREAT_SUGGESTION_APPLIED` | Suggestion requests and applied suggestions. Open each goal and break down `source` to compare type and context suggestions. |
-| `Exports` | **Goal is** | `THREAT_MODEL_TMBOM_EXPORTED`, `DIAGRAM_EXPORTED`, `THREAT_MODEL_REPORT_PRINT_REQUESTED` | tmBOM exports, diagram exports, and print requests. Break down `DIAGRAM_EXPORTED` by `format`. |
+| `Exports` | **Goal is** | `THREAT_MODEL_TML_EXPORTED`, `DIAGRAM_EXPORTED`, `THREAT_MODEL_REPORT_PRINT_REQUESTED` | tmBOM exports, diagram exports, and print requests. Break down `DIAGRAM_EXPORTED` by `format`. |
 
 #### Public links (optional)
 

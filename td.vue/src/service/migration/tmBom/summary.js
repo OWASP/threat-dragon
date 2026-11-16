@@ -4,7 +4,7 @@ const merge = (model) => {
     const summary = new Object();
 
     if (!model.scope) {
-        console.warn('Missing TM-BOM scope which is a required object');
+        console.warn('Missing TML scope which is a required object');
         return summary;
     }
 
