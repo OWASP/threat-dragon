@@ -61,7 +61,10 @@ After the releases candidate has been agreed by the Threat Dragon community, a r
 6. `npm run build`
 7. `npm test`
 8. `npm run test:vue`
-9. ensure documentation is clean: `pyspelling --config .spellcheck.yaml` and `markdownlint-cli2  docs/**/*.md`
+9. ensure documentation is clean:
+    1. `pyspelling --config .spellcheck.yaml`
+    2. `markdownlint-cli2 docs/*.md docs/**/*.md`
+    3. `lychee --max-retries 1 --retry-wait-time 1 --max-concurrency 5 'docs/**/*.md' 'docs/*.md' '*.md'`
 10. update the version in `title:` for the docs in file `docs/_config.yml`
 11. ensure all package-lock files are up to date using `npm install`
 12. `git add --all; git status`

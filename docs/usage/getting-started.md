@@ -122,9 +122,8 @@ many of them transcribed from the [Threat Model Cookbook][tmc] project :
 These models can provide ideas on how to get started and have
 diagrams, model details and threats as examples.
 
-The security community is adding threat models are also being added to
-the [Threat Model Library][tml] project in TML format.
-These models can be read directly by Threat Dragon and edited.
+The open-source security community is also publishing threat models to the [Threat Model Library][tml] project.
+These models are in a file format that can be read and edited directly by Threat Dragon.
 
 ## Opening an existing model
 
