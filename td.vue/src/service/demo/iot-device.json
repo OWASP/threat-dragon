@@ -3,10 +3,13 @@
   "summary": {
     "title": "Internet of Things (IoT) Device",
     "owner": "A development team",
-    "description": "This threat model has been provided by the OWASP Threat Model Cookbook:\nthreat-model-cookbook/Flow Diagram/iot-device",
+    "description": "This threat model has been provided by the OWASP Threat Model Cookbook:\n\n[threat-model-cookbook/Flow Diagram/iot-device](https://github.com/OWASP/threat-model-cookbook/tree/master/Flow%20Diagram/iot-device)",
     "id": 0
   },
   "detail": {
+    "configuration": {
+      "renderMarkdown": true
+    },
     "contributors": [
       {
         "name": "development engineers"
@@ -1298,7 +1301,7 @@
             "data": {
               "type": "tm.Flow",
               "name": "Send command",
-              "description": "Periodically GET to the API and receive  a command to execute",
+              "description": "Periodically GET to the API and receive a command to execute",
               "outOfScope": false,
               "reasonOutOfScope": "",
               "hasOpenThreats": false,

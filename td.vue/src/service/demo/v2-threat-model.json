@@ -6,6 +6,9 @@
     "id": 0
   },
   "detail": {
+    "configuration": {
+      "renderMarkdown": true
+    },
     "contributors": [
       {
         "name": "Tom Brown"
@@ -138,8 +141,8 @@
                 {
                   "status": "Open",
                   "severity": "High",
-                  "mitigation": "Encrypt the DB credentials in the configuration file.\n\nExpire and replace the DB credentials regularly.",
-                  "description": "The Background Worker configuration stores the credentials used by the worker to access the DB. An attacker could compromise the Background Worker and get access to the DB credentials.",
+                  "mitigation": "- Encrypt the DB credentials in the configuration file.\n- Expire and replace the DB credentials regularly.",
+                  "description": "The Background Worker configuration stores the credentials used by the worker to access the DB.\n\nAn attacker could compromise the Background Worker and get access to the DB credentials.",
                   "title": "Accessing DB credentials",
                   "type": "Information disclosure",
                   "modelType": "STRIDE",
@@ -274,7 +277,7 @@
                 {
                   "status": "Mitigated",
                   "severity": "High",
-                  "description": "An attacker could make an query call on the DB,",
+                  "description": "An attacker could make an query call on the DB.",
                   "title": "Unauthorised access",
                   "type": "Information disclosure",
                   "mitigation": "Require all queries to be authenticated.",
@@ -579,7 +582,7 @@
                   "title": "Fake messages could be placed on the queue",
                   "type": "Spoofing",
                   "description": "An attacker could put a fake message on queue, causing the Background Worker to do incorrect processing.",
-                  "mitigation": "Restrict access to the queue to the IP addresses of the Web Server and Background Worker.\n\nImplement authentication on the queue endpoint.",
+                  "mitigation": "- Restrict access to the queue to the IP addresses of the Web Server and Background Worker.\n- Implement authentication on the queue endpoint.",
                   "modelType": "STRIDE",
                   "id": "b917c6dd-e2d5-455c-8b81-61407126abfa"
                 }

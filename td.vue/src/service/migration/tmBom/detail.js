@@ -2,8 +2,11 @@ import diagrams from './diagrams/diagrams';
 
 const merge = (model, version) => {
     const allDiagrams = diagrams.merge(model, version);
-    
+
     return {
+        configuration: {
+            renderMarkdown: true
+        },
         contributors: [{ 'name': 'Imported from TM-BOM' }],
         diagrams: allDiagrams,
         diagramTop: allDiagrams.length,

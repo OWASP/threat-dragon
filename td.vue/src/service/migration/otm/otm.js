@@ -9,6 +9,9 @@ export const importOtm = (model) => {
     return {
         summary: summary.merge(model),
         detail: {
+            configuration: {
+                renderMarkdown: true
+            },
             contributors: [{ 'name': 'Imported from Open Threat Model' }],
             diagrams: allDiagrams.diagrams,
             diagramTop: allDiagrams.diagrams.length,

@@ -7,6 +7,9 @@
     "id": 0
   },
   "detail": {
+    "configuration": {
+      "renderMarkdown": true
+    },
     "contributors": [],
     "diagrams": [
       {

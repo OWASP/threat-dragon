@@ -3,10 +3,13 @@
   "summary": {
     "title": "Renting Car Startup",
     "owner": "A development team",
-    "description": "This threat model has been provided by the OWASP Threat Model Cookbook:\nthreat-model-cookbook/Flow Diagram/renting-car-startup",
+    "description": "This threat model has been provided by the OWASP Threat Model Cookbook:\n\n[threat-model-cookbook/Flow Diagram/renting-car-startup](https://github.com/OWASP/threat-model-cookbook/tree/master/Flow%20Diagram/renting-car-startup)",
     "id": 0
   },
   "detail": {
+    "configuration": {
+      "renderMarkdown": true
+    },
     "contributors": [
       {
         "name": "development engineers"

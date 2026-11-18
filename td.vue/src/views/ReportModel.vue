@@ -160,10 +160,12 @@
 
             <div class="td-report-section">
                 <td-executive-summary
+                    :renderMarkdown="renderMarkdown"
                     :summary="model.summary.description"
                     :threats="allThreats"
                 ></td-executive-summary>
                 <td-print-executive-summary
+                    :renderMarkdown="renderMarkdown"
                     :summary="model.summary.description"
                     :threats="allThreats"
                 ></td-print-executive-summary>
@@ -173,6 +175,7 @@
                 v-for="(diagram, idx) in diagrams"
                 :key="idx"
                 :diagram="diagram"
+                :renderMarkdown="renderMarkdown"
                 :showProperties="display.properties"
                 :showMitigated="display.mitigated"
                 :showOutOfScope="display.outOfScope"
@@ -279,6 +282,9 @@ export default {
         ...mapGetters({
             contributors: 'contributors'
         }),
+        renderMarkdown() {
+            return Boolean(this.model?.detail?.configuration?.renderMarkdown);
+        },
         diagrams: function () {
             const sortedDiagrams = this.model.detail.diagrams.slice().sort((a, b) => {
                 if (a.title < b.title)
