@@ -1,5 +1,5 @@
 # NPM: Base image with the pinned npm version (in native host's platform)
-FROM --platform=$BUILDPLATFORM docker.io/library/node:24.22.1-alpine@sha256:06d7adf3e0ef61a13f1d28682726366f97a15aa1888c934d3ecec86c33918b53 AS build-npm-base
+FROM --platform=$BUILDPLATFORM docker.io/library/node:24.22.2-alpine@sha256:a34ab6d7f6f4813f4d0c5469d74685604b962fbdbf5793a7bc7b4998ecb867c8 AS build-npm-base
 WORKDIR /build
 
 # Copy over NPM config and enforce usage across all tool calls
@@ -94,7 +94,7 @@ COPY package.json ./_data/package.json
 RUN bundle exec jekyll build -b ./docs/
 
 
-FROM docker.io/library/node:24.22.1-alpine@sha256:06d7adf3e0ef61a13f1d28682726366f97a15aa1888c934d3ecec86c33918b53 AS final
+FROM docker.io/library/node:24.22.2-alpine@sha256:a34ab6d7f6f4813f4d0c5469d74685604b962fbdbf5793a7bc7b4998ecb867c8 AS final
 
 # npm is needed only in the build stages. The runtime executes Node directly.
 RUN rm -rf /usr/local/lib/node_modules/npm /usr/local/bin/npm /usr/local/bin/npx
