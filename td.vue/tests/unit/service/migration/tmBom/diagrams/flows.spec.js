@@ -4,7 +4,7 @@ import tmBomModel from '../../tmbom-test-model';
 
 describe('service/migration/tmBom/diagrams/flows.js', () => {
 
-    describe('convert/export TM-BOM data-flows', () => {
+    describe('convert/export TML data-flows', () => {
         let dataFlows;
 
         beforeEach(() => {
@@ -27,7 +27,7 @@ describe('service/migration/tmBom/diagrams/flows.js', () => {
 
     });
 
-    describe('merge/import TM-BOM data-flows', () => {
+    describe('merge/import TML data-flows', () => {
 
         describe('finds the flows', () => {
             it('counts flows in model', () => {

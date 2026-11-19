@@ -9,7 +9,7 @@ import { buildVersion } from '@/store';
 import summary from './summary';
 import threats from './diagrams/threats/threats';
 
-// export Plain Old Dragon (POD) format to a TM-BOM file
+// export Plain Old Dragon (POD) format to a TML file
 export const exportAsTmbom = (model) => {
     const tmbomNodes = nodes.convert(model);
     const tmbomThreats = threats.convert(model);
@@ -31,7 +31,7 @@ export const exportAsTmbom = (model) => {
         risks: tmbomThreats.risks
     };
 
-    // compatibility object exists if original file was also TM-BOM
+    // compatibility object exists if original file was also TML
     if (model.compatibility) {
         // optional key values
         tmbom.description = model.compatibility?.description || undefined;
@@ -46,7 +46,7 @@ export const exportAsTmbom = (model) => {
     return tmbom;
 };
 
-// import a TM-BOM file to POD
+// import a TML file to POD
 export const importTmbom = (model) => {
 
     // required values not used by TD but need to be preserved
@@ -71,15 +71,15 @@ export const importTmbom = (model) => {
     };
 };
 
-// read a TM-BOM file to POD
+// read a TML file to POD
 const read = (model) => {
-    // not supported yet, return an empty Threat Dragon model with TM-BOM attached
+    // not supported yet, return an empty Threat Dragon model with TML attached
     return {
         version: buildVersion,
         summary: {
             title: model.scope.title,
             owner: '',
-            description: 'Empty Threat Dragon model from a TM-BOM',
+            description: 'Empty Threat Dragon model from a TML',
             id: 0
         },
         detail: {
@@ -94,14 +94,14 @@ const read = (model) => {
 
 };
 
-// write a TM-BOM file from POD
+// write a TML file from POD
 const write = (model) => {
-    // not supported yet, so return a nearly empty TM-BOM
+    // not supported yet, so return a nearly empty TML
     return {
         version: buildVersion,
         scope: {
             title: model.tmBom.scope.title,
-            description: 'Empty Threat Model Bill of Materials (TM-BOM)',
+            description: 'Empty Threat Model Bill of Materials (TML)',
             business_criticality: '',
             data_sensitivity: '',
             exposure: '',

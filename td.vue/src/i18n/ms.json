@@ -245,7 +245,7 @@
       "noModelOpen": "No model open",
       "otmImported": "Import of Open Threat Model converts the file to Threat Dragon",
       "save": "Could not save the Threat Model. Check the developer console for more information",
-      "tmBomImported": "Import of TM-BOM converts the file format to Threat Dragon",
+      "tmBomImported": "Import of TML converts the file format to Threat Dragon",
       "v1Translate": "Model versi 1.x yang diimport akan dinaik tarafkan ke skema versi 2.0"
     },
     "prompts": {
@@ -359,7 +359,7 @@
     "exportPdf": "Laporan PDF",
     "exportTd": "Asal (Threat Dragon)",
     "exportTemplate": "As Template",
-    "exportTmBom": "As TM-BOM",
+    "exportTmBom": "As TML",
     "exportOtm": "Ancaman Terbuka Model (OTM)",
     "import": "Import",
     "ok": "OK",

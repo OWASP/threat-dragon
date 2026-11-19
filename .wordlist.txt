@@ -159,7 +159,7 @@ td
 threatdragon
 ThreatDragonModels
 TLS
-tmBOM
+TML
 Trisqel
 trivy
 Trivy

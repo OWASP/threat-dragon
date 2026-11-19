@@ -4,7 +4,7 @@ import personas from './personas';
 import risks from './risks';
 import { v4 as uuidv4 } from 'uuid';
 
-// Threat Dragon has no concept of threat persona, but TM-BOM threats require one
+// Threat Dragon has no concept of threat persona, but TML threats require one
 const defaultThreatPersona = {
     symbolic_name: uuidv4(),
     title: 'Default threat persona',

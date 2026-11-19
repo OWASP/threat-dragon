@@ -10,11 +10,11 @@ describe('service/migration/tmBom/summary.js', () => {
         console.warn = jest.fn();
     });
 
-    describe('merge TM-BOM', () => {
+    describe('merge TML', () => {
         let testSummary;
         const testAssumptions = [{validity: 'valid0', description: ''}, {validity: '', description: 'description1'}];
 
-        describe('creates summary from TM-BOM', () => {
+        describe('creates summary from TML', () => {
             beforeEach(() => {
                 assumptions.summary.mockReturnValue(testAssumptions);
                 testSummary = summary.merge(tmBomModel);
@@ -42,7 +42,7 @@ describe('service/migration/tmBom/summary.js', () => {
             });
         });
 
-        describe('handles empty TM-BOM objects', () => {
+        describe('handles empty TML objects', () => {
 
             beforeEach(() => {
                 console.warn = jest.fn();

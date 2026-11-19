@@ -14,20 +14,20 @@ risks.merge.mockImplementation((_model, threats) => threats);
 
 describe('service/migration/tmBom/diagrams/threats/threats.js', () => {
 
-    describe('convert/export TM-BOM threats', () => {
+    describe('convert/export TML threats', () => {
         let tmbomThreats;
         
         beforeEach(() => {
             tmbomThreats = threats.convert(tdModel);
         });
 
-        it('converts TM-BOM threats', () => {
+        it('converts TML threats', () => {
             expect(tmbomThreats.controls.length).toBeGreaterThan(4);
             expect(tmbomThreats.risks.length).toBeGreaterThan(4);
             expect(tmbomThreats.threats.length).toBeGreaterThan(4);
         });
 
-        it('provides single TM-BOM threat persona', () => {
+        it('provides single TML threat persona', () => {
             expect(tmbomThreats.threat_personas).toHaveLength(1);
             expect(tmbomThreats.threat_personas[0]).toMatchObject(threats.defaults.threatPersona);
         });
@@ -87,7 +87,7 @@ describe('service/migration/tmBom/diagrams/threats/threats.js', () => {
         });
     });
 
-    describe('merge/import TM-BOM threats', () => {
+    describe('merge/import TML threats', () => {
         const tdThreats = threats.merge(tmBomModel);
 
         it('finds the threats', () => {

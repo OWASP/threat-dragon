@@ -24,7 +24,7 @@ const mockCombinedModel = {
     version: '2.x.x',
     summary: {
         title: tmBomModel.scope.title,
-        description: 'Empty Threat Dragon model from a TM-BOM',
+        description: 'Empty Threat Dragon model from a TML',
     },
     detail: [],
     tmBom: tmBomModel
@@ -35,7 +35,7 @@ describe('service/migration/tmBom/tmBom.js', () => {
     describe('exportAsTmbom', () => {
         let testModel;
 
-        describe('export to TM-BOM format', () => {
+        describe('export to TML format', () => {
             beforeEach(() => {
                 boxes.convert.mockReturnValue([]);
                 diagrams.convert.mockReturnValue([]);
@@ -61,12 +61,12 @@ describe('service/migration/tmBom/tmBom.js', () => {
                 expect(testModel.repo_link).toBe(tdModel.compatibility.repo_link);
             });
 
-            it('creates the TM-BOM scope', () => {
+            it('creates the TML scope', () => {
                 expect(testModel.scope).toEqual(tmBomModel.scope);
             });
         });
 
-        describe('handles missing TM-BOM objects', () => {
+        describe('handles missing TML objects', () => {
             beforeEach(() => {
                 boxes.convert.mockReturnValue([]);
                 diagrams.convert.mockReturnValue([]);
@@ -103,7 +103,7 @@ describe('service/migration/tmBom/tmBom.js', () => {
         const detailReturn = 'test detail';
         const summaryReturn = 'test summary';
 
-        describe('import from TM-BOM format', () => {
+        describe('import from TML format', () => {
             beforeEach(() => {
                 summary.merge.mockReturnValue(summaryReturn);
                 detail.merge.mockReturnValue(detailReturn);
@@ -138,7 +138,7 @@ describe('service/migration/tmBom/tmBom.js', () => {
             });
         });
 
-        describe('handles missing TM-BOM objects', () => {
+        describe('handles missing TML objects', () => {
             it('skips absent optional values', () => {
                 const noOptionsModel = JSON.parse(JSON.stringify(tmBomModel));
                 delete noOptionsModel.frozen;
@@ -172,7 +172,7 @@ describe('service/migration/tmBom/tmBom.js', () => {
             expect(testModel.summary.description.length).toBeGreaterThan(1);
         });
 
-        it('preserves the original TM-BOM', () => {
+        it('preserves the original TML', () => {
             expect(testModel.tmBom).toStrictEqual(tmBomModel);
         });
 
@@ -185,11 +185,11 @@ describe('service/migration/tmBom/tmBom.js', () => {
             testModel = tmBom.write(mockCombinedModel);
         });
 
-        it('adds the TM-BOM schema version', () => {
+        it('adds the TML schema version', () => {
             expect(testModel.version.length).toBeGreaterThanOrEqual(5);
         });
 
-        it('creates the TM-BOM scope', () => {
+        it('creates the TML scope', () => {
             expect(testModel.scope.title).toStrictEqual(mockCombinedModel.tmBom.scope.title);
             expect(testModel.scope.description.length).toBeGreaterThan(1);
         });

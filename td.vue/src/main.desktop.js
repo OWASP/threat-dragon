@@ -104,7 +104,7 @@ window.electronAPI.onOpenModel((_event, fileName, jsonModel) => {
             window.electronAPI.modelOpened(fileName);
         } else if (schema.isTmBom(jsonModel)) {
             jsonModel = openTmBom(jsonModel);
-            console.debug('force re-selection of file name for TM-BOM');
+            console.debug('force re-selection of file name for TML');
             fileName = '';
             window.electronAPI.modelOpened(fileName);
         } else if (schema.isOtm(jsonModel)) {
@@ -207,7 +207,7 @@ const localAuth = () => {
 };
 
 const openTmBom = (jsonModel) => {
-    console.info('Convert TM-BOM to internal TD format');
+    console.info('Convert TML to internal TD format');
     appProxy.$toast.warning(t('threatmodel.warnings.tmBomImported'), { timeout: false });
     return importTmbom(jsonModel);
 };

@@ -245,7 +245,7 @@
       "noModelOpen": "没有打开的模型",
       "otmImported": "目前尚不支持导入开放威胁模型文件格式",
       "save": "无法保存威胁模型。请查看开发者控制台以获取更多信息。",
-      "tmBomImported": "TM-BOM文件格式的导入功能尚处于实验阶段，可能随时变更，此类变更可能导致模型损坏。",
+      "tmBomImported": "TML文件格式的导入功能尚处于实验阶段，可能随时变更，此类变更可能导致模型损坏。",
       "v1Translate": "导入的 1.x 版模型将升级到 2.0 版本"
     },
     "prompts": {
@@ -359,7 +359,7 @@
     "exportPdf": "导出PDF",
     "exportTd": "原始 (Threat Dragon)",
     "exportTemplate": "As Template",
-    "exportTmBom": "As TM-BOM",
+    "exportTmBom": "As TML",
     "exportOtm": "开放威胁模型 (OTM)",
     "import": "导入",
     "ok": "OK",

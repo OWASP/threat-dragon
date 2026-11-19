@@ -140,12 +140,12 @@ describe('views/Threatmodel.vue', () => {
                 await wrapper.vm.onExportTmBomClick(evt);
             });
 
-            it('writes the TM-BOM file', () => {
+            it('writes the TML file', () => {
                 expect(writeFile).toHaveBeenCalledWith({ bomFormat: 'CycloneDX' }, '');
             });
 
             it('tracks the export without model contents', () => {
-                expect(analytics.track).toHaveBeenCalledWith('THREAT_MODEL_TMBOM_EXPORTED', { format: 'TM_BOM' });
+                expect(analytics.track).toHaveBeenCalledWith('THREAT_MODEL_TML_EXPORTED', { format: 'TM_BOM' });
             });
         });
 

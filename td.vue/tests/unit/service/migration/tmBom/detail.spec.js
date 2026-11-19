@@ -9,7 +9,7 @@ describe('service/migration/tmBom/detail.js', () => {
     let testDetail;
     const testDiagrams = [{title: 'test title0'}, {title: 'test title1'}];
 
-    describe('import TM-BOM diagram details', () => {
+    describe('import TML diagram details', () => {
 
         it('provides detail', () => {
             diagrams.merge.mockReturnValue(testDiagrams);

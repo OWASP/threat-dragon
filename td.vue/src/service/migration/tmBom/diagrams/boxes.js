@@ -10,7 +10,7 @@ const convert = (model, nodes) => {
     // there may be no diagrams, or no cells within a diagram, or no cells that are boundary boxes
     model.detail.diagrams?.forEach((diagram) => {
         diagram.cells?.forEach((cell) => {
-            // from a TM-BOM point of view, trust boundary curves are also trust zones
+            // from a TML point of view, trust boundary curves are also trust zones
             if (cell.data.isTrustBoundary) {
                 zones.push({
                     symbolic_name: cell.id,

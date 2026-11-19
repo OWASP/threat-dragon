@@ -8,7 +8,7 @@ describe('service/migration/tmBom/diagrams/boxes.js', () => {
         console.warn = jest.fn();
     });
 
-    describe('convert/export TM-BOM trust zones', () => {
+    describe('convert/export TML trust zones', () => {
         let trustZones;
         let nodes;
         beforeEach(() => {
@@ -55,7 +55,7 @@ describe('service/migration/tmBom/diagrams/boxes.js', () => {
         });
     });
 
-    describe('merge/import TM-BOM trust zones', () => {
+    describe('merge/import TML trust zones', () => {
         let testBoundaryBoxes;
         beforeEach(() => {
             testBoundaryBoxes = boxes.merge(tmBomModel);
@@ -114,7 +114,7 @@ describe('service/migration/tmBom/diagrams/boxes.js', () => {
 
     });
 
-    describe('handle absence of TM-BOM trust zones', () => {
+    describe('handle absence of TML trust zones', () => {
         const reducedModel = JSON.parse(JSON.stringify(tmBomModel));
         delete (reducedModel.trust_zones);
         const testBoundaryBoxes = boxes.merge(reducedModel);

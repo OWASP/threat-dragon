@@ -164,10 +164,10 @@ export default {
                     fileName = '';
                     this.$store.dispatch(tmActions.update, { fileName: fileName });
                 } else if (schema.isTmBom(jsonModel)) {
-                    console.info('Convert TM-BOM to internal TD format');
+                    console.info('Convert TML to internal TD format');
                     this.$toast.warning(this.$t('threatmodel.warnings.tmBomImported'), { timeout: false });
                     jsonModel = importTmbom(jsonModel);
-                    console.debug('Force selection of file name for TM-BOM');
+                    console.debug('Force selection of file name for TML');
                     fileName = '';
                     this.$store.dispatch(tmActions.update, { fileName: fileName });
                 } else if (schema.isOtm(jsonModel)) {

@@ -245,7 +245,7 @@
       "noModelOpen": "Модель не открыта",
       "otmImported": "При импорте открытой модели угроз файл преобразуется в формат Threat Dragon",
       "save": "Не удалось сохранить модель угроз. Подробности смотрите в консоли разработчика",
-      "tmBomImported": "При импорте TM-BOM формат файла преобразуется в формат Threat Dragon",
+      "tmBomImported": "При импорте TML формат файла преобразуется в формат Threat Dragon",
       "v1Translate": "Импортированная модель версии 1.x обновлена до формата версии 2.x"
     },
     "prompts": {
@@ -359,7 +359,7 @@
     "exportPdf": "Отчёт в формате PDF",
     "exportTd": "Исходный формат (Threat Dragon)",
     "exportTemplate": "Как шаблон",
-    "exportTmBom": "Как TM-BOM",
+    "exportTmBom": "Как TML",
     "exportOtm": "Open Threat Model (OTM)",
     "import": "Импортировать",
     "ok": "OK",
