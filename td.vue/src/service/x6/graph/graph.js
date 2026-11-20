@@ -87,7 +87,7 @@ const getEditGraph = (container, ctor = Graph) => {
             new Scroller({
                 enabled: true,
                 modifiers: ['shift'],
-                pageVisible: true,
+                pageVisible: false,
                 pageBreak: false,
                 pannable:  true
             })

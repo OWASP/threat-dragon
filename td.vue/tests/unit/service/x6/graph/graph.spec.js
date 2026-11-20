@@ -1,8 +1,16 @@
+import { Graph } from '@antv/x6';
 import { Export } from '@antv/x6-plugin-export';
 
 import events from '@/service/x6/graph/events.js';
 import graph, { beforeAddCommand } from '@/service/x6/graph/graph.js';
 import keys from '@/service/x6/graph/keys.js';
+
+jest.mock('@antv/x6', () => {
+    const x6 = jest.requireActual('@antv/x6');
+    const mockGraph = jest.fn();
+    Object.setPrototypeOf(mockGraph, x6.Graph);
+    return { ...x6, Graph: mockGraph };
+});
 
 describe('service/x6/graph/graph.js', () => {
     let container, graphRes;
@@ -15,6 +23,10 @@ describe('service/x6/graph/graph.js', () => {
         use = jest.fn().mockReturnThis();
     }
 
+    beforeEach(() => {
+        Graph.mockImplementation((config) => new GraphMock(config));
+    });
+
     describe('getReadonlyGraph', () => {
 
         beforeEach(() => {
@@ -26,6 +38,12 @@ describe('service/x6/graph/graph.js', () => {
 
         it('does not add the event listeners', () => {
             expect(events.listen).not.toHaveBeenCalled();
+        });
+
+        it('uses the default X6 constructor when no constructor is supplied', () => {
+            graph.getReadonlyGraph(container);
+
+            expect(Graph).toHaveBeenCalledWith(expect.objectContaining({ container }));
         });
 
         it('disables history', () => {
@@ -47,6 +65,12 @@ describe('service/x6/graph/graph.js', () => {
             events.listen = jest.fn();
             keys.bind = jest.fn();
             graphRes = graph.getEditGraph(container, GraphMock);
+        });
+
+        it('uses the default X6 constructor when no constructor is supplied', () => {
+            graph.getEditGraph(container);
+
+            expect(Graph).toHaveBeenCalledWith(expect.objectContaining({ container }));
         });
 
         it('applies the beforeAddCommand', () => {
@@ -83,6 +107,15 @@ describe('service/x6/graph/graph.js', () => {
                 size: 10,
                 visible: true
             });
+        });
+
+        it('keeps the scroller grid continuous instead of limiting it to a page', () => {
+            expect(graphRes.use).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    name: 'scroller',
+                    options: expect.objectContaining({ pageVisible: false })
+                })
+            );
         });
 
         it('sets the snapline', () => {

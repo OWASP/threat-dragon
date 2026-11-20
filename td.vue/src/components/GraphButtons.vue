@@ -161,7 +161,9 @@ export default {
                 const currentZoom = this.graph.zoom();
                 try{
                     this.graph.zoomTo(1);
-                    this.graph.exportSVG(`${this.diagram.title}.svg`);
+                    this.graph.exportSVG(`${this.diagram.title}.svg`, {
+                        viewBox: this.graph.getContentBBox()
+                    });
                     analytics.track('DIAGRAM_EXPORTED', { format: 'SVG' });
                 }finally{
                     this.graph.zoomTo(currentZoom);

@@ -19,6 +19,8 @@ describe('service/diagram/diagram.js', () => {
             version: '2.x'
         };
         graphMock = {
+            once: jest.fn(),
+            zoomToFit: jest.fn(),
             fromJSON: jest.fn(),
             toJSON: jest.fn().mockReturnValue(diagramMock),
             addNode: jest.fn(),
@@ -40,12 +42,42 @@ describe('service/diagram/diagram.js', () => {
             diagram.draw(null, diagramMock);
             expect(graphMock.fromJSON).toHaveBeenCalledTimes(1);
         });
+
+        it('does not change the readonly diagram framing', () => {
+            diagram.draw(null, diagramMock);
+
+            expect(graphMock.once).not.toHaveBeenCalled();
+        });
     });
 
     describe('edit', () => {
         it('gets the edit graph', () => {
             diagram.edit(null, diagramMock);
             expect(graphFactory.getEditGraph).toHaveBeenCalledWith(null);
+        });
+
+        it('waits for cell rendering before fitting the drawing', () => {
+            diagram.edit(null, diagramMock);
+
+            expect(graphMock.zoomToFit).not.toHaveBeenCalled();
+        });
+
+        it('registers the initial fit once before importing cells', () => {
+            graphMock.fromJSON.mockImplementation(() => {
+                expect(graphMock.once).toHaveBeenCalledWith('render:done', expect.any(Function));
+            });
+            diagram.edit(null, diagramMock);
+        });
+
+        it('fits the rendered drawing including labels without enlarging it', () => {
+            diagram.edit(null, diagramMock);
+            graphMock.once.mock.calls[0][1]();
+
+            expect(graphMock.zoomToFit).toHaveBeenCalledWith({
+                padding: 30,
+                maxScale: 1,
+                useCellGeometry: false
+            });
         });
     });
 
